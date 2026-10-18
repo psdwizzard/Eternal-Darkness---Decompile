@@ -4,9 +4,9 @@ typedef int s32;
 extern const char lbl_8023BEF8[];
 extern float lbl_8064DCF0;
 extern float lbl_8064DCF4;
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern unsigned int fn_80036D5C(void*);
@@ -21,13 +21,13 @@ s32 fn_80009BE8(void* script)
     register s32 value;
     register u32 flags;
 
-    if (fn_8016A598(script) != 2) {
-        fn_80163BB4(script, lbl_8023BEF8, 2, fn_8016A598(script));
+    if (lua_gettop(script) != 2) {
+        luaO_verror(script, lbl_8023BEF8, 2, lua_gettop(script));
         return 0;
     }
 
-    value = (s32)fn_8016A694(script, 1);
-    fn_8016A694(script, 2);
+    value = (s32)lua_tonumber(script, 1);
+    lua_tonumber(script, 2);
     object = fn_80201814(value);
     if (object != 0) {
         target = fn_80201BC8(object);

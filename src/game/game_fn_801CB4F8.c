@@ -40,15 +40,12 @@ typedef struct SYNTH_VOICE {
     u8 lfoUsedByInput[2];
 } SYNTH_VOICE;
 
-extern u64 lbl_8064D3E0;
-extern s16 fn_801BEA3C(SYNTH_VOICE*, u32, u8);
-extern u16 fn_801CAFAC(int, int, int);
+extern u64 synthRealTime;
+extern s16 varGet(SYNTH_VOICE*, u32, u8);
+extern u16 inpGetMidiCtrl(int, int, int);
 
-#define synthRealTime lbl_8064D3E0
-#define varGet fn_801BEA3C
-#define inpGetMidiCtrl fn_801CAFAC
 
-u16 fn_801CB4F8(SYNTH_VOICE* statePtr, McmdInputSlot* slotPtr, int midi, int midiSet)
+u16 _GetInputValue(SYNTH_VOICE* statePtr, McmdInputSlot* slotPtr, int midi, int midiSet)
 {
     u32 sign;
     u32 i;

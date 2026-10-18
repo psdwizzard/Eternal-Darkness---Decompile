@@ -33,7 +33,7 @@ extern char lbl_80332520[];
 extern char lbl_80606328[];
 extern char lbl_80606318[];
 
-extern void fn_8020D318(char*, LevelEntry**, s32);
+extern void OSReceiveMessage(char*, LevelEntry**, s32);
 extern void fn_80138224(void);
 extern void* fn_80135748(u32*);
 extern void* fn_80024638(void*, void*, u32*);
@@ -73,7 +73,7 @@ void fn_80043034(u32 arg) {
     }
     lbl_8064C7C8 = 0;
     if (arg == 0xA1BEEF) {
-        fn_8020D318(lbl_803040F0, &entry, 1);
+        OSReceiveMessage(lbl_803040F0, &entry, 1);
         return;
     }
 
@@ -96,7 +96,7 @@ void fn_80043034(u32 arg) {
         fn_801358C4();
     }
 
-    fn_8020D318(lbl_803040F0, &entry, 1);
+    OSReceiveMessage(lbl_803040F0, &entry, 1);
     lbl_8030411C = *entry;
     level = lbl_8030411C.level;
     lbl_803003C8.mode_08 = level;

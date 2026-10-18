@@ -40,9 +40,9 @@ extern void fn_801FFCE0(void);
 extern void fn_801FFCE4(u16);
 extern void fn_801FFCF0(u16);
 extern void fn_801FFCFC(u16);
-extern void fn_80225F4C(int, void*, int);
-extern void fn_80226AB4(int, int, int);
-extern void fn_80226D28(int);
+extern void GXSetArray(int, void*, int);
+extern void GXBegin(int, int, int);
+extern void GXSetCullMode(int);
 extern void DCFlushRange(void*, u32);
 
 void fn_801FF9E4(void)
@@ -81,11 +81,11 @@ void fn_801FF9E4(void)
     }
     fn_801ECC4C();
     fn_801ED468(0x1B);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ECEC8(1, 3, 0);
-    fn_80225F4C(9, buffer9, 6);
-    fn_80225F4C(11, buffer11, 4);
-    fn_80225F4C(13, buffer11, 8);
+    GXSetArray(9, buffer9, 6);
+    GXSetArray(11, buffer11, 4);
+    GXSetArray(13, buffer11, 8);
     DCFlushRange(lbl_8064D858[lbl_8064D7D8 ^ 1], 0x86470);
     fn_801ECF50(3);
 
@@ -134,7 +134,7 @@ void fn_801FF9E4(void)
         fn_801ECEC8(1, 3, 0);
         fn_801EDA7C(0, 0, 0xABF, record);
         fn_801ECD74(packed);
-        fn_80226AB4(0x98, 6, current->count);
+        GXBegin(0x98, 6, current->count);
         for (; first < end; first++) {
             fn_801FFCFC(display[first * 2]);
             fn_801FFCF0(display[first * 2 + 1]);
@@ -143,5 +143,5 @@ void fn_801FF9E4(void)
         fn_801FFCE0();
     }
     fn_801ECEC8(1, 3, 1);
-    fn_80226D28(1);
+    GXSetCullMode(1);
 }

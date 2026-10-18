@@ -20,15 +20,15 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8024F2C0[];
-extern int* fn_8016393C(int, int*, int, int, int, void*, unsigned int);
+extern int* luaM_growaux(int, int*, int, int, int, void*, unsigned int);
 
-void fn_8015F8B4(Object* object)
+void codelineinfo(Object* object)
 {
     Root* root = object->root;
     Counter* counter = object->counter;
 
     if (counter->count > object->previous_count) {
-        root->values = fn_8016393C(object->allocator, root->values,
+        root->values = luaM_growaux(object->allocator, root->values,
                                   root->count, 2, 4, lbl_8024F2C0,
                                   0x7FFFFFFD);
         if (counter->count > object->previous_count + 1) {

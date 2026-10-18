@@ -30,7 +30,7 @@ struct DVDFileInfo {
 };
 
 /* Forward completion of a stream preparation to the file callback. */
-void fn_80213A1C(s32 result, DVDCommandBlock *block)
+void cbForPrepareStreamAsync(s32 result, DVDCommandBlock *block)
 {
     DVDFileInfo *fileInfo = (DVDFileInfo *)block;
 

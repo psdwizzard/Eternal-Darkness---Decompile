@@ -10,9 +10,9 @@ typedef struct TransferState {
     u32 transferred;
 } TransferState;
 
-extern u32 fn_8020B9D8(void);
-extern void fn_8020B990(void* destination, void* source, u32 blocks);
-extern void fn_8020B9B4(void* destination, void* source, u32 blocks);
+extern u32 LCQueueLength(void);
+extern void LCLoadBlocks(void* destination, void* source, u32 blocks);
+extern void LCStoreBlocks(void* destination, void* source, u32 blocks);
 
 int fn_80121EC0(TransferState* state, void* buffer)
 {
@@ -22,10 +22,10 @@ int fn_80121EC0(TransferState* state, void* buffer)
         return 1;
     }
 
-    if (fn_8020B9D8() < 12) {
+    if (LCQueueLength() < 12) {
         if (state->remaining > 0x1000) {
-            fn_8020B990(buffer, state->source, 0);
-            fn_8020B9B4(state->destination, buffer, 0);
+            LCLoadBlocks(buffer, state->source, 0);
+            LCStoreBlocks(state->destination, buffer, 0);
             state->destination = (char*)state->destination + 0x1000;
             state->source = (char*)state->source + 0x1000;
             state->remaining -= 0x1000;
@@ -33,8 +33,8 @@ int fn_80121EC0(TransferState* state, void* buffer)
             state->count--;
         } else {
             blocks = state->remaining >> 5;
-            fn_8020B990(buffer, state->source, blocks);
-            fn_8020B9B4(state->destination, buffer, blocks);
+            LCLoadBlocks(buffer, state->source, blocks);
+            LCStoreBlocks(state->destination, buffer, blocks);
             state->transferred += blocks << 5;
             state->remaining = 0;
             state->count = 0;

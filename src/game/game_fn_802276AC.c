@@ -1,4 +1,4 @@
-/* fn_802276AC: GXCopyDisp (Dolphin SDK GXFrameBuf.c).
+/* GXCopyTex: GXCopyDisp (Dolphin SDK GXFrameBuf.c).
  * Copies the EFB to the external frame buffer at dest, optionally clearing
  * the EFB, temporarily forcing the PE control/z-mode registers as needed. */
 
@@ -42,7 +42,7 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_802276AC(void *dest, u8 clear) {
+void GXCopyTex(void *dest, u8 clear) {
     u32 reg;
     u32 tempPeCtrl;
     u32 phyAddr;

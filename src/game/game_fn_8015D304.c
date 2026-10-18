@@ -21,8 +21,8 @@ typedef struct WorkerState {
 #pragma use_lmw_stmw on
 
 extern Request* fn_801587C4(void);
-extern int fn_8020D318(void*, void**, int);
-extern void fn_8020D250(void*, void*, int);
+extern int OSReceiveMessage(void*, void**, int);
+extern void OSSendMessage(void*, void*, int);
 extern void fn_80158850(void*);
 
 u32 fn_8015D304(void* owner, WorkerState* state)
@@ -38,21 +38,21 @@ u32 fn_8015D304(void* owner, WorkerState* state)
     request->field10 = 0;
     request->reply_queue = state->reply_queue;
 
-    while (fn_8020D318(request->reply_queue, &message, 0)) {
+    while (OSReceiveMessage(request->reply_queue, &message, 0)) {
         if (message != 0 && (int)message != 0x2A) {
             fn_80158850(message);
         }
     }
-    while (fn_8020D318(state->queue0, &message, 0)) {
+    while (OSReceiveMessage(state->queue0, &message, 0)) {
         if (message != 0 && (int)message != 0x2A) {
             fn_80158850(message);
         }
     }
-    while (fn_8020D318(state->queue1, &message, 0)) {
+    while (OSReceiveMessage(state->queue1, &message, 0)) {
     }
 
-    fn_8020D250(state->input_queue, request, 1);
-    fn_8020D318(state->reply_queue, &message, 1);
+    OSSendMessage(state->input_queue, request, 1);
+    OSReceiveMessage(state->reply_queue, &message, 1);
     result = ((Request*)message)->result;
     fn_80158850(message);
     return result;

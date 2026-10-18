@@ -3,11 +3,11 @@ typedef struct Value {
     char payload[12];
 } Value;
 
-extern Value* fn_8016A55C(void*, int);
+extern Value* luaA_indexAcceptable(void*, int);
 
-int fn_8016A5F4(void* context, int index)
+int lua_type(void* context, int index)
 {
-    Value* value = fn_8016A55C(context, index);
+    Value* value = luaA_indexAcceptable(context, index);
     if (value == 0) {
         return -1;
     }

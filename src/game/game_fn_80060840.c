@@ -9,8 +9,8 @@ typedef enum Result {
 } Result;
 extern int fn_80200C38();
 extern u16 fn_801A7434(void *);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 Result fn_80060840(void *owner, s32 *special)
 {
@@ -31,8 +31,8 @@ Result fn_80060840(void *owner, s32 *special)
         *special = 1;
         break;
     default:
-        result = (u32)fn_800FBFB0() % 2 ? ResultFour :
-                 ((u32)fn_800FBFB0() % 2 ? ResultFive : ResultSix);
+        result = (u32)rand() % 2 ? ResultFour :
+                 ((u32)rand() % 2 ? ResultFive : ResultSix);
         break;
     }
 

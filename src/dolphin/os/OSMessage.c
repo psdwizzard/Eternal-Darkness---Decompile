@@ -19,10 +19,10 @@ typedef struct OSMessageQueue {
 extern void OSInitThreadQueue(OSThreadQueue*);
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL);
-extern void fn_80210004(OSThreadQueue*);
-extern void fn_802100F0(OSThreadQueue*);
+extern void OSSleepThread(OSThreadQueue*);
+extern void OSWakeupThread(OSThreadQueue*);
 
-void fn_8020D1F0(OSMessageQueue* mq, OSMessage* msgArray, s32 msgCount)
+void OSInitMessageQueue(OSMessageQueue* mq, OSMessage* msgArray, s32 msgCount)
 {
     OSInitThreadQueue(&mq->queueSend);
     OSInitThreadQueue(&mq->queueReceive);
@@ -32,7 +32,7 @@ void fn_8020D1F0(OSMessageQueue* mq, OSMessage* msgArray, s32 msgCount)
     mq->usedCount = 0;
 }
 
-BOOL fn_8020D250(OSMessageQueue* mq, OSMessage msg, s32 flags)
+BOOL OSSendMessage(OSMessageQueue* mq, OSMessage msg, s32 flags)
 {
     BOOL enabled = OSDisableInterrupts();
 
@@ -41,17 +41,17 @@ BOOL fn_8020D250(OSMessageQueue* mq, OSMessage msg, s32 flags)
             OSRestoreInterrupts(enabled);
             return 0;
         }
-        fn_80210004(&mq->queueSend);
+        OSSleepThread(&mq->queueSend);
     }
 
     mq->msgArray[(mq->firstIndex + mq->usedCount) % mq->msgCount] = msg;
     mq->usedCount++;
-    fn_802100F0(&mq->queueReceive);
+    OSWakeupThread(&mq->queueReceive);
     OSRestoreInterrupts(enabled);
     return 1;
 }
 
-BOOL fn_8020D318(OSMessageQueue* mq, OSMessage* msg, s32 flags)
+BOOL OSReceiveMessage(OSMessageQueue* mq, OSMessage* msg, s32 flags)
 {
     BOOL enabled = OSDisableInterrupts();
 
@@ -60,7 +60,7 @@ BOOL fn_8020D318(OSMessageQueue* mq, OSMessage* msg, s32 flags)
             OSRestoreInterrupts(enabled);
             return 0;
         }
-        fn_80210004(&mq->queueReceive);
+        OSSleepThread(&mq->queueReceive);
     }
 
     if (msg != 0) {
@@ -68,12 +68,12 @@ BOOL fn_8020D318(OSMessageQueue* mq, OSMessage* msg, s32 flags)
     }
     mq->firstIndex = (mq->firstIndex + 1) % mq->msgCount;
     mq->usedCount--;
-    fn_802100F0(&mq->queueSend);
+    OSWakeupThread(&mq->queueSend);
     OSRestoreInterrupts(enabled);
     return 1;
 }
 
-BOOL fn_8020D3F4(OSMessageQueue* mq, OSMessage msg, s32 flags)
+BOOL OSJamMessage(OSMessageQueue* mq, OSMessage msg, s32 flags)
 {
     BOOL enabled = OSDisableInterrupts();
 
@@ -82,13 +82,13 @@ BOOL fn_8020D3F4(OSMessageQueue* mq, OSMessage msg, s32 flags)
             OSRestoreInterrupts(enabled);
             return 0;
         }
-        fn_80210004(&mq->queueSend);
+        OSSleepThread(&mq->queueSend);
     }
 
     mq->firstIndex = (mq->firstIndex + mq->msgCount - 1) % mq->msgCount;
     mq->msgArray[mq->firstIndex] = msg;
     mq->usedCount++;
-    fn_802100F0(&mq->queueReceive);
+    OSWakeupThread(&mq->queueReceive);
     OSRestoreInterrupts(enabled);
     return 1;
 }

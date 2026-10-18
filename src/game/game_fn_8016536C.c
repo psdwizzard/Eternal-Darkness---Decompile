@@ -17,32 +17,32 @@ typedef struct Parser {
 
 extern char lbl_8024F924[];
 extern char lbl_8024F940[];
-extern int fn_8015F9B0(OutputData**, int, int);
-extern void fn_80163E94(Parser*, int);
-extern void fn_801652B4(Parser*, ParseResult*);
-extern int fn_80163F00(Parser*, int);
-extern void fn_80163ED4(Parser*, int, char*);
-extern void fn_80163F38(Parser*, int, int, void*);
-extern void fn_8016203C(Parser*, int, int, char*);
+extern int luaK_code1(OutputData**, int, int);
+extern void check(Parser*, int);
+extern void constructor_part(Parser*, ParseResult*);
+extern int optional(Parser*, int);
+extern void check_condition(Parser*, int, char*);
+extern void check_match(Parser*, int, int, void*);
+extern void luaX_checklimit(Parser*, int, int, char*);
 
-void fn_8016536C(Parser* parser)
+void constructor(Parser* parser)
 {
     OutputData** output = parser->output;
     void* context = parser->context;
-    int index = fn_8015F9B0(output, 0x11, 0);
+    int index = luaK_code1(output, 0x11, 0);
     ParseResult first;
     ParseResult second;
     int count;
 
-    fn_80163E94(parser, 0x7B);
-    fn_801652B4(parser, &first);
+    check(parser, 0x7B);
+    constructor_part(parser, &first);
     count = first.value;
-    if (fn_80163F00(parser, 0x3B)) {
-        fn_801652B4(parser, &second);
-        fn_80163ED4(parser, first.kind != second.kind, lbl_8024F924);
+    if (optional(parser, 0x3B)) {
+        constructor_part(parser, &second);
+        check_condition(parser, first.kind != second.kind, lbl_8024F924);
         count += second.value;
     }
-    fn_80163F38(parser, 0x7D, 0x7B, context);
-    fn_8016203C(parser, count, 0x3FFFFFF, lbl_8024F940);
+    check_match(parser, 0x7D, 0x7B, context);
+    luaX_checklimit(parser, count, 0x3FFFFFF, lbl_8024F940);
     (*output)->words[index] = ((*output)->words[index] & 0x3F) | (count << 6);
 }

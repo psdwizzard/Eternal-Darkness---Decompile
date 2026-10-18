@@ -6,9 +6,9 @@ extern void fn_8011F114(Vec3*, int);
 extern unsigned int fn_80179004(Vec3*, unsigned int*);
 extern void fn_801A7610(int, unsigned int*, float, float, int, int, int);
 extern void fn_801A76F4(unsigned int*, int);
-extern void fn_80211A48(unsigned int*, Vec3*, unsigned int*);
-extern void fn_80211A90(Vec3*, Vec3*, float);
-extern void fn_80211AAC(Vec3*, Vec3*);
+extern void PSVECAdd(unsigned int*, Vec3*, unsigned int*);
+extern void PSVECScale(Vec3*, Vec3*, float);
+extern void PSVECNormalize(Vec3*, Vec3*);
 extern float lbl_8064E25C;
 void fn_8003B0BC(void* object, Vec3* normal_out, Vec3* position_out, int context, int transform, int use_transform) {
     QueryResult result;
@@ -32,9 +32,9 @@ void fn_8003B0BC(void* object, Vec3* normal_out, Vec3* position_out, int context
                 normal.x = *(float*)&result.normal[0];
                 normal.y = *(float*)&result.normal[1];
                 normal.z = *(float*)&result.normal[2];
-                fn_80211AAC(&direction, &direction);
-                fn_80211A90(&direction, &direction, (float)id);
-                fn_80211A48((unsigned int*)&normal, &direction, (unsigned int*)&normal);
+                PSVECNormalize(&direction, &direction);
+                PSVECScale(&direction, &direction, (float)id);
+                PSVECAdd((unsigned int*)&normal, &direction, (unsigned int*)&normal);
             } else {
                 normal.x = *(float*)&result.normal[0];
                 normal.y = *(float*)&result.normal[1];

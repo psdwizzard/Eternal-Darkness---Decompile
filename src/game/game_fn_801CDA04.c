@@ -1,6 +1,6 @@
-extern void fn_8021AB5C(void);
+extern void ARGetBaseAddress(void);
 
-void fn_801CDA04(void)
+void aramGetZeroBuffer(void)
 {
-    fn_8021AB5C();
+    ARGetBaseAddress();
 }

@@ -35,8 +35,8 @@ extern void fn_801ED3F4(void*);
 extern void fn_801A8EDC(void*);
 extern void fn_801A852C(Color*, int, void*, u32);
 extern void fn_801ECD74(Color*);
-extern void fn_80226AB4(int, int, int);
-extern int fn_800FBFD0(char*, char*, ...);
+extern void GXBegin(int, int, int);
+extern int sscanf(char*, char*, ...);
 extern void fn_801E7DCC(char*, ...);
 
 /* NonMatching: complete retail-backed control-sequence reconstruction. */
@@ -82,7 +82,7 @@ char* fn_801E3B08(char* text)
             glyph_color = lbl_8064D594;
             fn_801A852C(&glyph_color, 0, (void*)1, 0x80000000);
             lbl_8064C320 = -1;
-            fn_80226AB4(0x80, 5, 4);
+            GXBegin(0x80, 5, 4);
             short_size = (s16)glyph_scale;
             fn_801E4198(lbl_8064D574, lbl_8064D578 + short_size, -1);
             glyph = (value & 0x3fff) << 2;
@@ -208,7 +208,7 @@ char* fn_801E3B08(char* text)
     case 's': {
         consumed = 0;
         text++;
-        if (fn_800FBFD0(text, &lbl_8064C324, &scale, &consumed) > 0) {
+        if (sscanf(text, &lbl_8064C324, &scale, &consumed) > 0) {
             if (scale < lbl_80651264) lbl_8064C314 = scale;
             else fn_801E7DCC((char*)diagnostics - 0x1214, (double)scale);
         }

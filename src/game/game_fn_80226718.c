@@ -4,7 +4,7 @@ typedef int s32;
 
 extern volatile u16 *__peReg;
 
-void fn_80226718(s32 mode, u32 srcFactor, u32 dstFactor, u32 operation)
+void GXPokeBlendMode(s32 mode, u32 srcFactor, u32 dstFactor, u32 operation)
 {
     volatile u16 *blendReg = &__peReg[1];
     u32 value = *blendReg;

@@ -27,7 +27,7 @@ extern u8 lbl_80606328[];
 extern void* memset(void*, int, unsigned int);
 extern void fn_801804AC(void*, ShortCoord3*, ShortCoord3*, SixBytes*);
 extern void fn_80180554(void*, ShortCoord3*, ShortCoord3*, SixBytes*, u16, int);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_801805E0(void*, int, u8, u32, u32*, float);
 extern void fn_80180518(void*, u32, int);
 extern void fn_8018CB70(void*, u8, u16);
@@ -70,7 +70,7 @@ void fn_801A1C78(u8* object, ShortCoord3* first, ShortCoord3* second,
         fn_80180554(entry, &position, second, &setup, *(u16*)(config + 8), 0);
         random_value = config[1];
         fn_801805E0(entry + 0x20, 4,
-                    random_value - ((random_value - 1) & fn_800FBFB0()) + 4,
+                    random_value - ((random_value - 1) & rand()) + 4,
                     (i & 0x3F) * 4,
                     lbl_80607440, lbl_80650D10);
         fn_80180518(object + 0x24, i, 1);

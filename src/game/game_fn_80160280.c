@@ -17,28 +17,28 @@ typedef struct Root {
     char** items;
 } Root;
 
-extern Entry* fn_8015FEB8(List*, int, Entry*);
-extern int fn_8015FE80(Entry*);
-extern int fn_8015FFE8(Entry*);
-extern unsigned int fn_801600AC(Root*, int, int);
-extern char* fn_801613C8(Root*, int, int);
+extern Entry* aux_stackedfunction(List*, int, Entry*);
+extern int isLmark(Entry*);
+extern int currentpc(Entry*);
+extern unsigned int luaG_symbexec(Root*, int, int);
+extern char* luaF_getlocalname(Root*, int, int);
 extern char lbl_8064BA40;
 extern char lbl_8064BA48;
 extern char lbl_8064BA50;
 
-char* fn_80160280(List* list, Entry* position, char** output)
+char* getobjname(List* list, Entry* position, char** output)
 {
-    Entry* entry = fn_8015FEB8(list, 0, position);
+    Entry* entry = aux_stackedfunction(list, 0, position);
     Root* root;
     int ordinal;
     unsigned int token;
 
-    if (!fn_8015FE80(entry))
+    if (!isLmark(entry))
         return 0;
 
     root = (Root*)((Link1*)entry->child)->link->root;
-    ordinal = fn_8015FFE8(entry);
-    token = fn_801600AC(root, ordinal, (position - (entry + 1)));
+    ordinal = currentpc(entry);
+    token = luaG_symbexec(root, ordinal, (position - (entry + 1)));
 
     switch (token & 0x3f) {
     case 12:
@@ -46,7 +46,7 @@ char* fn_80160280(List* list, Entry* position, char** output)
                            ((token >> 4) & 0x0ffffffc)) + 0x14;
         return &lbl_8064BA40;
     case 11:
-        *output = fn_801613C8(root, (token >> 6) + 1, ordinal);
+        *output = luaF_getlocalname(root, (token >> 6) + 1, ordinal);
         return &lbl_8064BA48;
     case 14:
     case 16:

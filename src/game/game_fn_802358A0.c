@@ -14,8 +14,8 @@ typedef struct StaticCodebook {
 } StaticCodebook;
 
 extern void *fn_8022F780(s32 size);           /* _ogg_malloc */
-extern double fn_80101C30(double value, int n); /* ldexp */
-extern s32 fn_80235B10(StaticCodebook *b);     /* _book_maptype1_quantvals */
+extern double ldexp(double value, int n); /* ldexp */
+extern s32 _book_maptype1_quantvals(StaticCodebook *b);     /* _book_maptype1_quantvals */
 
 #define VQ_FMAN 21
 #define VQ_FEXP_BIAS 768
@@ -28,11 +28,11 @@ static float _float32_unpack(s32 val)
     if (sign) {
         mant = -mant;
     }
-    return fn_80101C30(mant, exp - (VQ_FMAN - 1) - VQ_FEXP_BIAS);
+    return ldexp(mant, exp - (VQ_FMAN - 1) - VQ_FEXP_BIAS);
 }
 
 /* _book_unquantize */
-float *fn_802358A0(StaticCodebook *b)
+float *_book_unquantize(StaticCodebook *b)
 {
     s32 j, k;
 
@@ -44,7 +44,7 @@ float *fn_802358A0(StaticCodebook *b)
 
         switch (b->maptype) {
         case 1:
-            quantvals = fn_80235B10(b);
+            quantvals = _book_maptype1_quantvals(b);
             for (j = 0; j < b->entries; j++) {
                 float last = 0.0f;
                 s32 indexdiv = 1;

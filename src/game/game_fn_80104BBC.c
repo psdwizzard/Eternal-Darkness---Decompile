@@ -21,7 +21,7 @@ typedef int s32;
     (d)[3] = ((a)[3] + (a)[4] + (b)[3] + (b)[4] + 2) >> 2
 
 /* 4x4 block copy with optional half-pel interpolation in x and/or y. */
-void fn_80104BBC(u8 *dst, s32 dstStride, u8 *src, s32 srcStride, s32 halfX, s32 halfY) {
+void _MotionComp(u8 *dst, s32 dstStride, u8 *src, s32 srcStride, s32 halfX, s32 halfY) {
     u8 *s;
     u8 *s2;
 

@@ -6,7 +6,7 @@ typedef struct StringWriteState {
     unsigned long used;
 } StringWriteState;
 
-int fn_800FA0B0(StringWriteState* state, const char* source, unsigned long count)
+int __StringWrite(StringWriteState* state, const char* source, unsigned long count)
 {
     unsigned long written = state->limit - state->used;
     if (state->used + count <= state->limit) {

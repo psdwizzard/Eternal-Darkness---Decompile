@@ -15,15 +15,15 @@ typedef struct Request {
 
 extern GlobalState lbl_8064A580;
 extern u32 lbl_8064D20C;
-extern int fn_80221394(u8, int);
-extern u32 fn_8021EB20(u8);
+extern int CARDFormatAsync(u8, int);
+extern u32 CARDGetXferredBytes(u8);
 
 void fn_8017C32C(Request* request)
 {
     if (lbl_8064A580.states[request->value] != 0) {
-        request->result = fn_80221394(request->value, 0);
+        request->result = CARDFormatAsync(request->value, 0);
         if (request->result >= 0) {
-            (&lbl_8064D20C)[request->value] = fn_8021EB20(request->value);
+            (&lbl_8064D20C)[request->value] = CARDGetXferredBytes(request->value);
             request->state = 1;
         }
     } else {

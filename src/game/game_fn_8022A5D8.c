@@ -17,7 +17,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022A5D8(int type, int srcFactor, int dstFactor, int logicOp)
+void GXSetBlendMode(int type, int srcFactor, int dstFactor, int logicOp)
 {
     SET_FIELD(gx->blendMode, 1, 0, type == 1 || type == 3);
     SET_FIELD(gx->blendMode, 1, 11, type == 3);

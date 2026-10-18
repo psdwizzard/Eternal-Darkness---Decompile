@@ -6,7 +6,7 @@ typedef struct Voice {
     u32* current;
 } Voice;
 
-u32 fn_801C13C0(Voice* voice)
+u32 vidMakeRoot(Voice* voice)
 {
     voice->current = voice->link;
     return voice->link[2];

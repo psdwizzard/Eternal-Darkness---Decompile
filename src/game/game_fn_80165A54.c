@@ -7,11 +7,11 @@ typedef struct Parser {
 
 typedef struct Entry Entry;
 
-extern int fn_80165870(Parser*, Entry*);
-extern void fn_8015F414(State*, Entry*, int);
+extern int expr(Parser*, Entry*);
+extern void luaK_goiftrue(State*, Entry*, int);
 
-void fn_80165A54(Parser* parser, Entry* entry)
+void cond(Parser* parser, Entry* entry)
 {
-    fn_80165870(parser, entry);
-    fn_8015F414(parser->state, entry, 0);
+    expr(parser, entry);
+    luaK_goiftrue(parser->state, entry, 0);
 }

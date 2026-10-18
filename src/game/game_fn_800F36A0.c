@@ -1,4 +1,4 @@
-asm unsigned int fn_800F36A0(void)
+asm unsigned int __TRK_get_MSR(void)
 {
     nofralloc
     mfmsr r3

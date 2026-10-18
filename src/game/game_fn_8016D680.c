@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void fn_80201138(int, void*, int, int, int, float);
 extern const char lbl_8024FF00[];
@@ -14,16 +14,16 @@ int fn_8016D680(void* state)
     float z;
     int c;
 
-    if (fn_8016A598(state) != 6) {
-        fn_80163BB4(state, lbl_8024FF00, 6, fn_8016A598(state));
+    if (lua_gettop(state) != 6) {
+        luaO_verror(state, lbl_8024FF00, 6, lua_gettop(state));
         return 0;
     }
-    x = (int)fn_8016A694(state, 1);
-    y = (int)fn_8016A694(state, 2);
-    z = (float)fn_8016A694(state, 3);
-    a = (int)fn_8016A694(state, 4);
-    b = (int)fn_8016A694(state, 5);
-    c = (int)fn_8016A694(state, 6);
+    x = (int)lua_tonumber(state, 1);
+    y = (int)lua_tonumber(state, 2);
+    z = (float)lua_tonumber(state, 3);
+    a = (int)lua_tonumber(state, 4);
+    b = (int)lua_tonumber(state, 5);
+    c = (int)lua_tonumber(state, 6);
     if (x != 0) {
         void* object = fn_80201814(x);
         if (object != 0) {

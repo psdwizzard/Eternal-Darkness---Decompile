@@ -17,8 +17,8 @@ extern int fn_80180430(void*, u8);
 extern void fn_80181808(void*, int, int);
 extern void fn_8018168C(void*, void*, s16, u16);
 extern void fn_8018A574(void*, void*, void*, s16*);
-extern void fn_80211A48(void*, void*, void*);
-extern void fn_80211380(void*, void*, float);
+extern void PSVECAdd(void*, void*, void*);
+extern void PSMTXRotAxisRad(void*, void*, float);
 extern void DCFlushRange(void*, unsigned int);
 extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16);
@@ -97,7 +97,7 @@ void fn_8018D998(u8* object)
     }
 
     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);
-    fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);
+    PSVECAdd(transform + 0x60, transform + 0x6C, transform + 0x60);
     {
         float value = *(float*)(transform + 0x68);
         if (value < lbl_80650A68) {
@@ -112,7 +112,7 @@ void fn_8018D998(u8* object)
         if (value < lbl_80650A68) {
             value = -value;
         }
-        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);
+        PSMTXRotAxisRad(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);
     }
     DCFlushRange(vertex_data, vertex_size);
     DCFlushRange(index_data, index_size);

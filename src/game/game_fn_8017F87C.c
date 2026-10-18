@@ -19,7 +19,7 @@ extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, unsigned int);
 extern void* memcpy(void*, const void*, unsigned int);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_80179904(ShortCoord3*, s16);
 extern void fn_801804AC(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*);
 extern void fn_80180554(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*, u16,
@@ -63,7 +63,7 @@ void fn_8017F87C(u8* object, ShortCoord3* first, ShortCoord3* second,
 
     for (i = 0; (u8)i < count; i++) {
         fn_80180554(entry, &current, &base, &zero,
-                    *(u16*)(config + 8) + (fn_800FBFB0() & 0xF), 1);
+                    *(u16*)(config + 8) + (rand() & 0xF), 1);
         fn_801805E0(entry + 0x20, 4, config[1], (i & 0x3F) * 4,
                     config + 0x1D, lbl_80650938);
         fn_80180518(object + 0x24, i, 1);

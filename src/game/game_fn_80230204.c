@@ -19,10 +19,10 @@ typedef struct Codebook {
 } Codebook;
 
 typedef struct OggPackBuffer OggPackBuffer;
-extern s32 fn_80230718(Codebook *book, OggPackBuffer *b);
+extern s32 vorbis_book_decode(Codebook *book, OggPackBuffer *b);
 
 /* Decode successive codebook vectors into the output buffer. */
-s32 fn_80230204(register Codebook *book, register float *a,
+s32 vorbis_book_decodev_set(register Codebook *book, register float *a,
                 register OggPackBuffer *b, register s32 n)
 {
     register s32 outputOffset;
@@ -48,7 +48,7 @@ s32 fn_80230204(register Codebook *book, register float *a,
             or callBook, book, book
             or callBuffer, b, b
         }
-        entry = fn_80230718(callBook, callBuffer);
+        entry = vorbis_book_decode(callBook, callBuffer);
         if (entry == -1) {
             return -1;
         }

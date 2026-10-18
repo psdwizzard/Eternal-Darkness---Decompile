@@ -93,11 +93,11 @@ extern OwnerData *fn_80201B8C(void *);
 extern void *fn_80201BC8(void *);
 extern void fn_80201D14(void *, u8);
 extern void fn_80201D2C(void *, int);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern float fn_80211B08(Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern float PSVECMag(Vec3 *);
 
 static inline Vec3 get_position(void *resource)
 {
@@ -199,7 +199,7 @@ void fn_800C52B8(void *object)
     model = fn_801A7778(gfx);
     fn_80157C0C(model, &facing);
     facing.z = lbl_8064F110;
-    dist = fn_80211B08(&facing);
+    dist = PSVECMag(&facing);
 
     draw = fn_801A717C();
     fn_801A7324(gfx, draw);
@@ -238,14 +238,14 @@ void fn_800C52B8(void *object)
             height = get_height(resource, &pos);
             angle = -(lbl_8064F1E4 + fn_800490E8(facing.y, facing.x));
             height = height + angle;
-            fn_80211A6C(&pos, &res_pos, &delta);
-            len = fn_80211B08(&delta);
-            fn_80211AAC(&delta, &dir);
-            fn_80211A90(&dir, &step, neg_dist);
-            fn_80211A48(&pos, &step, &dest);
+            PSVECSubtract(&pos, &res_pos, &delta);
+            len = PSVECMag(&delta);
+            PSVECNormalize(&delta, &dir);
+            PSVECScale(&dir, &step, neg_dist);
+            PSVECAdd(&pos, &step, &dest);
             owner_info->target = dest;
             owner_info->yaw = height;
-            fn_80211A90(&dir, &lbl_803251F0,
+            PSVECScale(&dir, &lbl_803251F0,
                         (len - dist) / (float)((frame - (start + 1)) * 2 + 8));
             fn_80128B8C(resource, &lbl_803251F0);
         }

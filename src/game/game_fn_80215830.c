@@ -50,7 +50,7 @@ static inline BOOL issueCommand(s32 prio, DVDCommandBlock *block) {
     return result;
 }
 
-BOOL fn_80215830(DVDCommandBlock *block, DVDCBCallback callback) {
+BOOL DVDCancelStreamAsync(DVDCommandBlock *block, DVDCBCallback callback) {
     BOOL idle;
 
     block->command = 7;

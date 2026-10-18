@@ -11,9 +11,9 @@ extern EXIControl Ecb_80640AA8[3];
 
 extern void __OSMaskInterrupts(u32);
 extern void __OSUnmaskInterrupts(u32);
-extern void *fn_8020C9D8(int);
+extern void *__OSGetInterruptHandler(int);
 
-void fn_80206778(int chan, EXIControl *exi)
+void SetExiInterruptMask(int chan, EXIControl *exi)
 {
     EXIControl *exi2 = &Ecb_80640AA8[2];
 
@@ -34,7 +34,7 @@ void fn_80206778(int chan, EXIControl *exi)
         }
         break;
     case 2:
-        if (fn_8020C9D8(0x19) == 0 || (exi->state & 0x10)) {
+        if (__OSGetInterruptHandler(0x19) == 0 || (exi->state & 0x10)) {
             __OSMaskInterrupts(0x40);
         } else {
             __OSUnmaskInterrupts(0x40);

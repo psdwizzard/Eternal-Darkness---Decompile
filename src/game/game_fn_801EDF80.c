@@ -78,9 +78,9 @@ extern int fn_8015AA20(void);
 extern void fn_8015DB84(void*, void*, u32);
 extern EntryPair* fn_8015DB74(void*, u32);
 extern void fn_8015DC54(void*, void*, void*, u32, u32);
-extern void fn_80228B98(void*, int);
-extern void fn_80228AFC(void*, int);
-extern u16 fn_8022893C(void*);
+extern void GXLoadTlut(void*, int);
+extern void GXLoadTexObj(void*, int);
+extern u16 GXGetTexObjHeight(void*);
 extern void fn_801EB8E8(void*);
 extern void fn_801EDE34(int, int, int, int);
 extern void fn_801EF278(int, int, int, int, int, int);
@@ -298,7 +298,7 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
 
                             fn_8015DC54(lbl_8064D5FC, &material, extra, 1,
                                         CACHED(region)[channel]);
-                            fn_80228B98(extra, 1);
+                            GXLoadTlut(extra, 1);
                         } else {
                             fn_8015DB84(lbl_8064D5FC, &material,
                                         CACHED(region)[channel]);
@@ -311,8 +311,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
                 if (channel == 1 && lbl_8064D650 != 0) {
                     fn_801EB8E8(values);
                 }
-                fn_80228AFC(&material, mode);
-                CHECKSUM(region, channel) = fn_8022893C(&material);
+                GXLoadTexObj(&material, mode);
+                CHECKSUM(region, channel) = GXGetTexObjHeight(&material);
                 lbl_8064D680++;
             } else {
                 lbl_8064D684++;

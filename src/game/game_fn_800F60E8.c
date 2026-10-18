@@ -4,7 +4,7 @@ typedef unsigned int u32;
 typedef long long s64;
 typedef unsigned long long u64;
 
-s64 fn_800F60E8(register u32 ah, register u32 al, register u32 bh, register u32 bl) {
+s64 __mod2i(register u32 ah, register u32 al, register u32 bh, register u32 bl) {
     register u32 rh, rl;
     register u32 tl, th;
     int za, zb;

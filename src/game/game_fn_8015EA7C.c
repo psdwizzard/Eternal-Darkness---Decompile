@@ -3,9 +3,9 @@ typedef struct Object {
     void* value;
 } Object;
 
-extern void fn_80162114(void*, void*, void*);
+extern void luaX_error(void*, void*, void*);
 
-void fn_8015EA7C(Object* object, void* value)
+void luaK_error(Object* object, void* value)
 {
-    fn_80162114(object, value, object->value);
+    luaX_error(object, value, object->value);
 }

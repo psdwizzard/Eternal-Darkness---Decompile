@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_801F348C(void*, int);
 extern const char lbl_8024FF00[];
 
@@ -11,16 +11,16 @@ int fn_80174DB8(void* state)
     } converted, value;
     int parameter;
 
-    if (fn_8016A598(state) != 5) {
-        fn_80163BB4(state, lbl_8024FF00, 5, fn_8016A598(state));
+    if (lua_gettop(state) != 5) {
+        luaO_verror(state, lbl_8024FF00, 5, lua_gettop(state));
         return 0;
     }
 
-    converted.data[0] = fn_8016A694(state, 1);
-    converted.data[1] = fn_8016A694(state, 2);
-    converted.data[2] = fn_8016A694(state, 3);
-    converted.data[3] = fn_8016A694(state, 4);
-    parameter = fn_8016A694(state, 5);
+    converted.data[0] = lua_tonumber(state, 1);
+    converted.data[1] = lua_tonumber(state, 2);
+    converted.data[2] = lua_tonumber(state, 3);
+    converted.data[3] = lua_tonumber(state, 4);
+    parameter = lua_tonumber(state, 5);
     value = converted;
     fn_801F348C(&value, parameter);
     return 0;

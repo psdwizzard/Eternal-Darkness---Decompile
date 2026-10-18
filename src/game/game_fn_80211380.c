@@ -1,8 +1,8 @@
 typedef float Mtx[3][4];
 typedef struct { float x, y, z; } Vec;
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
-extern void fn_80211AAC(const Vec *, Vec *);
+extern float sinf(float);
+extern float cosf(float);
+extern void PSVECNormalize(const Vec *, Vec *);
 extern const float lbl_80651608;
 extern const float lbl_8065160C;
 
@@ -10,7 +10,7 @@ extern const float lbl_8065160C;
  * the axis is normalised into vN, then each row is assembled as paired
  * singles from (x, y) * sin / (1 - cos) products. The (x, y) pair is
  * loaded over rad once rad is no longer needed. */
-void fn_80211380(register Mtx m, const Vec *axis, register float rad)
+void PSMTXRotAxisRad(register Mtx m, const Vec *axis, register float rad)
 {
     Vec vN;
     register float s, c, t;
@@ -18,10 +18,10 @@ void fn_80211380(register Mtx m, const Vec *axis, register float rad)
     register Vec *nAxis = &vN;
     register float cc, z, tmp2, tmp3, tT, tmp5, tmp6, tmp7, tmp8, tmp9;
 
-    s = fn_80048C2C(rad);
-    c = fn_80048C50(rad);
+    s = sinf(rad);
+    c = cosf(rad);
     t = lbl_80651608 - c;
-    fn_80211AAC(axis, nAxis);
+    PSVECNormalize(axis, nAxis);
     /* ASM: psq_l loads (x, y) as one pair; C can only load lane zero. */
     asm {
         psq_l rad, 0(nAxis), 0, 0

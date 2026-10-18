@@ -22,7 +22,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_8022BA20(s32 x_off, s32 y_off)
+void GXSetScissorBoxOffset(s32 x_off, s32 y_off)
 {
     u32 reg = 0;
     u32 hx;

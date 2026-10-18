@@ -49,12 +49,12 @@ typedef struct DisplayList {
 } DisplayList;
 
 extern int fn_80130998(int value, float scale);
-extern void fn_80226D28(int enabled);
+extern void GXSetCullMode(int enabled);
 extern DisplayList* fn_801222A0(void* object, int kind, int mode, int value);
 extern void fn_80122428(Runtime* runtime, DisplayList* list, int kind, int mode, int value);
 extern void fn_801ECF50(int mode);
 extern int fn_80122538(Object* object, Item* item, int object_index);
-extern void fn_8022B448(u32 offset, u32 size);
+extern void GXCallDisplayList(u32 offset, u32 size);
 
 void fn_80122AD4(Object* object, int mode, int filter, float scale)
 {
@@ -68,7 +68,7 @@ void fn_80122AD4(Object* object, int mode, int filter, float scale)
 
     runtime = object->runtime;
     kind = fn_80130998(runtime->kind, scale);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     list = fn_801222A0(runtime, kind, mode, 0);
     if (list->data == 0) {
         fn_80122428(runtime, list, kind, mode, 0);
@@ -85,12 +85,12 @@ void fn_80122AD4(Object* object, int mode, int filter, float scale)
                 (object->slots[entry->object_index].flags & 5) == 5) {
                 result = fn_80122538(object, &runtime->items[entry->index], entry->object_index);
                 if (result == filter) {
-                    fn_8022B448(offset, entry->size);
+                    GXCallDisplayList(offset, entry->size);
                 }
             }
             offset += entry->size;
             entry++;
         }
     }
-    fn_80226D28(1);
+    GXSetCullMode(1);
 }

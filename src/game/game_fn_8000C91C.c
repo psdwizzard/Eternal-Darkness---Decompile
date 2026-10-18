@@ -2,14 +2,14 @@ typedef int s32;
 typedef signed short s16;
 
 extern const char lbl_8023BED8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern int fn_80038308(void *, int, short *);
 extern void fn_80038878(s32, s32, s16);
 extern int fn_800389E0(void*, int, s32, int);
-extern float fn_8010181C(float);
+extern float ceil(float);
 extern void fn_8000C848(s32, s32, float, const char*, s32);
 
 s32 fn_8000C91C(void* script)
@@ -26,20 +26,20 @@ s32 fn_8000C91C(void* script)
     float scale4;
     const char* strings = lbl_8023BED8;
 
-    if (fn_8016A598(object) != 9) {
-        fn_80163BB4(object, strings + 0x20, 9, fn_8016A598(object));
+    if (lua_gettop(object) != 9) {
+        luaO_verror(object, strings + 0x20, 9, lua_gettop(object));
         return 0;
     }
 
-    id = (s32)fn_8016A694(object, 1);
-    mode = (s32)fn_8016A694(object, 2);
-    scale0 = (float)fn_8016A694(object, 3);
-    scale8 = (float)fn_8016A694(object, 4);
-    scale9 = (float)fn_8016A694(object, 5);
-    scale1 = (float)fn_8016A694(object, 6);
-    scale2 = (float)fn_8016A694(object, 7);
-    scale3 = (float)fn_8016A694(object, 8);
-    scale4 = (float)fn_8016A694(object, 9);
+    id = (s32)lua_tonumber(object, 1);
+    mode = (s32)lua_tonumber(object, 2);
+    scale0 = (float)lua_tonumber(object, 3);
+    scale8 = (float)lua_tonumber(object, 4);
+    scale9 = (float)lua_tonumber(object, 5);
+    scale1 = (float)lua_tonumber(object, 6);
+    scale2 = (float)lua_tonumber(object, 7);
+    scale3 = (float)lua_tonumber(object, 8);
+    scale4 = (float)lua_tonumber(object, 9);
     object = fn_80201814(id);
     if (object != 0) {
       switch (mode) {
@@ -47,7 +47,7 @@ s32 fn_8000C91C(void* script)
         s16 value = 0;
 
         fn_80038308(object, 0, &value);
-        value = (s16)fn_8010181C((float)value * scale0);
+        value = (s16)ceil((float)value * scale0);
         fn_80038878(id, 0, value);
         fn_800389E0(object, 0, value, 0);
         fn_8000C848(id, 0, scale8, strings + 0x2B8, 1);

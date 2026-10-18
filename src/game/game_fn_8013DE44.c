@@ -4,8 +4,8 @@ extern float lbl_80650350;
 extern float lbl_8065035C;
 extern float lbl_80650360;
 extern float lbl_80650364;
-extern void fn_80211A6C();
-extern float fn_80211B44(const Vec3*, const Vec3*);
+extern void PSVECSubtract();
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
 extern float fn_800ED720(float);
 
 int fn_8013DE44(const Vec3* a, const Vec3* b, const Vec3* c,
@@ -15,11 +15,11 @@ int fn_8013DE44(const Vec3* a, const Vec3* b, const Vec3* c,
     float projection;
     float discriminant;
 
-    fn_80211A6C(a, c, &delta);
-    projection = fn_80211B44(b, &delta);
+    PSVECSubtract(a, c, &delta);
+    projection = PSVECDotProduct(b, &delta);
     projection = lbl_8065035C * projection;
     discriminant = projection * projection -
-        lbl_80650360 * (fn_80211B44(&delta, &delta) - radius * radius);
+        lbl_80650360 * (PSVECDotProduct(&delta, &delta) - radius * radius);
     if (discriminant >= lbl_80650350) {
         float distance;
 

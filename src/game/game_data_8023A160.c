@@ -1,5 +1,5 @@
 /* Angle-reduction constants and arctangent polynomial coefficients. */
-const volatile double lbl_8023A160[19] = {
+const volatile double atanhi[19] = {
     0.4636476090008061,
     0.7853981633974483,
     0.982793723247329,

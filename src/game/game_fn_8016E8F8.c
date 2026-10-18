@@ -10,15 +10,15 @@ typedef struct ShortVec3 {
     short z;
 } ShortVec3;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern ShortVec3* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern ShortVec3* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void* fn_8012976C(void*, int, unsigned short, Vec3*, float);
 extern void* fn_80129878(void*, int, unsigned short, Vec3*, float);
-extern void fn_8016A970(void*, void*, int);
+extern void lua_pushusertag(void*, void*, int);
 extern const char lbl_8024FF00[];
 extern const double lbl_806506A8;
 extern const float lbl_806506C0;
@@ -34,19 +34,19 @@ int fn_8016E8F8(void* state, int alternate)
     void* object;
     void* result;
 
-    if (fn_8016A598(state) != 5) {
-        fn_80163BB4(state, lbl_8024FF00, 5, fn_8016A598(state));
+    if (lua_gettop(state) != 5) {
+        luaO_verror(state, lbl_8024FF00, 5, lua_gettop(state));
         return 0;
     }
 
-    id = (int)fn_8016A694(state, 1);
-    value = (int)fn_8016A694(state, 2);
-    kind = (unsigned short)(int)fn_8016A694(state, 3);
-    source = fn_8016A784(state, 4);
+    id = (int)lua_tonumber(state, 1);
+    value = (int)lua_tonumber(state, 2);
+    kind = (unsigned short)(int)lua_tonumber(state, 3);
+    source = lua_touserdata(state, 4);
     position.x = source->x;
     position.y = source->y;
     position.z = source->z;
-    scale = (float)fn_8016A694(state, 5);
+    scale = (float)lua_tonumber(state, 5);
     scale *= lbl_806506C0;
 
     if (id == 162) {
@@ -60,6 +60,6 @@ int fn_8016E8F8(void* state, int alternate)
     } else {
         result = object != 0 ? fn_8012976C(object, value, kind, &position, scale) : 0;
     }
-    fn_8016A970(state, result, 0);
+    lua_pushusertag(state, result, 0);
     return 1;
 }

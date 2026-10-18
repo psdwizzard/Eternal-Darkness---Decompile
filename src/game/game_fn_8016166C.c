@@ -13,9 +13,9 @@ typedef struct Collection {
 
 #pragma use_lmw_stmw on
 
-extern void fn_8016160C(void*, Node*);
+extern void markclosure(void*, Node*);
 
-void fn_8016166C(Collection* collection, void* list)
+void marktagmethods(Collection* collection, void* list)
 {
     int column;
     int row;
@@ -24,7 +24,7 @@ void fn_8016166C(Collection* collection, void* list)
         for (row = 0; row <= collection->last_row; row++) {
             Node* node = collection->rows[row].nodes[column];
             if (node != 0)
-                fn_8016160C(list, node);
+                markclosure(list, node);
         }
     }
 }

@@ -26,8 +26,8 @@ extern void *lbl_8064C4E4;
 extern void fn_8013F3C0(Segment *, const Vec3 *, const Vec3 *, float);
 extern unsigned int fn_8013638C(Segment *, Vec3 *, void *, Collision *, float *,
                                 float);
-extern void fn_80211A90(const Vec3 *, Vec3 *, float);
-extern void fn_80211A48(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, float);
+extern void PSVECAdd(const Vec3 *, const Vec3 *, Vec3 *);
 extern void *fn_8015C348(int);
 extern unsigned int fn_8013F898(void *, Segment *, Hit *);
 
@@ -46,8 +46,8 @@ void fn_80080A38(Vec3 *result, const Vec3 *start, Vec3 *end,
     if (shorten) {
         if (fn_8013638C(&segment, &segment.end, lbl_8064C4E4,
                         &collision, &fraction, lbl_8064EA78)) {
-            fn_80211A90(&segment.direction, &scaled, fraction);
-            fn_80211A48(&segment.start, &scaled, &segment.end);
+            PSVECScale(&segment.direction, &scaled, fraction);
+            PSVECAdd(&segment.start, &scaled, &segment.end);
             fn_8013F3C0(&segment, &segment.start, &segment.end,
                         segment.width);
             {

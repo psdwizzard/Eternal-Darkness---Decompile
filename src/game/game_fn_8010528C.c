@@ -28,10 +28,10 @@ typedef struct FrameContext {
     PlaneCursor planes[3];
 } FrameContext;
 
-extern void fn_80104BBC(int destination, u16 width, int reference,
+extern void _MotionComp(int destination, u16 width, int reference,
                         u16 reference_width, int x_half, int y_half);
 
-void fn_8010528C(Decoder *decoder, FrameContext *context, int x, int y)
+void MotionComp(Decoder *decoder, FrameContext *context, int x, int y)
 {
     PlaneCursor *cursor;
     MotionPlane *source;
@@ -66,7 +66,7 @@ void fn_8010528C(Decoder *decoder, FrameContext *context, int x, int y)
             reference_block = reference + offset_value;
             destination_block = cursor->destination + offset_value;
             offset++;
-            fn_80104BBC(destination_block, width, reference_block, width,
+            _MotionComp(destination_block, width, reference_block, width,
                         x_half, y_half);
             block++;
         }

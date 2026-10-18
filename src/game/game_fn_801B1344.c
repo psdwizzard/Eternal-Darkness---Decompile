@@ -1,17 +1,17 @@
 typedef unsigned char u8;
 
-extern int lbl_8064D330;
-extern void* lbl_8064D348;
-extern u8 lbl_8060BF90[];
+extern int __DTKInterruptFrequency;
+extern void* __DTKCurrentTrack;
+extern u8 __block_for_ais_isr[];
 
-extern void fn_801B1204(int);
-extern void fn_8021A19C(int);
-extern void fn_80215A64(void*, void (*)(int));
+extern void __DTKCallbackForPlaylist(int);
+extern void AISetStreamTrigger(int);
+extern void DVDGetStreamPlayAddrAsync(void*, void (*)(int));
 
-void fn_801B1344(int value)
+void __DTKCallbackForAIInterrupt(int value)
 {
-    fn_8021A19C(value + lbl_8064D330);
-    if (lbl_8064D348 != 0) {
-        fn_80215A64(lbl_8060BF90, fn_801B1204);
+    AISetStreamTrigger(value + __DTKInterruptFrequency);
+    if (__DTKCurrentTrack != 0) {
+        DVDGetStreamPlayAddrAsync(__block_for_ais_isr, __DTKCallbackForPlaylist);
     }
 }

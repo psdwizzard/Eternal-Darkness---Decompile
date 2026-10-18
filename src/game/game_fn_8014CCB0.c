@@ -38,7 +38,7 @@ extern void* lbl_8064C4E0;
 extern int lbl_802FC5BC[];
 
 extern void fn_8012B690(void*, Vec3*, Vec3*);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8017EA58(u8*);
 extern int fn_801E79FC(void*, int);
 extern void* fn_80148008(Vec3*, Vec3s*, u8*, void (*)(void));
@@ -61,8 +61,8 @@ void fn_8014CCB0(void* context, int* source, unsigned int packed)
 
     if (!(lbl_8064CF04 >= lbl_806504F8)) {
         fn_8012B690(context, &basis, &position);
-        range.x = 8 - (fn_800FBFB0() & 0xF);
-        range.y = 8 - (fn_800FBFB0() & 0xF);
+        range.x = 8 - (rand() & 0xF);
+        range.y = 8 - (rand() & 0xF);
         range.z = 8;
         fn_8017EA58(work.bytes);
         work.first.source = *source;

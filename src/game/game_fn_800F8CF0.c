@@ -1,9 +1,9 @@
-extern unsigned char lbl_8024AC90[];
+extern unsigned char __lower_map[];
 
-int fn_800F8CF0(int c)
+int tolower(int c)
 {
     if (c == -1) {
         return -1;
     }
-    return lbl_8024AC90[(unsigned char)c];
+    return __lower_map[(unsigned char)c];
 }

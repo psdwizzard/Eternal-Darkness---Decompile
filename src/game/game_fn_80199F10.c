@@ -17,7 +17,7 @@ extern void* memset(void*, int, unsigned long);
 extern void* memcpy(void*, const void*, unsigned long);
 extern void fn_8018F014(void*, u16);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_801805E0(void*, int, u8, u8, void*, float);
 extern void fn_8018E230(void*, void*, int, int, u8, int);
 extern void fn_80180518(void*, u8, int);
@@ -67,7 +67,7 @@ void fn_80199F10(u8* object, void* owner, void* source, u8* config)
         memcpy(packet, config + 0x20, 6);
         fn_8018F014(packet, *(u16*)(config + 0x1e));
         fn_80180554(entry, packet, source, &point, 0, 0);
-        adjusted = config[1] - (limit & fn_800FBFB0());
+        adjusted = config[1] - (limit & rand());
         fn_801805E0(entry + 0x20, 4, adjusted, index << 2, &seed, lbl_80650BCC);
         fn_8018E230(entry, entry + 0x2b, 1, 0, object[4], 0xcc);
         fn_80180518(object + 0x24, index, 1);

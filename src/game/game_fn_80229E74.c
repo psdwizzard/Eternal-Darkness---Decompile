@@ -14,7 +14,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80229E74(int stage, int selection)
+void GXSetTevKColorSel(int stage, int selection)
 {
     u32 *reg = &gx->tevKSel[stage >> 1];
 

@@ -7,12 +7,12 @@ typedef struct Stream {
     u8 pad[12];
 } Stream;
 
-extern s32 fn_80104044(void *ctx, s32 *out, u8 mode,
+extern s32 GetAotSum(void *ctx, s32 *out, u8 mode,
                       u8 *table, s32 stride, s32 index);
-extern u8 lbl_8032CC08[];
+extern u8 clipTable[];
 
 /* Decode a 4-by-4 block from a raw stream or weighted coefficients. */
-void fn_80104524(register u8 *ctx, u8 *dst, s32 stride, u8 dc,
+void IntraAotBlock(register u8 *ctx, u8 *dst, s32 stride, u8 dc,
                  register u8 mode, s32 index)
 {
     /* Preserve the coefficient buffer's original stack offset. */
@@ -20,7 +20,7 @@ void fn_80104524(register u8 *ctx, u8 *dst, s32 stride, u8 dc,
         u8 padding[0x14];
         s32 coef[16];
     } work;
-    u8 *clamp = lbl_8032CC08;
+    u8 *clamp = clipTable;
     u8 shift;
     s32 bias;
     register u8 callMode;
@@ -69,7 +69,7 @@ void fn_80104524(register u8 *ctx, u8 *dst, s32 stride, u8 dc,
     /* ASM: addi retains the retail argument-copy encoding; C uses mr. */
     asm { addi callMode, mode, 0 }
     bias = ((dc + 0x80) << shift) -
-        fn_80104044(ctx, work.coef, callMode, ctx + 0x3261,
+        GetAotSum(ctx, work.coef, callMode, ctx + 0x3261,
                     *(u16 *)(ctx + 0x325C), index);
     dst[0] = clamp[(work.coef[0] + bias) >> shift];
     dst[1] = clamp[(work.coef[1] + bias) >> shift];

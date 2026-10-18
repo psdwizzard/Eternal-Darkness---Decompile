@@ -33,7 +33,7 @@ extern Entry lbl_80331098[];
 extern void fn_8012CEA4(void *, int, Vec4 *);
 extern void fn_80179F48(const Vec4 *, Vec4 *);
 extern void fn_8017A34C(const Vec4 *, const Vec4 *, Vec4 *);
-extern void fn_80211E1C(Vec4 *, Vec4 *);
+extern void PSQUATNormalize(Vec4 *, Vec4 *);
 extern void fn_8012CDF0(void *, int, FourWords, int);
 
 void fn_8010C220(int index, int axis, float angle)
@@ -69,7 +69,7 @@ void fn_8010C220(int index, int axis, float angle)
     }
 
     fn_8017A34C(&spin, &current, &combined.vector);
-    fn_80211E1C(&combined.vector, &combined.vector);
+    PSQUATNormalize(&combined.vector, &combined.vector);
     fn_8012CDF0(primary->object, 15, combined.words, 1);
 
     secondary = &lbl_80331098[index];

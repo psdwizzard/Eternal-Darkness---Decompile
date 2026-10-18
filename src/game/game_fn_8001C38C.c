@@ -5,8 +5,8 @@ typedef struct Command {
     u32 words[8];
 } Command;
 
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_80070A6C(int);
 extern void fn_8001C310(void*);
 extern s32 fn_8011E310(s32, s32, s32, s32, s32, s32, s32);
@@ -19,8 +19,8 @@ s32 fn_8001C38C(void* arg)
 {
     s32 result;
 
-    if (fn_8016A598(arg) != 2) {
-        fn_80163BB4(arg, lbl_8023BEF8, 2, fn_8016A598(arg));
+    if (lua_gettop(arg) != 2) {
+        luaO_verror(arg, lbl_8023BEF8, 2, lua_gettop(arg));
         return 0;
     }
 

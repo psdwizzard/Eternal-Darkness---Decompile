@@ -3,7 +3,7 @@ typedef struct {
     unsigned char *base;
 } GXFifoHeader;
 
-void *fn_80224330(void *fifo)
+void *GXGetFifoBase(void *fifo)
 {
     return ((GXFifoHeader *)fifo)->base;
 }

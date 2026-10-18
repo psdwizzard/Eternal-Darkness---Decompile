@@ -1,4 +1,4 @@
-/* fn_80234A04: residue 0/1 inverse (Vorbis _01inverse). */
+/* _01inverse: residue 0/1 inverse (Vorbis _01inverse). */
 
 typedef int s32;
 
@@ -33,9 +33,9 @@ typedef struct VorbisBlock {
 } VorbisBlock;
 
 void *fn_8022F8C4(s32 size);
-s32 fn_80230718(Codebook *book, void *b);
+s32 vorbis_book_decode(Codebook *book, void *b);
 
-s32 fn_80234A04(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 ch,
+s32 _01inverse(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 ch,
                 s32 (*decodepart)(Codebook *, s32 *, void *, s32)) {
     s32 i, j, k, l, s;
     ResidueInfo *info = look->info;
@@ -56,7 +56,7 @@ s32 fn_80234A04(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 ch,
         for (i = 0, l = 0; i < partvals; l++) {
             if (s == 0) {
                 for (j = 0; j < ch; j++) {
-                    s32 temp = fn_80230718(look->phrasebook, &vb->opb);
+                    s32 temp = vorbis_book_decode(look->phrasebook, &vb->opb);
                     if (temp == -1) goto eopbreak;
                     partword[j][l] = look->decodemap[temp];
                     if (partword[j][l] == 0) goto errout;

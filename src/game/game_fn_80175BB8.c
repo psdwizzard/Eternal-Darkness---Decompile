@@ -1,11 +1,11 @@
 typedef signed short s16;
 typedef unsigned char u8;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_8016A7D8(void*);
-extern void fn_8016A830(void*, double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void lua_pushnil(void*);
+extern void lua_pushnumber(void*, double);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201C24();
 extern s16 fn_801578E8(void*);
@@ -27,32 +27,32 @@ int fn_80175BB8(void* state)
 
     diagnostic.strings = lbl_8024FF00;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, diagnostic.strings, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, diagnostic.strings, 2, lua_gettop(state));
         return 0;
     }
-    object_id = fn_8016A694(state, 1);
-    kind = fn_8016A694(state, 2);
+    object_id = lua_tonumber(state, 1);
+    kind = lua_tonumber(state, 2);
     if (fn_80201814(object_id) != 0) {
         object = fn_80201C24();
-        fn_8016A694(state, 3);
+        lua_tonumber(state, 3);
         switch (kind) {
-        case 0: fn_8016A830(state, fn_801578E8(object)); break;
-        case 1: fn_8016A830(state, fn_801578F4(object)); break;
-        case 2: fn_8016A830(state, fn_80157BC4(object)); break;
-        case 3: fn_8016A830(state, fn_80157BDC(object)); break;
-        case 4: fn_8016A830(state, fn_80157BD0(object)); break;
-        case 5: fn_8016A830(state, fn_80157900(object)); break;
-        case 6: fn_8016A830(state, fn_80157AB8(object)); break;
-        case 7: fn_8016A830(state, fn_80157918(object)); break;
+        case 0: lua_pushnumber(state, fn_801578E8(object)); break;
+        case 1: lua_pushnumber(state, fn_801578F4(object)); break;
+        case 2: lua_pushnumber(state, fn_80157BC4(object)); break;
+        case 3: lua_pushnumber(state, fn_80157BDC(object)); break;
+        case 4: lua_pushnumber(state, fn_80157BD0(object)); break;
+        case 5: lua_pushnumber(state, fn_80157900(object)); break;
+        case 6: lua_pushnumber(state, fn_80157AB8(object)); break;
+        case 7: lua_pushnumber(state, fn_80157918(object)); break;
         default:
-            fn_8016A7D8(state);
-            fn_80163BB4(state, diagnostic.strings + 0x5A8, kind);
+            lua_pushnil(state);
+            luaO_verror(state, diagnostic.strings + 0x5A8, kind);
             break;
         }
     } else {
-        fn_8016A7D8(state);
-        fn_80163BB4(state, diagnostic.strings + 0x5CC, object_id);
+        lua_pushnil(state);
+        luaO_verror(state, diagnostic.strings + 0x5CC, object_id);
     }
     return 1;
 }

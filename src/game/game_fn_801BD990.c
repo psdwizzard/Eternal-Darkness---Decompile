@@ -39,20 +39,20 @@ typedef struct MSTEP {
     u32 para2;
 } MSTEP;
 
-extern s32 fn_801BCF54(u16, SAMPLE_INFO*);
-extern void fn_801BDCEC(SYNTH_VOICE*);
-extern void fn_801B7954(SYNTH_VOICE*);
-extern void fn_801CC718(u32, u16, SAMPLE_INFO*, u32, u32, u32, u32, u32);
+extern s32 dataGetSample(u16, SAMPLE_INFO*);
+extern void DoSetPitch(SYNTH_VOICE*);
+extern void synthKeyStateUpdate(SYNTH_VOICE*);
+extern void hwInitSamplePlayback(u32, u16, SAMPLE_INFO*, u32, u32, u32, u32, u32);
 
 
-void fn_801BD990(SYNTH_VOICE* svoice, MSTEP* cstep)
+void mcmdStartSample(SYNTH_VOICE* svoice, MSTEP* cstep)
 {
     static SAMPLE_INFO newsmp;
     u16 smp;
 
     smp = cstep->para1 >> 8;
 
-    if (fn_801BCF54(smp, &newsmp) != 0) {
+    if (dataGetSample(smp, &newsmp) != 0) {
         return;
     }
     switch ((u8)(cstep->para1 >> 0x18)) {
@@ -78,15 +78,15 @@ void fn_801BD990(SYNTH_VOICE* svoice, MSTEP* cstep)
         }
     }
 
-    fn_801CC718(svoice->id & 0xFF, smp, &newsmp, (svoice->cflags & 0x100) == 0,
+    hwInitSamplePlayback(svoice->id & 0xFF, smp, &newsmp, (svoice->cflags & 0x100) == 0,
                 ((u32)svoice->prio << 24) | (svoice->age >> 15), svoice->id,
                 (svoice->cflags & 0x80000000000ULL) == 0, svoice->itdMode);
 
     svoice->sInfo = newsmp.info;
 
     if (svoice->playFrq != 0xffffffff) {
-        fn_801BDCEC(svoice);
+        DoSetPitch(svoice);
     }
     svoice->cflags |= 0x20;
-    fn_801B7954(svoice);
+    synthKeyStateUpdate(svoice);
 }

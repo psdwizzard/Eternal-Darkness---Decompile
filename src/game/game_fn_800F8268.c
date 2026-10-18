@@ -12,7 +12,7 @@ typedef struct decimal {
 } decimal;
 
 /* Compare decimal magnitudes, allowing trailing zero digits. */
-int fn_800F8268(const decimal *a, const decimal *b)
+int __equals_dec(const decimal *a, const decimal *b)
 {
     int b_length, a_length, i, common;
 

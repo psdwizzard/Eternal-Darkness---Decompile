@@ -24,8 +24,8 @@ extern u8 fn_80193878(void*);
 extern u8 fn_80193868(void*);
 extern void fn_801938B8(void*, u8);
 extern void fn_801938B0(void*, u8);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8017FE1C(void*, void*);
 extern void fn_801939DC(void);
 extern u8 fn_80193890(void*);
@@ -92,13 +92,13 @@ void fn_8014A378(void* left, void* right)
                             fn_801938B8(object, 0);
                             fn_801938B0(object, 2);
                         } else if (flags & 2) {
-                            int random = fn_800FBFB0();
+                            int random = rand();
                             int span = (u8)upper - 4;
                             u8 first = random % span;
                             int remainder;
                             fn_801938B8(object, first);
                             remainder = span - first;
-                            fn_801938B0(object, first + (fn_800FBFB0() % remainder) + 2);
+                            fn_801938B0(object, first + (rand() % remainder) + 2);
                         } else if (flags & 4) {
                             fn_801938B8(object, (u8)(upper - 5));
                             fn_801938B0(object, (u8)(upper - 3));

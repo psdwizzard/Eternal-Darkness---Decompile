@@ -330,7 +330,7 @@ it is not a narrower type. The second is stored straight into `lbl_8064D1E0`
 and is declared `void*`. The third could be either type, since building
 `fn_8015AD00`, `fn_8015AC94`, `fn_8016B400`, `fn_8016B4B4` and `fn_80095FDC`
 with `int` there produces identical bytes and the same DOL hash; it is declared
-`void*` because `fn_8016B4B4` passes that value to `fn_8016A970`, which already
+`void*` because `fn_8016B4B4` passes that value to `lua_pushusertag`, which already
 matches and takes a `void*` there. `lbl_8064D1DC`, which carries the value from
 `fn_8016B400` to `fn_8016B4B4`, is now `void*` in all three sources that
 declare it.
@@ -482,7 +482,7 @@ operands of `+=` is byte-identical to the compound form.
 
 ## The register evidence caught a wrong index update
 
-`fn_8015FF18`'s entry block read `offset = index + 1;` on the negative-value
+`luaG_getline`'s entry block read `offset = index + 1;` on the negative-value
 path. Retail's `addi` writes the INDEX register, so the original increments
 `index` and derives the scan cursor from it afterwards: `index++;` in the
 block, then `offset = index;` before the while loop. That is a semantic
@@ -572,8 +572,8 @@ The fourteen functions total 2528 bytes and 102 relocations. Each reports
 Eight audio functions require compiler settings different from the game
 library defaults. `fn_801A99B4` and `fn_801A9B94` use GC/1.3 `-O1,p`,
 `fn_801AE91C` uses GC/1.3 `-O3,p`, and `fn_801B1B0C` uses GC/1.3 `-O3`.
-`fn_801B2528`, `fn_801B2748`, `fn_801B2878`, and `fn_801B3470` use
-GC/1.2.5n with the normal game flags. `fn_801B2748` and `fn_801B3470` also
+`AllocateNote`, `KeyOffNotes`, `GetPublicId`, and `HandleMasterTrack` use
+GC/1.2.5n with the normal game flags. `KeyOffNotes` and `HandleMasterTrack` also
 require `-Cpp_exceptions on` to reproduce their `extab` and `extabindex`
 sections. The per-object optimization lists replace `-O4,p`; appending a
 second optimization flag does not reproduce the verified compiler invocations.
@@ -585,19 +585,19 @@ source for `fn_801B1B0C` matches unchanged at GC/1.3 `-O3`. The other seven
 also need small source corrections: named call-result locals in
 `fn_801A9B94`; the selected-channel width and child-entry lifetime in
 `fn_801AE91C`; a signed declaration in `fn_801A99B4`; assign-in-condition
-loads and direct list indexing in `fn_801B2528` and `fn_801B2748`; the volatile
-post-increment expression in `fn_801B2878`; and a named command-value local in
-`fn_801B3470`.
+loads and direct list indexing in `AllocateNote` and `KeyOffNotes`; the volatile
+post-increment expression in `GetPublicId`; and a named command-value local in
+`HandleMasterTrack`.
 
 The unsuccessful intermediate results were retained as evidence. The compiler
 setting alone reached 99.5% for `fn_801A9B94`, 96.7% for `fn_801AE91C`, 98.2%
-for `fn_801B2528`, 94.8% for `fn_801B2748`, 96.5% for `fn_801B2878`, and 93.8%
-for `fn_801B3470`. Flipping the multiply operands in `fn_801A9B94` was worse.
+for `AllocateNote`, 94.8% for `KeyOffNotes`, 96.5% for `GetPublicId`, and 93.8%
+for `HandleMasterTrack`. Flipping the multiply operands in `fn_801A9B94` was worse.
 For `fn_801A99B4`, locals of different widths, an inverted condition, and a
 modulo expression did not produce the record-form mask instruction. GC/1.3
-did not emit the retail prologue used by `fn_801B2748`; GC/1.2.5n did. Keeping
+did not emit the retail prologue used by `KeyOffNotes`; GC/1.2.5n did. Keeping
 the old scheduling or peephole overrides left different branch chains, and
-other optimization levels did not complete `fn_801B3470`. For `fn_801B2878`,
+other optimization levels did not complete `HandleMasterTrack`. For `GetPublicId`,
 a separate counter local and the attempted addi-zero pointer-copy forms did not
 match; the direct volatile post-increment did.
 
@@ -694,7 +694,7 @@ MWCC's function-scoped optimization controls resolve several recurring code-shap
 
 `fn_8011ECF8` needs `use_lmw_stmw on`, optimization level 2, and `opt_propagation off` together with separate offset assignments and direct indexing of the flag buffer. The source without these changes scores 96.04478%. `opt_propagation off` alone also scores 96.04478%; optimization level 1, with or without propagation disabled, scores 97.37313%; and optimization level 1 followed by optimization level 2, without propagation disabled, scores 99.10448%. Per-object `-O2` and `-O2,p` settings score 84.89552%. The direct optimization-level-2 form avoids stacked optimization directives and matches exactly.
 
-The directives were found by testing 26 function-scoped optimization controls and then testing pairs on candidates improved by a single directive. Alternate object-wide settings also match the unchanged sources of `fn_801ACDC4` and `fn_801AD8E8` at GC/1.3 `-O3`, `fn_801B1028` at GC/1.3 `-O1`, and `fn_801AD898` under GC/1.2.5n without the scheduling and peephole overrides. The scoped forms retain each object's existing compiler version and flags.
+The directives were found by testing 26 function-scoped optimization controls and then testing pairs on candidates improved by a single directive. Alternate object-wide settings also match the unchanged sources of `fn_801ACDC4` and `fn_801AD8E8` at GC/1.3 `-O3`, `__DTKStartAi` at GC/1.3 `-O1`, and `fn_801AD898` under GC/1.2.5n without the scheduling and peephole overrides. The scoped forms retain each object's existing compiler version and flags.
 
 ## A same-width `unsigned long` parameter copy can change register allocation
 
@@ -707,7 +707,7 @@ of the same source form.
 This parameter-copy form matches `fn_8006016C`, `fn_800777B0`,
 `fn_8009E4BC`, `fn_800C77B4`, `fn_800C77FC`, `fn_800D386C`,
 `fn_800D9F2C`, and `fn_800DCFE0`. `fn_8005BCC0` matches with a typed
-`register void *` copy. `fn_800D078C` and `fn_800F35E4` also use typed pointer
+`register void *` copy. `fn_800D078C` and `TRK_fill_mem` also use typed pointer
 copies and require function-scoped `opt_propagation off` pragmas.
 
 Typed pointer copies were tested in the seven pointer functions that require
@@ -768,7 +768,7 @@ Four harvested forms were rejected. `fn_800CA554` and `fn_800E8634` only reach
 100% with a pointer converted to an integer solely to change register
 allocation; normal saved-pointer and saved-value forms score 83.888885% and
 95.50848%, respectively. The proposed forms for `fn_801301B0` and
-`fn_801B3A2C` change functions used as `void` into value-returning functions.
+`seqSpeed` change functions used as `void` into value-returning functions.
 The latter can also return an uninitialized pointer. These four functions
 remain nonmatching.
 
@@ -924,12 +924,12 @@ registers but not the integer ones. `fn_8014BA14`'s `.sdata2` rule becomes
 `@65`; `fn_801D73D0`'s `Target` gains the `DamageData *` at 0x2C.
 
 Expression types decide what MWCC's common-subexpression pass can share. In
-`fn_801BA94C` the next-stream field is `unsigned long` and both checks compare
+`sndStreamMixParameterEx` the next-stream field is `unsigned long` and both checks compare
 it with `0xFFFFFFFF`, an `unsigned int`; the compare and the call argument then
 differ in type, so only the field address is shared and the two loads merge
 later, leaving retail's `add` plus `lwz 0x0` where an `unsigned int` field gives
 `lwzx`. The function's second level is written out as `mix_linked`, which
-calls the out-of-line `fn_801B9D1C` and `fn_801BA128` as retail's inlined copy
+calls the out-of-line `GetPrivateIndex` and `CheckOutputMode` as retail's inlined copy
 does; the externalize rule now names `@68` and `@70`. In `fn_8012C804`,
 `index_offset = index * 4;` sits right after `fn_80125ECC` and is used for the
 `dst` part while the `src` part stays `src->parts[index]`. Both scalings are the
@@ -1149,7 +1149,7 @@ is renamed through the `.sdata2` table.
 
 `fn_801AF37C` uses GC/1.3.2. Its four format strings are string literals, pooled at
 `lbl_80251808` by a new guarded rule; its two stream-state bytes are
-`volatile u8` fields. `fn_801AF0E4`, the callback it passes to `fn_80213704`,
+`volatile u8` fields. `fn_801AF0E4`, the callback it passes to `DVDReadAsyncPrio`,
 writes those bytes, and retail reads them again for every test. Without
 `volatile` the tests share one load (16 lines), as they do with accessor
 functions and pointer forms; `-O1` to `-O3` are 19 lines off or more.
@@ -1206,12 +1206,12 @@ to the retail symbol after compiling.
   statics `head`, `info`, `object`, `work`, `values` and `clear` in address
   order, under GC/1.3.2, renamed to `lbl_80302400` by the same
   `externalize_game_static_data_pool` rule.
-- `fn_801B7A7C` is MusyX `synthHandle`. `synth.c`'s data are statics in
+- `synthHandle` is MusyX `synthHandle`. `synth.c`'s data are statics in
   address order (`synthTicksPerSecond`, `synthJobTable`, `synthInfo`,
   `synthMasterFader`, `synthTrackVolume`, the aux user and callback arrays);
   GC/1.2.5n keeps declaration order, and retail adds the `+0x240` of the job
   table after the index, as it does for a pooled static. The block is renamed
-  to `lbl_80619860`.
+  to `synthTicksPerSecond`.
 - `fn_801415B4` is Tomas Möller's `coplanar_tri_tri`, with the published
   `EDGE_EDGE_TEST`, `EDGE_AGAINST_TRI_EDGES` and `POINT_IN_TRI` macros, `int`
   axes read from `lbl_8064D024`/`lbl_8064D022`, and the fixed triangle as
@@ -1238,7 +1238,7 @@ them.
   `(float *, float, float, float, int)`, as its neighbour `fn_800BE70C` does.
   The eight constants are renamed through `game_section_externalizations`,
   which replaces the old rule that named only `@69`.
-- `fn_801B7A7C`: `-fp_contract off`, which 140 other GC/1.2.5n units already
+- `synthHandle`: `-fp_contract off`, which 140 other GC/1.2.5n units already
   use.
 - `fn_8005B528`: GC/1.3.2. GC/1.3 lets the `values[*lbl_8064C5A8 - 1]` load
   pass two of the array's initializing stores; 1.3.2 keeps it after them, as

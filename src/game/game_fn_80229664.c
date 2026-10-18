@@ -1,4 +1,4 @@
-/* fn_80229664: GXSetIndTexOrder (Dolphin SDK GXBump.c).
+/* GXSetIndTexOrder: GXSetIndTexOrder (Dolphin SDK GXBump.c).
  * Selects the texture coordinate and texture map used by an indirect
  * texture stage, then sends the IREF BP register and marks the
  * indirect/TEV state dirty. */
@@ -34,7 +34,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80229664(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMapID tex_map)
+void GXSetIndTexOrder(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMapID tex_map)
 {
     switch (ind_stage) {
     case GX_INDTEXSTAGE0:

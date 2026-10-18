@@ -72,9 +72,9 @@ extern u32 fn_801E741C(const char *);
 extern int fn_80201814(int);
 extern int fn_802019EC(int, int);
 extern u32 fn_80201BC8(int);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
-extern void fn_80211C78(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
+extern void C_VECReflect(const Vec3 *, const Vec3 *, Vec3 *);
 
 void fn_80086B38(int screen, int reset)
 {
@@ -142,8 +142,8 @@ void fn_80086B38(int screen, int reset)
         lbl_8031CBA0.delta.z = lbl_8031CD84.links[1].position.z - lbl_8031CD84.links[0].position.z;
         lbl_8031CBA0.start = lbl_8031CD84.links[0].position;
         lbl_8031CBA0.end = lbl_8031CD84.links[1].position;
-        fn_80211A6C(&lbl_8031CBA0.delta, &lbl_8031CBA0.up, &lbl_8031CBA0.axis);
-        fn_80211AAC(&lbl_8031CBA0.axis, &lbl_8031CBA0.axis);
+        PSVECSubtract(&lbl_8031CBA0.delta, &lbl_8031CBA0.up, &lbl_8031CBA0.axis);
+        PSVECNormalize(&lbl_8031CBA0.axis, &lbl_8031CBA0.axis);
 
         for (i = 0; i < 5; i++) {
             lbl_8031CD84.links[i].handles[0] = 0;
@@ -157,7 +157,7 @@ void fn_80086B38(int screen, int reset)
         fn_80084404(&lbl_8031CD84.links[3], 0, lbl_8064EA14);
         lbl_8031CBA0.startActive = 1;
         lbl_8031CBA0.endActive = 1;
-        fn_80211C78(&lbl_8031CBA0.axis, &lbl_8031CBA0.up, &lbl_8031CBA0.pivot);
+        C_VECReflect(&lbl_8031CBA0.axis, &lbl_8031CBA0.up, &lbl_8031CBA0.pivot);
         lbl_8031CD84.selected = 1;
         fn_80084264(&lbl_8031CD84.links[2]);
         lbl_8031CD84.selected = -1;

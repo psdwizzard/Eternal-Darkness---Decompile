@@ -19,20 +19,19 @@ typedef struct SynthDataTables {
 } SynthDataTables;
 
 extern u8 lbl_8061C748[];
-extern u16 lbl_8064D3F2;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataCurveNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
 #define dataSmpSDirs lbl_8061C748
-#define dataCurveNum lbl_8064D3F2
 
-s32 fn_801BBD58(u16 cid, void* curvedata)
+s32 dataInsertCurve(u16 cid, void* curvedata)
 {
     long i;
     long j;
     SynthDataTables* t = (SynthDataTables*)dataSmpSDirs;
 
-    fn_801CE2B8();
+    hwDisableIrq();
 
     for (i = 0; i < dataCurveNum && ((DATA_TAB*)((u8*)t + 0x600))[i].id < cid; ++i)
         ;
@@ -44,24 +43,24 @@ s32 fn_801BBD58(u16 cid, void* curvedata)
                     ((DATA_TAB*)(t->sdir + 128))[j + 1] = ((DATA_TAB*)(t->sdir + 128))[j];
                 ++dataCurveNum;
             } else {
-                fn_801CE280();
+                hwEnableIrq();
                 return 0;
             }
         } else {
-            fn_801CE280();
+            hwEnableIrq();
             t->curve[i].refCount++;
             return 0;
         }
     } else if (dataCurveNum < 2048) {
         ++dataCurveNum;
     } else {
-        fn_801CE280();
+        hwEnableIrq();
         return 0;
     }
 
     t->curve[i].id = cid;
     t->curve[i].data = curvedata;
     t->curve[i].refCount = 1;
-    fn_801CE280();
+    hwEnableIrq();
     return 1;
 }

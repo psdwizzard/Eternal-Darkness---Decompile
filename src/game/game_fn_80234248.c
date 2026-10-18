@@ -1,5 +1,5 @@
 /* Eight-point MDCT butterfly. */
-void fn_80234248(float *x)
+void mdct_butterfly_8(float *x)
 {
     float r0 = x[6] + x[2];
     float r1 = x[6] - x[2];

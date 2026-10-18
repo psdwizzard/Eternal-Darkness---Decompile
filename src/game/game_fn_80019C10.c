@@ -19,10 +19,10 @@ typedef struct {
 
 extern const char lbl_8023BEF8[];
 extern const double lbl_8064DCE8;
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_8016A830(void*, double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void lua_pushnumber(void*, double);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201B9C();
 extern void* fn_80204844(void*, int);
 extern int fn_80201B54();
@@ -36,12 +36,12 @@ s32 fn_80019C10(void* script)
     register void* object;
     register void* script_arg = script;
 
-    if (fn_8016A598(script_arg) != 1) {
-        fn_80163BB4(script_arg, lbl_8023BEF8, 1, fn_8016A598(script_arg));
+    if (lua_gettop(script_arg) != 1) {
+        luaO_verror(script_arg, lbl_8023BEF8, 1, lua_gettop(script_arg));
         return 0;
     }
 
-    value = (s32)fn_8016A694(script_arg, 1);
+    value = (s32)lua_tonumber(script_arg, 1);
     result = 0;
     object = fn_80204844(fn_80201B9C(), 0x20);
     if (object != 0) {
@@ -56,6 +56,6 @@ s32 fn_80019C10(void* script)
         }
     }
 
-    fn_8016A830(script_arg, result);
+    lua_pushnumber(script_arg, result);
     return 1;
 }

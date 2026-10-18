@@ -19,41 +19,41 @@ typedef struct FreeLink {
     u16 active;
 } FreeLink;
 
-extern FreeLink lbl_80627C60[64];
-extern u8 lbl_8064D466;
-extern u8 lbl_8064D467;
-extern u8 lbl_8064D468;
-extern u8 lbl_8064D469;
-extern void fn_801C0ACC(Voice*, int);
-extern void fn_801C1520(Voice*);
+extern FreeLink voiceList[64];
+extern u8 voiceMusicRunning;
+extern u8 voiceFxRunning;
+extern u8 voiceListInsert;
+extern u8 voiceListRoot;
+extern void macMakeInactive(Voice*, int);
+extern void voiceRemovePriority(Voice*);
 
-void fn_801C1BCC(Voice* voice)
+void voiceFree(Voice* voice)
 {
     register u32 index;
     register FreeLink* link;
 
-    fn_801C0ACC(voice, 2);
-    fn_801C1520(voice);
+    macMakeInactive(voice, 2);
+    voiceRemovePriority(voice);
     voice->field_034 = 0;
     voice->active = 0;
     index = (u8)voice->index;
-    link = &lbl_80627C60[index];
+    link = &voiceList[index];
     if (link->active == 0) {
         link->active = 1;
-        if (lbl_8064D469 != 0xFF) {
+        if (voiceListRoot != 0xFF) {
             link->next = 0xFF;
-            link->previous = lbl_8064D468;
-            lbl_80627C60[lbl_8064D468].next = index;
+            link->previous = voiceListInsert;
+            voiceList[voiceListInsert].next = index;
         } else {
             link->next = 0xFF;
             link->previous = 0xFF;
-            lbl_8064D469 = index;
+            voiceListRoot = index;
         }
-        lbl_8064D468 = index;
+        voiceListInsert = index;
         if (voice->special != 0) {
-            lbl_8064D467--;
+            voiceFxRunning--;
         } else {
-            lbl_8064D466--;
+            voiceMusicRunning--;
         }
     }
     voice->index = -1;

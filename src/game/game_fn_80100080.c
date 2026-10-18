@@ -1,13 +1,11 @@
-/* fn_80100080: fdlibm __ieee754_rem_pio2 (MSL e_rem_pio2.c).
+/* __ieee754_rem_pio2: fdlibm __ieee754_rem_pio2 (MSL e_rem_pio2.c).
  * Returns x rem pi/2 in y[0]+y[1] and the quadrant count n. */
 
-extern int fn_80100514(double *x, double *y, int e0, int nx, int prec, const int *ipio2); /* __kernel_rem_pio2 */
+extern int __kernel_rem_pio2(double *x, double *y, int e0, int nx, int prec, const int *ipio2); /* __kernel_rem_pio2 */
 
-extern const int lbl_80239F20[]; /* two_over_pi */
-extern const int lbl_8023A028[]; /* npio2_hw */
+extern const int two_over_pi[]; /* two_over_pi */
+extern const int npio2_hw[]; /* npio2_hw */
 
-#define two_over_pi lbl_80239F20
-#define npio2_hw lbl_8023A028
 
 #define __HI(x) *(int *)&x
 #define __LO(x) *(1 + (int *)&x)
@@ -32,7 +30,7 @@ extern const double lbl_8064FCB8; /* pio2_3t */
 #define pio2_3 lbl_8064FCB0
 #define pio2_3t lbl_8064FCB8
 
-int fn_80100080(double x, double *y)
+int __ieee754_rem_pio2(double x, double *y)
 {
     double z, t, w, r, fn;
     double tx[3];
@@ -122,7 +120,7 @@ int fn_80100080(double x, double *y)
     tx[2] = z;
     nx = 3;
     while (tx[nx - 1] == 0.0) nx--;
-    n = fn_80100514(tx, y, e0, nx, 2, two_over_pi);
+    n = __kernel_rem_pio2(tx, y, e0, nx, 2, two_over_pi);
     if (hx < 0) {
         y[0] = -y[0];
         y[1] = -y[1];

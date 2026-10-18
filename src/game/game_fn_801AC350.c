@@ -14,7 +14,7 @@ typedef struct Effect {
 
 extern Effect lbl_806080E0[80];
 extern void fn_801AB0C4(Effect*, s8, int);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 extern void fn_801A99B4(void);
 
 void fn_801AC350(s8 value, int detailed, int drain)
@@ -48,7 +48,7 @@ void fn_801AC350(s8 value, int detailed, int drain)
                 }
             }
             if (active != 0) {
-                fn_80217324();
+                VIWaitForRetrace();
                 fn_801A99B4();
                 passes++;
             }

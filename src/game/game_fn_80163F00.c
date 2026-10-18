@@ -5,7 +5,7 @@ typedef struct Lexer {
 
 extern void fn_80163DA4(Lexer*);
 
-int fn_80163F00(Lexer* lexer, int token)
+int optional(Lexer* lexer, int token)
 {
     if (lexer->current_kind == token) {
         fn_80163DA4(lexer);

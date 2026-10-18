@@ -13,11 +13,11 @@ typedef struct Envelope {
     u8 alternate;
 } Envelope;
 
-extern u8 lbl_80252B2C[];
+extern u8 dspScale2IndexTab[];
 extern float lbl_80650F78;
 extern u32 fn_800F5C54(double value);
 
-int fn_801C2D9C(Envelope* envelope, u32 duration)
+int adsrStartRelease(Envelope* envelope, u32 duration)
 {
     float scaled;
 
@@ -35,7 +35,7 @@ int fn_801C2D9C(Envelope* envelope, u32 duration)
     case 1:
         if (envelope->alternate == 0 && envelope->state == 1) {
             envelope->secondary =
-                (u32)(193 - lbl_80252B2C[(int)envelope->value >> 21]) << 16;
+                (u32)(193 - dspScale2IndexTab[(int)envelope->value >> 21]) << 16;
         }
         scaled = lbl_80650F78 * (int)envelope->secondary;
         envelope->duration = fn_800F5C54(scaled * duration) >> 12;

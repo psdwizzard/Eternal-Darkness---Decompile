@@ -46,7 +46,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
         GX_WRITE_U32(val); \
     } while (0)
 
-void fn_8022806C(GXChannelID chan, u8 enable, GXColorSrc amb_src, GXColorSrc mat_src,
+void GXSetChanCtrl(GXChannelID chan, u8 enable, GXColorSrc amb_src, GXColorSrc mat_src,
                  u32 light_mask, GXDiffuseFn diff_fn, GXAttnFn attn_fn)
 {
     u32 reg;

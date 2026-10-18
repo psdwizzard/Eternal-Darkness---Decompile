@@ -3,17 +3,17 @@
 #define __HI(x) *(int *)&x
 #define __LO(x) *(1 + (int *)&x)
 
-extern const volatile double lbl_8023A160[19];
+extern const volatile double atanhi[19];
 extern const double lbl_8064FDC8; /* huge */
 extern const double lbl_8064FDD0; /* one */
 extern const double lbl_8064FDD8; /* 1.5 */
 extern const double lbl_8064FDE0; /* 2.4375 */
 extern const double lbl_8064FDE8; /* one */
 
-double fn_8010161C(double x) {
+double atan(double x) {
     double w, s1, s2, z, ax;
     int ix, hx, id;
-    const double *aT = (const double *)lbl_8023A160;
+    const double *aT = (const double *)atanhi;
 
     hx = __HI(x);
     ix = hx & 0x7fffffff;

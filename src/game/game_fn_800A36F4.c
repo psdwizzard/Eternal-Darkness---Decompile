@@ -6,12 +6,12 @@ typedef struct Object800A36F4 { u8 pad0[0x160]; void* active; } Object800A36F4;
 
 extern void *fn_80201BC8();
 extern void fn_8011F114();
-extern void fn_80211A6C();
+extern void PSVECSubtract();
 extern int fn_800A4F44(Vec800A36F4*, float);
-extern void fn_80211AAC(Vec800A36F4*, Vec800A36F4*);
+extern void PSVECNormalize(Vec800A36F4*, Vec800A36F4*);
 extern float fn_8011F6F8(void*);
-extern void fn_80211A90(Vec800A36F4*, Vec800A36F4*, float);
-extern void fn_80211A48(void*, Vec800A36F4*, Vec800A36F4*);
+extern void PSVECScale(Vec800A36F4*, Vec800A36F4*, float);
+extern void PSVECAdd(void*, Vec800A36F4*, Vec800A36F4*);
 extern void fn_8012AC74(void*, Vec800A36F4*, int);
 extern float lbl_8064EE94;
 
@@ -27,13 +27,13 @@ int fn_800A36F4(Object800A36F4* object, Matrix800A36F4* matrix, void* arg)
     if (object->active != 0) {
         target = fn_80201BC8(arg);
         fn_8011F114(&origin, target);
-        fn_80211A6C(&origin, matrix, &delta);
+        PSVECSubtract(&origin, matrix, &delta);
         if (fn_800A4F44(&delta, matrix->v[0][3]) > 0) {
-            fn_80211AAC(&delta, &delta);
+            PSVECNormalize(&delta, &delta);
             amount = matrix->v[0][3] - fn_8011F6F8(target);
             amount *= lbl_8064EE94;
-            fn_80211A90(&delta, &scaled, amount);
-            fn_80211A48(matrix, &scaled, &result);
+            PSVECScale(&delta, &scaled, amount);
+            PSVECAdd(matrix, &scaled, &result);
             result.z = origin.z;
             fn_8012AC74(target, &result, 3);
         }

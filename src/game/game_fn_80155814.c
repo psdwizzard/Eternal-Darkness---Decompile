@@ -19,7 +19,7 @@ typedef struct State {
 
 extern int fn_8013D618(void*, void*, void*, float, float);
 extern void fn_8016B400(s16, State*, int);
-extern float fn_80211B44(void*, void*);
+extern float PSVECDotProduct(void*, void*);
 
 void fn_80155814(State* state, void* context, void* object, int alternate)
 {
@@ -59,7 +59,7 @@ void fn_80155814(State* state, void* context, void* object, int alternate)
     } else if ((state->flags & bit_a) || (state->flags & mask_a)) {
         state->flags &= ~mask_a;
         state->flags &= ~bit_a;
-        if (fn_80211B44(object, state) > state->threshold_a &&
+        if (PSVECDotProduct(object, state) > state->threshold_a &&
             state->event_a1 != -1)
             fn_8016B400(state->event_a1, state, 0);
     }
@@ -80,7 +80,7 @@ void fn_80155814(State* state, void* context, void* object, int alternate)
     } else if ((state->flags & bit_b) || (state->flags & mask_b)) {
         state->flags &= ~mask_b;
         state->flags &= ~bit_b;
-        if (fn_80211B44(object, state->point) > state->threshold_b &&
+        if (PSVECDotProduct(object, state->point) > state->threshold_b &&
             state->event_b1 != -1)
             fn_8016B400(state->event_b1, state, 0);
     }

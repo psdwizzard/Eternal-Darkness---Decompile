@@ -24,7 +24,7 @@ typedef struct Parser {
     ParserState* state;
 } Parser;
 
-void fn_8016425C(Parser* parser, int count)
+void adjustlocalvars(Parser* parser, int count)
 {
     ParserState* state = parser->state;
 

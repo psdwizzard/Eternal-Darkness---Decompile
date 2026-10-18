@@ -1,24 +1,24 @@
 typedef int s32;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern s32 fn_8011804C(s32);
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_80013870(void* script)
 {
     void* parser = script;
     s32 result;
 
-    if (fn_8016A598(parser) != 1) {
-        fn_80163BB4(parser, lbl_8023BEF8, 1, fn_8016A598(parser));
+    if (lua_gettop(parser) != 1) {
+        luaO_verror(parser, lbl_8023BEF8, 1, lua_gettop(parser));
         return 0;
     }
 
-    result = fn_8011804C(fn_800F5C54(fn_8016A694(parser, 1)));
-    fn_8016A830(parser, (double)result);
+    result = fn_8011804C(fn_800F5C54(lua_tonumber(parser, 1)));
+    lua_pushnumber(parser, (double)result);
     return 1;
 }

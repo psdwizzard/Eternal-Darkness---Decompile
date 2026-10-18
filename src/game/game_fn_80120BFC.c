@@ -26,7 +26,7 @@ extern u32 lbl_8064CEE4;
 extern float lbl_806500A0;
 
 extern s32 fn_800473A4(void);
-extern void fn_800FBE38(void*, size_t, size_t, CompareProc);
+extern void qsort(void*, size_t, size_t, CompareProc);
 extern u32 fn_8011FAF4(void*);
 extern int fn_801209DC(Entry*, Entry*);
 extern void fn_80121114(Owner*, u32, s32, s32, s32, s32);
@@ -35,14 +35,14 @@ extern s32 fn_801ED59C(s32, s32);
 extern void fn_801ED5F4(s32, s32, s16, float*, Mtx, float);
 extern s32 fn_801EF384(void);
 extern void fn_801F47F8(void);
-extern u32 fn_8020B9D8(void);
-extern void fn_8020B9E4(s32);
-extern void fn_80226378(void);
-extern void fn_80226D28(s32);
-extern void fn_8022A044(s32, s32, s32, s32, s32);
-extern void fn_8022A6DC(u8);
-extern void fn_8022A71C(u8);
-extern void fn_8022A75C(u8, s32, u8);
+extern u32 LCQueueLength(void);
+extern void LCQueueWait(s32);
+extern void GXFlush(void);
+extern void GXSetCullMode(s32);
+extern void GXSetAlphaCompare(s32, s32, s32, s32, s32);
+extern void GXSetColorUpdate(u8);
+extern void GXSetAlphaUpdate(u8);
+extern void GXSetZMode(u8, s32, u8);
 
 void fn_80120BFC(s32 translucent)
 {
@@ -54,7 +54,7 @@ void fn_80120BFC(s32 translucent)
     s32 draw_index;
     Entry* entry;
 
-    fn_8022A044(4, 4, 0, 3, 0xFF);
+    GXSetAlphaCompare(4, 4, 0, 3, 0xFF);
     if (translucent == 0) {
         /* Keep children at their parent's distance before sorting the queue. */
         for (i = 0; i < (s32)lbl_8064CEE4; i++) {
@@ -73,10 +73,10 @@ void fn_80120BFC(s32 translucent)
                 }
             }
         }
-        fn_800FBE38(lbl_804ED180, lbl_8064CEE4, sizeof(Entry),
+        qsort(lbl_804ED180, lbl_8064CEE4, sizeof(Entry),
                     (CompareProc)fn_801209DC);
-        fn_8020B9D8();
-        fn_8020B9E4(0);
+        LCQueueLength();
+        LCQueueWait(0);
         {
             Entry* primary_entry;
 
@@ -93,7 +93,7 @@ void fn_80120BFC(s32 translucent)
                     primary_entry++;
                     continue;
                 }
-                fn_80226D28(1);
+                GXSetCullMode(1);
                 fn_80121114(primary_entry->object, primary_entry->count,
                             primary_entry->mode, 0, outline, 1);
                 primary_entry++;
@@ -111,7 +111,7 @@ void fn_80120BFC(s32 translucent)
                     primary_entry++;
                     continue;
                 }
-                fn_80226D28(1);
+                GXSetCullMode(1);
                 fn_80121114(primary_entry->object, primary_entry->count,
                             primary_entry->mode, 1, outline, 1);
                 primary_entry->object->flags &= ~0x80000u;
@@ -126,7 +126,7 @@ void fn_80120BFC(s32 translucent)
                     entry++;
                     continue;
                 }
-                fn_80226D28(1);
+                GXSetCullMode(1);
                 fn_80121114(entry->object, entry->count, entry->mode, 0, outline, 1);
                 entry++;
             }
@@ -136,17 +136,17 @@ void fn_80120BFC(s32 translucent)
                     entry++;
                     continue;
                 }
-                fn_80226D28(1);
+                GXSetCullMode(1);
                 fn_80121114(entry->object, entry->count, entry->mode, 1, outline, 1);
                 entry->object->flags &= ~0x80000u;
                 entry++;
             }
         }
     } else {
-        fn_80226D28(1);
-        fn_8022A71C(0);
-        fn_8022A6DC(0);
-        fn_8022A75C(1, 4, 1);
+        GXSetCullMode(1);
+        GXSetAlphaUpdate(0);
+        GXSetColorUpdate(0);
+        GXSetZMode(1, 4, 1);
         for (draw_index = 0, entry = lbl_804ED180;
              draw_index < (s32)lbl_8064CEE4; entry++, draw_index++) {
             if (fn_8011FAF4(entry->object) & 0x40) {
@@ -154,9 +154,9 @@ void fn_80120BFC(s32 translucent)
                 fn_80121114(entry->object, entry->count, entry->mode, 1, outline, 0);
             }
         }
-        fn_8022A75C(1, 3, 1);
-        fn_8022A71C(0);
-        fn_8022A6DC(1);
+        GXSetZMode(1, 3, 1);
+        GXSetAlphaUpdate(0);
+        GXSetColorUpdate(1);
         fn_801ED59C(1, 1);
         for (draw_index = 0, entry = lbl_804ED180;
              draw_index < (s32)lbl_8064CEE4; entry++, draw_index++) {
@@ -164,7 +164,7 @@ void fn_80120BFC(s32 translucent)
                 fn_80121114(entry->object, entry->count, entry->mode, 0, outline, 1);
             }
         }
-        fn_80226D28(1);
+        GXSetCullMode(1);
         fn_801ED59C(0, 1);
         for (draw_index = 0, entry = lbl_804ED180;
              draw_index < (s32)lbl_8064CEE4; entry++, draw_index++) {
@@ -176,7 +176,7 @@ void fn_80120BFC(s32 translucent)
     }
     fn_801ED5F4(0, 0, 0, 0, 0, lbl_806500A0);
     fn_801ECC4C();
-    fn_80226378();
-    fn_8022A044(7, 0, 0, 3, 0xFF);
+    GXFlush();
+    GXSetAlphaCompare(7, 0, 0, 3, 0xFF);
     fn_801ED59C(1, 1);
 }

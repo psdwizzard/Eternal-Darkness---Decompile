@@ -7,18 +7,18 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EFD6C(int *, TRKBuffer **);
-extern int fn_800EFA84(TRKBuffer *, u32);
-extern int fn_800EFAE8(TRKBuffer *, u16);
-extern int fn_800EF994(TRKBuffer *, const void *, int);
-extern int fn_800F3054(TRKBuffer *, int *, int, int, int);
+extern int TRKGetFreeBuffer(int *, TRKBuffer **);
+extern int TRKAppendBuffer1_ui32(TRKBuffer *, u32);
+extern int TRKAppendBuffer1_ui16(TRKBuffer *, u16);
+extern int TRKAppendBuffer_ui8(TRKBuffer *, const void *, int);
+extern int TRKRequestSend(TRKBuffer *, int *, int, int, int);
 extern TRKBuffer *TRKGetBuffer(int);
-extern int fn_800EFC6C(TRKBuffer *, u32);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
-extern int fn_800EF7B4(TRKBuffer *, u16 *);
-extern int fn_800EF56C(TRKBuffer *, u8 *, int);
-extern int fn_800EF2A0(TRKBuffer *);
-extern void fn_800EFCDC(int);
+extern int TRKSetBufferPosition(TRKBuffer *, u32);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
+extern int TRKReadBuffer1_ui16(TRKBuffer *, u16 *);
+extern int TRKReadBuffer_ui8(TRKBuffer *, u8 *, int);
+extern int TRKMessageSend(TRKBuffer *);
+extern void TRKReleaseBuffer(int);
 
 enum {
     DSMSG_WriteFile = 0xD0,
@@ -35,7 +35,7 @@ static inline int append(TRKBuffer *buffer, u8 value)
 }
 
 /* TRKSuppAccessFile */
-int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_reply, int read)
+int TRKSuppAccessFile(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_reply, int read)
 {
     int result;
     int exit;
@@ -61,36 +61,36 @@ int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_r
         else
             length = *count - done;
 
-        result = fn_800EFD6C(&buffer_id, &buffer);
+        result = TRKGetFreeBuffer(&buffer_id, &buffer);
 
         if (result == 0)
             result = append(buffer, read ? DSMSG_ReadFile : DSMSG_WriteFile);
 
         if (result == 0)
-            result = fn_800EFA84(buffer, (unsigned long)file_handle);
+            result = TRKAppendBuffer1_ui32(buffer, (unsigned long)file_handle);
 
         if (result == 0)
-            result = fn_800EFAE8(buffer, length);
+            result = TRKAppendBuffer1_ui16(buffer, length);
 
         if (!read && result == 0)
-            result = fn_800EF994(buffer, data + done, length);
+            result = TRKAppendBuffer_ui8(buffer, data + done, length);
 
         if (result == 0) {
             if (need_reply) {
                 reply_length = 0;
                 reply_io_result = 0;
 
-                result = fn_800F3054(buffer, &reply_buffer_id, read ? 5 : 5, 3, !(read && file_handle == 0));
+                result = TRKRequestSend(buffer, &reply_buffer_id, read ? 5 : 5, 3, !(read && file_handle == 0));
                 if (result == 0) {
                     reply_buffer = TRKGetBuffer(reply_buffer_id);
-                    fn_800EFC6C(reply_buffer, 2);
+                    TRKSetBufferPosition(reply_buffer, 2);
                 }
 
                 if (result == 0)
-                    result = fn_800EF86C(reply_buffer, &reply_io_result);
+                    result = TRKReadBuffer1_ui8(reply_buffer, &reply_io_result);
 
                 if (result == 0)
-                    result = fn_800EF7B4(reply_buffer, &reply_length);
+                    result = TRKReadBuffer1_ui16(reply_buffer, &reply_length);
 
                 if (read && result == 0) {
                     if (reply_buffer->length != reply_length + 5) {
@@ -100,7 +100,7 @@ int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_r
                     }
 
                     if (reply_length <= length)
-                        result = fn_800EF56C(reply_buffer, data + done, reply_length);
+                        result = TRKReadBuffer_ui8(reply_buffer, data + done, reply_length);
                 }
 
                 if (reply_length != length) {
@@ -111,13 +111,13 @@ int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_r
                 }
 
                 *io_result = reply_io_result;
-                fn_800EFCDC(reply_buffer_id);
+                TRKReleaseBuffer(reply_buffer_id);
             } else {
-                result = fn_800EF2A0(buffer);
+                result = TRKMessageSend(buffer);
             }
         }
 
-        fn_800EFCDC(buffer_id);
+        TRKReleaseBuffer(buffer_id);
         done += length;
     }
 

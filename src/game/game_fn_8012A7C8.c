@@ -32,9 +32,9 @@ extern void fn_8012B7A0(void *, float);
 extern int fn_8017A010(float *, int, float, float, float);
 extern void fn_8017A12C(float *, float, float);
 extern void fn_8017A1C0(float *, int, float, float);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern float fn_80211B08(const Vec3 *);
-extern float fn_80211B44(const Vec3 *, const Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern float PSVECMag(const Vec3 *);
+extern float PSVECDotProduct(const Vec3 *, const Vec3 *);
 extern float lbl_806501A8;
 extern float lbl_806501B8;
 extern float lbl_806501BC;
@@ -63,14 +63,14 @@ int fn_8012A7C8(Vec3 *pos, Actor *actor)
     int result;
 
     if (actor->flags2 & 1) {
-        fn_80211A6C(&actor->unkCC, pos, &toPos);
-        dist = fn_80211B08(&toPos);
-        fn_80211A6C(&actor->unkCC, &actor->unkD8, &toTarget);
+        PSVECSubtract(&actor->unkCC, pos, &toPos);
+        dist = PSVECMag(&toPos);
+        PSVECSubtract(&actor->unkCC, &actor->unkD8, &toTarget);
         start = *pos;
         if ((actor->flags2 & 2) && dist > lbl_806501B8 && !(actor->flags & 0x800)) {
             turn = 1;
         }
-        inFront = fn_80211B44(&toPos, &toTarget) > lbl_806501A8;
+        inFront = PSVECDotProduct(&toPos, &toTarget) > lbl_806501A8;
         if (!inFront && (actor->flags & 0x800)) {
             fn_80128BE4(pos);
         }
@@ -98,22 +98,22 @@ int fn_8012A7C8(Vec3 *pos, Actor *actor)
 
     if (inFront && !(actor->flags & 4)) {
         fn_8012ABEC(pos, &facing);
-        fn_80211A6C(&facing, &start, &dir);
+        PSVECSubtract(&facing, &start, &dir);
     }
 
     if ((actor->flags2 & 1) && inFront) {
-        fn_80211A6C(&actor->unkCC, pos, &toPos);
-        fn_80211B08(&toPos);
-        ok = fn_80211B44(&toPos, &toTarget) <= lbl_806501A8;
+        PSVECSubtract(&actor->unkCC, pos, &toPos);
+        PSVECMag(&toPos);
+        ok = PSVECDotProduct(&toPos, &toTarget) <= lbl_806501A8;
         if ((actor->flags & 0x8000) && !ok) {
-            fn_80211A6C(pos, &start, &delta);
-            dot = fn_80211B44(&delta, &dir);
-            len = fn_80211B08(&dir);
+            PSVECSubtract(pos, &start, &delta);
+            dot = PSVECDotProduct(&delta, &dir);
+            len = PSVECMag(&dir);
             if (len > lbl_806501A8) {
                 if (dot <= lbl_806501A8) {
                     ok = 1;
                 } else {
-                    a = fn_8003315C(dot / (len * fn_80211B08(&delta)));
+                    a = fn_8003315C(dot / (len * PSVECMag(&delta)));
                     if (a < lbl_806501A8) {
                         a = -a;
                     }

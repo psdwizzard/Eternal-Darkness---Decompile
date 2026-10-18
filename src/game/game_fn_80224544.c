@@ -1,4 +1,4 @@
-/* fn_80224544 (__GXCleanGPFifo, Dolphin SDK GXFifo.c).
+/* __GXCleanGPFifo (__GXCleanGPFifo, Dolphin SDK GXFifo.c).
  * Resets the GP FIFO's read and write pointers back to its base: first a
  * scratch copy of the FIFO is bound so the hardware drains nothing stale,
  * then the real FIFO is reset and rebound. */
@@ -37,8 +37,8 @@ BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
 void GXSetGPFifo(__GXFifoObj *fifo);
 void GXSetCPUFifo(__GXFifoObj *fifo);
-GXFifoBuffer *fn_80224648(void); /* GXGetGPFifo */
-GXFifoBuffer *fn_80224640(void); /* GXGetCPUFifo */
+GXFifoBuffer *GXGetGPFifo(void); /* GXGetGPFifo */
+GXFifoBuffer *GXGetCPUFifo(void); /* GXGetCPUFifo */
 
 static inline void *GXGetFifoBase(GXFifoBuffer *fifo) {
     __GXFifoObj *realFifo = &fifo->fifo;
@@ -59,9 +59,9 @@ static inline void GXInitFifoPtrs(GXFifoBuffer *fifo, void *readPtr, void *write
     OSRestoreInterrupts(enabled);
 }
 
-void fn_80224544(void) {
-    GXFifoBuffer *gpFifo = fn_80224648();
-    GXFifoBuffer *cpuFifo = fn_80224640();
+void __GXCleanGPFifo(void) {
+    GXFifoBuffer *gpFifo = GXGetGPFifo();
+    GXFifoBuffer *cpuFifo = GXGetCPUFifo();
     void *base = GXGetFifoBase(gpFifo);
     GXFifoBuffer dummyFifo;
 

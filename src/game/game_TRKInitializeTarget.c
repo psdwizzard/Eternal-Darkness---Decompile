@@ -1,12 +1,12 @@
 extern unsigned char gTRKState[];
-extern unsigned int lbl_8032A568;
+extern unsigned int lc_base;
 
-unsigned int fn_800F36A0(void);
+unsigned int __TRK_get_MSR(void);
 
 int TRKInitializeTarget(void)
 {
     *(int *)(gTRKState + 0x98) = 1;
-    *(unsigned int *)(gTRKState + 0x8C) = fn_800F36A0();
-    lbl_8032A568 = 0xE0000000;
+    *(unsigned int *)(gTRKState + 0x8C) = __TRK_get_MSR();
+    lc_base = 0xE0000000;
     return 0;
 }

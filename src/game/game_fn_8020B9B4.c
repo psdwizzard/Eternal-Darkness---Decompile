@@ -1,6 +1,6 @@
 typedef unsigned int u32;
 
-void fn_8020B9B4(register void* mainAddress, register void* cacheAddress, register u32 blocks)
+void LCStoreBlocks(register void* mainAddress, register void* cacheAddress, register u32 blocks)
 {
     register u32 control;
 

@@ -14,42 +14,42 @@ struct ARQRequest {
     ARQCallback callback;
 };
 
-extern void fn_8021A9B0(u32 type, u32 mainMemory, u32 aram, u32 length);
-extern void fn_8021B4F8(void);
-extern ARQRequest* lbl_8064DB38;
-extern ARQRequest* lbl_8064DB48;
-extern ARQRequest* lbl_8064DB4C;
-extern ARQCallback lbl_8064DB50;
-extern ARQCallback lbl_8064DB54;
+extern void ARStartDMA(u32 type, u32 mainMemory, u32 aram, u32 length);
+extern void __ARQServiceQueueLo(void);
+extern ARQRequest* __ARQRequestQueueHi;
+extern ARQRequest* __ARQRequestPendingHi;
+extern ARQRequest* __ARQRequestPendingLo;
+extern ARQCallback __ARQCallbackHi;
+extern ARQCallback __ARQCallbackLo;
 
 /* ARQ DMA-complete interrupt: run the finished request's callback, then
  * start the next high-priority request or resume the low-priority chunks. */
-void fn_8021B5FC(void)
+void __ARQInterruptServiceRoutine(void)
 {
-    if (lbl_8064DB50 != 0) {
-        lbl_8064DB50((u32)lbl_8064DB48);
-        lbl_8064DB48 = 0;
-        lbl_8064DB50 = 0;
-    } else if (lbl_8064DB54 != 0) {
-        lbl_8064DB54((u32)lbl_8064DB4C);
-        lbl_8064DB4C = 0;
-        lbl_8064DB54 = 0;
+    if (__ARQCallbackHi != 0) {
+        __ARQCallbackHi((u32)__ARQRequestPendingHi);
+        __ARQRequestPendingHi = 0;
+        __ARQCallbackHi = 0;
+    } else if (__ARQCallbackLo != 0) {
+        __ARQCallbackLo((u32)__ARQRequestPendingLo);
+        __ARQRequestPendingLo = 0;
+        __ARQCallbackLo = 0;
     }
 
-    if (lbl_8064DB38 != 0) {
-        if (lbl_8064DB38->type == 0) {
-            fn_8021A9B0(lbl_8064DB38->type, lbl_8064DB38->source,
-                        lbl_8064DB38->destination, lbl_8064DB38->length);
+    if (__ARQRequestQueueHi != 0) {
+        if (__ARQRequestQueueHi->type == 0) {
+            ARStartDMA(__ARQRequestQueueHi->type, __ARQRequestQueueHi->source,
+                        __ARQRequestQueueHi->destination, __ARQRequestQueueHi->length);
         } else {
-            fn_8021A9B0(lbl_8064DB38->type, lbl_8064DB38->destination,
-                        lbl_8064DB38->source, lbl_8064DB38->length);
+            ARStartDMA(__ARQRequestQueueHi->type, __ARQRequestQueueHi->destination,
+                        __ARQRequestQueueHi->source, __ARQRequestQueueHi->length);
         }
-        lbl_8064DB50 = lbl_8064DB38->callback;
-        lbl_8064DB48 = lbl_8064DB38;
-        lbl_8064DB38 = lbl_8064DB38->next;
+        __ARQCallbackHi = __ARQRequestQueueHi->callback;
+        __ARQRequestPendingHi = __ARQRequestQueueHi;
+        __ARQRequestQueueHi = __ARQRequestQueueHi->next;
     }
 
-    if (lbl_8064DB48 == 0) {
-        fn_8021B4F8();
+    if (__ARQRequestPendingHi == 0) {
+        __ARQServiceQueueLo();
     }
 }

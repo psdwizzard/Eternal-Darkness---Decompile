@@ -23,7 +23,7 @@ extern f32 lbl_8064F2B0;
 extern s32 lbl_80651A9C;
 extern s32 lbl_80651AA0;
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern int fn_80128408(void);
 extern int fn_800453AC(f32, int, int, int, int, int, int, int, int, Vec3 *, int, int);
 extern void *fn_80201814(void);
@@ -42,9 +42,9 @@ extern void fn_8012D0D0(void *);
 static inline void AddJitter(Vec3 *v, u8 bits)
 {
     if (bits != 0) {
-        v->x += (f32)((1 << (bits - 1)) - (((1 << bits) - 1) & fn_800FBFB0()));
-        v->y += (f32)((1 << (bits - 1)) - (((1 << bits) - 1) & fn_800FBFB0()));
-        v->z += (f32)((1 << (bits - 1)) - (((1 << bits) - 1) & fn_800FBFB0()));
+        v->x += (f32)((1 << (bits - 1)) - (((1 << bits) - 1) & rand()));
+        v->y += (f32)((1 << (bits - 1)) - (((1 << bits) - 1) & rand()));
+        v->z += (f32)((1 << (bits - 1)) - (((1 << bits) - 1) & rand()));
     }
 }
 
@@ -63,7 +63,7 @@ void *fn_800CEC24(int base, u8 range, Vec3 *position, void *source, u8 jitterBit
         lbl_8064CAA0 = 0;
     }
     if (count > 0 && lbl_8064CAA0 < 6) {
-        fn_800453AC(0.0f, 0x3A, base + fn_800FBFB0() % range, -1, -1,
+        fn_800453AC(0.0f, 0x3A, base + rand() % range, -1, -1,
                     -1, -1, -1, 0x23, position, 5, 0);
         result = fn_80201814();
         lbl_8064CAA0++;
@@ -80,7 +80,7 @@ void *fn_800CEC24(int base, u8 range, Vec3 *position, void *source, u8 jitterBit
             s32 c3;
 
             if (divisor != lbl_8064F2B0) {
-                s = size + (f32)(fn_800FBFB0() & 3) / divisor;
+                s = size + (f32)(rand() & 3) / divisor;
             } else {
                 s = size;
             }

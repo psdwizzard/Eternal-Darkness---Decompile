@@ -19,7 +19,7 @@ typedef struct Request {
 extern void* fn_8017AF64(void);
 extern u64 OSGetTime(void);
 extern int fn_8017B47C(int, int*, int*);
-extern int fn_80220A68(int, void*, void*);
+extern int CARDMount(int, void*, void*);
 extern int fn_8017BD78(Request*);
 extern void fn_8017C724(Request*);
 extern void fn_8017BA64(unsigned int);
@@ -42,7 +42,7 @@ int fn_8017AF90(int value)
 
     do {
         if (fn_8017B47C(request.value, &primary_value, &primary_level) == 0) {
-            request.result = fn_80220A68(request.value, handle, fn_8017BA64);
+            request.result = CARDMount(request.value, handle, fn_8017BA64);
         } else {
             request.result = -3;
         }

@@ -1,7 +1,7 @@
 #include "src/game/types.h"
 
-extern double fn_80101988(double); /* cos */
-extern double fn_80102360(double); /* exp */
+extern double cos(double); /* cos */
+extern double exp(double); /* exp */
 extern double __frsqrte(double);
 extern const float lbl_806517F8; /* pi */
 extern const float lbl_806517FC; /* 2 */
@@ -11,7 +11,7 @@ extern const double lbl_80651818; /* 3 */
 
 /* Evaluate the line spectral pairs at each mapped frequency, then apply
  * the resulting amplitude to all samples sharing that frequency. */
-void fn_802328A4(float *curve, int *map, int count, int bins,
+void vorbis_lsp_to_curve(float *curve, int *map, int count, int bins,
                 float *lsp, int order, float amplitude, float offset)
 {
     int i;
@@ -23,7 +23,7 @@ void fn_802328A4(float *curve, int *map, int count, int bins,
     i = 0;
     two = lbl_806517FC;
     for (; i < order; i++) {
-        lsp[i] = two * (float)fn_80101988(lsp[i]);
+        lsp[i] = two * (float)cos(lsp[i]);
     }
 
     two = 2.0f;
@@ -37,7 +37,7 @@ void fn_802328A4(float *curve, int *map, int count, int bins,
 
         p = 0.5f;
         q = p;
-        w = two * (float)fn_80101988(frequencyScale * (float)k);
+        w = two * (float)cos(frequencyScale * (float)k);
 
         for (j = 1; j < order; j += 2) {
             q *= w - lsp[j - 1];
@@ -66,7 +66,7 @@ void fn_802328A4(float *curve, int *map, int count, int bins,
             w = root;
         }
 
-        gain = (float)fn_80102360(0.11512925f * (amplitude / w - offset));
+        gain = (float)exp(0.11512925f * (amplitude / w - offset));
         curve[i] *= gain;
         while (map[++i] == k) {
             curve[i] *= gain;

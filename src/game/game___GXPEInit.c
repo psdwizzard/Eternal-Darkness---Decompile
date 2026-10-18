@@ -13,18 +13,18 @@ typedef void (*OSInterruptHandler)(s16 interrupt, OSContext *context);
 extern OSInterruptHandler __OSSetInterruptHandler(s16 interrupt, OSInterruptHandler handler);
 extern u32 __OSUnmaskInterrupts(u32 mask);
 extern void OSInitThreadQueue(OSThreadQueue *queue);
-extern void fn_80226858(s16 interrupt, OSContext *context);
-extern void fn_80226924(s16 interrupt, OSContext *context);
-extern OSThreadQueue lbl_8064DBBC;
+extern void GXTokenInterruptHandler(s16 interrupt, OSContext *context);
+extern void GXFinishInterruptHandler(s16 interrupt, OSContext *context);
+extern OSThreadQueue FinishQueue;
 extern volatile u16 *__peReg;
 
 void __GXPEInit(void)
 {
     u32 control;
 
-    __OSSetInterruptHandler(18, fn_80226858);
-    __OSSetInterruptHandler(19, fn_80226924);
-    OSInitThreadQueue(&lbl_8064DBBC);
+    __OSSetInterruptHandler(18, GXTokenInterruptHandler);
+    __OSSetInterruptHandler(19, GXFinishInterruptHandler);
+    OSInitThreadQueue(&FinishQueue);
     __OSUnmaskInterrupts(0x2000);
     __OSUnmaskInterrupts(0x1000);
 

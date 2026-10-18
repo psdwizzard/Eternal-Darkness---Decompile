@@ -9,18 +9,18 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern TRKBuffer lbl_80328610[3];
-extern void fn_800F34C4(void *);
-extern void fn_800F34BC(void *);
+extern TRKBuffer gTRKMsgBufs[3];
+extern void TRKAcquireMutex(void *);
+extern void TRKReleaseMutex(void *);
 
-void fn_800EFCDC(int id)
+void TRKReleaseBuffer(int id)
 {
     TRKBuffer *buffer;
 
     if (id != -1 && id >= 0 && id < 3) {
-        buffer = &lbl_80328610[id];
-        fn_800F34C4(buffer);
+        buffer = &gTRKMsgBufs[id];
+        TRKAcquireMutex(buffer);
         buffer->in_use = 0;
-        fn_800F34BC(buffer);
+        TRKReleaseMutex(buffer);
     }
 }

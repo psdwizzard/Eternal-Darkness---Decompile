@@ -2,7 +2,7 @@
 extern const double lbl_8064FE08;
 extern const double lbl_8064FE10;
 
-double fn_80101A5C(double x)
+double floor(double x)
 {
     int high;
     unsigned int low;

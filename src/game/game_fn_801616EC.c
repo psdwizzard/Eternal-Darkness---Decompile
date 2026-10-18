@@ -15,9 +15,9 @@ typedef struct List {
     Item* head;
 } List;
 
-extern void fn_8016160C(List*, Item*);
+extern void markclosure(List*, Item*);
 
-void fn_801616EC(List* list, Entry* entry)
+void markobject(List* list, Entry* entry)
 {
     Item* item;
 
@@ -29,10 +29,10 @@ void fn_801616EC(List* list, Entry* entry)
             item->active = 1;
         break;
     case 6:
-        fn_8016160C(list, entry->item->first);
+        markclosure(list, entry->item->first);
         break;
     case 5:
-        fn_8016160C(list, entry->item);
+        markclosure(list, entry->item);
         break;
     case 4:
         item = entry->item;

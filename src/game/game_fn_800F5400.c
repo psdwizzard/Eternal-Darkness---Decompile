@@ -1,4 +1,4 @@
-int fn_800F5400(void)
+int TRKTargetCPUMinorType(void)
 {
     return 84;
 }

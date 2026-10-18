@@ -18,7 +18,7 @@ extern GXData *gx;
 extern u8 lbl_8064C460[4];
 extern u8 lbl_8064C464[4];
 extern u8 lbl_8064C468[4];
-extern void fn_80224908(void);
+extern void __GXXfVtxSpecs(void);
 
 #define FIELD(reg, width, shift) (((reg) >> (shift)) & ((1UL << (width)) - 1))
 typedef union { u8 byte; u32 word; } GXFifo;
@@ -26,7 +26,7 @@ volatile GXFifo GXWGFifo : 0xCC008000;
 #define FIFO8 GXWGFifo.byte
 #define FIFO32 GXWGFifo.word
 
-void fn_80225144(void)
+void __GXSetVCD(void)
 {
     u32 limit, lo, hi, normalCount;
     u32 descriptorLo, descriptorHi;
@@ -38,7 +38,7 @@ void fn_80225144(void)
     FIFO8 = 0x60;
     descriptorHi = gx->vcdHi;
     FIFO32 = descriptorHi;
-    fn_80224908();
+    __GXXfVtxSpecs();
 
     if (gx->vNum != 0) {
         normalCount = gx->hasBiNrms * 2 + 1;

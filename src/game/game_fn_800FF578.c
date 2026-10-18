@@ -1,10 +1,10 @@
-/* fn_800FF578: fdlibm __ieee754_log (MSL e_log.c). */
+/* __ieee754_log: fdlibm __ieee754_log (MSL e_log.c). */
 
 #define __HI(x) *(int *)&x
 #define __LO(x) *(1 + (int *)&x)
 
-extern int lbl_8064CC50;           /* errno */
-extern double lbl_8064CC60;        /* zero */
+extern int errno;           /* errno */
+extern double zero;        /* zero */
 extern const double lbl_8064FAE8; /* -two54 */
 extern const double lbl_8064FAF0; /* two54 */
 extern const double lbl_8064FAF8; /* 1.0 */
@@ -21,7 +21,6 @@ extern const double lbl_8064FB48; /* Lg2 */
 extern const double lbl_8064FB50; /* Lg4 */
 extern const double lbl_8064FB58; /* Lg6 */
 
-#define zero lbl_8064CC60
 #define two54 lbl_8064FAF0
 #define ln2_hi lbl_8064FB00
 #define ln2_lo lbl_8064FB08
@@ -33,7 +32,7 @@ extern const double lbl_8064FB58; /* Lg6 */
 #define Lg6 lbl_8064FB58
 #define Lg7 lbl_8064FB40
 
-double fn_800FF578(double x) {
+double __ieee754_log(double x) {
     double hfsq, f, s, z, R, w, t1, t2, dk;
     int k, hx, i, j;
     unsigned int lx;
@@ -46,7 +45,7 @@ double fn_800FF578(double x) {
             return lbl_8064FAE8 / zero;
         }
         if (hx < 0) {
-            lbl_8064CC50 = 33;
+            errno = 33;
             return (x - x) / zero;
         }
         k -= 54;

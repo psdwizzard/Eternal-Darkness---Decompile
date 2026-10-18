@@ -25,7 +25,7 @@ extern GXData *gx;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_80225878(int vtxfmt, const volatile GXVtxAttrFmtList *list)
+void GXSetVtxAttrFmtv(int vtxfmt, const volatile GXVtxAttrFmtList *list)
 {
     int attr, count, type;
     u8 frac;

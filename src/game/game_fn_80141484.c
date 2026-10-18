@@ -28,14 +28,14 @@ extern char lbl_8064BA00;
 extern char lbl_802FC53C[];
 
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern void fn_801EDA7C(void*, int, int, int);
 extern void fn_801ECF50(int);
-extern void fn_80226C18(int, int);
+extern void GXSetLineWidth(int, int);
 extern int fn_801E79FC(void*, int);
 extern void fn_80140E70(void*, DebugVertex*, u8, int, u32);
-extern void fn_800F9D4C(char*, const char*, ...);
+extern void sprintf(char*, const char*, ...);
 extern void fn_800ED4BC(char*, int, const char*, ...);
 
 void fn_80141484(DebugBatch* batch, u32 value)
@@ -49,11 +49,11 @@ void fn_80141484(DebugBatch* batch, u32 value)
     vertices = batch->vertices;
     output = batch->output;
     fn_801ED468(0x1B);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ED118();
     fn_801EDA7C(lbl_802FC53C, 0, 0x2BF, 0);
     fn_801ECF50(4);
-    fn_80226C18(0x12, 0);
+    GXSetLineWidth(0x12, 0);
 
     i = 0;
     while (i < batch->count) {
@@ -69,7 +69,7 @@ void fn_80141484(DebugBatch* batch, u32 value)
     while (i < batch->count) {
         DebugVertex* vertex = (DebugVertex*)((u8*)vertices + source->slot * 0x38);
         char text[24];
-        fn_800F9D4C(text, &lbl_8064BA00, source->value);
+        sprintf(text, &lbl_8064BA00, source->value);
         fn_800ED4BC(vertex->text, 3, text);
         i++;
         source++;

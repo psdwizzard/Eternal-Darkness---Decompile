@@ -7,9 +7,9 @@ typedef struct Entry {
     u8 rest[0xD4];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-void fn_801CC704(u32 index, u32 value)
+void hwSetPriority(u32 index, u32 value)
 {
-    lbl_8064D4AC[index].value = value;
+    dspVoice[index].value = value;
 }

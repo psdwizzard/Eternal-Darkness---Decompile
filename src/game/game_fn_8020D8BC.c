@@ -1,4 +1,4 @@
-/* fn_8020D8BC (0x8020D8BC, 200 bytes): OSUnlockMutex. */
+/* OSUnlockMutex (0x8020D8BC, 200 bytes): OSUnlockMutex. */
 
 typedef struct OSThread OSThread;
 typedef struct OSMutex OSMutex;
@@ -32,13 +32,13 @@ struct OSThread {
 
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int level);
-extern OSThread* fn_8020F2DC(void);
-extern int fn_8020F3D0(OSThread* thread);
-extern void fn_802100F0(OSThreadQueue* queue);
+extern OSThread* OSGetCurrentThread(void);
+extern int __OSGetEffectivePriority(OSThread* thread);
+extern void OSWakeupThread(OSThreadQueue* queue);
 
-void fn_8020D8BC(OSMutex* mutex) {
+void OSUnlockMutex(OSMutex* mutex) {
     int enabled = OSDisableInterrupts();
-    OSThread* currentThread = fn_8020F2DC();
+    OSThread* currentThread = OSGetCurrentThread();
 
     if (mutex->thread == currentThread && --mutex->count == 0) {
         OSMutex* next = mutex->next;
@@ -55,9 +55,9 @@ void fn_8020D8BC(OSMutex* mutex) {
         }
         mutex->thread = 0;
         if (currentThread->priority < currentThread->base) {
-            currentThread->priority = fn_8020F3D0(currentThread);
+            currentThread->priority = __OSGetEffectivePriority(currentThread);
         }
-        fn_802100F0(&mutex->queue);
+        OSWakeupThread(&mutex->queue);
     }
     OSRestoreInterrupts(enabled);
 }

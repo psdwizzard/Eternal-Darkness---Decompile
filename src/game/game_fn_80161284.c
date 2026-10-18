@@ -22,19 +22,19 @@ typedef struct Entry {
 } Entry;
 
 extern char lbl_8064BA80;
-extern int fn_801611F8(Entry*);
-extern void* fn_8016B5CC(Object*, int, unsigned int, char*, int);
+extern int protosize(Entry*);
+extern void* luaM_realloc(Object*, int, unsigned int, char*, int);
 
-void fn_80161284(Object* object, Entry* entry)
+void luaF_freeproto(Object* object, Entry* entry)
 {
     if (entry->count > 0)
-        object->allocation_size -= fn_801611F8(entry);
+        object->allocation_size -= protosize(entry);
 
-    fn_8016B5CC(object, entry->field18, 0, &lbl_8064BA80, 78);
-    fn_8016B5CC(object, entry->field38, 0, &lbl_8064BA80, 79);
-    fn_8016B5CC(object, entry->field08, 0, &lbl_8064BA80, 80);
-    fn_8016B5CC(object, entry->field00, 0, &lbl_8064BA80, 81);
-    fn_8016B5CC(object, entry->field10, 0, &lbl_8064BA80, 82);
-    fn_8016B5CC(object, entry->field2C, 0, &lbl_8064BA80, 83);
-    fn_8016B5CC(object, (int)entry, 0, &lbl_8064BA80, 84);
+    luaM_realloc(object, entry->field18, 0, &lbl_8064BA80, 78);
+    luaM_realloc(object, entry->field38, 0, &lbl_8064BA80, 79);
+    luaM_realloc(object, entry->field08, 0, &lbl_8064BA80, 80);
+    luaM_realloc(object, entry->field00, 0, &lbl_8064BA80, 81);
+    luaM_realloc(object, entry->field10, 0, &lbl_8064BA80, 82);
+    luaM_realloc(object, entry->field2C, 0, &lbl_8064BA80, 83);
+    luaM_realloc(object, (int)entry, 0, &lbl_8064BA80, 84);
 }

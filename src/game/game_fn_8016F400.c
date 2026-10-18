@@ -12,10 +12,10 @@ typedef struct Vec3s {
     s16 z;
 } Vec3s;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80179DB0(Vec3*, Vec3s*);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
@@ -29,13 +29,13 @@ int fn_8016F400(void* state)
     Vec3s* source;
     void* object;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    object_id = (int)fn_8016A694(state, 1);
-    source = fn_8016A784(state, 2);
+    object_id = (int)lua_tonumber(state, 1);
+    source = lua_touserdata(state, 2);
     if (source != 0) {
         fn_80179DB0(&position, source);
     } else {

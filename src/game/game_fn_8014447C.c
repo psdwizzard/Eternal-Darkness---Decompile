@@ -56,12 +56,12 @@ extern int lbl_8064D070;
 extern int lbl_8064D074;
 extern int lbl_8064D078;
 
-extern int fn_80218FE0(void);
-extern void fn_80217324(void);
-extern void fn_80217F88(void);
-extern int fn_80218DDC(unsigned int mask);
-extern int fn_80218EDC(unsigned int mask);
-extern unsigned int fn_802191F0(PadStatus* status);
+extern int PADInit(void);
+extern void VIWaitForRetrace(void);
+extern void VIFlush(void);
+extern int PADReset(unsigned int mask);
+extern int PADRecalibrate(unsigned int mask);
+extern unsigned int PADRead(PadStatus* status);
 extern void fn_80145408(unsigned int ticks);
 
 void fn_8014447C(int initialize)
@@ -72,27 +72,27 @@ void fn_8014447C(int initialize)
     register Entry* entries;
 
     if (initialize) {
-        fn_80218FE0();
-        fn_80217324();
-        fn_80218EDC(0x80000000);
-        fn_80217324();
+        PADInit();
+        VIWaitForRetrace();
+        PADRecalibrate(0x80000000);
+        VIWaitForRetrace();
         do {
-            fn_80217F88();
-            fn_80217324();
-        } while (fn_80218DDC(0x80000000) != 1);
-        fn_80217F88();
-        fn_80217324();
+            VIFlush();
+            VIWaitForRetrace();
+        } while (PADReset(0x80000000) != 1);
+        VIFlush();
+        VIWaitForRetrace();
         /* ASM: addi retains the zero-offset pooled address; C substitutes mr. */
         asm { addi scratch, data, 0 }
-        fn_802191F0((PadStatus*)scratch);
+        PADRead((PadStatus*)scratch);
         /* ASM: addi preserves the separate controller-status address from the retail data pool; C folds it into the pool base. */
         asm { addi status, data, 0 }
         while (status->err < -1) {
-            fn_80218DDC(0x80000000);
+            PADReset(0x80000000);
             fn_80145408(0xFB90);
             /* ASM: addi retains the zero-offset pooled address; C substitutes mr. */
             asm { addi scratch, data, 0 }
-            fn_802191F0((PadStatus*)scratch);
+            PADRead((PadStatus*)scratch);
             lbl_8064D04C = status->err;
         }
         lbl_8064D04C = status->err;

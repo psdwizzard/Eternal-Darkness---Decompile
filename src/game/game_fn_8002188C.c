@@ -188,35 +188,35 @@ extern s32 fn_801ECC4C();
 extern s32 fn_801ED3F4();
 extern s32 fn_801ED5F4();
 extern s32 fn_801F3960();
-extern s32 fn_802119B0();
-extern s32 fn_802262B8();
-extern s32 fn_802266B0();
-extern s32 fn_80226EA0();
-extern s32 fn_80226FA4();
-extern s32 fn_802276AC();
-extern s32 fn_80228474();
-extern s32 fn_80228730();
-extern s32 fn_80228AFC();
-extern s32 fn_80228B98();
-extern s32 fn_80229330();
-extern s32 fn_80229490();
-extern s32 fn_80229664();
-extern s32 fn_8022979C();
-extern s32 fn_802297C8();
-extern s32 fn_80229810();
-extern s32 fn_80229B08();
-extern s32 fn_80229B88();
-extern s32 fn_80229C0C();
-extern s32 fn_80229CCC();
-extern s32 fn_80229D8C();
-extern s32 fn_80229E74();
-extern s32 fn_80229F4C();
-extern s32 fn_80229FA4();
-extern s32 fn_8022A044();
-extern s32 fn_8022A118();
-extern s32 fn_8022A2F4();
-extern s32 fn_8022A5D8();
-extern s32 fn_8022B4B8();
+extern s32 C_MTXOrtho();
+extern s32 GXSetNumTexGens();
+extern s32 GXPixModeSync();
+extern s32 GXSetTexCopySrc();
+extern s32 GXSetTexCopyDst();
+extern s32 GXCopyTex();
+extern s32 GXInitTexObj();
+extern s32 GXInitTexObjLOD();
+extern s32 GXLoadTexObj();
+extern s32 GXLoadTlut();
+extern s32 GXSetIndTexMtx();
+extern s32 GXSetIndTexCoordScale();
+extern s32 GXSetIndTexOrder();
+extern s32 GXSetNumIndStages();
+extern s32 GXSetTevDirect();
+extern s32 GXSetTevIndWarp();
+extern s32 GXSetTevColorIn();
+extern s32 GXSetTevAlphaIn();
+extern s32 GXSetTevColorOp();
+extern s32 GXSetTevAlphaOp();
+extern s32 GXSetTevColor();
+extern s32 GXSetTevKColorSel();
+extern s32 GXSetTevSwapMode();
+extern s32 GXSetTevSwapModeTable();
+extern s32 GXSetAlphaCompare();
+extern s32 GXSetTevOrder();
+extern s32 GXSetNumTevStages();
+extern s32 GXSetBlendMode();
+extern s32 GXSetProjection();
 
 
 /* Retail-owned menu/debug strings. */
@@ -593,9 +593,9 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
       iVar4 = lbl_8064C694;
     }
     fn_800472B0(1);
-    fn_80228B98(lbl_8063B2A0,0);
-    fn_80228B98(lbl_8063B2C4,4);
-    fn_80228B98(lbl_8063B2AC,2);
+    GXLoadTlut(lbl_8063B2A0,0);
+    GXLoadTlut(lbl_8063B2C4,4);
+    GXLoadTlut(lbl_8063B2AC,2);
     memset(local_8c,0,sizeof(local_8c));
     if ((iVar4 == 3) && (lbl_8064DEA8 == lbl_8064C67C)) {
       fn_801AD4B4(0,0,1,0);
@@ -692,24 +692,24 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
       }
     }
     fn_801E5FE4();
-    fn_8022A5D8(1,4,5,0);
+    GXSetBlendMode(1,4,5,0);
     fn_801A8D38(5);
-    fn_802119B0((double)lbl_8064DEA8,(double)lbl_8064DEBC,
+    C_MTXOrtho((double)lbl_8064DEA8,(double)lbl_8064DEBC,
       (double)lbl_8064DEA8,(double)lbl_8064DEB8,
       (double)lbl_8064DEC0,(double)lbl_8064DF24,
       auStack_74);
-    fn_8022B4B8(auStack_74,1);
+    GXSetProjection(auStack_74,1);
     fn_801ED3F4(lbl_8030241C[4]);
     fn_801A91D4(0xb,0xff - local_a4.channel[3] & 0xff,1);
-    fn_80226EA0(0,0,0x280,0x1e0);
-    fn_80226FA4(0x280,0x1e0,4,0);
-    fn_802276AC(uVar5,1);
-    fn_802266B0();
-    fn_80228474(lbl_8063C638 + lbl_8064D738 * 0x20,uVar5,0x280,0x1e0,4,0,0,0);
+    GXSetTexCopySrc(0,0,0x280,0x1e0);
+    GXSetTexCopyDst(0x280,0x1e0,4,0);
+    GXCopyTex(uVar5,1);
+    GXPixModeSync();
+    GXInitTexObj(lbl_8063C638 + lbl_8064D738 * 0x20,uVar5,0x280,0x1e0,4,0,0,0);
     dVar11 = (double)lbl_8064DEA8;
-    fn_80228730(dVar11,dVar11,dVar11,lbl_8063C638 + lbl_8064D738 * 0x20,1,1,0,0,0
+    GXInitTexObjLOD(dVar11,dVar11,dVar11,lbl_8063C638 + lbl_8064D738 * 0x20,1,1,0,0,0
       );
-    fn_8022A5D8(1,4,5,0);
+    GXSetBlendMode(1,4,5,0);
     if ((lbl_8064C688 != -1) &&
       (iVar4 = lbl_8064C68C, iVar4 != 0xff)) {
       fn_801ED3F4(lbl_8064C6AC[lbl_8064C688]);
@@ -738,41 +738,41 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
         fn_801A8FE8(lbl_8023D4F8,lbl_8023D4E0,0,0,5);
       }
     }
-    fn_80228AFC(lbl_8063C638 + lbl_8064D738 * 0x20,0);
-    fn_80228AFC(lbl_8063B260,7);
-    fn_80228AFC(lbl_8063B31C,1);
+    GXLoadTexObj(lbl_8063C638 + lbl_8064D738 * 0x20,0);
+    GXLoadTexObj(lbl_8063B260,7);
+    GXLoadTexObj(lbl_8063B31C,1);
     local_140 = local_a4;
-    fn_80229D8C(1,&local_140);
-    fn_80229FA4(0,0,1,2,0);
-    fn_80229F4C(0,0,0);
+    GXSetTevColor(1,&local_140);
+    GXSetTevSwapModeTable(0,0,1,2,0);
+    GXSetTevSwapMode(0,0,0);
     fn_801ECB40(lbl_8064CBA0 + 1U & 0xff);
     fn_801ECB40(lbl_8064CBA0 & 0xff);
-    fn_80229E74(0,0xd);
-    fn_8022A5D8(1,4,5,3);
-    fn_8022A118(0,0,0,0xff);
+    GXSetTevKColorSel(0,0xd);
+    GXSetBlendMode(1,4,5,3);
+    GXSetTevOrder(0,0,0,0xff);
     fn_80023230(0,1,4,0x3c);
-    fn_80229C0C(0,0,0,0,1,0);
-    fn_80229CCC(0,0,0,0,1,0);
-    fn_80229B88(0,7,4,1,7);
-    fn_80229664(0,0,1);
-    fn_80229490(0,0,0);
-    fn_80229330(1,local_8c,2);
-    fn_80229810(0,0,1,0,1);
-    fn_802262B8(1);
-    fn_8022A2F4(1);
-    fn_8022979C(1);
-    fn_80229B08(0,0xf,0xe,8,0xf);
+    GXSetTevColorOp(0,0,0,0,1,0);
+    GXSetTevAlphaOp(0,0,0,0,1,0);
+    GXSetTevAlphaIn(0,7,4,1,7);
+    GXSetIndTexOrder(0,0,1);
+    GXSetIndTexCoordScale(0,0,0);
+    GXSetIndTexMtx(1,local_8c,2);
+    GXSetTevIndWarp(0,0,1,0,1);
+    GXSetNumTexGens(1);
+    GXSetNumTevStages(1);
+    GXSetNumIndStages(1);
+    GXSetTevColorIn(0,0xf,0xe,8,0xf);
     fn_801A8FE8(lbl_8023D4F8,lbl_8023D4E0,0,0,5);
     fn_801A8FE8(lbl_8023D4F8,lbl_8023D540,0,0,5);
     fn_801A8FE8(lbl_8023D4F8,lbl_8023D520,0,0,5);
-    fn_80229B08(0,0xf,8,0xc,0xf);
+    GXSetTevColorIn(0,0xf,8,0xc,0xf);
     fn_801A8FE8(lbl_8023D4F8,lbl_8023D4E0,0,0,5);
-    fn_8022A044(7,0,0,3,0xff);
+    GXSetAlphaCompare(7,0,0,3,0xff);
     fn_801ED3F4(lbl_8030241C[4]);
     fn_801ECC4C();
-    fn_8022979C(0);
-    fn_802297C8(0);
-    fn_8022A5D8(1,4,5,0);
+    GXSetNumIndStages(0);
+    GXSetTevDirect(0);
+    GXSetBlendMode(1,4,5,0);
     break;
   case 15:
     fn_801A91D4(0x18,param_3,1);

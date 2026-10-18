@@ -13,21 +13,21 @@ typedef struct State {
     s16 value_a1;
 } State;
 
-extern u32 fn_801CC13C(u32);
-extern u32 fn_801CAFAC(int, int, int);
+extern u32 inpTranslateExCtrl(u32);
+extern u32 inpGetMidiCtrl(int, int, int);
 
-u32 fn_801CC1AC(State* state, u32 control)
+u32 inpGetExCtrl(State* state, u32 control)
 {
     u16 result;
 
-    switch ((u8)fn_801CC13C(control)) {
+    switch ((u8)inpTranslateExCtrl(control)) {
     case 0xA0:
         return state->value_a0 * 2 + 0x2000;
     case 0xA1:
         return state->value_a1 * 2 + 0x2000;
     default:
         if (state->channel != 0xFF) {
-            result = fn_801CAFAC(control, state->channel, state->layer);
+            result = inpGetMidiCtrl(control, state->channel, state->layer);
         } else {
             result = 0;
         }

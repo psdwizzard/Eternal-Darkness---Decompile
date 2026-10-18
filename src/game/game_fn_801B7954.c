@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern void fn_801B775C(void*, u32, u32);
+extern void synthAddJob(void*, u32, u32);
 
-void fn_801B7954(void* voice)
+void synthKeyStateUpdate(void* voice)
 {
-    fn_801B775C(voice, 2, 0);
+    synthAddJob(voice, 2, 0);
 }

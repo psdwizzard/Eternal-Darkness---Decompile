@@ -24,7 +24,7 @@ extern u32 MaxEntryNum_8064D9EC;
 
 #define entryIsDir(i) (((FstStart_8064D9E4[i].isDirAndStringOff & 0xff000000) == 0) ? 0 : 1)
 
-BOOL fn_80213320(s32 entry, DVDFileInfo *fileInfo) {
+BOOL DVDFastOpen(s32 entry, DVDFileInfo *fileInfo) {
     if (entry < 0 || entry >= MaxEntryNum_8064D9EC || entryIsDir(entry)) {
         return 0;
     }

@@ -19,7 +19,7 @@ extern void fn_801EF580(void* value);
 extern void fn_80024434(void);
 extern void fn_80156EBC(void);
 extern void fn_80156E50(u32 value);
-extern void fn_80228B98(void* data, u32 value);
+extern void GXLoadTlut(void* data, u32 value);
 extern void fn_801EC7F4(void* source, void* destination);
 extern void fn_801F59A0(void);
 extern void fn_801EC9E4(void);
@@ -34,7 +34,7 @@ extern void fn_800B7EF4(u8 value, u32 mask);
 extern s32 fn_800B8F80(void);
 extern void fn_800B8F9C(void);
 extern s32 fn_8017BB60(void);
-extern int fn_80220234(int index, int* first, int* second);
+extern int CARDProbeEx(int index, int* first, int* second);
 extern void fn_80156B1C(u32 value);
 extern void fn_801571C4(void);
 extern void fn_801F35A8(void);
@@ -47,9 +47,9 @@ extern void fn_801A99B4(void);
 extern void fn_8017AF44(void);
 extern void fn_800BC000(void);
 extern void fn_800B9474(u32 value);
-extern void fn_8020F088(void* data);
-extern void fn_8020EFBC(void* data);
-extern void fn_8020F0F8(void* data);
+extern void OSCheckStopwatch(void* data);
+extern void OSStopStopwatch(void* data);
+extern void OSResetStopwatch(void* data);
 
 void fn_80023CF8(void)
 {
@@ -63,7 +63,7 @@ void fn_80023CF8(void)
     fn_80156EBC();
     fn_80156E50(1);
     fn_80156E50(0);
-    fn_80228B98(lbl_8063B2AC, 2);
+    GXLoadTlut(lbl_8063B2AC, 2);
     fn_801EC7F4(lbl_80265DA0, lbl_8063B374);
     fn_801EC7F4(lbl_80265EBC, lbl_8063B38C);
     fn_801F59A0();
@@ -84,8 +84,8 @@ void fn_80023CF8(void)
         fn_800B8F9C();
     }
     if (!fn_8017BB60()) {
-        fn_80220234(0, &first, &second);
-        fn_80220234(1, &first, &second);
+        CARDProbeEx(0, &first, &second);
+        CARDProbeEx(1, &first, &second);
     }
     fn_80156B1C(0);
     fn_801571C4();
@@ -104,7 +104,7 @@ void fn_80023CF8(void)
     fn_8017AF44();
     fn_800BC000();
     fn_800B9474(0x7F);
-    fn_8020F088(lbl_806391F0);
-    fn_8020EFBC(lbl_806391F0);
-    fn_8020F0F8(lbl_806391F0);
+    OSCheckStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_806391F0);
+    OSResetStopwatch(lbl_806391F0);
 }

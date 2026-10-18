@@ -5,7 +5,7 @@ typedef struct DisplayEntry {
     void* object;
 } DisplayEntry;
 
-extern void fn_80225FE8(int, int, int, int, int, int);
+extern void GXSetTexCoordGen2(int, int, int, int, int, int);
 
 static DisplayEntry display_entries[0x400] = {0};
 static u8 lbl_8063B260[0x40] = {0};
@@ -32,7 +32,7 @@ void fn_801EDEC4(int index, int value0, int value1, int value2)
 {
     if (values1[index] != value1 || value0 != values0[index] ||
         value2 != values2[index]) {
-        fn_80225FE8(index, value0, value1, value2, 0, 125);
+        GXSetTexCoordGen2(index, value0, value1, value2, 0, 125);
         values1[index] = value1;
         values0[index] = value0;
         values2[index] = value2;

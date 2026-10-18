@@ -18,7 +18,7 @@ typedef struct BitStream {
 extern char lbl_8024F038[];
 extern void fn_80158E7C(int);
 extern void fn_80158E84(int);
-extern int fn_8020D318(void*, void*, int);
+extern int OSReceiveMessage(void*, void*, int);
 extern void fn_80155BB0(char*, char*, ...);
 extern void* memset(void*, int, u32);
 extern void fn_8015B628(BitStream*);
@@ -44,7 +44,7 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
     int remaining;
 
     fn_80158E7C(3);
-    if (fn_8020D318(reader, &scratch, 0) != 0) {
+    if (OSReceiveMessage(reader, &scratch, 0) != 0) {
         fn_80155BB0(strings + 0xb0, strings + 0xc8);
     }
 

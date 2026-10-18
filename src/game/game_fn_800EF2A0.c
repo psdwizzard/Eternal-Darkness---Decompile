@@ -5,10 +5,10 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800F564C(unsigned char value);
-extern int fn_800F5674(void);
+extern int WriteUART1(unsigned char value);
+extern int WriteUARTFlush(void);
 
-int fn_800EF2A0(TRKBuffer *buffer)
+int TRKMessageSend(TRKBuffer *buffer)
 {
     u8 checksum;
     u32 i;
@@ -23,30 +23,30 @@ int fn_800EF2A0(TRKBuffer *buffer)
     }
     checksum = (u8)(sum ^ 0xFF);
 
-    result = fn_800F564C(0x7E);
+    result = WriteUART1(0x7E);
     if (result == 0) {
         for (j = 0; j < buffer->length; j++) {
             value = buffer->data[j];
             if (value == 0x7E || value == 0x7D) {
-                result = fn_800F564C(0x7D);
+                result = WriteUART1(0x7D);
                 value ^= 0x20;
                 if (result != 0) break;
             }
-            result = fn_800F564C((signed char)value);
+            result = WriteUART1((signed char)value);
             if (result != 0) break;
         }
     }
     if (result == 0) {
         final_value = checksum;
         if (final_value == 0x7E || final_value == 0x7D) {
-            result = fn_800F564C(0x7D);
+            result = WriteUART1(0x7D);
             final_value ^= 0x20;
             if (result != 0) goto checksum_done;
         }
-        result = fn_800F564C((signed char)final_value);
+        result = WriteUART1((signed char)final_value);
     }
 checksum_done:
-    if (result == 0) result = fn_800F564C(0x7E);
-    if (result == 0) return fn_800F5674();
+    if (result == 0) result = WriteUART1(0x7E);
+    if (result == 0) return WriteUARTFlush();
     return result;
 }

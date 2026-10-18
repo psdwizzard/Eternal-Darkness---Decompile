@@ -26,19 +26,19 @@ typedef struct CARDControl {
     u8 reservedD4[0x3C];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
-extern s32 fn_8021EABC(s32 channel, u32 address, s32 length, void *buffer,
+extern CARDControl __CARDBlock[];
+extern s32 __CARDWrite(s32 channel, u32 address, s32 length, void *buffer,
                        CARDCallback callback);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
 extern void fn_80222004(s32 channel, s32 result);
 
 void fn_80222174(s32 channel, s32 result)
 {
-    CARDControl *card = &lbl_80641C60[channel];
+    CARDControl *card = &__CARDBlock[channel];
     CARDCallback callback;
 
     if (result >= 0) {
-        result = fn_8021EABC(channel, card->sectorSize * card->fileInfo->iBlock,
+        result = __CARDWrite(channel, card->sectorSize * card->fileInfo->iBlock,
                              card->sectorSize, card->buffer, fn_80222004);
         if (result >= 0) {
             return;
@@ -47,6 +47,6 @@ void fn_80222174(s32 channel, s32 result)
 
     callback = card->callback;
     card->callback = 0;
-    fn_8021D374(card, result);
+    __CARDPutControlBlock(card, result);
     callback(channel, result);
 }

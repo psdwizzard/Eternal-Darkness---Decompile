@@ -32,11 +32,11 @@ extern void fn_8013C8F0(const Vec3* first, const Vec3* second,
                         const Vec3* third, const Vec3* fourth, Vec3* output);
 extern void fn_80141EA8(Vec3* a, Vec3* b, Vec3* c, u8 triangle);
 extern float fn_80178F88(float, float, float, float, float, float);
-extern void fn_802110A8(Matrix in, Matrix out);
-extern void fn_802114E0(Matrix output, void* angles);
-extern void fn_80211710(Matrix m, Vec3* in, Vec3* out);
-extern void fn_80211A6C(const Vec3* a, const Vec3* b, Vec3* out);
-extern void fn_80211A90(Vec3* in, Vec3* out, float scale);
+extern void PSMTXInverse(Matrix in, Matrix out);
+extern void PSMTXQuat(Matrix output, void* angles);
+extern void PSMTXMultVec(Matrix m, Vec3* in, Vec3* out);
+extern void PSVECSubtract(const Vec3* a, const Vec3* b, Vec3* out);
+extern void PSVECScale(Vec3* in, Vec3* out, float scale);
 
 extern float lbl_80650278;
 
@@ -70,21 +70,21 @@ int fn_80135D80(Vec3* p0, Vec3* p1, Vec3* p2, Vec3* p3, void* object,
     mask = 0;
     scale = (int)(1 << info->scale_shift);
 
-    fn_802114E0(matrix, fn_8011FE34(object));
-    fn_802110A8(matrix, matrix);
+    PSMTXQuat(matrix, fn_8011FE34(object));
+    PSMTXInverse(matrix, matrix);
 
-    fn_80211A6C(p0, origin, &v0);
-    fn_80211710(matrix, &v0, &v0);
-    fn_80211A90(&v0, &v0, scale);
-    fn_80211A6C(p1, origin, &v1);
-    fn_80211710(matrix, &v1, &v1);
-    fn_80211A90(&v1, &v1, scale);
-    fn_80211A6C(p2, origin, &v2);
-    fn_80211710(matrix, &v2, &v2);
-    fn_80211A90(&v2, &v2, scale);
-    fn_80211A6C(p3, origin, &v3);
-    fn_80211710(matrix, &v3, &v3);
-    fn_80211A90(&v3, &v3, scale);
+    PSVECSubtract(p0, origin, &v0);
+    PSMTXMultVec(matrix, &v0, &v0);
+    PSVECScale(&v0, &v0, scale);
+    PSVECSubtract(p1, origin, &v1);
+    PSMTXMultVec(matrix, &v1, &v1);
+    PSVECScale(&v1, &v1, scale);
+    PSVECSubtract(p2, origin, &v2);
+    PSMTXMultVec(matrix, &v2, &v2);
+    PSVECScale(&v2, &v2, scale);
+    PSVECSubtract(p3, origin, &v3);
+    PSMTXMultVec(matrix, &v3, &v3);
+    PSVECScale(&v3, &v3, scale);
 
     fn_8013C8F0(&v0, &v1, &v2, &v3, &center);
     fn_80141EA8(&v0, &v1, &v2, 0);

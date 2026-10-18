@@ -19,8 +19,8 @@ char lbl_8023BEBC[] = "chars/cin%04d/cin%04d.bin";
 
 extern u8 fn_80054BC4(s32);
 extern void fn_80138894(void);
-extern s32 fn_800F9D4C(char*, const char*, ...);
-extern s32 fn_8021302C(const char*);
+extern s32 sprintf(char*, const char*, ...);
+extern s32 DVDConvertPathToEntrynum(const char*);
 extern void* fn_80138B90(const char*, s32, s32);
 extern void fn_801E85A8(void*);
 extern void* fn_801E86A0(void*, u32);
@@ -45,8 +45,8 @@ void fn_80008014(s32 arg0, s32 arg1)
     lbl_8064C534 = 0;
     fn_80138894();
 
-    fn_800F9D4C(path, lbl_8023BEBC, (u8)arg1, (u8)arg1);
-    if (fn_8021302C(path) == -1) {
+    sprintf(path, lbl_8023BEBC, (u8)arg1, (u8)arg1);
+    if (DVDConvertPathToEntrynum(path) == -1) {
         return;
     }
 

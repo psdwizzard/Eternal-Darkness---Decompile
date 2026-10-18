@@ -15,10 +15,10 @@ typedef struct Envelope {
     u8 alternate;
 } Envelope;
 
-extern u16 lbl_802529A8[];
-extern int fn_801C2B00(Envelope* envelope);
+extern u16 dspAttenuationTab[];
+extern int salChangeADSRState(Envelope* envelope);
 
-int fn_801C2F34(Envelope* envelope, u16* level, u16* delta)
+int adsrHandle(Envelope* envelope, u16* level, u16* delta)
 {
     int done = 0;
     s32 previous;
@@ -36,7 +36,7 @@ int fn_801C2F34(Envelope* envelope, u16* level, u16* delta)
                 *delta = -((-envelope->step) >> 21);
             }
             if (--envelope->duration == 0) {
-                done = fn_801C2B00(envelope);
+                done = salChangeADSRState(envelope);
             }
         } else {
             *level = (s32)envelope->value >> 16;
@@ -55,7 +55,7 @@ int fn_801C2F34(Envelope* envelope, u16* level, u16* delta)
                 if (change < 0) {
                     change = 0;
                 }
-                envelope->value = (u32)lbl_802529A8[change] << 16;
+                envelope->value = (u32)dspAttenuationTab[change] << 16;
             }
             *level = previous >> 16;
             change = envelope->value - previous;
@@ -65,7 +65,7 @@ int fn_801C2F34(Envelope* envelope, u16* level, u16* delta)
                 *delta = -((-change) >> 21);
             }
             if (--envelope->duration == 0) {
-                done = fn_801C2B00(envelope);
+                done = salChangeADSRState(envelope);
             }
         } else {
             *level = (s32)envelope->value >> 16;

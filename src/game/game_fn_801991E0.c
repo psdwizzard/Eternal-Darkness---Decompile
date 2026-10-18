@@ -5,7 +5,7 @@ typedef unsigned long u32;
 
 extern int fn_80180430(void*, u8);
 extern void fn_8018E230(void*, void*, int, int, int, int);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_80179904(s16*, s16);
 extern void fn_8018F014(s16*, int);
 extern void fn_80199358(void);
@@ -25,7 +25,7 @@ void fn_801991E0(u8* object, float* offset, u8 bias)
             *(s16*)(entry + 0x10) = (s16)(*(s16*)(entry + 0xa) - offset[0]);
             *(s16*)(entry + 0x12) = (s16)(*(s16*)(entry + 0xc) - offset[1]);
             *(s16*)(entry + 0x14) = (int)(*(s16*)(entry + 0xe) - offset[2]) >> 2;
-            fn_80179904((s16*)(entry + 0x10), (s16)(bias + (fn_800FBFB0() & 7)));
+            fn_80179904((s16*)(entry + 0x10), (s16)(bias + (rand() & 7)));
             fn_8018F014((s16*)(entry + 0x10), 2);
         }
         entry += 0x38;

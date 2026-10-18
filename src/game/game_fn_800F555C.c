@@ -19,11 +19,11 @@ typedef struct CommBuffer {
 } CommBuffer;
 
 extern CommTable gDBCommTable;
-extern CommBuffer lbl_8032A578;
+extern CommBuffer gWritePos;
 
-int fn_800F555C(u8 *value)
+int TRKReadUARTPoll(u8 *value)
 {
-    CommBuffer *buffer = &lbl_8032A578;
+    CommBuffer *buffer = &gWritePos;
     int result = 4;
 
     if (buffer->readIndex >= buffer->readCount) {

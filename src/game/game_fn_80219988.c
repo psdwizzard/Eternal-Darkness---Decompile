@@ -31,8 +31,8 @@ typedef struct InputOrigin {
     u8 pad[4];
 } InputOrigin;
 
-extern u32 lbl_8064C430;
-extern InputOrigin lbl_80641C20[];
+extern u32 AnalogMode;
+extern InputOrigin Origin[];
 
 static inline s8 ClampStick(s8 origin, s8 value) {
     s8 limit;
@@ -64,14 +64,14 @@ static inline u8 ClampTrigger(u8 value, u8 origin) {
 
 #define CLAMP_TRIGGER(field) out->field = ClampTrigger(out->field, org->field);
 
-void fn_80219988(int chan, DecodedInput* out, PackedInput* in) {
+void SPEC2_MakeStatus(int chan, DecodedInput* out, PackedInput* in) {
     InputOrigin* org;
 
     out->buttons = (in->w0 >> 16) & 0x3FFF;
     out->stickX = in->w0 >> 8;
     out->stickY = in->w0;
 
-    switch (lbl_8064C430 & 0x700) {
+    switch (AnalogMode & 0x700) {
     case 0x000:
     case 0x500:
     case 0x600:
@@ -118,7 +118,7 @@ void fn_80219988(int chan, DecodedInput* out, PackedInput* in) {
     }
 
     out->stickX -= 0x80;
-    org = &lbl_80641C20[chan];
+    org = &Origin[chan];
     out->stickY -= 0x80;
     out->substickX -= 0x80;
     out->substickY -= 0x80;

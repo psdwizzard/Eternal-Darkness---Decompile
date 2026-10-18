@@ -21,16 +21,16 @@ typedef struct StreamState {
 } StreamState;
 #pragma pack()
 
-extern void fn_801CC408(u32*);
+extern void sndConvertMs(u32*);
 
-void fn_801BE354(StreamState* state, StreamCommand* command, u8 index)
+void DoPanningSetup(StreamState* state, StreamCommand* command, u8 index)
 {
     s32 value;
     s32 adjustment;
 
     value = command->value >> 16;
     state->step_188[index] = value;
-    fn_801CC408(&state->step_188[index]);
+    sndConvertMs(&state->step_188[index]);
     adjustment = (s8)command->adjustment << 16;
     state->base_170[index] = (command->value << 8) & 0x00FF0000;
     state->target_180[index] = state->base_170[index] + adjustment;

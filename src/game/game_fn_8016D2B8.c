@@ -1,7 +1,7 @@
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
 extern int fn_80201B44();
 extern int fn_802019EC(int, int);
 extern void *fn_80201814();
@@ -11,8 +11,8 @@ extern void *fn_80201B9C();
 extern int fn_80201B5C(void*);
 extern int fn_80201B54();
 extern void* fn_80201BC0(void*);
-extern void fn_8016A7D8(void*);
-extern void fn_8016A830(void*, double);
+extern void lua_pushnil(void*);
+extern void lua_pushnumber(void*, double);
 extern const char lbl_8024FF00[];
 extern int lbl_8064D18C;
 
@@ -24,16 +24,16 @@ int fn_8016D2B8(void* state)
     int resolved;
     void* node;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
-    mode = (int)fn_8016A694(state, 1);
+    mode = (int)lua_tonumber(state, 1);
     if (mode == 6) {
-        node = fn_8016A784(state, 2);
+        node = lua_touserdata(state, 2);
     }
     if (mode != 6) {
-        argument = (int)fn_8016A694(state, 2);
+        argument = (int)lua_tonumber(state, 2);
     }
     switch (mode) {
     case 1:
@@ -63,9 +63,9 @@ int fn_8016D2B8(void* state)
         break;
     }
     if (result <= 0) {
-        fn_8016A7D8(state);
+        lua_pushnil(state);
     } else {
-        fn_8016A830(state, (double)result);
+        lua_pushnumber(state, (double)result);
     }
     return 1;
 }

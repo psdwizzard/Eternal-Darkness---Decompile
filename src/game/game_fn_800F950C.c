@@ -36,17 +36,17 @@ enum { DISK_FILE = 1, CONSOLE_FILE = 2 };
 enum { NEUTRAL = 0, READING = 2, REREADING = 3 };
 #define EFPOS 40
 
-extern int lbl_8064CC50; /* errno */
+extern int errno; /* errno */
 
 /* MSL ftell: report the logical position, including buffered I/O. */
-unsigned int fn_800F950C(FileRecord *file)
+unsigned int ftell(FileRecord *file)
 {
     unsigned int pos;
     unsigned int state;
 
     if ((file->mode.file_kind != DISK_FILE &&
          file->mode.file_kind != CONSOLE_FILE) || file->error) {
-        lbl_8064CC50 = EFPOS;
+        errno = EFPOS;
         return -1;
     }
     state = file->state.io_state;

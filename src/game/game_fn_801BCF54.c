@@ -47,18 +47,17 @@ typedef struct SynthDataTables {
 } SynthDataTables;
 
 extern u8 lbl_8061C748[];
-extern u16 lbl_8064D3F0;
+extern u16 dataSmpSDirNum;
 extern SDIR_DATA* lbl_8064D410;
 extern SAMPLE_HEADER* lbl_8064D414;
-extern s32 fn_801BCF44(void*, void*);
-extern void* fn_801CC370(void*, void*, int, u32, s32 (*)(void*, void*));
+extern s32 smpcmp(void*, void*);
+extern void* sndBSearch(void*, void*, int, u32, s32 (*)(void*, void*));
 
 #define dataSmpSDirs lbl_8061C748
-#define dataSmpSDirNum lbl_8064D3F0
 #define dataGetSample_result lbl_8064D410
 #define dataGetSample_sheader lbl_8064D414
 
-s32 fn_801BCF54(u16 sid, SAMPLE_INFO* newsmp)
+s32 dataGetSample(u16 sid, SAMPLE_INFO* newsmp)
 {
     long i;
     SynthDataTables* t = (SynthDataTables*)dataSmpSDirs;
@@ -66,7 +65,7 @@ s32 fn_801BCF54(u16 sid, SAMPLE_INFO* newsmp)
     t->getSampleKey.id = sid;
 
     for (i = 0; i < dataSmpSDirNum; ++i) {
-        if ((dataGetSample_result = (SDIR_DATA*)fn_801CC370(&t->getSampleKey, t->sdir[i].data, t->sdir[i].numSmp, sizeof(SDIR_DATA), fn_801BCF44)) != 0) {
+        if ((dataGetSample_result = (SDIR_DATA*)sndBSearch(&t->getSampleKey, t->sdir[i].data, t->sdir[i].numSmp, sizeof(SDIR_DATA), smpcmp)) != 0) {
             if (dataGetSample_result->ref_cnt != 0xFFFF) {
                 dataGetSample_sheader = (SAMPLE_HEADER*)&dataGetSample_result->info;
                 newsmp->info = dataGetSample_sheader->info;

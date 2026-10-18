@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern u32 lbl_8064D33C;
+extern u32 __DTKState;
 
-u32 fn_801B191C(void)
+u32 DTKGetState(void)
 {
-    return lbl_8064D33C;
+    return __DTKState;
 }

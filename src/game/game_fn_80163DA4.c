@@ -13,7 +13,7 @@ typedef struct Lexer {
     int last_line;
 } Lexer;
 
-extern int fn_80163224(Lexer*, double*);
+extern int luaX_lex(Lexer*, double*);
 
 void fn_80163DA4(Lexer* lexer)
 {
@@ -22,6 +22,6 @@ void fn_80163DA4(Lexer* lexer)
         lexer->current = lexer->lookahead;
         lexer->lookahead.kind = 284;
     } else {
-        lexer->current.kind = fn_80163224(lexer, &lexer->current.value);
+        lexer->current.kind = luaX_lex(lexer, &lexer->current.value);
     }
 }

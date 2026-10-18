@@ -13,9 +13,9 @@ extern GameData lbl_8030F540;
 extern s32 lbl_8064CDC8;
 extern s32 lbl_8064C5A4;
 extern const char lbl_8023CA4C[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 
 s32 fn_8001243C(void* script)
 {
@@ -26,16 +26,16 @@ s32 fn_8001243C(void* script)
     lbl_8030F540.value_1DA = 0;
     lbl_8030F540.value_1D0 = -1;
 
-    switch (fn_8016A598(parser)) {
+    switch (lua_gettop(parser)) {
     case 3:
-        lbl_8030F540.value_1DA = (s32)fn_8016A694(parser, 3);
+        lbl_8030F540.value_1DA = (s32)lua_tonumber(parser, 3);
     case 2:
-        lbl_8064CDC8 = (s32)fn_8016A694(parser, 2);
+        lbl_8064CDC8 = (s32)lua_tonumber(parser, 2);
     case 1:
-        lbl_8064C5A4 = (s32)fn_8016A694(parser, 1);
+        lbl_8064C5A4 = (s32)lua_tonumber(parser, 1);
         break;
     default:
-        fn_80163BB4(parser, lbl_8023CA4C, fn_8016A598(parser));
+        luaO_verror(parser, lbl_8023CA4C, lua_gettop(parser));
         break;
     }
     return 0;

@@ -3,10 +3,10 @@ typedef struct Parser {
     void* table;
 } Parser;
 
-extern int fn_80163FE4(void*, void*);
-extern void fn_8015ECCC(Parser*, int);
+extern int string_constant(void*, void*);
+extern void luaK_kstr(Parser*, int);
 
-void fn_80164088(Parser* parser, void* entry)
+void code_string(Parser* parser, void* entry)
 {
-    fn_8015ECCC(parser, fn_80163FE4(parser->table, entry));
+    luaK_kstr(parser, string_constant(parser->table, entry));
 }

@@ -1,7 +1,7 @@
-extern void* lbl_8064D3D0;
-extern void fn_801CE358(void*);
+extern void* synthVoice;
+extern void salFree(void*);
 
-void fn_801B8C04(void)
+void synthExit(void)
 {
-    fn_801CE358(lbl_8064D3D0);
+    salFree(synthVoice);
 }

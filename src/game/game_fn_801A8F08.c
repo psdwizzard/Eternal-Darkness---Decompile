@@ -3,7 +3,7 @@ typedef signed long s32;
 typedef unsigned short u16;
 
 extern void fn_801ECF50(s32);
-extern void fn_80226AB4(s32, void*, s32);
+extern void GXBegin(s32, void*, s32);
 extern void fn_801A9454(s16, s16, s16);
 extern void fn_801A9468(u16);
 extern void fn_801A9450(void);
@@ -19,7 +19,7 @@ void fn_801A8F08(s32 x0, s32 y0, s32 x1, s32 y1, s32 depth,
     s16 sy1;
 
     fn_801ECF50(6);
-    fn_80226AB4(0x80, palette, 4);
+    GXBegin(0x80, palette, 4);
     sx0 = x0;
     sy0 = y0;
     sdepth = depth;

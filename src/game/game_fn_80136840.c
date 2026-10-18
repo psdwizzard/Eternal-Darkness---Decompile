@@ -31,7 +31,7 @@ typedef struct Surface {
 
 extern void fn_80136610(Quad*, QuadInfo*, Vec3s*);
 extern int fn_8013F078(const Vec3*, const Surface*, const void*, Result*, float);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float lbl_806502A0;
 
 int fn_80136840(const Vec3* point, void* object, Result* out, float radius)
@@ -46,7 +46,7 @@ int fn_80136840(const Vec3* point, void* object, Result* out, float radius)
         fn_80136610((Quad*)((char*)object + 0x30 + i * 0x1C),
                     &surface, (Vec3s*)object);
         if (fn_8013F078(point, (const Surface*)&surface, object, &candidate, radius)) {
-            float distance = fn_80211D4C(point, &candidate.point);
+            float distance = PSVECSquareDistance(point, &candidate.point);
             if (distance < best) {
                 best = distance;
                 found = 1;

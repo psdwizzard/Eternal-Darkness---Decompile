@@ -1,6 +1,6 @@
-void fn_800F5754(void);
+void EnableEXI2Interrupts(void);
 
 void EnableMetroTRKInterrupts(void)
 {
-    fn_800F5754();
+    EnableEXI2Interrupts();
 }

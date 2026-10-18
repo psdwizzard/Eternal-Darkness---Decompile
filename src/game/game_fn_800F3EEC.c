@@ -13,8 +13,7 @@ typedef struct TRKStepStatus {
 
 extern u8 gTRKCPUState[];
 extern u8 gTRKState[];
-extern TRKStepStatus lbl_8024A874;
-#define gTRKStepStatus lbl_8024A874
+extern TRKStepStatus gTRKStepStatus;
 
 static inline void TRKTargetEnableTrace(BOOL enable)
 {
@@ -43,7 +42,7 @@ static inline DSError TRKTargetDoStep(void)
     return 0;
 }
 
-DSError fn_800F3EEC(u32 rangeStart, u32 rangeEnd, BOOL stepOver)
+DSError TRKTargetStepOutOfRange(u32 rangeStart, u32 rangeEnd, BOOL stepOver)
 {
     DSError error = 0;
 

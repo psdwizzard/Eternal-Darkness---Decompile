@@ -17,7 +17,7 @@ typedef struct State {
     Item items[7];
 } State;
 
-int fn_801C773C(State* state, u8* source)
+int salAddStudioInput(State* state, u8* source)
 {
     u8 value;
 

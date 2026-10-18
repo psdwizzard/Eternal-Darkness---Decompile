@@ -1,6 +1,6 @@
 typedef struct Vec3 { float x, y, z; } Vec3;
 
-extern float fn_80211B44(const Vec3*, const Vec3*);
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
 extern float lbl_80650324;
 extern float lbl_80650328;
 
@@ -9,7 +9,7 @@ void fn_8013C460(Vec3* position, const Vec3* direction,
 {
     float amount;
 
-    amount = limit + fn_80211B44(position, direction);
+    amount = limit + PSVECDotProduct(position, direction);
     amount = -amount;
     if (amount > -(lbl_80650324 + radius)) {
         amount = lbl_80650328 + (amount + radius);

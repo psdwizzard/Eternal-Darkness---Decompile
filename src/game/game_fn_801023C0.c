@@ -1,6 +1,6 @@
-extern double fn_80101A5C(double value);
+extern double floor(double value);
 
-float fn_801023C0(float value)
+float floorf(float value)
 {
-    return (float)fn_80101A5C(value);
+    return (float)floor(value);
 }

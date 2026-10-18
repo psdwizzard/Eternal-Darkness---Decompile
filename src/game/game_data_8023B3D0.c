@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* Packed lookup and transform constants. */
-const volatile u32 lbl_8023B3D0[34] = {
+const volatile u32 inpWarmMIDIDefaults[34] = {
     0xFF00FFFF, 0xFFFFFFFF, 0xFFFFFF7F, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFF00FFFF, 0xFFFFFFFF, 0xFFFFFF7F, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0xFF00FFFF,

@@ -29,10 +29,10 @@ typedef struct VIPosition {
 extern u16 lbl_80641AC8[];
 /* 64-bit "changed" register mask (one bit per VI register, MSB = reg 0).
  * symbols.txt splits its low word out as lbl_8064DA8C. */
-extern volatile u64 lbl_8064DA88;
+extern volatile u64 changed;
 
 #define VI_BITMASK(index) (1ull << (63 - (index)))
-#define MARK_CHANGED(index) (lbl_8064DA88 |= VI_BITMASK(index))
+#define MARK_CHANGED(index) (changed |= VI_BITMASK(index))
 #define ToPhysical(addr) ((u32)(addr) & 0x3FFFFFFF)
 #define IS_LOWER_16MB(addr) ((addr) < 0x1000000)
 
@@ -57,7 +57,7 @@ static inline void calcFbbs(u32 bufAddr, u16 panPosX, u16 panPosY, u8 wordPerLin
     *bfbb = ToPhysical(*bfbb);
 }
 
-void fn_80217378(VIPosition *hv, u32 *tfbb, u32 *bfbb, u32 *rtfbb, u32 *rbfbb) {
+void setFbbRegs(VIPosition *hv, u32 *tfbb, u32 *bfbb, u32 *rtfbb, u32 *rbfbb) {
     u16 *regs = lbl_80641AC8;
     u32 shifted;
 

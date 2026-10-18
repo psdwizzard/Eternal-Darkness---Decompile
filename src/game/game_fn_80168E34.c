@@ -24,14 +24,14 @@ typedef struct State {
     Slot* slots;
 } State;
 
-extern Value* fn_801679F8(State*, Object*, Value*);
-extern int fn_80167D2C(Value*);
-extern void fn_8016057C(State*, int);
-extern void fn_80160B18(State*, Value*, int);
-extern void fn_801603AC(State*, Value*, char*);
+extern Value* luaH_set(State*, Object*, Value*);
+extern int luaT_tag(Value*);
+extern void luaD_checkstack(State*, int);
+extern void luaD_call(State*, Value*, int);
+extern void luaG_typeerror(State*, Value*, char*);
 extern char lbl_8064BBE8;
 
-void fn_80168E34(State* state, Value* key, Value* value)
+void luaV_settable(State* state, Value* key, Value* value)
 {
     void* target;
 
@@ -40,23 +40,23 @@ void fn_80168E34(State* state, Value* key, Value* value)
         int index = object->index;
         if (index == 4 || state->slots[index].second == 0) {
             Value* old_top = state->top;
-            Value* result = fn_801679F8(state, object, value);
+            Value* result = luaH_set(state, object, value);
             *result = old_top[-1];
             return;
         }
     }
 
-    target = state->slots[fn_80167D2C(key)].second;
+    target = state->slots[luaT_tag(key)].second;
     if (target != 0) {
-        fn_8016057C(state, 3);
+        luaD_checkstack(state, 3);
         state->top[2] = state->top[-1];
         state->top[1] = *value;
         state->top[0] = *key;
         state->top[-1].data.pointer = target;
         state->top[-1].type = 5;
         state->top += 3;
-        fn_80160B18(state, state->top - 4, 0);
+        luaD_call(state, state->top - 4, 0);
     } else {
-        fn_801603AC(state, key, &lbl_8064BBE8);
+        luaG_typeerror(state, key, &lbl_8064BBE8);
     }
 }

@@ -17,23 +17,23 @@ typedef struct CardControl {
     u8 reservedE0[0x30];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 extern s32 EXILock(s32 channel, u32 device, EXICallback unlockedCallback);
-extern void fn_8021C644(s32 channel, void *context);
-extern s32 fn_8021C9C8(s32 channel);
+extern void __CARDUnlockedHandler(s32 channel, void *context);
+extern s32 Retry(s32 channel);
 
-void fn_8021CBF4(s32 channel, s32 result)
+void UnlockedCallback(s32 channel, s32 result)
 {
-    CardControl *card = &lbl_80641C60[channel];
+    CardControl *card = &__CARDBlock[channel];
     CardCallback callback;
 
     if (result >= 0) {
-        card->unlockCallback = fn_8021CBF4;
-        if (!EXILock(channel, 0, fn_8021C644)) {
+        card->unlockCallback = UnlockedCallback;
+        if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
             result = 0;
         } else {
             card->unlockCallback = 0;
-            result = fn_8021C9C8(channel);
+            result = Retry(channel);
         }
     }
 

@@ -5,7 +5,7 @@ typedef union MatrixPair {
 } MatrixPair;
 
 /* Stream the first two rows of a 3-by-4 matrix to the graphics FIFO. */
-void fn_8022B66C(register const MatrixPair *matrix,
+void WriteMTXPS4x2(register const MatrixPair *matrix,
                  register volatile double *fifo)
 {
     register double tail;

@@ -6,7 +6,7 @@ extern const float lbl_8065162C;
 extern const float lbl_80651630;
 
 /* Return the length of a vector. */
-float fn_80211B08(register Vec3 *v)
+float PSVECMag(register Vec3 *v)
 {
     register float scale, length, correction;
     register float three;

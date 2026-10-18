@@ -11,17 +11,17 @@ typedef struct HeapDesc {
     Cell *allocated;
 } HeapDesc;
 
-extern HeapDesc *lbl_8064D920;
-extern int lbl_8064D924;
+extern HeapDesc *HeapArray;
+extern int NumHeaps;
 
-int fn_8020AF78(void *start, void *end) {
+int OSCreateHeap(void *start, void *end) {
     HeapDesc *hd;
     Cell *cell;
     int i;
     int count;
 
-    hd = lbl_8064D920;
-    count = lbl_8064D924;
+    hd = HeapArray;
+    count = NumHeaps;
     start = (void *)(((unsigned long)start + 31) & ~31UL);
     end = (void *)((unsigned long)end & ~31UL);
     for (i = 0; i < count; hd++, i++) {

@@ -4,7 +4,7 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
-void fn_801CA538(Vec3* output, Vec3* left, Vec3* right)
+void salCrossProduct(Vec3* output, Vec3* left, Vec3* right)
 {
     output->x = left->y * right->z - left->z * right->y;
     output->y = left->z * right->x - left->x * right->z;

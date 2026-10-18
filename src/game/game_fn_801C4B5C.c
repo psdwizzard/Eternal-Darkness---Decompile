@@ -219,67 +219,41 @@ typedef struct DSPstudioinfo {
 static DSPstudioinfo dspStudio[8];
 static DSPvoice* voices[64];
 
-extern u16* lbl_8064D498;
-extern u32 lbl_8064D49C;
-extern u16* lbl_8064D490;
-extern u16* lbl_8064D48C;
-extern u16* lbl_8064D488;
-extern u16* lbl_8064D47C;
-extern u16* lbl_8064D480;
-extern u16 lbl_8064D484;
-extern u16 lbl_8064D494;
-extern u8 lbl_8064D4E7;
-extern u8 lbl_8064D4E6;
-extern u8 lbl_8064D4E4;
-extern u32 lbl_8064D478;
-extern void* lbl_8064D4A4;
-extern u16 lbl_8023B2F0[];
-extern u16 lbl_80253130[4][3];
+extern u16* dspCmdList;
+extern u32 dspHRTFOn;
+extern u16* dspCmdPtr;
+extern u16* dspCmdMaxPtr;
+extern u16* dspCmdCurBase;
+extern u16* dspCmdLastLoad;
+extern u16* dspCmdLastBase;
+extern u16 dspCmdLastSize;
+extern u16 dspCmdFirstSize;
+extern u8 salFrame;
+extern u8 salAuxFrame;
+extern u8 salMaxStudioNum;
+extern u32 dspARAMZeroBuffer;
+extern void* dspSurround;
+extern u16 dspMixerCycles[];
+extern u16 dspSRCCycles[4][3];
 extern u16 lbl_8023B330[];
 
-extern void fn_801C47A8(DSPstudioinfo*, DSPvoice*);
-extern int fn_801C753C(DSPvoice*, int);
-extern void fn_801C7624(DSPvoice*);
-extern void fn_8020B7D8(void*, u32);
-extern void fn_801C4A60(DSPvoice**, s32, s32);
-extern u32 fn_801C2D74(ADSR_VARS*);
-extern u32 fn_801C46B4(u16*, u16*, u16*, u16, u16*, u16);
-extern int fn_801C2EF0(ADSR_VARS*);
-extern u32 fn_801C2F34(ADSR_VARS*, u16*, u16*);
-extern int fn_801C2D9C(ADSR_VARS*, u32);
+extern void HandleDepopVoice(DSPstudioinfo*, DSPvoice*);
+extern int salSynthSendMessage(DSPvoice*, int);
+extern void salDeactivateVoice(DSPvoice*);
+extern void DCStoreRangeNoSync(void*, u32);
+extern void SortVoices(DSPvoice**, s32, s32);
+extern u32 adsrSetup(ADSR_VARS*);
+extern u32 salCheckVolErrorAndResetDelta(u16*, u16*, u16*, u16, u16*, u16);
+extern int adsrRelease(ADSR_VARS*);
+extern u32 adsrHandle(ADSR_VARS*, u16*, u16*);
+extern int adsrStartRelease(ADSR_VARS*, u32);
 extern void* memset(void*, int, u32);
 extern void DCFlushRange(void*, u32);
 extern void DCFlushRangeNoSync(void*, u32);
 
-#define dspCmdList lbl_8064D498
-#define dspHRTFOn lbl_8064D49C
-#define dspCmdPtr lbl_8064D490
-#define dspCmdMaxPtr lbl_8064D48C
-#define dspCmdCurBase lbl_8064D488
-#define dspCmdLastLoad lbl_8064D47C
-#define dspCmdLastBase lbl_8064D480
-#define dspCmdLastSize lbl_8064D484
-#define dspCmdFirstSize lbl_8064D494
-#define salFrame lbl_8064D4E7
-#define salAuxFrame lbl_8064D4E6
-#define salMaxStudioNum lbl_8064D4E4
-#define dspARAMZeroBuffer lbl_8064D478
-#define dspSurround lbl_8064D4A4
-#define dspMixerCycles lbl_8023B2F0
 #define pbOffsets lbl_8023B330
-#define dspSRCCycles lbl_80253130
 u32 __OSBusClock : 0x800000F8;
 #define OS_BUS_CLOCK __OSBusClock
-#define HandleDepopVoice fn_801C47A8
-#define salSynthSendMessage fn_801C753C
-#define salDeactivateVoice fn_801C7624
-#define DCStoreRangeNoSync fn_8020B7D8
-#define SortVoices fn_801C4A60
-#define adsrSetup fn_801C2D74
-#define salCheckVolErrorAndResetDelta fn_801C46B4
-#define adsrRelease fn_801C2EF0
-#define adsrHandle fn_801C2F34
-#define adsrStartRelease fn_801C2D9C
 #define DSP_VOICE_CHANGE_ADSR 0x10
 #define DSP_VOICE_CHANGE_BREAK 0x20
 #define DSP_VOICE_CHANGE_KEYOFF 0x40
@@ -353,7 +327,7 @@ static inline void DoDepopFade(s32* dspStart, s16* dspDelta, s32* hostSum)
         dspCmdMaxPtr = dspCmdPtr + 0xC0;                                                       \
     }
 
-void fn_801C4B5C(s16* dest, u32 nsDelay)
+void salBuildCommandList(s16* dest, u32 nsDelay)
 {
     u8 s;
     u8 mix_start;

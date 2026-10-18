@@ -14,11 +14,11 @@ typedef struct {
 extern int OSDisableInterrupts(void);
 extern int vprintf(const char*, va_list);
 extern void OSReport(const char*, ...);
-extern u32* fn_8020C0F4(void); /* OSGetStackPointer */
+extern u32* OSGetStackPointer(void); /* OSGetStackPointer */
 extern void PPCHalt(void);
 
 /* OSPanic */
-void fn_8020C5D0(const char* file, int line, const char* msg, ...)
+void OSPanic(const char* file, int line, const char* msg, ...)
 {
     va_list marker;
     u32 i;
@@ -31,7 +31,7 @@ void fn_8020C5D0(const char* file, int line, const char* msg, ...)
     OSReport(" in \"%s\" on line %d.\n", file, line);
 
     OSReport("\nAddress:      Back Chain    LR Save\n");
-    for (i = 0, p = fn_8020C0F4(); p && (u32)p != 0xffffffff && i++ < 16;
+    for (i = 0, p = OSGetStackPointer(); p && (u32)p != 0xffffffff && i++ < 16;
          p = (u32*)*p) {
         OSReport("0x%08x:   0x%08x    0x%08x\n", p, p[0], p[1]);
     }

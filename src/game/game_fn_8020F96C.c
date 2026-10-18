@@ -31,8 +31,8 @@ struct OSThread {
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
 extern void OSClearContext(void *context);
-extern void fn_8020D984(OSThread *thread);
-extern void fn_802100F0(OSThreadQueue *queue);
+extern void __OSUnlockAllMutex(OSThread *thread);
+extern void OSWakeupThread(OSThreadQueue *queue);
 extern void SelectThread_8020F61C(s32 yield);
 extern volatile s32 RunQueueHint_8064D98C;
 
@@ -43,7 +43,7 @@ volatile OSThreadQueue __OSActiveThreadQueue : 0x800000DC;
 #define __OSCurrentThread (*(OSThread **)0x800000E4)
 
 /* OSExitThread */
-void fn_8020F96C(void *val)
+void OSExitThread(void *val)
 {
     OSThread *currentThread;
     s32 enabled;
@@ -73,8 +73,8 @@ void fn_8020F96C(void *val)
         currentThread->state = OS_THREAD_STATE_MORIBUND;
         currentThread->value = val;
     }
-    fn_8020D984(currentThread);
-    fn_802100F0(&currentThread->joinQueue);
+    __OSUnlockAllMutex(currentThread);
+    OSWakeupThread(&currentThread->joinQueue);
     RunQueueHint_8064D98C = 1;
     if (RunQueueHint_8064D98C != 0) {
         SelectThread_8020F61C(0);

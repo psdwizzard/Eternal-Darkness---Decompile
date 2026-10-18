@@ -24,7 +24,7 @@ extern void *fn_80200C38(int id);
 extern void *fn_801A7498(void *node);
 extern void *fn_80201814(void *object);
 extern void *fn_80205288(void *object);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern int fn_801AC9F4(unsigned short sound, int volume, Vec3 *position, int flags);
 extern int fn_8006AEA4(void *object);
 extern Actor *fn_80201B8C(void *object);
@@ -69,8 +69,8 @@ void fn_8006A740(void *object, int arg1, int id, int *out) {
         if (out != 0) {
             *out = 0x13;
         }
-        fn_801AC9F4((int)fn_800FBFB0() % 5 + 0x2E, 100, position, 2);
-        sound = lbl_80243ED0[(int)fn_800FBFB0() % 5];
+        fn_801AC9F4((int)rand() % 5 + 0x2E, 100, position, 2);
+        sound = lbl_80243ED0[(int)rand() % 5];
         fn_801AC9F4(sound, 50, position, 2);
         if (fn_8006AEA4(object) != 0) {
             arg1 = fn_80072354(fn_80201B8C(object)->unk90);

@@ -13,13 +13,13 @@ struct Owner {
 };
 
 extern Owner lbl_8060D420[];
-extern Owner* lbl_8064D398;
-extern Owner* lbl_8064D39C;
+extern Owner* seqPausedRoot;
+extern Owner* seqActiveRoot;
 
 static inline int resolve_handle(u32 value)
 {
     u32 key = value & 0x7FFFFFFF;
-    Owner* node = lbl_8064D39C;
+    Owner* node = seqActiveRoot;
 
     while (node != 0) {
         if (node->key == key) {
@@ -28,7 +28,7 @@ static inline int resolve_handle(u32 value)
         }
         node = node->next;
     }
-    node = lbl_8064D398;
+    node = seqPausedRoot;
     while (node != 0) {
         if (node->key == key) {
             key = node->type;
@@ -39,7 +39,7 @@ static inline int resolve_handle(u32 value)
     return -1;
 }
 
-void fn_801B3B08(u32 handle)
+void seqContinue(u32 handle)
 {
     u32 id = resolve_handle(handle);
     Owner* owner;
@@ -52,16 +52,16 @@ void fn_801B3B08(u32 handle)
         if (owner->prev != 0) {
             owner->prev->next = owner->next;
         } else {
-            lbl_8064D398 = owner->next;
+            seqPausedRoot = owner->next;
         }
         if (owner->next != 0) {
             owner->next->prev = owner->prev;
         }
-        if ((owner->next = lbl_8064D39C) != 0) {
-            lbl_8064D39C->prev = owner;
+        if ((owner->next = seqActiveRoot) != 0) {
+            seqActiveRoot->prev = owner;
         }
         owner->prev = 0;
-        lbl_8064D39C = owner;
+        seqActiveRoot = owner;
         owner->state = 1;
     } else {
         lbl_8060D420[id & 0x7FFFFFFF].pad10[0xECA] &= ~8;

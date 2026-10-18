@@ -7,14 +7,14 @@ typedef struct Envelope {
     u32 release;
 } Envelope;
 
-extern int fn_801C2D9C(Envelope* envelope, u32 duration);
+extern int adsrStartRelease(Envelope* envelope, u32 duration);
 
-int fn_801C2EF0(Envelope* envelope)
+int adsrRelease(Envelope* envelope)
 {
     switch (envelope->mode) {
     case 0:
     case 1:
-        return fn_801C2D9C(envelope, envelope->release);
+        return adsrStartRelease(envelope, envelope->release);
     }
     return 0;
 }

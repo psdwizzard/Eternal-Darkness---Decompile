@@ -22,31 +22,31 @@ struct DSPTask {
     DSPTask *prev;
 };
 
-extern DSPTask *lbl_8064DB74; /* Last task. */
-extern DSPTask *lbl_8064DB78; /* First task. */
-extern DSPTask *lbl_8064DB7C; /* Current task. */
+extern DSPTask *__DSP_last_task; /* Last task. */
+extern DSPTask *__DSP_first_task; /* First task. */
+extern DSPTask *__DSP_curr_task; /* Current task. */
 
 /* Remove a completed DSP task from the task list. */
-void fn_8021C2E0(DSPTask *task)
+void __DSP_remove_task(DSPTask *task)
 {
     task->flags = 0;
     task->state = 3;
 
-    if (lbl_8064DB78 == task) {
+    if (__DSP_first_task == task) {
         if (task->next != 0) {
-            lbl_8064DB78 = task->next;
+            __DSP_first_task = task->next;
             task->next->prev = 0;
         } else {
-            lbl_8064DB7C = 0;
-            lbl_8064DB74 = 0;
-            lbl_8064DB78 = 0;
+            __DSP_curr_task = 0;
+            __DSP_last_task = 0;
+            __DSP_first_task = 0;
         }
-    } else if (lbl_8064DB74 == task) {
-        lbl_8064DB74 = task->prev;
+    } else if (__DSP_last_task == task) {
+        __DSP_last_task = task->prev;
         task->prev->next = 0;
-        lbl_8064DB7C = lbl_8064DB78;
+        __DSP_curr_task = __DSP_first_task;
     } else {
-        lbl_8064DB7C = task->next;
+        __DSP_curr_task = task->next;
         task->prev->next = task->next;
         task->next->prev = task->prev;
     }

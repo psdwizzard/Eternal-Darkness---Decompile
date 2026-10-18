@@ -12,9 +12,9 @@ typedef union {
 
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
-extern void fn_8022B638(const Mtx mtx, volatile f32 *fifo);
+extern void WriteMTXPS3x3from3x4(const Mtx mtx, volatile f32 *fifo);
 
-void fn_8022B6CC(const Mtx mtx, register u32 id)
+void GXLoadNrmMtxImm(const Mtx mtx, register u32 id)
 {
     register u32 address;
 
@@ -26,5 +26,5 @@ void fn_8022B6CC(const Mtx mtx, register u32 id)
     }
     GXWGFifo.u8 = 0x10;
     GXWGFifo.u32 = address | 0x80000;
-    fn_8022B638(mtx, &GXWGFifo.f32);
+    WriteMTXPS3x3from3x4(mtx, &GXWGFifo.f32);
 }

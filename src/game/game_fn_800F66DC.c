@@ -1,12 +1,12 @@
 extern void* OSGetArenaLo(void);
 extern void* OSGetArenaHi(void);
 extern void OSSetArenaLo(void*);
-extern void* fn_8020AF08(void*, void*, int);
-extern int fn_8020AF78(void*, void*);
-extern void fn_8020AEF8(int);
-extern void fn_8020AE7C(int, void*);
+extern void* OSInitAlloc(void*, void*, int);
+extern int OSCreateHeap(void*, void*);
+extern void OSSetCurrentHeap(int);
+extern void OSFreeToHeap(int, void*);
 
-static int lbl_8064CC30;
+static int initialized;
 static int unused;
 
 static inline void InitDefaultHeap(void)
@@ -16,20 +16,20 @@ static inline void InitDefaultHeap(void)
 
     arenaLo = OSGetArenaLo();
     arenaHi = OSGetArenaHi();
-    arenaLo = fn_8020AF08(arenaLo, arenaHi, 1);
+    arenaLo = OSInitAlloc(arenaLo, arenaHi, 1);
     OSSetArenaLo(arenaLo);
     arenaLo = (void*)(((unsigned int)arenaLo + 0x1F) & ~0x1F);
     arenaHi = (void*)((unsigned int)arenaHi & ~0x1F);
-    fn_8020AEF8(fn_8020AF78(arenaLo, arenaHi));
+    OSSetCurrentHeap(OSCreateHeap(arenaLo, arenaHi));
     OSSetArenaLo(arenaHi);
-    lbl_8064CC30 = 1;
+    initialized = 1;
 }
 
-void fn_800F66DC(void* p)
+void __sys_free(void* p)
 {
-    if (!lbl_8064CC30) {
+    if (!initialized) {
         InitDefaultHeap();
     }
 
-    fn_8020AE7C(0, p);
+    OSFreeToHeap(0, p);
 }

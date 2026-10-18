@@ -39,7 +39,7 @@ struct OSMutex {
 };
 
 /* Detect whether following mutex owners leads back to this thread. */
-s32 fn_8020DAF4(OSThread *thread)
+s32 __OSCheckDeadLock(OSThread *thread)
 {
     OSMutex *mutex = thread->mutex;
     OSThread *owner;

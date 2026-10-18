@@ -64,46 +64,29 @@ typedef struct McmdVoiceState {
     u8 pad402[2];
 } McmdVoiceState;
 
-extern SynthState lbl_80619860;
-extern McmdVoiceState* lbl_8064D3D0;
-extern u32 lbl_8064D3CC;
-extern u64 lbl_8064D3E0;
-extern u32 fn_801CC6DC(u32);
-extern u16 fn_801CBAE8(McmdVoiceState*);
-extern u16 fn_801CBC98(McmdVoiceState*);
-extern u16 fn_801CB9C8(McmdVoiceState*);
-extern u16 fn_801CBA10(McmdVoiceState*);
-extern u16 fn_801CB980(McmdVoiceState*);
-extern u16 fn_801CBBC0(McmdVoiceState*);
-extern u16 fn_801CBB78(McmdVoiceState*);
-extern u16 fn_801CBC50(McmdVoiceState*);
-extern u16 fn_801CBC08(McmdVoiceState*);
-extern u8 fn_801CC6D4(void);
-extern void fn_801CCCC4(u32, u8, u32, u32, f32, f32, f32);
-extern void fn_801CC704(u32, u32);
-extern void fn_801B775C(void*, int, u32);
+extern SynthState synthTicksPerSecond;
+extern McmdVoiceState* synthVoice;
+extern u32 synthFlags;
+extern u64 synthRealTime;
+extern u32 hwIsActive(u32);
+extern u16 inpGetModulation(McmdVoiceState*);
+extern u16 inpGetTremolo(McmdVoiceState*);
+extern u16 inpGetPanning(McmdVoiceState*);
+extern u16 inpGetSurPanning(McmdVoiceState*);
+extern u16 inpGetVolume(McmdVoiceState*);
+extern u16 inpGetReverb(McmdVoiceState*);
+extern u16 inpGetPreAuxA(McmdVoiceState*);
+extern u16 inpGetPostAuxB(McmdVoiceState*);
+extern u16 inpGetPreAuxB(McmdVoiceState*);
+extern u8 hwGetTimeOffset(void);
+extern void hwSetVolume(u32, u8, u32, u32, f32, f32, f32);
+extern void hwSetPriority(u32, u32);
+extern void synthAddJob(void*, int, u32);
 
-#define synthVoice lbl_8064D3D0
-#define synthFlags lbl_8064D3CC
-#define synthRealTime lbl_8064D3E0
 #define synthMasterFader synth->masterFader
 #define synthTrackVolume synth->trackVolume
 #define HWVOICE(i) (&synthVoice[i])
 #define HWVOICE_FLAGS(sv) (*(u64*)&(sv)->cFlagsHi)
-#define hwIsActive fn_801CC6DC
-#define inpGetModulation fn_801CBAE8
-#define inpGetTremolo fn_801CBC98
-#define inpGetPanning fn_801CB9C8
-#define inpGetSurPanning fn_801CBA10
-#define inpGetVolume fn_801CB980
-#define inpGetReverb fn_801CBBC0
-#define inpGetPreAuxA fn_801CBB78
-#define inpGetPostAuxB fn_801CBC50
-#define inpGetPreAuxB fn_801CBC08
-#define hwGetTimeOffset fn_801CC6D4
-#define hwSetVolume fn_801CCCC4
-#define hwSetPriority fn_801CC704
-#define synthAddJob fn_801B775C
 
 static inline void UpdateTimeMIDICtrl(McmdVoiceState* sv)
 {
@@ -113,7 +96,7 @@ static inline void UpdateTimeMIDICtrl(McmdVoiceState* sv)
     }
 }
 
-void fn_801B6F1C(int voice)
+void ZeroOffsetHandler(int voice)
 {
     McmdVoiceState* sv;
     u32 lowDeltaTime;
@@ -129,7 +112,7 @@ void fn_801B6F1C(int voice)
     s32 pan;
     s32 fxIndex;
     f32 postVol;
-    SynthState* synth = &lbl_80619860;
+    SynthState* synth = &synthTicksPerSecond;
 
     sv = HWVOICE(voice);
     if (hwIsActive(voice) || sv->addr != 0) {

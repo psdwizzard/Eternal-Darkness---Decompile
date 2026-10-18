@@ -11,7 +11,7 @@ typedef struct GXData {
 extern GXData *gx;
 
 /* GXSetDispCopyFrame2Field: configure the display copy's field mode. */
-void fn_80227114(int mode)
+void GXSetDispCopyFrame2Field(int mode)
 {
     gx->cpDisp = (gx->cpDisp & ~0x3000) | ((u32)mode << 12);
     gx->cpTex = gx->cpTex & ~0x3000;

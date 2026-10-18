@@ -13,12 +13,12 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-extern void fn_8022BA8C(int attr);
+extern void __GXSetMatrixIndex(int attr);
 
-void fn_8022B70C(u32 id)
+void GXSetCurrentMtx(u32 id)
 {
     u32 *reg = &gx->matIdxA;
 
     *reg = (*reg & ~0x3F) | id;
-    fn_8022BA8C(0);
+    __GXSetMatrixIndex(0);
 }

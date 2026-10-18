@@ -19,7 +19,7 @@ typedef union GXWGPipe {
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
 /* Send the cached depth-control register to the graphics FIFO. */
-void fn_802266B0(void)
+void GXPixModeSync(void)
 {
     GXWGFifo.byte = 0x61;
     GXWGFifo.word = gx->zControl;

@@ -52,12 +52,12 @@ extern s32 lbl_8064DD20;
 extern s32 lbl_8064DD24;
 extern s32 lbl_8064DD28;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
-extern void fn_8016A830(void*, double);
-extern void fn_8016A7D8(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
+extern void lua_pushnumber(void*, double);
+extern void lua_pushnil(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80043F44(Request*);
 extern void* fn_80034708(Request*);
 extern void *fn_80201BC8();
@@ -127,48 +127,48 @@ s32 fn_8000F774(void* script)
     Request req;
 
     script_reg = script;
-    if (fn_8016A598(script_reg) != 11) {
-        fn_80163BB4(script_reg, lbl_8023BEF8, 11,
-                    fn_8016A598(script_reg));
+    if (lua_gettop(script_reg) != 11) {
+        luaO_verror(script_reg, lbl_8023BEF8, 11,
+                    lua_gettop(script_reg));
         return 0;
     }
 
     fn_80043F44(&req);
-    req.f10 = (s32)fn_8016A694(script_reg, 1);
-    req.f14 = (s32)fn_8016A694(script_reg, 2);
-    index = (s32)fn_8016A694(script_reg, 3);
+    req.f10 = (s32)lua_tonumber(script_reg, 1);
+    req.f14 = (s32)lua_tonumber(script_reg, 2);
+    index = (s32)lua_tonumber(script_reg, 3);
     if (index == -1) {
         index = req.f2C;
     }
     req.f2C = index;
-    index = (s32)fn_8016A694(script_reg, 4);
+    index = (s32)lua_tonumber(script_reg, 4);
     if (index == -1) {
         index = req.f18;
     }
     req.f18 = index;
-    index = (s32)fn_8016A694(script_reg, 5);
+    index = (s32)lua_tonumber(script_reg, 5);
     if (index == -1) {
         index = req.f1C;
     }
     req.f1C = index;
-    index = (s32)fn_8016A694(script_reg, 6);
+    index = (s32)lua_tonumber(script_reg, 6);
     if (index == -1) {
         index = req.f20;
     }
     req.f20 = index;
-    index = (s32)fn_8016A694(script_reg, 7);
+    index = (s32)lua_tonumber(script_reg, 7);
     if (index == -1) {
         index = req.f24;
     }
     req.f24 = index;
-    index = (s32)fn_8016A694(script_reg, 8);
+    index = (s32)lua_tonumber(script_reg, 8);
     if (index == -1) {
         index = req.f28;
     }
     req.f28 = index;
-    req.scale = (float)fn_8016A694(script_reg, 9);
-    position = fn_8016A784(script_reg, 10);
-    index = (s32)fn_8016A694(script_reg, 11);
+    req.scale = (float)lua_tonumber(script_reg, 9);
+    position = lua_touserdata(script_reg, 10);
+    index = (s32)lua_tonumber(script_reg, 11);
     if (index == -1) {
         index = req.f30;
     }
@@ -280,10 +280,10 @@ s32 fn_8000F774(void* script)
     }
 
 done:
-    fn_8016A830(script_reg, (double)(s32)fn_80201B54(view));
+    lua_pushnumber(script_reg, (double)(s32)fn_80201B54(view));
     goto return_one;
 no_view:
-    fn_8016A7D8(script_reg);
+    lua_pushnil(script_reg);
 return_one:
     return 1;
 }

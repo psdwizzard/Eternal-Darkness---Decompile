@@ -8,7 +8,7 @@ typedef struct State {
     u32 handles[16];
 } State;
 
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 
 void fn_8017F084(u8* object, u8* config)
 {
@@ -26,7 +26,7 @@ void fn_8017F084(u8* object, u8* config)
     *(u16*)(object + 0xEC) = *(u16*)(config + 0x18);
 
     while ((u8)pair < count) {
-        fn_800FBFB0();
+        rand();
         state->active[index] = zero;
         state->pending[index] = zero;
         state->handles[index] = zero;

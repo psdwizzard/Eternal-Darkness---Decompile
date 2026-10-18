@@ -20,9 +20,9 @@ typedef struct CARDControl {
     u8 padDC[0x34];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
+extern CARDControl __CARDBlock[];
 extern void *memcpy(void *, const void *, u32);
-extern s32 fn_8021D374(CARDControl *card, s32 result); /* __CARDPutControlBlock */
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result); /* __CARDPutControlBlock */
 
 void fn_8021EB40(s32 chan, s32 result)
 {
@@ -31,7 +31,7 @@ void fn_8021EB40(s32 chan, s32 result)
     u16 *fat0;
     u16 *fat1;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (result >= 0) {
         fat0 = (u16 *)((u8 *)card->workArea + 0x6000);
         fat1 = (u16 *)((u8 *)card->workArea + 0x8000);
@@ -45,7 +45,7 @@ void fn_8021EB40(s32 chan, s32 result)
     }
 
     if (card->apiCallback == 0)
-        fn_8021D374(card, result);
+        __CARDPutControlBlock(card, result);
 
     callback = card->eraseCallback;
     if (callback) {

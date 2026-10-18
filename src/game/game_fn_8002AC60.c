@@ -73,10 +73,10 @@ extern void fn_801E7CBC(Vec3 *a, Vec3 *b, Vec3 *c, Vec3 *d, u32 *color);
 } while (0)
 extern void *fn_80205288(void *object);
 extern u32 fn_80178E94(const f32 *a, const f32 *b);
-extern void fn_80211A90(const Vec3 *in, Vec3 *out, f32 scale);
-extern void fn_80211A48(const Vec3 *a, const Vec3 *b, Vec3 *out);
-extern void fn_80211C78(Vec3 *a, Vec3 *b, Vec3 *out);
-extern void fn_80211AAC(Vec3 *in, Vec3 *out);
+extern void PSVECScale(const Vec3 *in, Vec3 *out, f32 scale);
+extern void PSVECAdd(const Vec3 *a, const Vec3 *b, Vec3 *out);
+extern void C_VECReflect(Vec3 *a, Vec3 *b, Vec3 *out);
+extern void PSVECNormalize(Vec3 *in, Vec3 *out);
 extern void fn_800EBA80(int a, Vec3 *pos, Color *color, u8 b, f32 c);
 
 extern DebugPath lbl_80303A18;
@@ -225,8 +225,8 @@ render:
                     }
                     length = fn_80178E94(&start.x, &target.x);
                     direction = &hit.direction;
-                    fn_80211A90(direction, &offset, (f32)length);
-                    fn_80211A48(&hit.position, &offset, &end);
+                    PSVECScale(direction, &offset, (f32)length);
+                    PSVECAdd(&hit.position, &offset, &end);
                     startHigh = start;
                     startHigh.z += lbl_8064E01C;
                     endHigh = end;
@@ -242,10 +242,10 @@ render:
                     }
 
                     if (lbl_8064C718 != 0) {
-                        fn_80211C78(direction, (Vec3 *)(lbl_8064C718 + 0x14), &side);
-                        fn_80211AAC(&side, &side);
-                        fn_80211A90(&side, &side, lbl_8064E024);
-                        fn_80211A48(&end, &side, &tip);
+                        C_VECReflect(direction, (Vec3 *)(lbl_8064C718 + 0x14), &side);
+                        PSVECNormalize(&side, &side);
+                        PSVECScale(&side, &side, lbl_8064E024);
+                        PSVECAdd(&end, &side, &tip);
                         tipHigh = tip;
                         tipHigh.z += lbl_8064E01C;
                         lineTip = tip;

@@ -5,10 +5,10 @@ typedef struct Entry {
     u8 bytes[0xF4];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
-extern void fn_801C7624(Entry* entry);
+extern Entry* dspVoice;
+extern void salDeactivateVoice(Entry* entry);
 
-void fn_801CCF94(u32 index)
+void hwOff(u32 index)
 {
-    fn_801C7624(&lbl_8064D4AC[index]);
+    salDeactivateVoice(&dspVoice[index]);
 }

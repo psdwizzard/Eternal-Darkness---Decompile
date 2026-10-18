@@ -6,9 +6,9 @@ typedef struct PacketTemplate {
     u32 word2;
 } PacketTemplate;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void fn_80205868(void*, int, const PacketTemplate*, int);
@@ -22,13 +22,13 @@ int fn_80176D14(void* state)
     int second;
     void* object;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    first = (int)fn_8016A694(state, 1);
-    second = (int)fn_8016A694(state, 2);
+    first = (int)lua_tonumber(state, 1);
+    second = (int)lua_tonumber(state, 2);
     object = fn_80201814(first);
     if (object != 0) {
         object = fn_80201BC8(object);

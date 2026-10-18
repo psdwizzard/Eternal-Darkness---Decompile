@@ -18,7 +18,7 @@ typedef struct ResourceCache {
     ResourceList entries;
 } ResourceCache;
 
-extern signed char fn_8022C96C(const char *left, const char *right);
+extern signed char Strcmp(const char *left, const char *right);
 
 static inline ResourceEntry *findResource(ResourceCache *cache, const char *path)
 {
@@ -26,7 +26,7 @@ static inline ResourceEntry *findResource(ResourceCache *cache, const char *path
 
     if (path != 0) {
         while (entry != 0) {
-            if (fn_8022C96C(path, entry->text) == 0) {
+            if (Strcmp(path, entry->text) == 0) {
                 return entry;
             }
             entry = entry->next;
@@ -36,7 +36,7 @@ static inline ResourceEntry *findResource(ResourceCache *cache, const char *path
 }
 
 /* Acquire a cached resource and count the new reference. */
-void *fn_8022C7C8(ResourceCache *cache, const char *path)
+void *DSGetCacheObj(ResourceCache *cache, const char *path)
 {
     ResourceEntry *entry = findResource(cache, path);
 

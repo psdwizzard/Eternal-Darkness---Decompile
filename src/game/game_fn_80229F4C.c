@@ -14,7 +14,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80229F4C(int stage, int rasterSwap, int textureSwap)
+void GXSetTevSwapMode(int stage, int rasterSwap, int textureSwap)
 {
     u32 *reg = &gx->tevAlphaEnv[stage];
 

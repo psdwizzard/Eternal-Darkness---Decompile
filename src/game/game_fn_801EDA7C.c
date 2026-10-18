@@ -16,8 +16,8 @@ extern int fn_801EDA74(void);
 extern int* fn_8015AB00(int);
 extern int fn_801EDF80(s16*, int, int, int, int*, int, int, int, int, void*);
 extern void fn_801EDD58(void);
-extern void fn_802262B8(u8);
-extern void fn_8022A2F4(u8);
+extern void GXSetNumTexGens(u8);
+extern void GXSetNumTevStages(u8);
 
 int fn_801EDA7C(s16* values, int context, int flags, void* state)
 {
@@ -140,8 +140,8 @@ int fn_801EDA7C(s16* values, int context, int flags, void* state)
     }
 
     if (count != 0 && lbl_8064D63C != count) {
-        fn_802262B8((u8)lbl_8064D630);
-        fn_8022A2F4((u8)count);
+        GXSetNumTexGens((u8)lbl_8064D630);
+        GXSetNumTevStages((u8)count);
         lbl_8064D63C = count;
         lbl_8064C4EC++;
     }

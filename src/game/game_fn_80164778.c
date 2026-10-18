@@ -3,23 +3,23 @@ typedef struct Parser {
     void* state;
 } Parser;
 
-extern int fn_8015EE94(void*);
-extern void fn_8015EED8(void*, int);
-extern void fn_8015EE54(void*, int);
+extern int luaK_lastisopen(void*);
+extern void luaK_setcallreturns(void*, int);
+extern void luaK_adjuststack(void*, int);
 
-void fn_80164778(Parser* parser, int start, int end)
+void adjust_mult_assign(Parser* parser, int start, int end)
 {
     void* state = parser->state;
     int count = end - start;
 
-    if (end > 0 && fn_8015EE94(state)) {
+    if (end > 0 && luaK_lastisopen(state)) {
         count--;
         if (count <= 0) {
-            fn_8015EED8(state, -count);
+            luaK_setcallreturns(state, -count);
             count = 0;
         } else {
-            fn_8015EED8(state, 0);
+            luaK_setcallreturns(state, 0);
         }
     }
-    fn_8015EE54(state, count);
+    luaK_adjuststack(state, count);
 }

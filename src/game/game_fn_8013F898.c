@@ -13,7 +13,7 @@ typedef struct Collection {
 
 extern float lbl_806503D8;
 extern int fn_8013E284(const void*, const Shape*, const void*, Result*);
-extern float fn_80211D4C(const Vec3*, const void*);
+extern float PSVECSquareDistance(const Vec3*, const void*);
 extern void fn_80140AEC(Shape*, Collection*);
 
 Shape* fn_8013F898(Collection* collection, const void* value, Result* out)
@@ -36,7 +36,7 @@ Shape* fn_8013F898(Collection* collection, const void* value, Result* out)
 
     for (; i < count; shape++, i++) {
         if (fn_8013E284(value, shape, context, &candidate)) {
-            float distance = fn_80211D4C(candidate_point, value);
+            float distance = PSVECSquareDistance(candidate_point, value);
             if (distance < best) {
                 best = distance;
                 result = shape;

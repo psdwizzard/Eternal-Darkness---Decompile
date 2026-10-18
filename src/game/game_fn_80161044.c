@@ -15,10 +15,10 @@ typedef struct Object {
     void* limit;
 } Object;
 
-extern int fn_800F6460(JumpContext*);
-extern void fn_801605F4(Object*);
+extern int __setjmp(JumpContext*);
+extern void restore_stack_limit(Object*);
 
-int fn_80161044(Object* object, void (*callback)(Object*, void*), void* argument)
+int luaD_runprotected(Object* object, void (*callback)(Object*, void*), void* argument)
 {
     JumpContext context;
     JumpContext* volatile* saved_context;
@@ -32,13 +32,13 @@ int fn_80161044(Object* object, void (*callback)(Object*, void*), void* argument
     *result = 0;
     *saved_context = object->context;
     object->context = &context;
-    if (fn_800F6460(&context) == 0) {
+    if (__setjmp(&context) == 0) {
         callback(object, argument);
     } else {
         object->limit = saved_limit;
         object->start = saved_start;
         object->current = saved_current;
-        fn_801605F4(object);
+        restore_stack_limit(object);
     }
     object->context = *saved_context;
     return *result;

@@ -24,36 +24,36 @@ typedef struct TRKSerialState {
     int count;
 } TRKSerialState;
 
-extern TRKSerialState lbl_80329FC4;
-extern int fn_800EFFBC(void);
+extern TRKSerialState gTRKFramingState;
+extern int TRKTestForPacket(void);
 extern TRKBuffer *TRKGetBuffer(int);
-extern int fn_800EFC6C(TRKBuffer *, u32);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
-extern void fn_800EEF1C(TRKEvent *, int);
-extern int fn_800EEF34(const TRKEvent *);
-extern void fn_800EFCDC(int);
+extern int TRKSetBufferPosition(TRKBuffer *, u32);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
+extern void TRKConstructEvent(TRKEvent *, int);
+extern int TRKPostEvent(const TRKEvent *);
+extern void TRKReleaseBuffer(int);
 
 void TRKGetInput(void)
 {
     TRKBuffer *buffer;
     int buffer_id;
 
-    buffer_id = fn_800EFFBC();
+    buffer_id = TRKTestForPacket();
 
     if (buffer_id != -1) {
         u8 command;
 
         buffer = TRKGetBuffer(buffer_id);
-        fn_800EFC6C(buffer, 0);
-        fn_800EF86C(buffer, &command);
+        TRKSetBufferPosition(buffer, 0);
+        TRKReadBuffer1_ui8(buffer, &command);
         if (command < 0x80) {
             TRKEvent event;
-            fn_800EEF1C(&event, 2);
+            TRKConstructEvent(&event, 2);
             event.buffer = buffer_id;
-            lbl_80329FC4.buffer_id = -1;
-            fn_800EEF34(&event);
+            gTRKFramingState.buffer_id = -1;
+            TRKPostEvent(&event);
         } else {
-            fn_800EFCDC(buffer_id);
+            TRKReleaseBuffer(buffer_id);
         }
     }
 }

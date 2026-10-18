@@ -19,8 +19,8 @@ typedef struct Request {
 
 extern GlobalState lbl_8064A580;
 extern u32 lbl_8064D20C;
-extern int fn_802223DC(u8, void*, int);
-extern u32 fn_8021EB20(u8);
+extern int CARDDeleteAsync(u8, void*, int);
+extern u32 CARDGetXferredBytes(u8);
 
 void fn_8017C67C(Request* request)
 {
@@ -28,10 +28,10 @@ void fn_8017C67C(Request* request)
 
     if (lbl_8064A580.states[value] == 1) {
         if (lbl_8064A580.statuses[value] == 0) {
-            request->result = fn_802223DC(value, request->payload, 0);
+            request->result = CARDDeleteAsync(value, request->payload, 0);
             if (request->result >= 0) {
                 (&lbl_8064D20C)[request->value] =
-                    fn_8021EB20(request->value);
+                    CARDGetXferredBytes(request->value);
                 request->state = 1;
             }
         }

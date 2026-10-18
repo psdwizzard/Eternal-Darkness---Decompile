@@ -3,7 +3,7 @@ typedef signed int s32;
 extern s32 Packet_80640B68[][8];
 extern s32 Si_802FCA20[5];
 
-s32 fn_802082D4(s32 chan)
+s32 SIIsChanBusy(s32 chan)
 {
     s32 result = 1;
 

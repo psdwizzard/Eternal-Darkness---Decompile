@@ -9,7 +9,7 @@ typedef struct mdct_lookup {
 
 extern float lbl_80651838; /* 0.5f */
 
-void fn_80233978(mdct_lookup *init, float *x) {
+void mdct_bitreverse(mdct_lookup *init, float *x) {
     float half = lbl_80651838;
     int n = init->n;
     int *bit = init->bitrev;

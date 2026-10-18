@@ -9,7 +9,7 @@ typedef struct GXData {
 extern GXData *gx;
 
 /* GXSetCopyGamma: select the gamma correction for EFB copies. */
-void fn_80227520(int gamma)
+void GXSetDispCopyGamma(int gamma)
 {
     gx->cpTex = (gx->cpTex & ~0x180UL) | ((u32)gamma << 7);
 }

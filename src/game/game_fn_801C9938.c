@@ -14,15 +14,15 @@ struct Voice {
     Resource* resource;
 };
 
-extern unsigned char lbl_8064D3A0;
-extern Voice* lbl_8064D4C0;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern unsigned char sndActive;
+extern Voice* s3dListenerRoot;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
 static inline void ReleaseResource(Resource* resource)
 {
     u32 count = 0;
-    Voice* current = lbl_8064D4C0;
+    Voice* current = s3dListenerRoot;
     while (current != 0) {
         if (current->resource == resource) {
             count++;
@@ -35,10 +35,10 @@ static inline void ReleaseResource(Resource* resource)
     }
 }
 
-int fn_801C9938(Voice* voice)
+int sndRemoveListener(Voice* voice)
 {
-    if (lbl_8064D3A0 != 0) {
-        fn_801CE2B8();
+    if (sndActive != 0) {
+        hwDisableIrq();
         if (voice->resource != 0) {
             ReleaseResource(voice->resource);
         }
@@ -48,9 +48,9 @@ int fn_801C9938(Voice* voice)
         if (voice->next != 0) {
             voice->next->previous = voice->previous;
         } else {
-            lbl_8064D4C0 = voice->previous;
+            s3dListenerRoot = voice->previous;
         }
-        fn_801CE280();
+        hwEnableIrq();
         return 1;
     }
     return 0;

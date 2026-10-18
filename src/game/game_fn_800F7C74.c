@@ -12,7 +12,7 @@ typedef struct decimal {
 } decimal;
 
 /* Subtract two positive decimal significands, retaining up to 36 digits. */
-void fn_800F7C74(decimal *result, const decimal *a, const decimal *b)
+void __minus_dec(decimal *result, const decimal *a, const decimal *b)
 {
     int limit, shift, count, round;
     u8 *first, *p;

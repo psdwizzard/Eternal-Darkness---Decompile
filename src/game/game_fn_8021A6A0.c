@@ -24,14 +24,14 @@ typedef void (*AIDMACallback)(void);
 
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
-extern void fn_8021A730(AIDMACallback callback);
-extern AIDMACallback lbl_8064DADC;
-extern void *lbl_8064DAE0;
+extern void __AICallbackStackSwitch(AIDMACallback callback);
+extern AIDMACallback __AID_Callback;
+extern void *__CallbackStack;
 
 volatile u16 DSPRegisters[] : 0xCC005000;
 
 /* Handle the audio DMA interrupt, running the callback in a clean context. */
-void fn_8021A6A0(s16 interrupt, OSContext *context)
+void __AIDHandler(s16 interrupt, OSContext *context)
 {
     OSContext exceptionContext;
     u16 status;
@@ -41,11 +41,11 @@ void fn_8021A6A0(s16 interrupt, OSContext *context)
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(&exceptionContext);
 
-    if (lbl_8064DADC != 0) {
-        if (lbl_8064DAE0 != 0) {
-            fn_8021A730(lbl_8064DADC);
+    if (__AID_Callback != 0) {
+        if (__CallbackStack != 0) {
+            __AICallbackStackSwitch(__AID_Callback);
         } else {
-            lbl_8064DADC();
+            __AID_Callback();
         }
     }
 

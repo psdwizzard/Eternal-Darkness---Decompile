@@ -22,29 +22,29 @@ typedef struct State {
     Channel channels[256];
 } State;
 
-extern State* lbl_8064D380;
-extern u32 lbl_8064D388;
-extern void fn_801B5B20(u32, u8, u8);
+extern State* cseq;
+extern u32 curSeqId;
+extern void synthSetBpm(u32, u8, u8);
 
-void fn_801B3470(u8 index)
+void HandleMasterTrack(u8 index)
 {
     Channel* channel;
     Command* command;
     u32 value;
 
-    channel = &lbl_8064D380->channels[index];
+    channel = &cseq->channels[index];
     if (channel->active != 0) {
         while ((command = channel->cursor)->key != 0xFFFFFFFF) {
             if (command->key > *(u32*)((u8*)channel + 0x24 + channel->limit_index * 8)) {
                 break;
             }
 
-            if (*(u32*)((u8*)lbl_8064D380->flags_object + 0x10) & 0x40000000) {
+            if (*(u32*)((u8*)cseq->flags_object + 0x10) & 0x40000000) {
                 value = command->value;
                 channel->position = value;
-                fn_801B5B20(value >> 10, lbl_8064D388, index);
+                synthSetBpm(value >> 10, curSeqId, index);
             } else {
-                fn_801B5B20(command->value, lbl_8064D388, index);
+                synthSetBpm(command->value, curSeqId, index);
                 channel->position = channel->cursor->value << 10;
             }
             channel->cursor++;

@@ -1,6 +1,6 @@
-extern int fn_8015F9D4(void*, int, int, int);
+extern int luaK_code2(void*, int, int, int);
 
-void fn_8015F988(void* object, int type)
+void luaK_code0(void* object, int type)
 {
-    fn_8015F9D4(object, type, 0, 0);
+    luaK_code2(object, type, 0, 0);
 }

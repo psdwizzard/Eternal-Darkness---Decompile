@@ -21,7 +21,7 @@ extern f32 lbl_8064E6EC;
 
 extern u32 fn_801A7590(s32 event);
 extern void fn_801A76F4(EventVectors *vectors, s32 event);
-extern f32 fn_80211B08(Vec3 *position);
+extern f32 PSVECMag(Vec3 *position);
 extern s32 fn_80066D80(s32 context, s32 index);
 extern s32 fn_801A74F8(s32 event);
 extern s32 fn_8012EDB0(s32 context, s32 index, Vec3 *position, f32 first,
@@ -44,7 +44,7 @@ void fn_80066888(s32 context, s32 event, f32 first, f32 second)
     any_active = 0;
     fn_801A76F4(&vectors, event);
 
-    if (fn_80211B08(&vectors.direction) > lbl_8064E6C0) {
+    if (PSVECMag(&vectors.direction) > lbl_8064E6C0) {
         copied_position = vectors.direction;
         for (index = 0; index < 15; index++) {
             if ((mask & (1U << index)) && fn_80066D80(context, index)) {

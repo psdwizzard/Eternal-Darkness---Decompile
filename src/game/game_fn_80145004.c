@@ -56,8 +56,8 @@ extern int lbl_8064D068;
 extern int lbl_8064D074;
 extern int lbl_8064D078;
 
-extern void fn_802191F0(PadStatus* status);
-extern void fn_80218474(PadStatus* status);
+extern void PADRead(PadStatus* status);
+extern void PADClamp(PadStatus* status);
 extern void fn_80145408(unsigned int ticks);
 extern void fn_80144F8C(void);
 
@@ -70,13 +70,13 @@ void fn_80145004(void)
     int buttons;
     int i;
 
-    fn_802191F0(lbl_805B40C0);
+    PADRead(lbl_805B40C0);
     while (lbl_805B40C0[0].err < -1) {
         fn_80145408(0xFB90);
-        fn_802191F0(lbl_805B40C0);
+        PADRead(lbl_805B40C0);
     }
     lbl_8064D04C = lbl_805B40C0[0].err;
-    fn_80218474(lbl_805B40C0);
+    PADClamp(lbl_805B40C0);
 
     pad = lbl_805B40F0;
     status = lbl_805B40C0;

@@ -5,8 +5,8 @@ typedef struct FloatObject {
     float value;
     char pad[12];
 } FloatObject;
-extern FloatObject lbl_8064B850;
-extern FloatObject lbl_8064B854;
+extern FloatObject __float_nan;
+extern FloatObject __float_huge;
 extern double __frsqrte(double);
 
 double fn_800B811C(double value)
@@ -28,7 +28,7 @@ double fn_800B811C(double value)
         return lbl_8064F080;
     }
     if (value != lbl_8064F080) {
-        return lbl_8064B850.value;
+        return __float_nan.value;
     }
-    return lbl_8064B854.value;
+    return __float_huge.value;
 }

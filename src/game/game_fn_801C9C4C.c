@@ -46,18 +46,18 @@ struct Bucket {
     u16 pad0E;
 };
 
-extern Bucket lbl_806293E0[];
-extern u8 lbl_8064D4D2;
-extern u8 lbl_8064D4D3;
+extern Bucket startGroup[];
+extern u8 s3dUseMaxVoices;
+extern u8 startGroupNum;
 extern float lbl_80650FB0;
 extern float lbl_80650FD4;
 extern float lbl_80650FF0;
 extern float lbl_80650FF4;
 
-extern int fn_801B7DC8(u16, int, int, u8, int);
-extern void fn_801C8CC0(Voice*, float, float, float, float, float);
+extern int synthFXStart(u16, int, int, u8, int);
+extern void SetFXParameters(Voice*, float, float, float, float, float);
 
-void fn_801C9C4C(void)
+void StartContinousEmitters(void)
 {
     int bucket_index;
     Event* event;
@@ -72,21 +72,21 @@ void fn_801C9C4C(void)
     one = lbl_80650FD4;
     upper_delay = lbl_80650FF4;
     lower_delay = lbl_80650FF0;
-    for (; bucket_index < lbl_8064D4D3; bucket_index++) {
-        event = lbl_806293E0[bucket_index].events;
+    for (; bucket_index < startGroupNum; bucket_index++) {
+        event = startGroup[bucket_index].events;
         while (event != 0) {
-            if (lbl_806293E0[bucket_index].pending != 0) {
-                if (lbl_8064D4D2 != 0 &&
-                    (lbl_806293E0[bucket_index].flags & 0x80000000) != 0) {
-                    if (lbl_806293E0[bucket_index].count <
-                        lbl_806293E0[bucket_index].events->voice->limit) {
+            if (startGroup[bucket_index].pending != 0) {
+                if (s3dUseMaxVoices != 0 &&
+                    (startGroup[bucket_index].flags & 0x80000000) != 0) {
+                    if (startGroup[bucket_index].count <
+                        startGroup[bucket_index].events->voice->limit) {
                         goto process_event;
                     }
                 }
 
                 {
                     float elapsed = event->time -
-                                    lbl_806293E0[bucket_index].pending->time;
+                                    startGroup[bucket_index].pending->time;
                     if (elapsed <= lower_delay) {
                         goto next_event;
                     }
@@ -113,7 +113,7 @@ process_event:
                 } else {
                     channel = voice->fallback_channel;
                 }
-                if ((voice->handle = fn_801B7DC8(voice->sound_id, 0x7F, 0x40,
+                if ((voice->handle = synthFXStart(voice->sound_id, 0x7F, 0x40,
                                                  channel,
                                                  (voice->flags & 0x10) != 0)) !=
                     0xFFFFFFFF) {
@@ -134,13 +134,13 @@ allocated:
             } else {
                 voice->gain = one;
             }
-            fn_801C8CC0(voice, event->time, event->value2, event->value3,
+            SetFXParameters(voice, event->time, event->value2, event->value3,
                         event->value4, event->value5);
             voice->flags &= ~0x20000;
-            lbl_806293E0[bucket_index].count++;
-            if (lbl_806293E0[bucket_index].pending != 0) {
-                lbl_806293E0[bucket_index].pending =
-                    lbl_806293E0[bucket_index].pending->next;
+            startGroup[bucket_index].count++;
+            if (startGroup[bucket_index].pending != 0) {
+                startGroup[bucket_index].pending =
+                    startGroup[bucket_index].pending->next;
             }
 next_event:
             event = event->next;

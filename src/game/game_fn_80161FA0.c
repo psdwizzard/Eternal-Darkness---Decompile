@@ -4,10 +4,10 @@ typedef struct Collection {
     unsigned int total_size;
 } Collection;
 
-extern void fn_80161F3C(Collection*);
+extern void luaC_collectgarbage(Collection*);
 
-void fn_80161FA0(Collection* collection)
+void luaC_checkGC(Collection* collection)
 {
     if (collection->total_size >= collection->threshold)
-        fn_80161F3C(collection);
+        luaC_collectgarbage(collection);
 }

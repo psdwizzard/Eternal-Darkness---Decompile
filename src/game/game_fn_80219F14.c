@@ -20,19 +20,19 @@ typedef struct OSContext {
 
 typedef void (*PADSamplingCallback)(void);
 
-extern PADSamplingCallback lbl_8064DACC;
+extern PADSamplingCallback SamplingCallback;
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
 
 /* Run the PAD sampling callback in a temporary context. */
-void fn_80219F14(s16 interrupt, OSContext *context)
+void SamplingHandler(s16 interrupt, OSContext *context)
 {
     OSContext exceptionContext;
 
-    if (lbl_8064DACC != 0) {
+    if (SamplingCallback != 0) {
         OSClearContext(&exceptionContext);
         OSSetCurrentContext(&exceptionContext);
-        lbl_8064DACC();
+        SamplingCallback();
         OSClearContext(&exceptionContext);
         OSSetCurrentContext(context);
     }

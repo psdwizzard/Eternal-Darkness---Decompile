@@ -15,9 +15,9 @@ typedef struct StreamSlot {
 } StreamSlot;
 
 extern StreamSlot lbl_8061AE48[];
-extern void fn_801C20C8(u32);
+extern void voiceUnblock(u32);
 
-void fn_801B9C98(int index)
+void streamKill(int index)
 {
     StreamSlot* slot = &lbl_8061AE48[index];
 
@@ -25,7 +25,7 @@ void fn_801B9C98(int index)
     case 1:
     case 2:
         if (slot->state == 2) {
-            fn_801C20C8(slot->voice);
+            voiceUnblock(slot->voice);
         }
         slot->state = 3;
         slot->callback(0, 0, 0, 0, slot->callback_arg);

@@ -1,4 +1,4 @@
-/* fn_800FD4E0: MSL __strtold - scan a floating point number (decimal,
+/* __strtold: MSL __strtold - scan a floating point number (decimal,
  * hexadecimal, INF or NAN) through a character read callback. */
 
 typedef struct decimal {
@@ -13,41 +13,41 @@ typedef struct decimal {
 } decimal;
 
 /* __ctype_map, __upper_map, __lconv */
-extern unsigned char lbl_8024AB90[];
-extern unsigned char lbl_8024AD90[];
-extern char* lbl_8024AE90[];
+extern unsigned char __ctype_map[];
+extern unsigned char __upper_map[];
+extern char* __lconv[];
 
 /* __float_nan, __float_huge, __double_huge, __extended_min, __extended_max */
-extern long lbl_8064B850[];
-extern long lbl_8064B854[];
-extern long lbl_8064B860[];
-extern long lbl_8064B868[];
-extern long lbl_8064B870[];
+extern long __float_nan[];
+extern long __float_huge[];
+extern long __double_huge[];
+extern long __extended_min[];
+extern long __extended_max[];
 
 /* 0.0 constants */
 extern double lbl_8064F978;
 extern double lbl_8064F980;
 
 /* __dec2num */
-double fn_800F6F40(const decimal* d);
+double __dec2num(const decimal* d);
 
-#define NAN_VAL (*(float*)lbl_8064B850)
-#define INFINITY_VAL (*(float*)lbl_8064B854)
-#define HUGE_VAL_D (*(double*)lbl_8064B860)
-#define LDBL_MIN_D (*(double*)lbl_8064B868)
-#define LDBL_MAX_D (*(double*)lbl_8064B870)
+#define NAN_VAL (*(float*)__float_nan)
+#define INFINITY_VAL (*(float*)__float_huge)
+#define HUGE_VAL_D (*(double*)__double_huge)
+#define LDBL_MIN_D (*(double*)__extended_min)
+#define LDBL_MAX_D (*(double*)__extended_max)
 
 #define EOF (-1)
 #define SHRT_MIN (-0x8000)
 #define SHRT_MAX 0x7FFF
 #define SIGDIGLEN 20
 
-#define isspace(c) (lbl_8024AB90[(unsigned char)(c)] & 0x06)
-#define isdigit(c) (lbl_8024AB90[(unsigned char)(c)] & 0x10)
-#define isxdigit(c) (lbl_8024AB90[(unsigned char)(c)] & 0x20)
-#define isalpha(c) (lbl_8024AB90[(unsigned char)(c)] & 0xC0)
+#define isspace(c) (__ctype_map[(unsigned char)(c)] & 0x06)
+#define isdigit(c) (__ctype_map[(unsigned char)(c)] & 0x10)
+#define isxdigit(c) (__ctype_map[(unsigned char)(c)] & 0x20)
+#define isalpha(c) (__ctype_map[(unsigned char)(c)] & 0xC0)
 static inline int toupper(int c) {
-    return (c == EOF) ? EOF : (int)lbl_8024AD90[(unsigned char)c];
+    return (c == EOF) ? EOF : (int)__upper_map[(unsigned char)c];
 }
 
 enum scan_states {
@@ -89,7 +89,7 @@ enum hex_scan_states {
 #define fetch() (count++, (*ReadProc)(ReadProcArg, 0, 0))
 #define unfetch(c) (*ReadProc)(ReadProcArg, c, 1)
 
-long double fn_800FD4E0(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg,
+long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg,
                         int* chars_scanned, int* overflow) {
     int scan_state = start;
     int hex_scan_state = not_hex;
@@ -111,7 +111,7 @@ long double fn_800FD4E0(int max_width, int (*ReadProc)(void*, int, int), void* R
     int exp_digits = 0;
     unsigned intdigits = 0;
     short hex_exp = 0;
-    int radix_marker = *(unsigned char*)lbl_8024AE90[0];
+    int radix_marker = *(unsigned char*)__lconv[0];
 
     *overflow = 0;
     c = fetch();
@@ -505,7 +505,7 @@ long double fn_800FD4E0(int max_width, int (*ReadProc)(void*, int, int), void* R
         }
 
         d.exp = exp_value;
-        result = fn_800F6F40(&d);
+        result = __dec2num(&d);
 
         if (lbl_8064F978 != result && result < LDBL_MIN_D) {
             *overflow = 1;

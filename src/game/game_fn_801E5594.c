@@ -12,7 +12,7 @@ typedef struct {
 #define va_start(ap, last) __builtin_va_info(&(ap))
 
 extern char lbl_80637040[];
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern u32 fn_801E3A34(u32*);
 extern void fn_801E5448(s16, s16, float, const char*, ...);
 
@@ -24,7 +24,7 @@ void fn_801E5594(s16 x, s16 y, float scale, u32* color, u32* shadow,
     u32 color_value;
 
     va_start(args, format);
-    fn_800F9E2C(lbl_80637040, format, args);
+    vsprintf(lbl_80637040, format, args);
     shadow_value = *shadow;
     fn_801E3A34(&shadow_value);
     fn_801E5448(x + 2, y + 2, scale, lbl_80637040);

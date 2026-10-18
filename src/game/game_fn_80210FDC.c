@@ -1,11 +1,11 @@
 typedef float Mtx[3][4];
-extern const float lbl_8064C3F0[]; /* Paired translation mask: { 0, 1 }. */
+extern const float Unit01[]; /* Paired translation mask: { 0, 1 }. */
 
 /* Concatenate two affine matrices: ab = a * b. Load all of b before
  * writing results so either input matrix may also be the destination. */
-void fn_80210FDC(register const Mtx a, register const Mtx b, register Mtx ab)
+void PSMTXConcat(register const Mtx a, register const Mtx b, register Mtx ab)
 {
-    register const float *unit = lbl_8064C3F0;
+    register const float *unit = Unit01;
     register float translation, y, x, z;
     const float (*end)[4] = a + 3;
 

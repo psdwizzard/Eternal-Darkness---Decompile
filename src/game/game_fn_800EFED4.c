@@ -16,16 +16,16 @@ typedef struct TRKSerialState {
     int count;
 } TRKSerialState;
 
-extern TRKSerialState lbl_80329FC4;
-extern void fn_800EEF1C(TRKEvent *, int);
-extern int fn_800EEF34(const TRKEvent *);
+extern TRKSerialState gTRKFramingState;
+extern void TRKConstructEvent(TRKEvent *, int);
+extern int TRKPostEvent(const TRKEvent *);
 
-void fn_800EFED4(int buffer)
+void TRKProcessInput(int buffer)
 {
     TRKEvent event;
 
-    fn_800EEF1C(&event, 2);
+    TRKConstructEvent(&event, 2);
     event.buffer = buffer;
-    lbl_80329FC4.buffer_id = -1;
-    fn_800EEF34(&event);
+    gTRKFramingState.buffer_id = -1;
+    TRKPostEvent(&event);
 }

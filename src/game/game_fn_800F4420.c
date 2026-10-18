@@ -1,4 +1,4 @@
-int fn_800F4420(unsigned char *state)
+int TRKTargetSupportMask(unsigned char *state)
 {
     state[0] = 0x7A;
     state[1] = 0;

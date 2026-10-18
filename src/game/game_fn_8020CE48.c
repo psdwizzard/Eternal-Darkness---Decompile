@@ -1,4 +1,4 @@
-/* fn_8020CE48: __OSDispatchInterrupt (OSInterrupt.c) */
+/* __OSDispatchInterrupt: __OSDispatchInterrupt (OSInterrupt.c) */
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -35,7 +35,7 @@ extern __OSInterruptHandler* InterruptHandlerTable_8064D938;
 extern __OSInterrupt __OSLastInterrupt;
 extern u32 __OSLastInterruptSrr0;
 extern u64 __OSLastInterruptTime;
-extern OSInterruptMask lbl_802FD8A0[];
+extern OSInterruptMask InterruptPrioTable[];
 
 #define __PIRegs ((volatile u32*)0xCC003000)
 #define __MEMRegs ((volatile u16*)0xCC004000)
@@ -56,7 +56,7 @@ static inline u32 InterruptBits(register u32 bits) {
     return bits;
 }
 
-void fn_8020CE48(u8 exception, register OSContext* exceptionContext) {
+void __OSDispatchInterrupt(u8 exception, register OSContext* exceptionContext) {
     register u32 intsr;
     register OSContext* context;
     register volatile u16* mem;
@@ -203,7 +203,7 @@ dispatchInterrupt:
 
     unmasked = cause & ~(*(OSInterruptMask*)0x800000C4 | *(OSInterruptMask*)0x800000C8);
     if (unmasked >= 1U) {
-        for (prio = lbl_802FD8A0;; ++prio) {
+        for (prio = InterruptPrioTable;; ++prio) {
             if ((unmasked & *prio) >= 1U) {
                 interrupt = (__OSInterrupt)__cntlzw(unmasked & *prio);
                 break;

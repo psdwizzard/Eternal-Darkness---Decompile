@@ -70,14 +70,14 @@ typedef struct AudioBlock {
     int residue_bits;
 } AudioBlock;
 
-extern void *fn_800F9990(void *dest, const void *src, u32 size);
+extern void *memmove(void *dest, const void *src, u32 size);
 
 /* Signed halving with truncation toward zero. */
 #define HALF_SAMPLES(n) (((int)((unsigned int)(n) >> 31) + (n)) >> 1)
 
 extern float lbl_80651798; /* 32768.0f: normalized float to signed PCM scale. */
 
-int fn_8022FA30(AudioState *state, AudioBlock *block)
+int vorbis_synthesis_blockin(AudioState *state, AudioBlock *block)
 {
     AudioInfo *info = state->info;
     CodecSetup *setup = info->codec_setup;
@@ -96,7 +96,7 @@ int fn_8022FA30(AudioState *state, AudioBlock *block)
             unsigned int offset;
             for (i = 0, offset = 0; i < info->channels; offset += sizeof(s16 *), i++) {
                 s16 *pcm = *(s16 **)((char *)state->pcm + offset);
-                fn_800F9990(pcm, pcm + shift, state->pcm_current * sizeof(s16));
+                memmove(pcm, pcm + shift, state->pcm_current * sizeof(s16));
             }
         }
     }

@@ -6,8 +6,8 @@ typedef struct Entry {
 } Entry;
 
 extern Entry lbl_8060B430[];
-extern void fn_801BB3A0(void*);
-extern void fn_801BB1A0(void*);
+extern void sndStreamDeactivate(void*);
+extern void sndStreamActivate(void*);
 
 void fn_801AD95C(int state)
 {
@@ -16,7 +16,7 @@ void fn_801AD95C(int state)
         i = 0;
         do {
             if (lbl_8060B430[i].active != 0) {
-                fn_801BB3A0(lbl_8060B430[i].handle);
+                sndStreamDeactivate(lbl_8060B430[i].handle);
             }
             i++;
         } while (i < 3);
@@ -24,7 +24,7 @@ void fn_801AD95C(int state)
         i = 0;
         do {
             if (lbl_8060B430[i].active != 0) {
-                fn_801BB1A0(lbl_8060B430[i].handle);
+                sndStreamActivate(lbl_8060B430[i].handle);
             }
             i++;
         } while (i < 3);

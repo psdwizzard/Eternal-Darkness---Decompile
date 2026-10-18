@@ -3,7 +3,7 @@
 /* Pick the first level that accepts the sample peak, the sum of rounded
  * magnitudes, and the partition position. */
 
-extern double fn_80102074(double x); /* rint */
+extern double rint(double x); /* rint */
 
 typedef struct LevelTable {
     char pad0[0x514];
@@ -15,7 +15,7 @@ typedef struct LevelTable {
 
 extern float lbl_80651860;
 
-int fn_80234E9C(float *in, s32 n, LevelTable **tablep, s32 count, s32 value)
+int _testhack(float *in, s32 n, LevelTable **tablep, s32 count, s32 value)
 {
     float buf[128];
     float *b;
@@ -87,7 +87,7 @@ int fn_80234E9C(float *in, s32 n, LevelTable **tablep, s32 count, s32 value)
         }
     }
     for (i = 0; i < n; i++) {
-        b[i] = fn_80102074(b[i]);
+        b[i] = rint(b[i]);
     }
     for (i = 0; i < n; i++) {
         sum += b[i];

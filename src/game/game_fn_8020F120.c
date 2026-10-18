@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* System-call exception vector: flush the gather pipe, then restore HID0. */
-void fn_8020F120(void)
+void SystemCallVector(void)
 {
     register u32 savedHid0;
     register u32 flushHid0;

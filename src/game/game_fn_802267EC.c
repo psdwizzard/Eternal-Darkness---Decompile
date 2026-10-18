@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 extern volatile u16 *__peReg;
 
-void fn_802267EC(u8 enable, u32 func, u8 update)
+void GXPokeZMode(u8 enable, u32 func, u8 update)
 {
     u32 value = enable;
 

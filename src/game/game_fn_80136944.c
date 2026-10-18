@@ -40,7 +40,7 @@ typedef struct Obstacle {
 } Obstacle;
 extern void fn_80136610(Quad*, QuadInfo*, Vec3s*);
 extern int fn_8013E284(const Shape*, const Obstacle*, const void*, Result*);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float lbl_806502A0;
 
 int fn_80136944(const Shape* shape, void* object, Result* out)
@@ -55,7 +55,7 @@ int fn_80136944(const Shape* shape, void* object, Result* out)
         fn_80136610((Quad*)((char*)object + 0x30 + i * 0x1C),
                     &surface, (Vec3s*)object);
         if (fn_8013E284(shape, (const Obstacle*)&surface, object, &candidate)) {
-            float distance = fn_80211D4C(&shape->point, &candidate.point);
+            float distance = PSVECSquareDistance(&shape->point, &candidate.point);
             if (distance < best) {
                 best = distance;
                 found = 1;

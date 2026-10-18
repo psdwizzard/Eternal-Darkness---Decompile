@@ -10,8 +10,8 @@ typedef struct StreamBuffer {
 
 extern void DCFlushRange(void*, u32);
 extern void OSReport(const char*, ...);
-extern int fn_8020D318(void*, void*, int);
-extern int fn_80213704(void*, void*, u32, u32, void (*)(void), u32);
+extern int OSReceiveMessage(void*, void*, int);
+extern int DVDReadAsyncPrio(void*, void*, u32, u32, void (*)(void), u32);
 extern void* memcpy(void*, const void*, u32);
 extern void* memset(void*, int, u32);
 
@@ -35,10 +35,10 @@ u32 fn_80237A04(void* dst, u32 size) {
         chunk = 0x2000;
         if (lbl_8064DC54 > 0) {
             do {
-                fn_8020D318(&work->queue, &message, 1);
+                OSReceiveMessage(&work->queue, &message, 1);
                 if (lbl_8064DC30 != message) {
                     OSReport("Error detected. Resumbitting job!\n");
-                    while (fn_80213704(work->file, work->data + (lbl_8064DC48 << 13),
+                    while (DVDReadAsyncPrio(work->file, work->data + (lbl_8064DC48 << 13),
                                        lbl_8064DC30, lbl_8064DC50 - lbl_8064DC30,
                                        fn_80237E7C, 2) == 0) {
                     }
@@ -55,7 +55,7 @@ u32 fn_80237A04(void* dst, u32 size) {
         memset(work->data + (lbl_8064DC48 << 13), 0, 0x2000);
         DCFlushRange(work->data + (lbl_8064DC48 << 13), 0x2000);
         if (chunk != 0) {
-            while (fn_80213704(work->file, work->data + (lbl_8064DC48 << 13), chunk,
+            while (DVDReadAsyncPrio(work->file, work->data + (lbl_8064DC48 << 13), chunk,
                                lbl_8064DC50, fn_80237E7C, 2) == 0) {
             }
             lbl_8064DC30 = chunk;

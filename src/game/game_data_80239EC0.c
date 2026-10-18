@@ -1,5 +1,5 @@
 /* Symmetric logarithm-reduction constants. */
-const volatile double lbl_80239EC0[6] = {
+const volatile double halF[6] = {
     0.5,
     -0.5,
     0.6931471803691238,

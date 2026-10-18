@@ -8,8 +8,8 @@ typedef struct Params {
 
 extern float lbl_806503A8;
 extern void fn_80179C10(Vec3*, float, float, const Vec3*, float, unsigned char);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211A6C();
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECSubtract();
 
 void fn_8013F760(const Vec3* origin, Params* params, float extent,
                  Vec3* out)
@@ -26,8 +26,8 @@ void fn_8013F760(const Vec3* origin, Params* params, float extent,
                 params->scale, params->type);
     fn_80179C10(&center, lbl_806503A8, lbl_806503A8, &params->position,
                 params->scale, params->type);
-    fn_80211A6C(origin, &center, &offset);
-    fn_80211A48(out, &offset, out);
-    fn_80211A48(out + 1, &offset, out + 1);
-    fn_80211A48(out + 2, &offset, out + 2);
+    PSVECSubtract(origin, &center, &offset);
+    PSVECAdd(out, &offset, out);
+    PSVECAdd(out + 1, &offset, out + 1);
+    PSVECAdd(out + 2, &offset, out + 2);
 }

@@ -20,22 +20,22 @@ typedef struct Queue {
     volatile u8 count;
 } Queue;
 
-extern Queue lbl_80630A30;
-extern Queue lbl_80630CB4;
+extern Queue aramQueueLo;
+extern Queue aramQueueHi;
 extern void (*lbl_8064D4FC)(void*);
-extern void fn_801CD46C(void*);
+extern void aramQueueCallback(void*);
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
-extern void fn_8021B730(void*, u32, u32, u32, u32, u32, u32, void*);
+extern void ARQPostRequest(void*, u32, u32, u32, u32, u32, u32, void*);
 
-void fn_801CD5D0(u32 field_10, u32 field_14, u32 field_18, u32 alternate,
+void aramUploadData(u32 field_10, u32 field_14, u32 field_18, u32 alternate,
                  u32 field_20, u32 field_24)
 {
     Queue* queue;
     u32 enabled;
     u32 alternate_flag;
 
-    queue = alternate != 0 ? &lbl_80630CB4 : &lbl_80630A30;
+    queue = alternate != 0 ? &aramQueueHi : &aramQueueLo;
     for (;;) {
         enabled = OSDisableInterrupts();
         if (queue->count < 16) {
@@ -48,14 +48,14 @@ void fn_801CD5D0(u32 field_10, u32 field_14, u32 field_18, u32 alternate,
             queue->entries[queue->write_index].field_10 = field_10;
             queue->entries[queue->write_index].field_14 = field_14;
             queue->entries[queue->write_index].field_18 = field_18;
-            queue->entries[queue->write_index].callback = fn_801CD46C;
+            queue->entries[queue->write_index].callback = aramQueueCallback;
             queue->entries[queue->write_index].field_20 = field_20;
             queue->entries[queue->write_index].field_24 = field_24;
 
             if (lbl_8064D4FC != 0) {
                 lbl_8064D4FC(&queue->entries[queue->write_index]);
             } else {
-                fn_8021B730(&queue->entries[queue->write_index],
+                ARQPostRequest(&queue->entries[queue->write_index],
                              queue->entries[queue->write_index].field_4,
                              queue->entries[queue->write_index].field_8,
                              queue->entries[queue->write_index].field_C,

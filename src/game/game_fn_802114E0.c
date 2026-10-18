@@ -3,7 +3,7 @@ typedef struct Quaternion { float x, y, z, w; } Quaternion;
 extern const float lbl_80651608;
 
 /* Convert a quaternion to a rotation matrix, including normalization. */
-void fn_802114E0(register Mtx m, register const Quaternion *q)
+void PSMTXQuat(register Mtx m, register const Quaternion *q)
 {
     register float zero, one, two, norm, xy, zw, squaresXY;
     register float squaresZW, sums, yx, crossW, reciprocal;

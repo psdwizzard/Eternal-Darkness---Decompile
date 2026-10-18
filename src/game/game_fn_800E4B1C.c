@@ -39,7 +39,7 @@ extern u16 fn_800E5000(void);
 extern u16 fn_800E4A50(void);
 extern void fn_800E4AB8(void);
 extern void fn_800E4980(void);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern int fn_801AAE68(u16, u8, u8, float, Vec3 *, s8, u8, u8, u16, u32);
 extern void fn_801F74C8(int, int, int);
 extern void fn_801441C0(int, int, int);
@@ -106,7 +106,7 @@ void fn_800E4B1C(void)
                     lbl_8064CADC = 0;
                 }
                 if (lbl_8064CAF2 == 0) {
-                    int random = (int)fn_800FBFB0();
+                    int random = (int)rand();
                     int range = maximum_delay - minimum_delay;
                     lbl_80325C40[lbl_8064CAF4][0] = minimum_delay + random % range;
                     lbl_8064CAEA = lbl_80325C40[lbl_8064CAF4][0] - 170;

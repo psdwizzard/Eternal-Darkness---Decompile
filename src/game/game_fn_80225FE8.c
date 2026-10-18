@@ -34,9 +34,9 @@ typedef enum {
 #define GX_WRITE_U8(v) (*(volatile u8 *)0xCC008000 = (u8)(v))
 #define GX_WRITE_U32(v) (*(volatile u32 *)0xCC008000 = (u32)(v))
 
-extern void fn_8022BA8C(int attr);
+extern void __GXSetMatrixIndex(int attr);
 
-void fn_80225FE8(int dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mtx,
+void GXSetTexCoordGen2(int dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mtx,
                  u8 normalize, u32 pt_texmtx)
 {
     u32 reg = 0;
@@ -135,5 +135,5 @@ void fn_80225FE8(int dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mt
     default: SET_REG_FIELD(gx->matIdxB, 6, 18, mtx); break;
     }
 
-    fn_8022BA8C(dst_coord + GX_VA_TEX0MTXIDX);
+    __GXSetMatrixIndex(dst_coord + GX_VA_TEX0MTXIDX);
 }

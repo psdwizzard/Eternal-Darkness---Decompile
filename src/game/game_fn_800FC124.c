@@ -1,4 +1,4 @@
-/* fn_800FC124: MSL scanf core (__sformatter). */
+/* __sformatter: MSL scanf core (__sformatter). */
 
 typedef struct {
     unsigned char gpr;
@@ -13,10 +13,10 @@ void* __va_arg(void* list, int type);
 
 typedef unsigned short wchar_t;
 
-extern unsigned char lbl_8024AB90[]; /* __ctype_map */
+extern unsigned char __ctype_map[]; /* __ctype_map */
 inline int isspace(int c)
 {
-    return lbl_8024AB90[(unsigned char)c] & 0x06;
+    return __ctype_map[(unsigned char)c] & 0x06;
 }
 
 #define EOF -1
@@ -56,15 +56,15 @@ typedef struct {
 typedef int (*ReadProcType)(void*, int, int);
 
 const char* fn_800FCAD0(const char* format_string, scan_format* format); /* parse_format */
-unsigned long long fn_800FE4EC(int base, int max_width, ReadProcType ReadProc, void* ReadProcArg,
+unsigned long long __strtoull(int base, int max_width, ReadProcType ReadProc, void* ReadProcArg,
                                int* chars_scanned, int* negative, int* overflow); /* __strtoull */
-unsigned long fn_800FE8F8(int base, int max_width, ReadProcType ReadProc, void* ReadProcArg,
+unsigned long __strtoul(int base, int max_width, ReadProcType ReadProc, void* ReadProcArg,
                           int* chars_scanned, int* negative, int* overflow); /* __strtoul */
-long double fn_800FD4E0(int max_width, ReadProcType ReadProc, void* ReadProcArg, int* chars_scanned,
+long double __strtold(int max_width, ReadProcType ReadProc, void* ReadProcArg, int* chars_scanned,
                         int* overflow); /* __strtold */
-int fn_800F96C0(wchar_t* pwc, const signed char* s, unsigned long n); /* mbtowc */
+int mbtowc(wchar_t* pwc, const signed char* s, unsigned long n); /* mbtowc */
 
-int fn_800FC124(ReadProcType ReadProc, void* ReadProcArg, const char* format_str, va_list arg)
+int __sformatter(ReadProcType ReadProc, void* ReadProcArg, const char* format_str, va_list arg)
 {
     int num_chars, chars_read, items_assigned, conversions;
     int base, negative, overflow;
@@ -129,11 +129,11 @@ int fn_800FC124(ReadProcType ReadProc, void* ReadProcArg, const char* format_str
             base = 0;
         signed_int:
             if (format.argument_options == long_long_argument) {
-                u_long_long_num = fn_800FE4EC(base, format.field_width, ReadProc, ReadProcArg,
+                u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg,
                                               &num_chars, &negative, &overflow);
             }
             if (format.argument_options != long_long_argument) {
-                u_long_num = fn_800FE8F8(base, format.field_width, ReadProc, ReadProcArg, &num_chars,
+                u_long_num = __strtoul(base, format.field_width, ReadProc, ReadProcArg, &num_chars,
                                          &negative, &overflow);
             }
 
@@ -184,11 +184,11 @@ int fn_800FC124(ReadProcType ReadProc, void* ReadProcArg, const char* format_str
             base = 16;
         unsigned_int:
             if (format.argument_options == long_long_argument) {
-                u_long_long_num = fn_800FE4EC(base, format.field_width, ReadProc, ReadProcArg,
+                u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg,
                                               &num_chars, &negative, &overflow);
             }
             if (format.argument_options != long_long_argument) {
-                u_long_num = fn_800FE8F8(base, format.field_width, ReadProc, ReadProcArg, &num_chars,
+                u_long_num = __strtoul(base, format.field_width, ReadProc, ReadProcArg, &num_chars,
                                          &negative, &overflow);
             }
 
@@ -236,7 +236,7 @@ int fn_800FC124(ReadProcType ReadProc, void* ReadProcArg, const char* format_str
         case 'E':
         case 'g':
         case 'G':
-            long_double_num = fn_800FD4E0(format.field_width, ReadProc, ReadProcArg, &num_chars, &overflow);
+            long_double_num = __strtold(format.field_width, ReadProc, ReadProcArg, &num_chars, &overflow);
 
             if (!num_chars) {
                 goto exit;
@@ -273,7 +273,7 @@ int fn_800FC124(ReadProcType ReadProc, void* ReadProcArg, const char* format_str
                 while (format.field_width-- && (rval = (*ReadProc)(ReadProcArg, 0, __GetAChar)) != EOF) {
                     c = rval;
                     if (format.argument_options == wchar_argument) {
-                        fn_800F96C0((wchar_t*)arg_ptr, &c, 1);
+                        mbtowc((wchar_t*)arg_ptr, &c, 1);
                         arg_ptr++;
                     } else {
                         *arg_ptr++ = c;
@@ -331,7 +331,7 @@ int fn_800FC124(ReadProcType ReadProc, void* ReadProcArg, const char* format_str
                 while (format.field_width-- && (c = (*ReadProc)(ReadProcArg, 0, __GetAChar)) != EOF &&
                        tst_char_map(format.char_set, c)) {
                     if (format.argument_options == wchar_argument) {
-                        fn_800F96C0((wchar_t*)arg_ptr, &c, 1);
+                        mbtowc((wchar_t*)arg_ptr, &c, 1);
                         arg_ptr = (char*)((wchar_t*)arg_ptr + 1);
                     } else {
                         *arg_ptr++ = c;

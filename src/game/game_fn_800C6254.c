@@ -36,9 +36,9 @@ extern void *fn_8004918C(void);
 extern void *fn_8004914C(void);
 extern void *fn_801A7780(void *);
 extern int fn_8011F6A4(void *, int, int, int, void *, int);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
-extern void fn_80211A90(const Vec3 *, Vec3 *, float);
-extern void fn_80211A48(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, float);
+extern void PSVECAdd(const Vec3 *, const Vec3 *, Vec3 *);
 extern void *fn_8012AB2C(void *);
 extern void fn_8013F4D0(Segment *, const Vec3 *, const Vec3 *);
 extern void *fn_80140258(void *, const Vec3 *, Vec3 *, int, void *);
@@ -66,9 +66,9 @@ void fn_800C6254(void *context, void *object)
                     position = query.position;
                     direction = query.direction;
                 }
-                fn_80211AAC(&direction, &direction);
-                fn_80211A90(&direction, &direction, lbl_8064F1F0);
-                fn_80211A48(&position, &direction, &position);
+                PSVECNormalize(&direction, &direction);
+                PSVECScale(&direction, &direction, lbl_8064F1F0);
+                PSVECAdd(&position, &direction, &position);
                 collision = fn_8012AB2C(object);
                 fn_8013F4D0(&segment, &query.position, &position);
                 lbl_8064C718 = fn_80140258(collision, &segment.first,

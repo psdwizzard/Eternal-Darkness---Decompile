@@ -57,11 +57,11 @@ typedef struct AudioJob {
 } AudioJob;
 
 extern void *memset(void *, int, unsigned long);
-extern void fn_80233658(void *, f32 *, f32 *);
-extern f32 fn_8023633C(void *, s32, s32, s32, s32);
+extern void mdct_backward(void *, f32 *, f32 *);
+extern f32 _vorbis_window(void *, s32, s32, s32, s32);
 extern f32 lbl_80651830;
 
-s32 fn_80232C44(AudioContext *context, AudioJob *job)
+s32 mapping0_inverse(AudioContext *context, AudioJob *job)
 {
     f32 *inputs[2];
     s32 inputActive[2];
@@ -176,14 +176,14 @@ s32 fn_80232C44(AudioContext *context, AudioJob *job)
 
     for (i = 0; i < graph->channelCount; i++) {
         void *source = *sources[context->sampleIndex + 1];
-        fn_80233658(source, context->buffers[i], context->buffers[i]);
+        mdct_backward(source, context->buffers[i], context->buffers[i]);
     }
 
     for (i = 0; i < graph->channelCount; i++) {
         f32 *buffer = context->buffers[i];
         if (activeBase[i] != 0) {
             for (j = 0; j < samples; j++) {
-                buffer[j] *= fn_8023633C(*(void **)((char *)settings + 4), j,
+                buffer[j] *= _vorbis_window(*(void **)((char *)settings + 4), j,
                                           scaleCount, left, right);
             }
         } else {

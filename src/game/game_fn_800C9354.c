@@ -3,8 +3,8 @@ typedef struct Vec3 {
 } Vec3;
 
 extern Vec3 fn_80201E78(void *object);
-extern void fn_80211A6C(const Vec3 *first, const Vec3 *second, Vec3 *result);
-extern float fn_80211B08(const Vec3 *value);
+extern void PSVECSubtract(const Vec3 *first, const Vec3 *second, Vec3 *result);
+extern float PSVECMag(const Vec3 *value);
 extern float lbl_8064F294;
 
 int fn_800C9354(void *first, void *second, void *third)
@@ -16,8 +16,8 @@ int fn_800C9354(void *first, void *second, void *third)
     Vec3 second_delta;
     float first_distance;
 
-    fn_80211A6C(&third_position, &second_position, &first_delta);
-    fn_80211A6C(&third_position, &first_position, &second_delta);
-    first_distance = fn_80211B08(&first_delta);
-    return fn_80211B08(&second_delta) - first_distance >= lbl_8064F294;
+    PSVECSubtract(&third_position, &second_position, &first_delta);
+    PSVECSubtract(&third_position, &first_position, &second_delta);
+    first_distance = PSVECMag(&first_delta);
+    return PSVECMag(&second_delta) - first_distance >= lbl_8064F294;
 }

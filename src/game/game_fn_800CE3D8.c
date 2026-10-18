@@ -20,8 +20,8 @@ extern void *fn_80201B8C();
 extern int fn_801ED57C(int);
 extern void DCFlushRange(void *, unsigned int);
 extern void fn_80027150(void *, void *, void *);
-extern void fn_8022A71C(int);
-extern void fn_8022A6DC(int);
+extern void GXSetAlphaUpdate(int);
+extern void GXSetColorUpdate(int);
 extern void fn_801ECC4C(void);
 extern void fn_801EA9F8(void);
 extern int lbl_8064D738;
@@ -41,11 +41,11 @@ void fn_800CE3D8(void *object)
     DCFlushRange(second->positions[lbl_8064D738], 0x18);
     DCFlushRange(second->texcoords[lbl_8064D738], 0x10);
     DCFlushRange(second->colors[lbl_8064D738], 0x10);
-    fn_8022A71C(1);
-    fn_8022A6DC(1);
+    GXSetAlphaUpdate(1);
+    GXSetColorUpdate(1);
     fn_80027150(second->positions[lbl_8064D738],
                 second->colors[lbl_8064D738], second->texcoords[lbl_8064D738]);
-    fn_8022A71C(0);
+    GXSetAlphaUpdate(0);
     fn_801ECC4C();
     fn_801EA9F8();
     fn_801ED57C(saved);

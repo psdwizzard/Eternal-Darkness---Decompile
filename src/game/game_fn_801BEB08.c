@@ -10,11 +10,9 @@ typedef struct MSTEP {
     u32 para2;
 } MSTEP;
 
-extern u32 fn_801BE9D8(SYNTH_VOICE*, u32, u8);
-extern void fn_801BEAA4(SYNTH_VOICE*, u32, u8, s32);
+extern u32 varGet32(SYNTH_VOICE*, u32, u8);
+extern void varSet32(SYNTH_VOICE*, u32, u8, s32);
 
-#define varGet32 fn_801BE9D8
-#define varSet32 fn_801BEAA4
 
 static inline s16 varGetSigned(SYNTH_VOICE* state, u32 useExCtrl, u8 index)
 {
@@ -26,7 +24,7 @@ static inline void varSet(SYNTH_VOICE* state, u8 useExCtrl, u8 index, s16 value)
     varSet32(state, useExCtrl, index, value);
 }
 
-void fn_801BEB08(SYNTH_VOICE* state, MSTEP* operation, u8 opcode)
+void mcmdVarCalculation(SYNTH_VOICE* state, MSTEP* operation, u8 opcode)
 {
     s16 s1;
     s16 s2;

@@ -6,21 +6,21 @@ typedef struct VoiceUpdate {
     u8 type;
 } VoiceUpdate;
 
-extern void fn_801B3770(void*);
-extern void fn_801B35BC(void*);
-extern void fn_801B3C14(void*, int, int);
+extern void seqStop(void*);
+extern void seqPause(void*);
+extern void seqMute(void*, int, int);
 
-void fn_801B7A10(VoiceUpdate* update)
+void HandleFaderTermination(VoiceUpdate* update)
 {
     switch (update->type) {
     case 1:
-        fn_801B3770(update->voice);
+        seqStop(update->voice);
         break;
     case 2:
-        fn_801B35BC(update->voice);
+        seqPause(update->voice);
         break;
     case 3:
-        fn_801B3C14(update->voice, 0, 0);
+        seqMute(update->voice, 0, 0);
         break;
     }
 }

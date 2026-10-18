@@ -26,8 +26,8 @@ typedef struct {
 
 extern u8 *gx;
 extern volatile u32 *__piReg;
-GXDisplayListState lbl_806426A0;
-extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
+GXDisplayListState DisplayListFifo;
+extern GXFifoObj *OldCPUFifo; /* OldCPUFifo */
 
 #define GX32(o) (*(u32 *)(gx + (o)))
 #define GX8(o) (*(u8 *)(gx + (o)))
@@ -35,11 +35,11 @@ extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
 void *memcpy(void *dst, const void *src, u32 n);
-void fn_80226A28(void);              /* __GXSetDirtyState */
-void fn_80224048(GXFifoObj *fifo);   /* __GXSaveCPUFifoAux */
+void __GXSetDirtyState(void);              /* __GXSetDirtyState */
+void __GXSaveCPUFifoAux(GXFifoObj *fifo);   /* __GXSaveCPUFifoAux */
 void GXSetCPUFifo(GXFifoObj *fifo);
 
-u32 fn_8022B374(void) {
+u32 GXEndDisplayList(void) {
     u32 ov;
     BOOL enabled;
     u32 bpMask;
@@ -47,22 +47,22 @@ u32 fn_8022B374(void) {
     u32 pad[2]; /* unused; reproduces the original 0x20-byte frame */
 
     if (GX32(0x4F4) != 0) {
-        fn_80226A28();
+        __GXSetDirtyState();
     }
     reg = __piReg[5];
     ov = (reg >> 26) & 1;
-    fn_80224048(&lbl_806426A0.fifo);
-    GXSetCPUFifo(lbl_8064DBC8);
+    __GXSaveCPUFifoAux(&DisplayListFifo.fifo);
+    GXSetCPUFifo(OldCPUFifo);
     if (GX8(0x4F1) != 0) {
         enabled = OSDisableInterrupts();
         bpMask = GX32(0x8);
-        memcpy(gx, lbl_806426A0.savedGXData, 0x4F8);
+        memcpy(gx, DisplayListFifo.savedGXData, 0x4F8);
         GX32(0x8) = bpMask;
         OSRestoreInterrupts(enabled);
     }
     GX8(0x4F0) = 0;
     if (!ov) {
-        return lbl_806426A0.fifo.count;
+        return DisplayListFifo.fifo.count;
     }
     return 0;
 }

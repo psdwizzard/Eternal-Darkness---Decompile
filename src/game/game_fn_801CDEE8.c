@@ -1,26 +1,26 @@
 typedef unsigned int u32;
 
-extern void (*lbl_8064D510)(void);
-extern volatile u32 lbl_8064D518;
-extern volatile u32 lbl_8064D51C;
-extern volatile u32 lbl_8064D520;
+extern void (*userCallback)(void);
+extern volatile u32 salDspIsDone;
+extern volatile u32 salLogicIsWaiting;
+extern volatile u32 salLogicActive;
 
 extern void OSEnableInterrupts(void);
 extern void OSDisableInterrupts(void);
 
-void fn_801CDEE8(void)
+void dspResumeCallback(void)
 {
     volatile u32 padding[2];
 
-    lbl_8064D518 = 1;
-    if (lbl_8064D51C != 0) {
-        lbl_8064D51C = 0;
-        if (lbl_8064D520 == 0) {
-            lbl_8064D520 = 1;
+    salDspIsDone = 1;
+    if (salLogicIsWaiting != 0) {
+        salLogicIsWaiting = 0;
+        if (salLogicActive == 0) {
+            salLogicActive = 1;
             OSEnableInterrupts();
-            lbl_8064D510();
+            userCallback();
             OSDisableInterrupts();
-            lbl_8064D520 = 0;
+            salLogicActive = 0;
         }
     }
 }

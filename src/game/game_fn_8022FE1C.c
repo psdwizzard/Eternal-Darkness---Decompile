@@ -24,11 +24,11 @@ typedef struct DecoderState {
 
 /* Keep the non-prototype declaration compatible with the two-argument
  * definition while preserving the original call's unused mode argument. */
-extern s32 fn_8022FE60();
+extern s32 _vds_shared_init();
 
-s32 fn_8022FE1C(DecoderState *state, DecoderWrapper *wrapper)
+s32 vorbis_synthesis_init(DecoderState *state, DecoderWrapper *wrapper)
 {
-    fn_8022FE60(state, wrapper, 0);
+    _vds_shared_init(state, wrapper, 0);
     state->pcm_read = -1;
     state->granulepos = -1;
     state->sequence = -1;

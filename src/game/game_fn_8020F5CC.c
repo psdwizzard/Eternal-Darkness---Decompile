@@ -38,14 +38,14 @@ struct OSMutex {
     OSMutex *prev;
 };
 
-extern OSThread *fn_8020F40C(OSThread *thread, s32 priority);
+extern OSThread *SetEffectivePriority(OSThread *thread, s32 priority);
 
 /* Propagate a higher effective priority through mutex owners. */
-void fn_8020F5CC(OSThread *thread, s32 priority) {
+void __OSPromoteThread(OSThread *thread, s32 priority) {
     do {
         if (thread->suspend > 0 || thread->priority <= priority) {
             break;
         }
-        thread = fn_8020F40C(thread, priority);
+        thread = SetEffectivePriority(thread, priority);
     } while (thread != 0);
 }

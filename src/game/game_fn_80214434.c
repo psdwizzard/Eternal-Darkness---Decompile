@@ -15,11 +15,11 @@ typedef struct DVDDiskID {
 } DVDDiskID;
 
 extern DVDDiskID *currID_8064DA04;
-extern s32 fn_80212E2C(s32 enable, u32 size, DVDLowCallback callback);
-extern void fn_80214658(u32 intType);
+extern s32 DVDLowAudioBufferConfig(s32 enable, u32 size, DVDLowCallback callback);
+extern void cbForStateCheckID3(u32 intType);
 
 /* Configure the audio stream buffer from the current disk ID. */
-void fn_80214434(void)
+void stateCheckID3(void)
 {
-    fn_80212E2C(currID_8064DA04->streaming, 10, fn_80214658);
+    DVDLowAudioBufferConfig(currID_8064DA04->streaming, 10, cbForStateCheckID3);
 }

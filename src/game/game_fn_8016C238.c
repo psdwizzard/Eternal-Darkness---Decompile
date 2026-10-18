@@ -1,9 +1,9 @@
 typedef signed short s16;
 
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
-extern double fn_8016A694(void*, int);
-extern s16* fn_8016A784(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
+extern double lua_tonumber(void*, int);
+extern s16* lua_touserdata(void*, int);
 extern void fn_801B05E8(int, int, int, int, void*, int, int, int);
 extern const char lbl_8024FF00[];
 
@@ -17,16 +17,16 @@ int fn_8016C238(void* state)
     float vector[3];
     void* position;
 
-    if (fn_8016A598(state) != 5) {
-        fn_80163BB4(state, lbl_8024FF00, 5, fn_8016A598(state));
+    if (lua_gettop(state) != 5) {
+        luaO_verror(state, lbl_8024FF00, 5, lua_gettop(state));
         return 0;
     }
 
-    first = (int)fn_8016A694(state, 1);
-    second = (int)fn_8016A694(state, 2);
-    third = (int)fn_8016A694(state, 3);
-    fourth = (int)fn_8016A694(state, 4);
-    source = fn_8016A784(state, 5);
+    first = (int)lua_tonumber(state, 1);
+    second = (int)lua_tonumber(state, 2);
+    third = (int)lua_tonumber(state, 3);
+    fourth = (int)lua_tonumber(state, 4);
+    source = lua_touserdata(state, 5);
     if (source != 0) {
         vector[0] = source[0];
         vector[1] = source[1];

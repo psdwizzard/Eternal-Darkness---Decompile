@@ -1,4 +1,4 @@
-asm void fn_800F36B0(void *destination, const void *source, unsigned int length,
+asm void TRK_ppc_memcpy(void *destination, const void *source, unsigned int length,
                      unsigned int read_msr, unsigned int write_msr)
 {
     nofralloc

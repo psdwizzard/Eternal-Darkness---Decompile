@@ -56,11 +56,10 @@ typedef struct SynthSequencer {
     SynthSection section[1];
 } SynthSequencer;
 
-extern SynthSequencer* lbl_8064D380;
-#define cseq lbl_8064D380
+extern SynthSequencer* cseq;
 #define TRACK_CMD(t) ((t)->current)
 
-SynthSequenceEvent* fn_801B443C(u8 channel)
+SynthSequenceEvent* GenerateNextTrackEvent(u8 channel)
 {
     u32 trackId;
     SynthTrackCursor* track;

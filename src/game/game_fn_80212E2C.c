@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Configure the disc audio buffer and start the command timeout. */
-s32 fn_80212E2C(s32 enable, u32 size, DVDLowCallback callback) {
+s32 DVDLowAudioBufferConfig(s32 enable, u32 size, DVDLowCallback callback) {
     u32 enableBit;
 
     Callback_8064D9A0 = callback;

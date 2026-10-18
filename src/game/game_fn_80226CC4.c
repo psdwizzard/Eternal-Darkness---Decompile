@@ -18,7 +18,7 @@ typedef union {
 volatile GXFifo GXWGFifo : 0xCC008000;
 
 /* GXSetTexCoordCylWrap: set cylindrical wrapping for a texture coordinate. */
-void fn_80226CC4(int coord, u8 wrapS, u8 wrapT)
+void GXEnableTexOffsets(int coord, u8 wrapS, u8 wrapT)
 {
     gx->suSsize[coord] = (gx->suSsize[coord] & ~0x40000UL) | ((u32)wrapS << 18);
     gx->suSsize[coord] = (gx->suSsize[coord] & ~0x80000UL) | ((u32)wrapT << 19);

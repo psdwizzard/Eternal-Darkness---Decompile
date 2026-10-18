@@ -12,19 +12,19 @@ typedef struct CardControl {
     u8 pad84[0x110 - 0x84];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 extern BOOL EXISelect(s32 chan, u32 dev, u32 freq);
 extern BOOL EXIDeselect(s32 chan);
-extern BOOL fn_80206AC8(s32 chan, void *buf, s32 len, u32 type);
+extern BOOL EXIImmEx(s32 chan, void *buf, s32 len, u32 type);
 extern void *memset(void *, int, unsigned long);
 
 /* Issue a card read-array command (0x52) and read rlen bytes into rbuf. */
-s32 fn_8021D7AC(s32 chan, u32 data, void *rbuf, s32 rlen, BOOL mode) {
+s32 ReadArrayUnlock(s32 chan, u32 data, void *rbuf, s32 rlen, BOOL mode) {
     CardControl *card;
     BOOL err;
     u8 cmd[5];
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (!EXISelect(chan, 0, 4)) {
         return -3;
     }
@@ -43,9 +43,9 @@ s32 fn_8021D7AC(s32 chan, u32 data, void *rbuf, s32 rlen, BOOL mode) {
     }
 
     err = 0;
-    err |= !fn_80206AC8(chan, cmd, 5, 1);
-    err |= !fn_80206AC8(chan, card->workArea + 0x200, card->latency, 1);
-    err |= !fn_80206AC8(chan, rbuf, rlen, 0);
+    err |= !EXIImmEx(chan, cmd, 5, 1);
+    err |= !EXIImmEx(chan, card->workArea + 0x200, card->latency, 1);
+    err |= !EXIImmEx(chan, rbuf, rlen, 0);
     err |= !EXIDeselect(chan);
 
     return err ? -3 : 0;

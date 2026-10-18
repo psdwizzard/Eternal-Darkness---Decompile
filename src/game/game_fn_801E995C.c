@@ -34,7 +34,7 @@ typedef struct ModelHeader {
 extern void fn_801E9124(u32*);
 extern void fn_80155BB0(const char*, const char*, ...);
 extern u32 fn_801EA900(const u8*, void*, u16);
-extern void fn_80211A90(Vec3*, const Vec3*, float);
+extern void PSVECScale(Vec3*, const Vec3*, float);
 extern u32 fn_80178F14(s32, s32, s32, s32, s32, s32);
 extern char lbl_80265CB8[];
 extern char lbl_80265CDC[];
@@ -104,7 +104,7 @@ u32 fn_801E995C(const u8* source, ModelHeader* header)
             entry->center.y += vertices[entry->indices[j] * 3 + 1];
             entry->center.z += vertices[entry->indices[j] * 3 + 2];
         }
-        fn_80211A90(&entry->center, &entry->center,
+        PSVECScale(&entry->center, &entry->center,
                     lbl_806512AC / (float)count);
         for (j = 0; j < count; j++) {
             s16* vertex = vertices + entry->indices[j] * 3;

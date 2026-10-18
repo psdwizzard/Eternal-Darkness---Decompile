@@ -23,8 +23,8 @@ extern char lbl_80250FD4[];
 extern u32 fn_8017B8AC(void);
 extern u32 fn_8017B95C(void);
 extern void DCFlushRange(void*, u32);
-extern int fn_80222224(u8*, void*, u32, u32, int);
-extern u32 fn_8021EB20(u8, int);
+extern int CARDWriteAsync(u8*, void*, u32, u32, int);
+extern u32 CARDGetXferredBytes(u8, int);
 extern void fn_8017BA60(char*);
 
 void fn_8017C47C(Request* request)
@@ -36,12 +36,12 @@ void fn_8017C47C(Request* request)
             DCFlushRange(lbl_8064A580.buffer, fn_8017B8AC());
             transfer_size = fn_8017B95C();
             request->result =
-                fn_80222224(&lbl_8064A6C8[request->value * 20],
+                CARDWriteAsync(&lbl_8064A6C8[request->value * 20],
                             lbl_8064A580.buffer, fn_8017B8AC(),
                             transfer_size, 0);
             if (request->result >= 0) {
                 (&lbl_8064D20C)[request->value] =
-                    fn_8021EB20(request->value, request->result);
+                    CARDGetXferredBytes(request->value, request->result);
                 request->state = 1;
             } else {
                 fn_8017BA60(lbl_80250FD4);

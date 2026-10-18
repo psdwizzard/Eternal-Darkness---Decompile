@@ -22,11 +22,11 @@ typedef struct Parser {
     Input* input;
 } Parser;
 
-extern int fn_800F8D2C(int);
-extern void fn_80162114(Parser*, char*, int);
-extern void fn_80162228(Parser*);
-extern void fn_80163A9C(Buffer*, unsigned int);
-extern char* fn_80166E3C(Buffer*, char*, unsigned int);
+extern int isdigit(int);
+extern void luaX_error(Parser*, char*, int);
+extern void inclinenumber(Parser*);
+extern void luaO_openspace(Buffer*, unsigned int);
+extern char* luaS_newlstr(Buffer*, char*, unsigned int);
 extern char lbl_8024F6D0[];
 extern char lbl_8024F6E4[];
 
@@ -44,7 +44,7 @@ extern char lbl_8024F6E4[];
     NEXT_TOKEN();                                                              \
 } while (0)
 
-void fn_80162BEC(Parser* parser, int delimiter, char** result)
+void read_string(Parser* parser, int delimiter, char** result)
 {
     Buffer* buffer = parser->buffer;
     unsigned int index;
@@ -53,7 +53,7 @@ void fn_80162BEC(Parser* parser, int delimiter, char** result)
     int token;
 
     if (buffer->capacity < 10) {
-        fn_80163A9C(buffer, 0x8A);
+        luaO_openspace(buffer, 0x8A);
     }
 
     index = 1;
@@ -62,14 +62,14 @@ void fn_80162BEC(Parser* parser, int delimiter, char** result)
 
     while (parser->current_token != delimiter) {
         if (index + 10 > buffer->capacity) {
-            fn_80163A9C(buffer, index + 0x8A);
+            luaO_openspace(buffer, index + 0x8A);
         }
 
         switch (parser->current_token) {
         case -1:
         case '\n':
             buffer->data[index++] = 0;
-            fn_80162114(parser, lbl_8024F6D0, 0x11B);
+            luaX_error(parser, lbl_8024F6D0, 0x11B);
             break;
 
         case '\\':
@@ -98,7 +98,7 @@ void fn_80162BEC(Parser* parser, int delimiter, char** result)
                 break;
             case '\n':
                 buffer->data[index++] = '\n';
-                fn_80162228(parser);
+                inclinenumber(parser);
                 break;
             case '0':
             case '1':
@@ -117,10 +117,10 @@ void fn_80162BEC(Parser* parser, int delimiter, char** result)
                     value -= '0';
                     NEXT_TOKEN();
                     count++;
-                } while (count < 3 && fn_800F8D2C(parser->current_token));
+                } while (count < 3 && isdigit(parser->current_token));
                 if (value != (unsigned char)value) {
                     buffer->data[index++] = 0;
-                    fn_80162114(parser, lbl_8024F6E4, 0x11B);
+                    luaX_error(parser, lbl_8024F6E4, 0x11B);
                 }
                 buffer->data[index++] = value;
                 break;
@@ -138,5 +138,5 @@ void fn_80162BEC(Parser* parser, int delimiter, char** result)
 
     SAVE_AND_NEXT(parser->current_token);
     buffer->data[index] = 0;
-    *result = fn_80166E3C(buffer, buffer->data + 1, index - 2);
+    *result = luaS_newlstr(buffer, buffer->data + 1, index - 2);
 }

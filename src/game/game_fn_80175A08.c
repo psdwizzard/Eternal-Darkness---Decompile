@@ -1,9 +1,9 @@
 typedef signed short s16;
 typedef unsigned char u8;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201C24();
 extern void fn_80157B48(void*, s16);
@@ -24,16 +24,16 @@ int fn_80175A08(void* state)
     void* object;
     int value;
     diagnostic.strings = lbl_8024FF00;
-    if (fn_8016A598(state) != 3) {
-        fn_80163BB4(state, diagnostic.strings, 3, fn_8016A598(state));
+    if (lua_gettop(state) != 3) {
+        luaO_verror(state, diagnostic.strings, 3, lua_gettop(state));
         return 0;
     }
 
-    object_id = fn_8016A694(state, 1);
-    kind = fn_8016A694(state, 2);
+    object_id = lua_tonumber(state, 1);
+    kind = lua_tonumber(state, 2);
     if (fn_80201814(object_id) != 0) {
         object = fn_80201C24();
-        value = fn_8016A694(state, 3);
+        value = lua_tonumber(state, 3);
         switch (kind) {
         case 0:
             fn_80157B48(object, value);
@@ -60,11 +60,11 @@ int fn_80175A08(void* state)
             fn_80157B3C(object, value);
             break;
         default:
-            fn_80163BB4(state, diagnostic.strings + 0x5A8, kind);
+            luaO_verror(state, diagnostic.strings + 0x5A8, kind);
             break;
         }
     } else {
-        fn_80163BB4(state, diagnostic.strings + 0x5CC, object_id);
+        luaO_verror(state, diagnostic.strings + 0x5CC, object_id);
     }
     return 0;
 }

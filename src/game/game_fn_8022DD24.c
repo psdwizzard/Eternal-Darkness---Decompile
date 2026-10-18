@@ -47,7 +47,7 @@ static inline void CompleteTransfer(s32 chan)
 }
 
 /* Wait for the channel 2 immediate transfer to finish. */
-void fn_8022DD24(void)
+void AmcEXISync(void)
 {
     s32 chan = 2;
     EXIControl *exi = lbl_8064C4B8;

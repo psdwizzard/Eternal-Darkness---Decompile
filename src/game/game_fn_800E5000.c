@@ -1,7 +1,7 @@
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 unsigned short fn_800E5000(void)
 {
-    return fn_800FBFB0() % 5;
+    return rand() % 5;
 }

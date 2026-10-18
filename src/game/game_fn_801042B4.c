@@ -1,8 +1,8 @@
 #include "src/game/types.h"
 
-s32 fn_80103B58(s32 arg0, u8* weights, s32* state, s32 arg3, s32 arg4, s32 arg5);
+s32 GetMCAotBasis(s32 arg0, u8* weights, s32* state, s32 arg3, s32 arg4, s32 arg5);
 
-s32 fn_801042B4(s32 arg0, s32* sums, u8 count, s32 arg3, s32 arg4, s32 arg5) {
+s32 GetMCAotSum(s32 arg0, s32* sums, u8 count, s32 arg3, s32 arg4, s32 arg5) {
     s32 state;
     u8 weights[16];
     s32 value;
@@ -27,7 +27,7 @@ s32 fn_801042B4(s32 arg0, s32* sums, u8 count, s32 arg3, s32 arg4, s32 arg5) {
     sums[0] = 0;
 
     while (count--) {
-        value = fn_80103B58(arg0, weights, &state, arg3, arg4, arg5);
+        value = GetMCAotBasis(arg0, weights, &state, arg3, arg4, arg5);
         sums[0] += value * weights[0];
         sums[1] += value * weights[1];
         sums[2] += value * weights[2];

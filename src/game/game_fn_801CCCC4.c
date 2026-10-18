@@ -23,17 +23,17 @@ typedef struct Group {
     u8 pad58[0x64];
 } Group;
 
-extern Entry* lbl_8064D4AC;
-extern Group lbl_80628CB0[];
-extern volatile u16 lbl_8023B458[];
+extern Entry* dspVoice;
+extern Group dspStudio[];
+extern volatile u16 itdOffTab[];
 extern volatile float lbl_80651020;
 extern volatile float lbl_80651024;
 
-extern void fn_801C79C8(u8 table_kind, float* output, u32 packed_min,
+extern void salCalcVolume(u8 table_kind, float* output, u32 packed_min,
                         u32 packed_max, float x, float y, float z,
                         u32 bias_x, u32 alternate_layout);
 
-void fn_801CCCC4(u32 index, u8 table_kind, u32 packed_min, u32 packed_max,
+void hwSetVolume(u32 index, u8 table_kind, u32 packed_min, u32 packed_max,
                  float x, float y, float z)
 {
     float output[9];
@@ -43,7 +43,7 @@ void fn_801CCCC4(u32 index, u8 table_kind, u32 packed_min, u32 packed_max,
     int blue;
     float value;
 
-    entry = &lbl_8064D4AC[index];
+    entry = &dspVoice[index];
     value = lbl_80651020;
     if (x >= value) {
         x = value;
@@ -57,9 +57,9 @@ void fn_801CCCC4(u32 index, u8 table_kind, u32 packed_min, u32 packed_max,
         z = value;
     }
 
-    fn_801C79C8(table_kind, output, packed_min, packed_max, x, y, z,
+    salCalcVolume(table_kind, output, packed_min, packed_max, x, y, z,
                 (entry->flagsF0 & 0x80000000) != 0,
-                lbl_80628CB0[entry->group].alternate_layout == 1);
+                dspStudio[entry->group].alternate_layout == 1);
 
     value = lbl_80651024;
     red = value * output[0];
@@ -107,8 +107,8 @@ void fn_801CCCC4(u32 index, u8 table_kind, u32 packed_min, u32 packed_max,
     }
 
     if ((entry->flagsF0 & 0x80000000) != 0) {
-        entry->fieldD0 = lbl_8023B458[(packed_min >> 16) & 0xFF];
-        entry->fieldD2 = 0x20 - lbl_8023B458[(packed_min >> 16) & 0xFF];
+        entry->fieldD0 = itdOffTab[(packed_min >> 16) & 0xFF];
+        entry->fieldD2 = 0x20 - itdOffTab[(packed_min >> 16) & 0xFF];
         entry->flags24 |= 0x200;
     }
 }

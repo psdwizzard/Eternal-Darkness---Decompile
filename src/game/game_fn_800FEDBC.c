@@ -1,12 +1,12 @@
-/* fn_800FEDBC: fdlibm __ieee754_acos (MSL e_acos.c), with MSL's inline
+/* __ieee754_acos: fdlibm __ieee754_acos (MSL e_acos.c), with MSL's inline
  * frsqrte-based sqrt expanded in place. */
 
 #define __HI(x) *(int *)&x
 #define __LO(x) *(1 + (int *)&x)
 
 /* __float_nan, __float_huge */
-extern long lbl_8064B850[];
-extern long lbl_8064B854[];
+extern long __float_nan[];
+extern long __float_huge[];
 
 extern const double lbl_8064F988; /* 0.0 */
 extern const double lbl_8064F990; /* pi */
@@ -46,8 +46,8 @@ extern const double lbl_8064FA10; /* 2.0 */
 #define three 3.0
 #define two lbl_8064FA10
 
-#define NAN (*(float *)lbl_8064B850)
-#define INFINITY (*(float *)lbl_8064B854)
+#define NAN (*(float *)__float_nan)
+#define INFINITY (*(float *)__float_huge)
 
 static inline double sqrt(double x)
 {
@@ -66,7 +66,7 @@ static inline double sqrt(double x)
     return INFINITY;
 }
 
-double fn_800FEDBC(double x)
+double __ieee754_acos(double x)
 {
     double z, p, q, r, w, s, c, df;
     int hx, ix;

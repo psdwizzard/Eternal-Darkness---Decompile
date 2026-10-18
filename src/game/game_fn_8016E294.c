@@ -5,13 +5,13 @@ typedef struct DVDFileInfo {
 } DVDFileInfo;
 
 extern void* fn_8015E4A4(void);
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern int fn_800F9D4C(char*, const char*, ...);
-extern int fn_802136A4(const char*);
-extern int fn_80213394(const char*, DVDFileInfo*);
-extern void fn_8021345C(DVDFileInfo*);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern int sprintf(char*, const char*, ...);
+extern int DVDChangeDir(const char*);
+extern int DVDOpen(const char*, DVDFileInfo*);
+extern void DVDClose(DVDFileInfo*);
 extern void fn_8015977C(int, int, int, int, int);
 extern const char lbl_8024FF00[];
 extern const char lbl_8024FFEC[];
@@ -30,25 +30,25 @@ int fn_8016E294(void* state)
     int opened;
 
     fn_8015E4A4();
-    if (fn_8016A598(state) != 3) {
-        fn_80163BB4(state, lbl_8024FF00, 3, fn_8016A598(state));
+    if (lua_gettop(state) != 3) {
+        luaO_verror(state, lbl_8024FF00, 3, lua_gettop(state));
         return 0;
     }
 
-    first = (int)fn_8016A694(state, 1);
-    second = (int)fn_8016A694(state, 2);
-    third = (int)fn_8016A694(state, 3);
-    fn_800F9D4C((char*)path, lbl_8024FFEC, lbl_8064DC80, first);
+    first = (int)lua_tonumber(state, 1);
+    second = (int)lua_tonumber(state, 2);
+    third = (int)lua_tonumber(state, 3);
+    sprintf((char*)path, lbl_8024FFEC, lbl_8064DC80, first);
     for (i = 0; i < 13; i++) {
         if (path[i] == ' ') {
             path[i] = '0';
         }
     }
-    fn_802136A4(&lbl_8064BC10);
-    opened = fn_80213394((char*)path, &file);
-    fn_802136A4(&lbl_8064BC18);
+    DVDChangeDir(&lbl_8064BC10);
+    opened = DVDOpen((char*)path, &file);
+    DVDChangeDir(&lbl_8064BC18);
     if (opened != 0) {
-        fn_8021345C(&file);
+        DVDClose(&file);
         fn_8015977C(first, second, third, 0, 0);
     }
     return 0;

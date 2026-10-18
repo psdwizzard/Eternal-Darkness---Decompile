@@ -25,26 +25,26 @@ typedef struct {
 } __GXFifoObj;
 
 extern volatile u16 *__cpReg;
-extern __GXFifoObj *lbl_8064DB90; /* CPUFifo */
-extern __GXFifoObj *lbl_8064DB94; /* GPFifo */
-extern u8 lbl_8064DB9C;           /* CPGPLinked */
+extern __GXFifoObj *CPUFifo; /* CPUFifo */
+extern __GXFifoObj *GPFifo; /* GPFifo */
+extern u8 CPGPLinked;           /* CPGPLinked */
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
-void fn_8022441C(void); /* __GXFifoReadEnable */
-void fn_80224444(void); /* __GXFifoReadDisable */
-void fn_80224468(u8 enable); /* __GXFifoLink */
-void fn_802244AC(u8 hiWatermarkEn, u8 loWatermarkEn); /* __GXWriteFifoIntEnable */
-void fn_802244F8(u8 underflowEn, u8 overflowEn); /* __GXWriteFifoIntReset */
+void __GXFifoReadEnable(void); /* __GXFifoReadEnable */
+void __GXFifoReadDisable(void); /* __GXFifoReadDisable */
+void __GXFifoLink(u8 enable); /* __GXFifoLink */
+void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn); /* __GXWriteFifoIntEnable */
+void __GXWriteFifoIntReset(u8 underflowEn, u8 overflowEn); /* __GXWriteFifoIntReset */
 
 #define GX_PHY_ADDR(a) ((u32)(a) & 0x3FFFFFFF)
 
 void GXSetGPFifo(__GXFifoObj *fifo) {
     BOOL enabled = OSDisableInterrupts();
 
-    fn_80224444();
-    fn_802244AC(0, 0);
-    lbl_8064DB94 = fifo;
+    __GXFifoReadDisable();
+    __GXWriteFifoIntEnable(0, 0);
+    GPFifo = fifo;
 
     __cpReg[16] = (u16)GX_PHY_ADDR(fifo->base);
     __cpReg[18] = (u16)GX_PHY_ADDR(fifo->top);
@@ -63,16 +63,16 @@ void GXSetGPFifo(__GXFifoObj *fifo) {
 
     __sync();
 
-    if (lbl_8064DB90 == lbl_8064DB94) {
-        lbl_8064DB9C = 1;
-        fn_802244AC(1, 0);
-        fn_80224468(1);
+    if (CPUFifo == GPFifo) {
+        CPGPLinked = 1;
+        __GXWriteFifoIntEnable(1, 0);
+        __GXFifoLink(1);
     } else {
-        lbl_8064DB9C = 0;
-        fn_802244AC(0, 0);
-        fn_80224468(0);
+        CPGPLinked = 0;
+        __GXWriteFifoIntEnable(0, 0);
+        __GXFifoLink(0);
     }
-    fn_802244F8(1, 1);
-    fn_8022441C();
+    __GXWriteFifoIntReset(1, 1);
+    __GXFifoReadEnable();
     OSRestoreInterrupts(enabled);
 }

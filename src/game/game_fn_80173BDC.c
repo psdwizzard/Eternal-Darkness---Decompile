@@ -16,9 +16,9 @@ typedef struct EffectDescriptor {
     u8 bytes[144];
 } EffectDescriptor;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
@@ -43,13 +43,13 @@ int fn_80173BDC(void* arg)
 
     rotation = lbl_806506EC;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    resource = fn_800F5C54(fn_8016A694(state, 1));
-    kind = fn_8016A694(state, 2);
+    resource = fn_800F5C54(lua_tonumber(state, 1));
+    kind = lua_tonumber(state, 2);
     source = fn_80158ABC(fn_8015C4A4(resource, 2), 2, 0);
     position.x = source->x;
     position.y = source->y;

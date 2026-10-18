@@ -50,7 +50,7 @@ extern Group801F15D0* fn_8015C28C(s32);
 extern u32 fn_801ECBB4(void);
 extern s32 fn_801F2370(Input801F15D0*, Vec3*, s32, ColorItem801F15D0*);
 extern u32 fn_80178F14(s32, s32, s32, s32, s32, s32);
-extern void fn_80211B44(Vec3*, Vec3*);
+extern void PSVECDotProduct(Vec3*, Vec3*);
 extern const float lbl_806513B8;
 
 s32 fn_801F15D0(Vec3* point, s32 group_id, Input801F15D0* input,
@@ -108,8 +108,8 @@ s32 fn_801F15D0(Vec3* point, s32 group_id, Input801F15D0* input,
         if (distance <= (float)input->limit0 ||
             distance <= (float)input->limit1 ||
             distance <= (float)input->limit2) {
-            fn_80211B44(&item->direction, item_point);
-            fn_80211B44(&item->direction, point);
+            PSVECDotProduct(&item->direction, item_point);
+            PSVECDotProduct(&item->direction, point);
         }
     }
 

@@ -27,7 +27,7 @@ extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
 extern void* memcpy(void*, const void*, u32);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180554(void*, void*, void*, void*, u16, int);
 extern void fn_801805E0(void*, int, u8, u32, void*, float);
@@ -73,13 +73,13 @@ void fn_8019A8C4(u8* object, void* first, void* second, u8* config)
     memcpy(&table, second, 6);
     random.z = *(s16*)((u8*)first + 4);
     for (i = 0; (u8)i < count; i++) {
-        random.x = *(s16*)first + width - (mask & fn_800FBFB0());
-        random.y = *(s16*)((u8*)first + 2) + width - (mask & fn_800FBFB0());
-        table.z = *(s16*)((u8*)second + 4) + (fn_800FBFB0() & 3);
+        random.x = *(s16*)first + width - (mask & rand());
+        random.y = *(s16*)((u8*)first + 2) + width - (mask & rand());
+        table.z = *(s16*)((u8*)second + 4) + (rand() & 3);
         fn_80180554(entry, &random, &table, &setup,
-                    *(u16*)(config + 8) + (fn_800FBFB0() & 7), 0);
+                    *(u16*)(config + 8) + (rand() & 7), 0);
         fn_801805E0(entry + 0x20, 4,
-                    config[1] - (random_mask & fn_800FBFB0()),
+                    config[1] - (random_mask & rand()),
                     (i & 0x3F) * 4, &effect, lbl_80650BCC);
         entry += 0x38;
     }

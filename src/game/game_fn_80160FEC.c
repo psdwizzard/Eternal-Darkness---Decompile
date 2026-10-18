@@ -9,20 +9,20 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8024F5C0[];
-extern void fn_800F6564(Child*, int);
-extern void fn_80160F00(Object*, char*);
+extern void __longjmp(Child*, int);
+extern void message(Object*, char*);
 extern void exit(int);
 
-void fn_80160FEC(Object* object, int state)
+void luaD_breakrun(Object* object, int state)
 {
     Child* child = object->child;
 
     if (child != 0) {
         child->state = state;
-        fn_800F6564(object->child, 1);
+        __longjmp(object->child, 1);
     } else {
         if (state != 4) {
-            fn_80160F00(object, lbl_8024F5C0);
+            message(object, lbl_8024F5C0);
         }
         exit(1);
     }

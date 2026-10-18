@@ -1,15 +1,15 @@
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern volatile u16 lbl_8064D52C;
-extern volatile u32 lbl_8064D530;
+extern volatile u16 hwIrqLevel;
+extern volatile u32 oldState;
 extern void OSRestoreInterrupts(u32);
 
-void fn_801CE280(void)
+void hwEnableIrq(void)
 {
-    u16 count = lbl_8064D52C - 1;
-    lbl_8064D52C = count;
+    u16 count = hwIrqLevel - 1;
+    hwIrqLevel = count;
     if (count == 0) {
-        OSRestoreInterrupts(lbl_8064D530);
+        OSRestoreInterrupts(oldState);
     }
 }

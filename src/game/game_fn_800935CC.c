@@ -13,7 +13,7 @@ typedef struct Candidate {
 
 extern void* fn_80158950(int key, u16* count);
 extern void fn_80201E78(void* destination, void* object);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern u32 fn_80178E94(const float* first, const float* second);
 extern Vec3 lbl_80239694;
 
@@ -53,7 +53,7 @@ Candidate* fn_800935CC(register void* object, register Vec3* position,
     origin = *source;
 
     if (flags & 8) {
-        best = candidate + ((int)fn_800FBFB0() % count);
+        best = candidate + ((int)rand() % count);
     } else {
         for (i = 0; i < count; ++i, ++candidate) {
             if (flags & 2) {

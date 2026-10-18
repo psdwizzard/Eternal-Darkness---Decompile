@@ -6,6 +6,6 @@ typedef struct AudioPage {
     int bodySize;
 } AudioPage;
 
-int fn_8022F6F0(AudioPage *page) {
+int ogg_page_eos(AudioPage *page) {
     return page->header[5] & 4;
 }

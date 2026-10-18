@@ -2,7 +2,7 @@ extern unsigned char lbl_80608020[];
 extern unsigned char lbl_806080E0[];
 
 extern void fn_801AB048(void*);
-extern void fn_801C9938(void*);
+extern void sndRemoveListener(void*);
 
 void fn_801AAAD8(void)
 {
@@ -19,5 +19,5 @@ void fn_801AAAD8(void)
             break;
         }
     } while (1);
-    fn_801C9938(lbl_80608020);
+    sndRemoveListener(lbl_80608020);
 }

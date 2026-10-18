@@ -1,6 +1,6 @@
 typedef unsigned int u32;
 
-u32 fn_801CC460(u32 value)
+u32 sndConvert2Ms(u32 value)
 {
     return value >> 8;
 }

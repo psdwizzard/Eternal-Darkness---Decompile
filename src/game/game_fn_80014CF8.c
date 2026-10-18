@@ -3,9 +3,9 @@ typedef unsigned int u32;
 
 extern const char lbl_8023BEF8[];
 extern unsigned int fn_800F5C54(double);
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_801D62D0(u32, s32, s32, u32, s32, s32, s32, s32, s32, s32,
                        s32, s32, s32, s32, s32, s32, s32, s32, s32, u32, s32,
                        s32, u32, u32, s32, s32);
@@ -39,35 +39,35 @@ s32 fn_80014CF8(void* script)
     u32 flags;
     u32 transformed;
 
-    if (fn_8016A598(script) != 24) {
-        fn_80163BB4(script, lbl_8023BEF8, 24, fn_8016A598(script));
+    if (lua_gettop(script) != 24) {
+        luaO_verror(script, lbl_8023BEF8, 24, lua_gettop(script));
         return 0;
     }
 
-    v1 = fn_800F5C54(fn_8016A694(script, 1));
-    v2 = (s32)fn_8016A694(script, 2);
-    v3 = (s32)fn_8016A694(script, 3);
-    v4 = fn_800F5C54(fn_8016A694(script, 4));
-    v5 = (s32)fn_8016A694(script, 5);
-    v6 = (s32)fn_8016A694(script, 6);
-    v7 = (s32)fn_8016A694(script, 7);
-    v8 = (s32)fn_8016A694(script, 8);
-    v9 = (s32)fn_8016A694(script, 9);
-    v10 = (s32)fn_8016A694(script, 10);
-    v11 = (s32)fn_8016A694(script, 11);
-    v12 = (s32)fn_8016A694(script, 12);
-    v13 = (s32)fn_8016A694(script, 13);
-    v14 = (s32)fn_8016A694(script, 14);
-    v15 = (s32)fn_8016A694(script, 15);
-    v16 = (s32)fn_8016A694(script, 16);
-    v17 = (s32)fn_8016A694(script, 17);
-    v18 = (s32)fn_8016A694(script, 18);
-    v19 = (s32)fn_8016A694(script, 19);
-    v20 = (s32)fn_8016A694(script, 20);
-    v21 = (s32)fn_8016A694(script, 21);
-    v22 = (s32)fn_8016A694(script, 22);
-    v23 = (s32)fn_8016A694(script, 23);
-    v24 = (s32)fn_8016A694(script, 24);
+    v1 = fn_800F5C54(lua_tonumber(script, 1));
+    v2 = (s32)lua_tonumber(script, 2);
+    v3 = (s32)lua_tonumber(script, 3);
+    v4 = fn_800F5C54(lua_tonumber(script, 4));
+    v5 = (s32)lua_tonumber(script, 5);
+    v6 = (s32)lua_tonumber(script, 6);
+    v7 = (s32)lua_tonumber(script, 7);
+    v8 = (s32)lua_tonumber(script, 8);
+    v9 = (s32)lua_tonumber(script, 9);
+    v10 = (s32)lua_tonumber(script, 10);
+    v11 = (s32)lua_tonumber(script, 11);
+    v12 = (s32)lua_tonumber(script, 12);
+    v13 = (s32)lua_tonumber(script, 13);
+    v14 = (s32)lua_tonumber(script, 14);
+    v15 = (s32)lua_tonumber(script, 15);
+    v16 = (s32)lua_tonumber(script, 16);
+    v17 = (s32)lua_tonumber(script, 17);
+    v18 = (s32)lua_tonumber(script, 18);
+    v19 = (s32)lua_tonumber(script, 19);
+    v20 = (s32)lua_tonumber(script, 20);
+    v21 = (s32)lua_tonumber(script, 21);
+    v22 = (s32)lua_tonumber(script, 22);
+    v23 = (s32)lua_tonumber(script, 23);
+    v24 = (s32)lua_tonumber(script, 24);
 
     flags = 0x40000;
     if (v22 & 1) {

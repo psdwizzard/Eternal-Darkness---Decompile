@@ -5,9 +5,9 @@ typedef struct Lexer {
     double lookahead_value;
 } Lexer;
 
-extern int fn_80163224(Lexer*, double*);
+extern int luaX_lex(Lexer*, double*);
 
 void fn_80163E08(Lexer* lexer)
 {
-    lexer->lookahead_kind = fn_80163224(lexer, &lexer->lookahead_value);
+    lexer->lookahead_kind = luaX_lex(lexer, &lexer->lookahead_value);
 }

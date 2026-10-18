@@ -1,16 +1,16 @@
 typedef unsigned char u8;
 
 extern int fn_8012E200(void*, int, void*);
-extern void fn_80210FDC(void*, void*, void*);
+extern void PSMTXConcat(void*, void*, void*);
 
 void fn_8012E3AC(void* entry, void* matrix)
 {
     u8 value[48];
 
     if (fn_8012E200(entry, 0, value)) {
-        fn_80210FDC(matrix, value, matrix);
+        PSMTXConcat(matrix, value, matrix);
     }
     if (fn_8012E200(entry, 1, value)) {
-        fn_80210FDC(value, matrix, matrix);
+        PSMTXConcat(value, matrix, matrix);
     }
 }

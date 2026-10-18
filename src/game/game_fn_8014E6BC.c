@@ -48,7 +48,7 @@ extern void fn_80147EC4(void*);
 extern void fn_8019CE7C(void*, Vec3*, Bounds*, Vec3*);
 extern void fn_8019CE34(void*, u8);
 extern Coord2* fn_8017FDA8(void*, u8);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 void* fn_8014E6BC(Vec3* position, int count, u32* resource, u16 spread,
                   u16 duration, int flags)
@@ -115,8 +115,8 @@ void* fn_8014E6BC(Vec3* position, int count, u32* resource, u16 spread,
             fn_8019CE34(effect.owner, index);
             point = fn_8017FDA8(effect.owner, index);
             if (point != 0) {
-                point->x = position->x + spread - fn_800FBFB0() % (spread * 2);
-                point->y = position->y + spread - fn_800FBFB0() % (spread * 2);
+                point->x = position->x + spread - rand() % (spread * 2);
+                point->y = position->y + spread - rand() % (spread * 2);
             }
         }
     }

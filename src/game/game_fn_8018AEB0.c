@@ -12,9 +12,9 @@ extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16);
 extern void fn_801ED468(int);
 extern int fn_8017FFB8(void), fn_8017FFB0(void), fn_8017FF98(void);
-extern void fn_80225F4C(int, void*, u8);
+extern void GXSetArray(int, void*, u8);
 extern void fn_8018D2E0(float);
-extern void fn_80226AB4(int, int, u16);
+extern void GXBegin(int, int, u16);
 extern void fn_80188578(int), fn_8018856C(int), fn_80188560(int);
 extern void fn_8018855C(void);
 
@@ -57,14 +57,14 @@ void fn_8018AEB0(u8* object)
         int saved = fn_801ED57C(0);
         fn_8018D0D0(object, object + 0x5C, *(s16*)(object + 0xE));
         fn_801ED468(0x3C);
-        fn_80225F4C(9, vertex_data, fn_8017FFB8());
-        fn_80225F4C(13, index_data, fn_8017FFB0());
-        fn_80225F4C(11, color_data, fn_8017FF98());
+        GXSetArray(9, vertex_data, fn_8017FFB8());
+        GXSetArray(13, index_data, fn_8017FFB0());
+        GXSetArray(11, color_data, fn_8017FF98());
         if (*(float*)(object + 0x40) != lbl_80650A68) {
             *(float*)(object + 0x3C) += *(float*)(object + 0x40);
             fn_8018D2E0(*(float*)(object + 0x3C));
         }
-        fn_80226AB4(0x80, 5, offset);
+        GXBegin(0x80, 5, offset);
         for (i = 0; i < offset; i++) {
             fn_80188578(i);
             fn_8018856C(i);

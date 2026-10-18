@@ -14,25 +14,25 @@ typedef struct HeapStorage {
     HeapEntry entries[64];
 } HeapStorage;
 
-extern HeapStorage lbl_80630A30;
-extern HeapEntry* lbl_8064D500;
-extern HeapEntry* lbl_8064D504;
-extern HeapEntry* lbl_8064D508;
-extern u32 lbl_8064D4E8;
-extern u32 lbl_8064D4F0;
+extern HeapStorage aramQueueLo;
+extern HeapEntry* aramUsedStreamBuffers;
+extern HeapEntry* aramFreeStreamBuffers;
+extern HeapEntry* aramIdleStreamBuffers;
+extern u32 aramTop;
+extern u32 aramStream;
 
-void fn_801CDB2C(void)
+void InitStreamBuffers(void)
 {
-    u8* base = (u8*)&lbl_80630A30;
+    u8* base = (u8*)&aramQueueLo;
     u32 i;
 
-    lbl_8064D500 = 0;
-    lbl_8064D504 = 0;
-    lbl_8064D508 = (HeapEntry*)(base + 0x508);
+    aramUsedStreamBuffers = 0;
+    aramFreeStreamBuffers = 0;
+    aramIdleStreamBuffers = (HeapEntry*)(base + 0x508);
     for (i = 1; i < 64; i++) {
         ((HeapEntry*)(base + 0x508))[i - 1].next =
             &((HeapEntry*)(base + 0x508))[i];
     }
     ((HeapEntry*)(base + 0x508))[i - 1].next = 0;
-    lbl_8064D4F0 = lbl_8064D4E8;
+    aramStream = aramTop;
 }

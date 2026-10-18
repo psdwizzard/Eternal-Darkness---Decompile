@@ -28,17 +28,15 @@ typedef struct SynthInfo {
     u8 voiceCount;
 } SynthInfo;
 
-extern u8 lbl_8062A230[];
-extern SynthInfo lbl_80619C20;
-extern SYNTH_VOICE* lbl_8064D3D0;
-extern void fn_801B7954(SYNTH_VOICE*);
+extern u8 midi_lastNote[];
+extern SynthInfo synthInfo;
+extern SYNTH_VOICE* synthVoice;
+extern void synthKeyStateUpdate(SYNTH_VOICE*);
 
-#define gInpMidiCtrlByKey (((InpMidiState*)lbl_8062A230)->ctrlByKey)
-#define gInpMidiCtrl (((InpMidiState*)lbl_8062A230)->ctrl)
-#define gInpMidiDirty (((InpMidiState*)lbl_8062A230)->dirty)
-#define SYNTH_CONFIGURATION (&lbl_80619C20)
-#define synthVoice lbl_8064D3D0
-#define synthKeyStateUpdate fn_801B7954
+#define gInpMidiCtrlByKey (((InpMidiState*)midi_lastNote)->ctrlByKey)
+#define gInpMidiCtrl (((InpMidiState*)midi_lastNote)->ctrl)
+#define gInpMidiDirty (((InpMidiState*)midi_lastNote)->dirty)
+#define SYNTH_CONFIGURATION (&synthInfo)
 
 static inline void inpSetRPNHi(InpMidiState* st, u8 set, u8 channel, u8 value)
 {
@@ -119,9 +117,9 @@ static inline void inpSetRPNInc(InpMidiState* st, u8 set, u8 channel)
     }
 }
 
-void fn_801CA7C0(u8 ctrl, u8 channel, u8 set, u8 value)
+void inpSetMidiCtrl(u8 ctrl, u8 channel, u8 set, u8 value)
 {
-    InpMidiState* st = (InpMidiState*)lbl_8062A230;
+    InpMidiState* st = (InpMidiState*)midi_lastNote;
     u32 i;
 
     if (channel == 0xFF) {

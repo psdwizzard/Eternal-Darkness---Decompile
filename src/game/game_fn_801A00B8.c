@@ -16,7 +16,7 @@ extern u8 lbl_80606318[];
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_8018F014(void*, u8);
 extern void fn_80180554(void*, void*, void*, void*, u16, u32);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_801805E0(void*, u32, u8, u32, void*, float);
 extern void fn_80180518(void*, u32, u32);
 extern void fn_8018CEC0(void*, u32);
@@ -56,7 +56,7 @@ void fn_801A00B8(u8* object, void* arg1, u8* arg2, u8* descriptor)
         if (descriptor[0x20] != 0) fn_8018F014(stack_a, descriptor[0x20]);
         fn_80180554(entry, arg1, stack_a, &stack_b, *(u16*)(descriptor + 8), 0);
         divisor = descriptor[1];
-        fn_801805E0(entry + 0x20, 4, (u8)(divisor - (fn_800FBFB0() % divisor)),
+        fn_801805E0(entry + 0x20, 4, (u8)(divisor - (rand() % divisor)),
                     (index << 2) & 0xFC, descriptor + 0x10, lbl_80650CA0);
         fn_80180518(object + 0x24, index, 1);
         entry += 0x38;

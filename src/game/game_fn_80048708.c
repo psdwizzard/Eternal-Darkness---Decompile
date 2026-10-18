@@ -22,8 +22,8 @@ extern int fn_8003BF5C(void*);
 extern int fn_80137658(float, void*, Vec3*, void*, Plane*);
 extern void fn_8013F600(Plane*, Vec3*, float*);
 extern void fn_8013C518(Vec3*, const Vec3*, float, float);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
 extern void fn_80139F28(void*, const Vec3*, const Vec3*, Vec3*, void*);
 
 void fn_80048708(Vec3* input)
@@ -77,9 +77,9 @@ void fn_80048708(Vec3* input)
                     offset = fn_8011F770(other);
                     fn_8013F600(&contact, &normal, &distance);
                     fn_8013C518(&adjusted, &normal, lbl_8064E38C + radius, distance);
-                    fn_80211A48(&adjusted, offset, &adjusted);
+                    PSVECAdd(&adjusted, offset, &adjusted);
                     fn_80139F28(other, &adjusted, &adjusted, &result, (void*)1);
-                    fn_80211A6C(&result, offset, &result);
+                    PSVECSubtract(&result, offset, &result);
                     fn_8011F0E8(other, &result);
                 }
             }

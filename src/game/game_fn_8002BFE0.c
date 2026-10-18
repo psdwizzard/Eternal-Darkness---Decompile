@@ -21,8 +21,8 @@ extern float lbl_8064E064;
 extern float lbl_8064E068;
 
 extern void fn_8012CEA4(void*, s32, Vec4*);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8017A244(Vec3*, Vec4*, float);
 extern void fn_8012CF08(void*, s32, Vec4, Vec4, s32, s32, float);
 extern void fn_8012F58C(void*, s32, s32, s32, s32, s32);
@@ -40,7 +40,7 @@ void fn_8002BFE0(void* object)
 
     for (i = 0; i < 3; i++, component++) {
         fn_8012CEA4(object, 0xF, &first);
-        random = (fn_800FBFB0() & 0xF) + 10;
+        random = (rand() & 0xF) + 10;
         scale = (float)random;
         scale = 1.0f / scale;
         *component = 1.0f;

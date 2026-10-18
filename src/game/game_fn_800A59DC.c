@@ -78,7 +78,7 @@ extern void fn_800C63D8();
 extern void fn_800C677C();
 extern s32 fn_800CCAD0();
 extern void fn_800CD094();
-extern u8 fn_800FBFB0();
+extern u8 rand();
 extern void fn_8011E174();
 extern void fn_8011F114();
 extern void fn_801287C4();
@@ -421,7 +421,7 @@ int fn_800A59DC(void* object, int state, void* event, int* result)
             lbl_8064C94C = 0;
             return 1;
         } else if (event_type == 3) {
-            if (++lbl_8064C94C > fn_800FBFB0() + 900) {
+            if (++lbl_8064C94C > rand() + 900) {
                 fn_801294DC(actor, 0x10, 0x20, 1);
                 lbl_8064C94C = 0;
             }

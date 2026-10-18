@@ -51,9 +51,9 @@ typedef struct StreamBuffer {
     OSMessageQueue queue;
 } StreamBuffer;
 
-extern void fn_8020D1F0(OSMessageQueue *queue, OSMessage *messages, s32 count);
-extern int fn_80213394(char *name, DVDFileInfo *file);
-extern int fn_80213704(DVDFileInfo *file, void *addr, s32 length, s32 offset,
+extern void OSInitMessageQueue(OSMessageQueue *queue, OSMessage *messages, s32 count);
+extern int DVDOpen(char *name, DVDFileInfo *file);
+extern int DVDReadAsyncPrio(DVDFileInfo *file, void *addr, s32 length, s32 offset,
                        DVDCallback callback, s32 prio);
 extern void fn_80237E7C(int result);
 
@@ -78,7 +78,7 @@ void fn_80237DB4(register char *input) {
 
     /* ASM: or (mr) preserves the incoming name copy; C emits addi. */
     asm { or name, input, input }
-    fn_8020D1F0(&lbl_80643C20.queue, lbl_80643C20.messages, 8);
+    OSInitMessageQueue(&lbl_80643C20.queue, lbl_80643C20.messages, 8);
     /* ASM: li rematerializes zero across DVDOpen; or (mr) preserves the
        argument copy that this compiler replaces with addi in C. */
     asm {
@@ -86,7 +86,7 @@ void fn_80237DB4(register char *input) {
         or openName, name, name
     }
     lbl_8064DC3C = zero;
-    fn_80213394(openName, &lbl_80643C20.file);
+    DVDOpen(openName, &lbl_80643C20.file);
     file = &lbl_80643C20.file;
     zero = 0;
     /* ASM: lwz keeps the separate file base, which C folds into the offset. */
@@ -98,7 +98,7 @@ void fn_80237DB4(register char *input) {
         offset = lbl_8064DC50;
         /* ASM: or (mr) retains the callback register copy instead of addi. */
         asm { or readCallback, callback, callback }
-        result = fn_80213704(&lbl_80643C20.file, lbl_80643C20.data, 0x2000,
+        result = DVDReadAsyncPrio(&lbl_80643C20.file, lbl_80643C20.data, 0x2000,
                             offset, readCallback, 2);
     } while (result == 0);
     lbl_8064DC30 = 0x2000;

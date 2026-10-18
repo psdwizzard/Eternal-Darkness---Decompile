@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Return the squared length of a vector. */
-float fn_80211AF0(register const Vec3 *v)
+float PSVECSquareMag(register const Vec3 *v)
 {
     register float xySquared, lengthSquared;
 

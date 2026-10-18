@@ -38,11 +38,11 @@ struct OSMutex {
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
 extern void OSClearContext(void *context);
-extern void fn_8020D984(OSThread *thread);
-extern void fn_8020F368(OSThread *thread);
-extern s32 fn_8020F3D0(OSThread *thread);
-extern OSThread *fn_8020F40C(OSThread *thread, s32 priority);
-extern void fn_802100F0(OSThreadQueue *queue);
+extern void __OSUnlockAllMutex(OSThread *thread);
+extern void UnsetRun(OSThread *thread);
+extern s32 __OSGetEffectivePriority(OSThread *thread);
+extern OSThread *SetEffectivePriority(OSThread *thread, s32 priority);
+extern void OSWakeupThread(OSThreadQueue *queue);
 extern void SelectThread_8020F61C(s32 yield);
 extern volatile s32 RunQueueHint_8064D98C;
 
@@ -61,11 +61,11 @@ static inline void UpdatePriority(OSThread *thread)
         if (0 < thread->suspend) {
             break;
         }
-        priority = fn_8020F3D0(thread);
+        priority = __OSGetEffectivePriority(thread);
         if (thread->priority == priority) {
             break;
         }
-        thread = fn_8020F40C(thread, priority);
+        thread = SetEffectivePriority(thread, priority);
     } while (thread);
 }
 
@@ -78,7 +78,7 @@ void OSCancelThread(OSThread *thread)
     switch (thread->state) {
     case OS_THREAD_STATE_READY:
         if (!(0 < thread->suspend)) {
-            fn_8020F368(thread);
+            UnsetRun(thread);
         }
         break;
     case OS_THREAD_STATE_RUNNING:
@@ -125,8 +125,8 @@ void OSCancelThread(OSThread *thread)
     } else {
         thread->state = OS_THREAD_STATE_MORIBUND;
     }
-    fn_8020D984(thread);
-    fn_802100F0(&thread->joinQueue);
+    __OSUnlockAllMutex(thread);
+    OSWakeupThread(&thread->joinQueue);
     if (RunQueueHint_8064D98C) {
         SelectThread_8020F61C(0);
     }

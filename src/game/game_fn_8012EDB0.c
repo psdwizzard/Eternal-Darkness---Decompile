@@ -83,10 +83,10 @@ extern void fn_80125ECC(void*);
 extern int fn_8012FDA0(Object*, int);
 extern void fn_8011F3B4(void*, Matrix, u16, int);
 extern void fn_8011F304(TransformOutput*, Matrix, int);
-extern void fn_80211AAC(const Vec3*, Vec3*);
-extern void fn_80211B64(const Vec3*, const Vec3*, Vec3*);
-extern f32 fn_80211B08(const Vec3*);
-extern void fn_802110A8(void*, void*);
+extern void PSVECNormalize(const Vec3*, Vec3*);
+extern void PSVECCrossProduct(const Vec3*, const Vec3*, Vec3*);
+extern f32 PSVECMag(const Vec3*);
+extern void PSMTXInverse(void*, void*);
 extern void fn_8017AD00(const Matrix34*, const Vec3*, Vec3*);
 extern void fn_8017A244(const Vec3*, Vec4*, f32);
 extern void fn_8012CEA4(u8*, int, Vec4*);
@@ -130,10 +130,10 @@ int fn_8012EDB0(s32 context, s32 index, Vec3* position, f32 angle,
         fn_8011F3B4((void*)context, matrix.array, transform_id, 9);
         fn_8011F304(&transform.output, matrix.array, 9);
 
-        fn_80211AAC(position, position);
-        fn_80211B64(&transform.local.second, position, &cross);
-        if (fn_80211B08(&cross) > lbl_80650208) {
-            fn_802110A8(&matrix.matrix, &inverse.matrix);
+        PSVECNormalize(position, position);
+        PSVECCrossProduct(&transform.local.second, position, &cross);
+        if (PSVECMag(&cross) > lbl_80650208) {
+            PSMTXInverse(&matrix.matrix, &inverse.matrix);
             fn_8017AD00(&inverse.matrix, &cross, &axis);
             fn_8017A244(&axis, &desired, angle);
             fn_8012CEA4((u8*)context, index, &current);

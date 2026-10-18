@@ -35,12 +35,10 @@ static u8 s3dPad[0x50];
 static START_GROUP startGroup[64];
 static START_LIST startListNum[64];
 static RUN_LIST runList[64];
-extern u8 lbl_8064D4D3;
-extern u8 lbl_8064D4D4;
-#define startGroupNum lbl_8064D4D3
-#define startListNumnum lbl_8064D4D4
+extern u8 startGroupNum;
+extern u8 startListNumnum;
 
-int fn_801C9B1C(SND_EMITTER* emitter, float vol, float xPan, float yPan, float zPan, float pitch)
+int AddStartingEmitter(SND_EMITTER* emitter, float vol, float xPan, float yPan, float zPan, float pitch)
 {
     START_GROUP* group;
     START_LIST* scan;

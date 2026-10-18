@@ -1,11 +1,11 @@
-/* fn_80100514: fdlibm __kernel_rem_pio2 (MSL k_rem_pio2.c).
+/* __kernel_rem_pio2: fdlibm __kernel_rem_pio2 (MSL k_rem_pio2.c).
  * Reduces x (given as 24-bit chunks) modulo pi/2 to high precision. */
 
-extern double fn_80101A5C(double x);        /* floor */
-extern double fn_80101C30(double x, int n); /* scalbn */
+extern double floor(double x);        /* floor */
+extern double ldexp(double x, int n); /* scalbn */
 
-extern const int lbl_8023A0A8[];    /* init_jk */
-extern const double lbl_8023A0B8[]; /* PIo2 */
+extern const int init_jk[];    /* init_jk */
+extern const double PIo2[]; /* PIo2 */
 extern const double lbl_8064FD18; /* 0.0 */
 extern const double lbl_8064FD20; /* 2^-24 */
 extern const double lbl_8064FD28; /* 2^24 */
@@ -17,13 +17,11 @@ extern const double lbl_8064FD48; /* 1.0 */
 static const double two24 = 1.67772160000000000000e+07;
 static const double twon24 = 5.96046447753906250000e-08;
 
-#define init_jk lbl_8023A0A8
-#define PIo2 lbl_8023A0B8
 #define one lbl_8064FD48
 /* Preserve the separate shared-zero loads at these initialization sites. */
 #define READ_ZERO() (*(volatile const double *)&lbl_8064FD18)
 
-int fn_80100514(double *x, double *y, int e0, int nx, int prec, const int *ipio2)
+int __kernel_rem_pio2(double *x, double *y, int e0, int nx, int prec, const int *ipio2)
 {
     int jz, jx, jv, jp, jk, carry, n, iq[20], i, j, k, m, q0, ih;
     register double testZero;
@@ -63,8 +61,8 @@ recompute:
     }
 
     /* compute n */
-    z = fn_80101C30(z, q0);            /* actual value of z */
-    z -= lbl_8064FD30 * fn_80101A5C(lbl_8064FD38 * z); /* trim off integer >= 8 */
+    z = ldexp(z, q0);            /* actual value of z */
+    z -= lbl_8064FD30 * floor(lbl_8064FD38 * z); /* trim off integer >= 8 */
     n = (int)z;
     z -= (double)n;
     ih = 0;
@@ -105,7 +103,7 @@ recompute:
         }
         if (ih == 2) {
             z = one - z;
-            if (carry != 0) z -= fn_80101C30(one, q0);
+            if (carry != 0) z -= ldexp(one, q0);
         }
     }
 
@@ -138,7 +136,7 @@ recompute:
             q0 -= 24;
         }
     } else { /* break z into 24-bit if necessary */
-        z = fn_80101C30(z, -q0);
+        z = ldexp(z, -q0);
         if (z >= lbl_8064FD28) {
             fw = (double)((int)(lbl_8064FD20 * z));
             iq[jz] = (int)(z - lbl_8064FD28 * fw);
@@ -151,7 +149,7 @@ recompute:
     }
 
     /* convert integer "bit" chunk to floating-point value */
-    fw = fn_80101C30(one, q0);
+    fw = ldexp(one, q0);
     for (i = jz; i >= 0; i--) {
         q[i] = fw * (double)iq[i];
         fw *= twon24;

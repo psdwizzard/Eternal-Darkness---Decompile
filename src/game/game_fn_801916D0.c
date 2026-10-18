@@ -36,8 +36,8 @@ extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void fn_801804AC(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*);
 extern void fn_80180518(void*, u32, int);
 extern void fn_80180554(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*, int,
@@ -87,10 +87,10 @@ void fn_801916D0(u8* object, ShortCoord3* first, ShortCoord3* second,
     for (i = 0; (u8)i < count; i++) {
         float angle = scale * (float)(u8)i / (float)count;
         position.components.x =
-            (s16)((float)*(s16*)(config + 0x28) * fn_80048C2C(angle) +
+            (s16)((float)*(s16*)(config + 0x28) * sinf(angle) +
                   *(float*)(config + 0x34));
         position.components.y =
-            (s16)((float)*(s16*)(config + 0x28) * fn_80048C50(angle) +
+            (s16)((float)*(s16*)(config + 0x28) * cosf(angle) +
                   *(float*)(config + 0x38));
         position.components.z = (s16)*(float*)(config + 0x3C);
         fn_80180554(entry, &position, second, &zero, 0,

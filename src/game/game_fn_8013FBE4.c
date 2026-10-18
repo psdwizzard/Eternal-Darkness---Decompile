@@ -14,7 +14,7 @@ extern float lbl_806503D8;
 extern void* fn_8013F980(void*, const void*, Result*);
 extern Hit* fn_8013E188(const void*, const void*, Result*);
 extern void* fn_801439E0(const void*, Result*, void*, unsigned int);
-extern float fn_80211D4C(const void*, const Vec3*);
+extern float PSVECSquareDistance(const void*, const Vec3*);
 
 void* fn_8013FBE4(Owner* owner, const void* value, Result* out,
                   void* context, unsigned int flags)
@@ -33,17 +33,17 @@ void* fn_8013FBE4(Owner* owner, const void* value, Result* out,
     if (flags & 1)
         extra = fn_801439E0(value, &extra_result, context, flags);
     if (first != 0) {
-        best = fn_80211D4C(value, (Vec3*)&first_result);
+        best = PSVECSquareDistance(value, (Vec3*)&first_result);
         selected = 1;
     }
     if (second != 0) {
-        float distance = fn_80211D4C(value, (Vec3*)&second_result);
+        float distance = PSVECSquareDistance(value, (Vec3*)&second_result);
         if (distance < best) {
             best = distance;
             selected = 2;
         }
     }
-    if (extra != 0 && fn_80211D4C(value, (Vec3*)&extra_result) < best)
+    if (extra != 0 && PSVECSquareDistance(value, (Vec3*)&extra_result) < best)
         selected = 3;
 
     if (selected == 1) {

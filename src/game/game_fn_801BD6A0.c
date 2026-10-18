@@ -26,16 +26,16 @@ typedef struct StreamCommand {
     u32 value;
 } StreamCommand;
 
-extern unsigned int fn_801CC2E4(void);
-extern unsigned int fn_801CC6DC(unsigned int);
+extern unsigned int sndRand(void);
+extern unsigned int hwIsActive(unsigned int);
 
-void fn_801BD6A0(StreamState* state, StreamCommand* command)
+void mcmdLoop(StreamState* state, StreamCommand* command)
 {
     u16 countdown;
 
     if (state->countdown == 0) {
         if ((command->flags >> 16) & 1) {
-            state->countdown = (u16)fn_801CC2E4() % (u16)(command->value >> 16);
+            state->countdown = (u16)sndRand() % (u16)(command->value >> 16);
         } else {
             state->countdown = command->value >> 16;
         }
@@ -64,7 +64,7 @@ update:
     }
 
     if ((command->flags >> 24) & 1) {
-        if (!(state->flags & 0x20) && !fn_801CC6DC(state->kind & 0xFF)) {
+        if (!(state->flags & 0x20) && !hwIsActive(state->kind & 0xFF)) {
             state->countdown = 0;
             return;
         }

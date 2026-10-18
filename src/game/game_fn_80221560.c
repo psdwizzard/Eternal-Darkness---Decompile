@@ -1,4 +1,4 @@
-/* fn_80221560: __CARDGetFileNo (SDK CARDOpen.c), with __CARDAccess and
+/* __CARDGetFileNo: __CARDGetFileNo (SDK CARDOpen.c), with __CARDAccess and
  * __CARDCompareFileName inlined. */
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -38,10 +38,10 @@ typedef struct CARDControl {
 #define CARD_MAX_FILE 127
 #define CARD_FILENAME_MAX 32
 
-extern DVDDiskID lbl_80641E80; /* __CARDDiskNone */
+extern DVDDiskID __CARDDiskNone; /* __CARDDiskNone */
 
 extern int fn_800F98EC(const void *a, const void *b, unsigned long n); /* memcmp */
-extern CARDDir *fn_8021EF3C(CARDControl *card);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
 
 static inline s32 __CARDAccess(CARDControl *card, CARDDir *ent)
 {
@@ -49,7 +49,7 @@ static inline s32 __CARDAccess(CARDControl *card, CARDDir *ent)
         return -4;
     }
 
-    if (card->diskID == &lbl_80641E80 ||
+    if (card->diskID == &__CARDDiskNone ||
         (fn_800F98EC(ent->gameName, card->diskID->gameName, 4) == 0 &&
          fn_800F98EC(ent->company, card->diskID->company, 2) == 0)) {
         return 0;
@@ -82,7 +82,7 @@ static inline BOOL __CARDCompareFileName(CARDDir *ent, const char *fileName)
     return 0;
 }
 
-s32 fn_80221560(CARDControl *card, const char *fileName, s32 *pfileNo)
+s32 __CARDGetFileNo(CARDControl *card, const char *fileName, s32 *pfileNo)
 {
     CARDDir *dir;
     CARDDir *ent;
@@ -93,7 +93,7 @@ s32 fn_80221560(CARDControl *card, const char *fileName, s32 *pfileNo)
         return -3;
     }
 
-    dir = fn_8021EF3C(card);
+    dir = __CARDGetDirBlock(card);
     for (fileNo = 0; fileNo < CARD_MAX_FILE; fileNo++) {
         ent = &dir[fileNo];
         result = __CARDAccess(card, ent);

@@ -11,13 +11,13 @@ typedef struct GXData {
 } GXData;
 
 extern GXData *gx;
-extern void fn_802283AC(int format, u16 width, u16 height,
+extern void __GetImageTileCount(int format, u16 width, u16 height,
                         u32 *tilesX, u32 *tilesY, u32 *planes);
 
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80226FA4(u16 width, u16 height, int format, u8 mipmap)
+void GXSetTexCopyDst(u16 width, u16 height, int format, u8 mipmap)
 {
     u32 tilesX;
     u32 tilesY;
@@ -44,7 +44,7 @@ void fn_80226FA4(u16 width, u16 height, int format, u8 mipmap)
     gx->copyIsDepth = (format & 0x10) == 0x10;
     SET_REG_FIELD(gx->cpTex, 1, 3, (copyFormat & 8) >> 3);
     copyFormat &= 7;
-    fn_802283AC(format, width, height, &tilesX, &tilesY, &planes);
+    __GetImageTileCount(format, width, height, &tilesX, &tilesY, &planes);
     gx->cpTexStride = 0;
     SET_REG_FIELD(gx->cpTexStride, 10, 0, tilesX * planes);
     SET_REG_FIELD(gx->cpTexStride, 8, 24, 0x4D);

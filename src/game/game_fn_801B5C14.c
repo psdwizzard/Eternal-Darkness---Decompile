@@ -33,23 +33,17 @@ typedef struct SynthInfo {
     u8 voiceCount;
 } SynthInfo;
 
-extern SynthInfo lbl_80619C20;
-extern McmdVoiceState* lbl_8064D3D0;
-extern u32 fn_801CC6DC(u32);
-extern void fn_801C106C(McmdVoiceState*);
-extern u32 fn_801C13D4(McmdVoiceState*, u32);
-extern void fn_801C26F8(McmdVoiceState*);
-extern void fn_801CB470(u8, u8, u8);
+extern SynthInfo synthInfo;
+extern McmdVoiceState* synthVoice;
+extern u32 hwIsActive(u32);
+extern void vidRemoveVoiceReferences(McmdVoiceState*);
+extern u32 vidMakeNew(McmdVoiceState*, u32);
+extern void voiceSetLastStarted(McmdVoiceState*);
+extern void inpSetMidiLastNote(u8, u8, u8);
 
-#define SYNTH_CONFIGURATION (&lbl_80619C20)
-#define synthVoice lbl_8064D3D0
-#define hwIsActive fn_801CC6DC
-#define vidRemoveVoiceReferences fn_801C106C
-#define vidMakeNew fn_801C13D4
-#define voiceSetLastStarted fn_801C26F8
-#define inpSetMidiLastNote fn_801CB470
+#define SYNTH_CONFIGURATION (&synthInfo)
 
-u32 fn_801B5C14(u8 key, u8 midi, u8 midiSet, u32 isMaster, u32* rejected)
+u32 do_voice_portamento(u8 key, u8 midi, u8 midiSet, u32 isMaster, u32* rejected)
 {
     u32 i;
     u32 result;

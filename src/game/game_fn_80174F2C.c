@@ -31,10 +31,10 @@ typedef struct ResourceRef {
     u32 value;
 } ResourceRef;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern Vec3s* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern Vec3s* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_8014CBC0(ResourceRef*);
 extern void fn_8014C988(ResourceRef*, int);
 extern void fn_8014C37C(int, ResourceRef*);
@@ -55,24 +55,24 @@ int fn_80174F2C(void* state)
     CommandDescriptor command;
     u16 value00;
 
-    if (fn_8016A598(state) != 10) {
-        fn_80163BB4(state, lbl_8024FF00, 10, fn_8016A598(state));
+    if (lua_gettop(state) != 10) {
+        luaO_verror(state, lbl_8024FF00, 10, lua_gettop(state));
         return 0;
     }
 
     fn_8014CBC0(&resource);
-    source = fn_8016A784(state, 1);
-    command.bytes24[0] = fn_8016A694(state, 2);
-    command.bytes24[1] = fn_8016A694(state, 3);
-    command.bytes24[2] = fn_8016A694(state, 4);
-    command.bytes24[3] = fn_8016A694(state, 5);
-    resource_id = fn_8016A694(state, 6);
-    command.value28 = fn_8016A694(state, 7);
-    value00 = fn_8016A694(state, 8);
+    source = lua_touserdata(state, 1);
+    command.bytes24[0] = lua_tonumber(state, 2);
+    command.bytes24[1] = lua_tonumber(state, 3);
+    command.bytes24[2] = lua_tonumber(state, 4);
+    command.bytes24[3] = lua_tonumber(state, 5);
+    resource_id = lua_tonumber(state, 6);
+    command.value28 = lua_tonumber(state, 7);
+    value00 = lua_tonumber(state, 8);
     descriptor = &command;
     descriptor->value00 = value00;
-    descriptor->value08 = fn_8016A694(state, 9);
-    descriptor->value0C = fn_8016A694(state, 10);
+    descriptor->value08 = lua_tonumber(state, 9);
+    descriptor->value0C = lua_tonumber(state, 10);
     command.byte34 = 2;
     command.position.x = source->x;
     command.position.y = source->y;

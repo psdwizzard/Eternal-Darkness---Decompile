@@ -2,21 +2,21 @@
 
 typedef unsigned int u32;
 
-extern int fn_8022DF68(int chan);
-extern int fn_8022DAE0(void* buf, int len, int mode, void* cb);
-extern int fn_8022DD24(void);
-extern int fn_8022DFE8(void);
+extern int AmcEXISelect(int chan);
+extern int AmcEXIImm(void* buf, int len, int mode, void* cb);
+extern int AmcEXISync(void);
+extern int AmcEXIDeselect(void);
 
 static inline void EXI2_WriteCmd(u32 cmd) {
     u32 data = cmd;
-    fn_8022DAE0(&data, 2, 1, 0);
-    fn_8022DD24();
+    AmcEXIImm(&data, 2, 1, 0);
+    AmcEXISync();
 }
 
 static inline int EXI2_Select(void) {
     int r = 0;
     while (r == 0) {
-        r = fn_8022DF68(5);
+        r = AmcEXISelect(5);
     }
     return r;
 }
@@ -33,26 +33,26 @@ int EXI2_WriteN(u32* buf, u32 len) {
         return 1;
     }
     EXI2_WriteCmd(0x80000000);
-    fn_8022DAE0(&n, 4, 1, 0);
-    fn_8022DD24();
+    AmcEXIImm(&n, 4, 1, 0);
+    AmcEXISync();
 
     words = n / 4 + ((n & 3) ? 1 : 0);
     for (i = 0; i < words; i++) {
-        fn_8022DAE0(p++,(i < words - 1) ? 4 : ((n & 3) + (n & 1) == 2) ? 2 : 4, 1, 0);
-        fn_8022DD24();
+        AmcEXIImm(p++,(i < words - 1) ? 4 : ((n & 3) + (n & 1) == 2) ? 2 : 4, 1, 0);
+        AmcEXISync();
     }
-    fn_8022DFE8();
+    AmcEXIDeselect();
 
     if (EXI2_Select() == 0) {
         return 1;
     }
     EXI2_WriteCmd(0x10000);
-    fn_8022DAE0(&status, 2, 0, 0);
-    fn_8022DD24();
+    AmcEXIImm(&status, 2, 0, 0);
+    AmcEXISync();
     do {
-        fn_8022DAE0(&status, 2, 0, 0);
-        fn_8022DD24();
+        AmcEXIImm(&status, 2, 0, 0);
+        AmcEXISync();
     } while (((status >> 16) & 1) == 0);
-    fn_8022DFE8();
+    AmcEXIDeselect();
     return 0;
 }

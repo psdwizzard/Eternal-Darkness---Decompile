@@ -1,6 +1,6 @@
 typedef signed short s16;
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 void fn_80193D64(s16* output, int count, int step, int base, int range)
 {
@@ -28,7 +28,7 @@ void fn_80193D64(s16* output, int count, int step, int base, int range)
     current = output;
     i = 0;
     while (i < length) {
-        random = fn_800FBFB0() % modulus + 2;
+        random = rand() % modulus + 2;
         if (positive != 0) {
             random = -random;
         }

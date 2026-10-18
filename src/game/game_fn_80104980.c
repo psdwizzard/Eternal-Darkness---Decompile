@@ -14,9 +14,9 @@ typedef struct Work80104980 {
     u8 byte14;
 } Work80104980;
 
-extern void fn_8010483C(u8 *, u8 *, int, BlockCursor *, u16 *);
+extern void IpicBlockDec(u8 *, u8 *, int, BlockCursor *, u16 *);
 
-void fn_80104980(register Entry80104980 *entries, register int *output, register int width,
+void IpicLineDec(register Entry80104980 *entries, register int *output, register int width,
                   register Work80104980 *work, register int columns)
 {
     u16 *current;
@@ -69,7 +69,7 @@ void fn_80104980(register Entry80104980 *entries, register int *output, register
         current = cursor->start + 1;
         cursor->start = current;
         cursor->value0 = *current;
-        fn_8010483C((u8 *)callEntries, (u8 *)callOutput, callWidth,
+        IpicBlockDec((u8 *)callEntries, (u8 *)callOutput, callWidth,
                     (BlockCursor *)callCursor, current);
         destination++;
         remaining--;
@@ -93,7 +93,7 @@ void fn_80104980(register Entry80104980 *entries, register int *output, register
     }
     current = cursor->start;
     cursor->start = current + 3;
-    fn_8010483C((u8 *)callEntries, (u8 *)callOutput, callWidth,
+    IpicBlockDec((u8 *)callEntries, (u8 *)callOutput, callWidth,
                 (BlockCursor *)callCursor, current);
     cursor->current++;
     cursor->end++;

@@ -6,41 +6,41 @@ typedef long s32;
 typedef struct OSContext OSContext;
 typedef void (*EXICallback)(s32, OSContext *);
 
-extern s32 fn_8022DF68(u32 freq);
-extern int fn_8022DAE0(void* buf, s32 len, u32 mode, EXICallback cb);
-extern void fn_8022DD24(void);
-extern s32 fn_8022DFE8(void);
-extern int fn_800F9FE4(const char* fmt, ...);
+extern s32 AmcEXISelect(u32 freq);
+extern int AmcEXIImm(void* buf, s32 len, u32 mode, EXICallback cb);
+extern void AmcEXISync(void);
+extern s32 AmcEXIDeselect(void);
+extern int printf(const char* fmt, ...);
 
 extern char lbl_802FF820[];
-extern u8* lbl_8064C4C0;
-extern int lbl_8064DBFC;
+extern u8* pucEXI2InputPending;
+extern int fExi2Selected;
 
 static inline void EXI2_WriteCmd(u32 cmd) {
-    fn_8022DAE0(&cmd, 2, 1, 0);
-    fn_8022DD24();
+    AmcEXIImm(&cmd, 2, 1, 0);
+    AmcEXISync();
 }
 
 static inline int EXI2_Begin(u32* status) {
     int ok;
     int r;
 
-    if (lbl_8064DBFC != 0) {
+    if (fExi2Selected != 0) {
         ok = 1;
     } else {
         r = 0;
         while (r == 0) {
-            r = fn_8022DF68(5);
+            r = AmcEXISelect(5);
         }
         ok = r;
         if (r == 0) {
-            fn_800F9FE4(lbl_802FF820);
+            printf(lbl_802FF820);
             ok = 0;
         } else {
-            lbl_8064DBFC = 1;
+            fExi2Selected = 1;
             EXI2_WriteCmd(0);
-            fn_8022DAE0(status, 2, 0, 0);
-            fn_8022DD24();
+            AmcEXIImm(status, 2, 0, 0);
+            AmcEXISync();
         }
     }
     return ok;
@@ -66,8 +66,8 @@ int EXI2_ReadN(u8* buf, u32 len) {
         int j;
         int count;
 
-        fn_8022DAE0(&word, (n < words - 1) ? 4 : (tail == 2) ? 2 : 4, 0, 0);
-        fn_8022DD24();
+        AmcEXIImm(&word, (n < words - 1) ? 4 : (tail == 2) ? 2 : 4, 0, 0);
+        AmcEXISync();
         if (len - i >= 4) {
             count = 4;
         } else {
@@ -77,8 +77,8 @@ int EXI2_ReadN(u8* buf, u32 len) {
             buf[i + j] = word >> ((3 - j) * 8);
         }
     }
-    fn_8022DFE8();
-    lbl_8064DBFC = 0;
-    *lbl_8064C4C0 = 0;
+    AmcEXIDeselect();
+    fExi2Selected = 0;
+    *pucEXI2InputPending = 0;
     return 0;
 }

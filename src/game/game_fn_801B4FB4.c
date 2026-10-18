@@ -53,19 +53,13 @@ typedef struct SEQ_INSTANCE {
     SEQ_SECTION section[16];
 } SEQ_INSTANCE;
 
-extern SEQ_INSTANCE* lbl_8064D380;
-extern void fn_801B3470(u8);
-extern void fn_801B4EF0(u8);
-extern SEQ_EVENT* fn_801B46C8(SEQ_EVENT*, u8, u32*);
-extern void fn_801B4654(SEQ_SECTION*, SEQ_EVENT*);
-extern float fn_801023C0(float);
+extern SEQ_INSTANCE* cseq;
+extern void HandleMasterTrack(u8);
+extern void InitTrackEventsSection(u8);
+extern SEQ_EVENT* HandleEvent(SEQ_EVENT*, u8, u32*);
+extern void InsertGlobalEvent(SEQ_SECTION*, SEQ_EVENT*);
+extern float floorf(float);
 
-#define cseq lbl_8064D380
-#define HandleMasterTrack fn_801B3470
-#define InitTrackEventsSection fn_801B4EF0
-#define HandleEvent fn_801B46C8
-#define InsertGlobalEvent fn_801B4654
-#define floorf fn_801023C0
 
 static inline float fmodf(float x, float y)
 {
@@ -109,7 +103,7 @@ static inline void RewindMTrack(u8 secIndex, u32 deltaTime)
     SetTickDelta(cseq->section + secIndex, deltaTime);
 }
 
-u32 fn_801B4FB4(u8 secIndex, u32 deltaTime)
+u32 HandleTrackEvents(u8 secIndex, u32 deltaTime)
 {
     SEQ_EVENT* ev;
     u32 loopFlag;

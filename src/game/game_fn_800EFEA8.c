@@ -1,4 +1,4 @@
-int fn_800EFEA8(void)
+int TRKTerminateSerialHandler(void)
 {
     return 0;
 }

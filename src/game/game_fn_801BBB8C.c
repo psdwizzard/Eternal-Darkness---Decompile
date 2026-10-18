@@ -9,19 +9,19 @@ typedef struct StreamResource12 {
 } StreamResource12;
 
 extern unsigned char lbl_8061C748[];
-extern u16 lbl_8064D3F6;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataLayerNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-int fn_801BBB8C(u16 id)
+int dataRemoveLayer(u16 id)
 {
     unsigned char* base = lbl_8061C748;
     int count;
     int index;
     int cursor;
 
-    fn_801CE2B8();
-    count = lbl_8064D3F6;
+    hwDisableIrq();
+    count = dataLayerNum;
     index = 0;
     while (index < count && ((StreamResource12*)(base + 0x4E00))[index].id != id) {
         index++;
@@ -40,11 +40,11 @@ int fn_801BBB8C(u16 id)
         ((StreamResource12*)(base + 0x4E00))[cursor - 1] =
             ((StreamResource12*)(base + 0x4E00))[cursor];
     }
-    lbl_8064D3F6--;
-    fn_801CE280();
+    dataLayerNum--;
+    hwEnableIrq();
     return 1;
 
 not_removed:
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 }

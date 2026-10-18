@@ -15,10 +15,10 @@ typedef struct DVDDiskID {
 typedef void (*DVDLowCallback)(u32);
 
 extern DVDDiskID tmpBuffer_80641960;
-extern s32 fn_80212AB0(void *addr, DVDLowCallback callback);
-extern void fn_80214894(u32 intType);
+extern s32 DVDLowReadDiskID(void *addr, DVDLowCallback callback);
+extern void cbForStateCoverClosed(u32 intType);
 
-void fn_80214864(void)
+void stateCoverClosed_CMD(void)
 {
-    fn_80212AB0(&tmpBuffer_80641960, fn_80214894);
+    DVDLowReadDiskID(&tmpBuffer_80641960, cbForStateCoverClosed);
 }

@@ -27,8 +27,8 @@ typedef struct Status {
     u16 flags;
 } Status;
 
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void *fn_80201B8C();
 extern Info *fn_80072354(void *);
 extern void fn_800360B0(void *, Status *);
@@ -54,7 +54,7 @@ int fn_80074864(void *object, void *unused, int *kind, u16 *count, u8 *value)
     kind_r = kind;
     count_r = count;
     value_r = value;
-    random_value = fn_800FBFB0() % 100;
+    random_value = rand() % 100;
     *kind_r = -1;
     *value_r = 0;
     result = 0;

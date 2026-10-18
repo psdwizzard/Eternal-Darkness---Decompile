@@ -28,10 +28,10 @@ extern void* lbl_8064C7EC[2];
 extern int lbl_8064C7F8;
 
 extern void fn_800433FC(void);
-extern void fn_8020D1F0(void*, void*, int);
-extern int fn_8020F84C(OSThread*, void* (*)(void*), void*, void*,
+extern void OSInitMessageQueue(void*, void*, int);
+extern int OSCreateThread(OSThread*, void* (*)(void*), void*, void*,
                          unsigned int, int, unsigned short);
-extern int fn_8020FC0C(OSThread*);
+extern int OSResumeThread(OSThread*);
 
 void fn_800432F4(void)
 {
@@ -43,9 +43,9 @@ void fn_800432F4(void)
     lbl_8064C7F8 = 0;
 
     if (lbl_8064C7C4 == 0) {
-        fn_8020D1F0(&block->queue1,
+        OSInitMessageQueue(&block->queue1,
                     block->queue1Storage, 4);
-        fn_8020D1F0(&block->queue3,
+        OSInitMessageQueue(&block->queue3,
                     block->queue3Storage, 4);
         {
             register void* queue;
@@ -54,10 +54,10 @@ void fn_800432F4(void)
             asm {
                 addi queue, block, 0
             }
-            fn_8020D1F0(queue, block->queue0Storage, 4);
+            OSInitMessageQueue(queue, block->queue0Storage, 4);
         }
-        fn_8020D1F0(&block->queue2, lbl_8064C7EC, 2);
-        fn_8020D1F0(&block->queue4, lbl_8064C7E4, 2);
+        OSInitMessageQueue(&block->queue2, lbl_8064C7EC, 2);
+        OSInitMessageQueue(&block->queue4, lbl_8064C7E4, 2);
         {
             register unsigned char* stackTop;
             register void (*entry)(void);
@@ -70,14 +70,14 @@ void fn_800432F4(void)
                 addi stackTop, block, 0x2428
                 addi entry, entryHigh, fn_800433FC@l
             }
-            fn_8020F84C((OSThread*)block->thread, (void* (*)(void*))entry, 0,
+            OSCreateThread((OSThread*)block->thread, (void* (*)(void*))entry, 0,
                         stackTop, 0x2000, 0x1D, 1);
         }
         /* ASM: an empty compiler barrier prevents reuse of the thread address
          * across calls; retail recomputes it for the resume operation. */
         asm {
         }
-        fn_8020FC0C((OSThread*)block->thread);
+        OSResumeThread((OSThread*)block->thread);
         lbl_8064C7C4 = 1;
     }
 }

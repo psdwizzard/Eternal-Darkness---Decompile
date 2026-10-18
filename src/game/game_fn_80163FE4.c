@@ -16,16 +16,16 @@ typedef struct Context {
 } Context;
 
 extern char lbl_8024F7DC[];
-extern void* fn_8016393C(void*, void*, unsigned int, unsigned int,
+extern void* luaM_growaux(void*, void*, unsigned int, unsigned int,
                          unsigned int, char*, unsigned int);
 
-int fn_80163FE4(Context* context, Entry* entry)
+int string_constant(Context* context, Entry* entry)
 {
     EntryTable* table = context->table;
     int index = entry->index;
 
     if (index >= table->count || table->entries[index] != entry) {
-        table->entries = fn_8016393C(context->allocator, table->entries,
+        table->entries = luaM_growaux(context->allocator, table->entries,
                                      table->count, 1, 4, lbl_8024F7DC,
                                      0x3FFFFFF);
         index = table->count++;

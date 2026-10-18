@@ -4,7 +4,7 @@ typedef unsigned long u32;
 extern volatile u16 *__cpReg;
 
 /* Read the four command processor counters, high halves first. */
-void fn_8022C3B8(u32 *counter2, u32 *counter3, u32 *counter0, u32 *counter1)
+void GXReadXfRasMetric(u32 *counter2, u32 *counter3, u32 *counter0, u32 *counter1)
 {
     u32 high0, high1, low;
 

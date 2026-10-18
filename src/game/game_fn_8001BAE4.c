@@ -4,10 +4,10 @@ typedef int s32;
 typedef struct Ref Ref;
 typedef struct Object Object;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
 extern void *fn_80201814();
 extern void* fn_80201C24();
 extern int fn_80201B44();
@@ -39,13 +39,13 @@ s32 fn_8001BAE4(void* arg)
     u16 value1;
     s32 value2;
 
-    if (fn_8016A598(arg) != 2) {
-        fn_80163BB4(arg, lbl_8023BEF8, 2, fn_8016A598(arg));
+    if (lua_gettop(arg) != 2) {
+        luaO_verror(arg, lbl_8023BEF8, 2, lua_gettop(arg));
         return 0;
     }
 
-    id1 = (s32)fn_8016A694(arg, 1);
-    id2 = (s32)fn_8016A694(arg, 2);
+    id1 = (s32)lua_tonumber(arg, 1);
+    id2 = (s32)lua_tonumber(arg, 2);
     ref1 = fn_80201814(id1);
     ref2 = fn_80201814(id2);
     if (ref1 == 0 || ref2 == 0)
@@ -56,48 +56,48 @@ s32 fn_8001BAE4(void* arg)
         first = object;
         id2 = (s32)fn_80201C24(ref2);
         if (fn_80157BF4((Object*)id2) != 4) {
-            fn_8016A830(arg, lbl_8064DD38);
+            lua_pushnumber(arg, lbl_8064DD38);
             return 1;
         }
         if (fn_80158234(first) == 0) {
-            fn_8016A830(arg, lbl_8064DD38);
+            lua_pushnumber(arg, lbl_8064DD38);
             return 1;
         }
         if (!fn_801586FC(id1, (void*)fn_80201B44())) {
-            fn_8016A830(arg, lbl_8064DDB8);
+            lua_pushnumber(arg, lbl_8064DDB8);
             return 1;
         }
         if ((fn_80158234((Object*)id2) & fn_80158234(first)) == 0) {
             if ((fn_80158234(first) == 0x100 || fn_80158234(first) == 0x400) &&
                 (fn_80158234((Object*)id2) == 0x100 || fn_80158234((Object*)id2) == 0x400)) {
-                fn_8016A830(arg, lbl_8064DE08);
+                lua_pushnumber(arg, lbl_8064DE08);
                 return 1;
             }
-            fn_8016A830(arg, lbl_8064DD40);
+            lua_pushnumber(arg, lbl_8064DD40);
             return 1;
         }
     } else {
         second = object;
         first = fn_80201C24(ref2);
         if (fn_80157BF4(first) != 3) {
-            fn_8016A830(arg, lbl_8064DD38);
+            lua_pushnumber(arg, lbl_8064DD38);
             return 1;
         }
         if (fn_80158234(first) == 0) {
-            fn_8016A830(arg, lbl_8064DD38);
+            lua_pushnumber(arg, lbl_8064DD38);
             return 1;
         }
         if (!fn_801586FC(id2, (void*)fn_80201B44())) {
-            fn_8016A830(arg, lbl_8064DDB8);
+            lua_pushnumber(arg, lbl_8064DDB8);
             return 1;
         }
         if ((fn_80158234(second) & fn_80158234(first)) == 0) {
             if ((fn_80158234(first) == 0x100 || fn_80158234(first) == 0x400) &&
                 (fn_80158234(second) == 0x100 || fn_80158234(second) == 0x400)) {
-                fn_8016A830(arg, lbl_8064DE08);
+                lua_pushnumber(arg, lbl_8064DE08);
                 return 1;
             }
-            fn_8016A830(arg, lbl_8064DD40);
+            lua_pushnumber(arg, lbl_8064DD40);
             return 1;
         }
     }
@@ -119,13 +119,13 @@ s32 fn_8001BAE4(void* arg)
     }
 
     if ((s32)(u16)value1 - value2 <= 0) {
-        fn_8016A830(arg, lbl_8064DE00);
+        lua_pushnumber(arg, lbl_8064DE00);
         return 1;
     }
-    fn_8016A830(arg, lbl_8064DCF8);
+    lua_pushnumber(arg, lbl_8064DCF8);
     return 1;
 
 invalid_refs:
-    fn_8016A830(arg, lbl_8064DE68);
+    lua_pushnumber(arg, lbl_8064DE68);
     return 1;
 }

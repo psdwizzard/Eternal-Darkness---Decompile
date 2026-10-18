@@ -37,9 +37,9 @@ extern void fn_801A7688(void *, int, Vec *);
 extern void *fn_80201814(int);
 extern int fn_80201B44(void);
 extern void *fn_80201BC8(void *);
-extern void fn_80211A48(Vec *, Vec *, Vec *);
-extern void fn_80211A6C(Vec *, Vec *, Vec *);
-extern void fn_80211A90(Vec *, Vec *, float);
+extern void PSVECAdd(Vec *, Vec *, Vec *);
+extern void PSVECSubtract(Vec *, Vec *, Vec *);
+extern void PSVECScale(Vec *, Vec *, float);
 
 void fn_8003BB04(void *object, int index) {
     SearchResult result;
@@ -63,12 +63,12 @@ void fn_8003BB04(void *object, int index) {
     if (found != 0) {
         target = fn_80201BC8(found);
         if (fn_8011F6A4(target, 2, 15, -1, &result, 1) != -1) {
-            fn_80211A90(&result.direction, &scaled, lbl_8064B480);
-            fn_80211A48(&result.position, &scaled, &start);
+            PSVECScale(&result.direction, &scaled, lbl_8064B480);
+            PSVECAdd(&result.position, &scaled, &start);
         }
         if (fn_8011F6A4(target, 3, 15, -1, &result, 1) != -1) {
-            fn_80211A90(&result.direction, &scaled, lbl_8064B484);
-            fn_80211A48(&result.position, &scaled, &end);
+            PSVECScale(&result.direction, &scaled, lbl_8064B484);
+            PSVECAdd(&result.position, &scaled, &end);
         }
     } else {
         depth = 3;
@@ -77,12 +77,12 @@ void fn_8003BB04(void *object, int index) {
         }
         transform = fn_80201BC8(model);
         if (fn_8011F6A4(transform, 2, depth, -1, &result, 1) != -1) {
-            fn_80211A90(&result.direction, &scaled, lbl_8064B480);
-            fn_80211A48(&result.position, &scaled, &start);
+            PSVECScale(&result.direction, &scaled, lbl_8064B480);
+            PSVECAdd(&result.position, &scaled, &start);
         }
         if (fn_8011F6A4(transform, 3, depth, -1, &result, 1) != -1) {
-            fn_80211A90(&result.direction, &scaled, lbl_8064B484);
-            fn_80211A48(&result.position, &scaled, &end);
+            PSVECScale(&result.direction, &scaled, lbl_8064B484);
+            PSVECAdd(&result.position, &scaled, &end);
         }
     }
     fn_801A75C0(&out0, object, index, &start);
@@ -90,7 +90,7 @@ void fn_8003BB04(void *object, int index) {
     if (index == 2) {
         segment.start = end;
         fn_801A7688(object, 1, &offset);
-        fn_80211A6C(&end, &offset, &segment.end);
+        PSVECSubtract(&end, &offset, &segment.end);
         fn_801A7610(object, segment);
     }
 }

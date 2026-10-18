@@ -17,7 +17,7 @@ volatile GXFifo GXWGFifo : 0xCC008000;
 #define GX_WRITE_U32(v) (GXWGFifo.word = (u32)(v))
 
 /* GXSetTevKColorSel: pick the konstant color selector for a TEV stage. */
-void fn_80229EE0(int stage, int sel)
+void GXSetTevKAlphaSel(int stage, int sel)
 {
     u32 *reg = &gx->tevKsel[stage >> 1];
 

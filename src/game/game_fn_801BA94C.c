@@ -23,13 +23,13 @@ typedef struct StreamSlot {
 
 /* Externalized to the retail stream table by this TU's build registration. */
 static StreamSlot streamInfo[64];
-extern u32 lbl_8064D3CC;
-extern void fn_801CE2B8(void);
-void fn_801BA94C(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right);
-extern void fn_801CE280(void);
-extern int fn_801B9D1C(u32);
-extern void fn_801BA128(u8*, u8*);
-extern void fn_801CCCC4(u32, u32, u32, u32, float, float, float);
+extern u32 synthFlags;
+extern void hwDisableIrq(void);
+void sndStreamMixParameterEx(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right);
+extern void hwEnableIrq(void);
+extern int GetPrivateIndex(u32);
+extern void CheckOutputMode(u8*, u8*);
+extern void hwSetVolume(u32, u32, u32, u32, float, float, float);
 
 static inline u32 find_stream(u32 id)
 {
@@ -45,17 +45,17 @@ static inline u32 find_stream(u32 id)
 
 static inline void check_output_mode(u8* left, u8* right)
 {
-    if (lbl_8064D3CC & 1) {
+    if (synthFlags & 1) {
         *left = 0x40;
         *right = 0;
-    } else if (!(lbl_8064D3CC & 2)) {
+    } else if (!(synthFlags & 2)) {
         *right = 0;
     }
 }
 
 static inline void set_mix(StreamSlot* slot)
 {
-    fn_801CCCC4(slot->voice, 0, (u32)slot->left << 16, (u32)slot->right << 16,
+    hwSetVolume(slot->voice, 0, (u32)slot->left << 16, (u32)slot->right << 16,
                 (float)slot->volume * (1.0f / 127.0f), (float)slot->aux_left * (1.0f / 127.0f),
                 (float)slot->aux_right * (1.0f / 127.0f));
 }
@@ -78,7 +78,7 @@ static inline void setup_mix_linked(StreamSlot* slot, u8 volume, u8 left, u8 rig
 {
     slot->saved_left = left;
     slot->saved_right = right;
-    fn_801BA128(&left, &right);
+    CheckOutputMode(&left, &right);
     slot->volume = volume;
     slot->left = left;
     slot->right = right;
@@ -90,25 +90,25 @@ static inline void mix_linked(u32 id, u8 volume, u8 left, u8 right, u8 aux_left,
 {
     u32 i;
 
-    fn_801CE2B8();
-    i = fn_801B9D1C(id);
+    hwDisableIrq();
+    i = GetPrivateIndex(id);
     if (i != -1) {
         setup_mix_linked(&streamInfo[i], volume, left, right, aux_left, aux_right);
         if (streamInfo[i].state == 2) {
             set_mix(&streamInfo[i]);
         }
         if (streamInfo[i].cache != 0xFFFFFFFF) {
-            fn_801BA94C(streamInfo[i].cache, volume, left, right, aux_left, aux_right);
+            sndStreamMixParameterEx(streamInfo[i].cache, volume, left, right, aux_left, aux_right);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }
 
-void fn_801BA94C(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right)
+void sndStreamMixParameterEx(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right)
 {
     u32 i;
 
-    fn_801CE2B8();
+    hwDisableIrq();
     i = find_stream(id);
     if (i != -1) {
         setup_mix(&streamInfo[i], volume, left, right, aux_left, aux_right);
@@ -119,5 +119,5 @@ void fn_801BA94C(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right
             mix_linked(streamInfo[i].cache, volume, left, right, aux_left, aux_right);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }

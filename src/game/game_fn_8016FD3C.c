@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void fn_80120AD0(void*, int, float, float, int, int);
@@ -15,15 +15,15 @@ int fn_8016FD3C(void* state)
     int flags;
     void* object;
 
-    if (fn_8016A598(state) != 4) {
-        fn_80163BB4(state, lbl_8024FF00, 4, fn_8016A598(state));
+    if (lua_gettop(state) != 4) {
+        luaO_verror(state, lbl_8024FF00, 4, lua_gettop(state));
         return 0;
     }
 
-    object_id = (int)fn_8016A694(state, 1);
-    value = (float)fn_8016A694(state, 2);
-    argument = (int)fn_8016A694(state, 3);
-    flags = (int)fn_8016A694(state, 4);
+    object_id = (int)lua_tonumber(state, 1);
+    value = (float)lua_tonumber(state, 2);
+    argument = (int)lua_tonumber(state, 3);
+    flags = (int)lua_tonumber(state, 4);
     object = fn_80201814(object_id);
     if (object != 0) {
         object = fn_80201BC8(object);

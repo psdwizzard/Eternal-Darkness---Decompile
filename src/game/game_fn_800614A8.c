@@ -33,8 +33,8 @@ extern M2C_UNK fn_80060C24(u32, s32, s8);                  /* extern */
 extern s32 fn_80060D4C(s32, u32, s32, s32, s8);            /* extern */
 extern s32 fn_80060F10(s32, u32, s32);                     /* extern */
 extern M2C_UNK fn_80060F9C(s32, u32, s32, void *, s32, s32, s8); /* extern */
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8011F114();                        /* extern */
 extern s32 fn_8011F598(u32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK); /* extern */
 extern M2C_UNK fn_8011F778(u32, f32);                      /* extern */
@@ -346,7 +346,7 @@ s32 fn_800614A8(s32 arg0, s32 arg1, s32 arg2, s32 *arg3) {
         if (arg1 == 0x0) {
             do {
                 if (temp_r23 == 0x1) {
-                    M2C_FIELD(temp_r28, s32 *, 0x78) = fn_800FBFB0() % 8;
+                    M2C_FIELD(temp_r28, s32 *, 0x78) = rand() % 8;
                     M2C_FIELD(temp_r28, s16 *, 0x86) = 0x1E;
                     fn_80201D2C((void *)arg0, 1);
                     fn_80201D14((void *)arg0, 1);
@@ -698,7 +698,7 @@ s32 fn_800614A8(s32 arg0, s32 arg1, s32 arg2, s32 *arg3) {
                     fn_80179064((s32) sp8C, (s32) sp90, (s32) sp5C, (s32) sp60);
                     if (var_r15_4 == 0) {
                         var_r15_5 = 1;
-                        if ((fn_800FBFB0() & 1) && (M2C_FIELD(temp_r28, u8 *, 0x89) & 1)) {
+                        if ((rand() & 1) && (M2C_FIELD(temp_r28, u8 *, 0x89) & 1)) {
                             temp_r16_3 = fn_801A717C();
                             M2C_FIELD(temp_r28, u8 *, 0x89) = (u8) (M2C_FIELD(temp_r28, u8 *, 0x89) & 0xFE);
                             fn_801A7470(temp_r16_3, 0x10);

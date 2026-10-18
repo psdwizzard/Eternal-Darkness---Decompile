@@ -2,12 +2,12 @@ typedef int BOOL;
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL enabled);
-extern void fn_8020B864(void);
+extern void __LCEnable(void);
 
-void fn_8020B930(void)
+void LCEnable(void)
 {
     BOOL enabled = OSDisableInterrupts();
 
-    fn_8020B864();
+    __LCEnable();
     OSRestoreInterrupts(enabled);
 }

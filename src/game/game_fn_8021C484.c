@@ -30,27 +30,27 @@ typedef struct CardControl {
     u8 pad108[8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern void fn_8020A93C(OSAlarm *alarm);
+extern CardControl __CARDBlock[];
+extern void OSCancelAlarm(OSAlarm *alarm);
 extern BOOL EXILock(s32 chan, u32 dev, EXICallback callback);
 extern BOOL EXIUnlock(s32 chan);
-extern s32 fn_8021C788(s32 chan, void *status);
-extern s32 fn_8021C878(s32 chan);
-extern s32 fn_8021C9C8(s32 chan);
+extern s32 __CARDReadStatus(s32 chan, void *status);
+extern s32 __CARDClearStatus(s32 chan);
+extern s32 Retry(s32 chan);
 
 static inline s32 CheckStatus(const u8 *status)
 {
     return (*status & 0x18) ? -5 : 0;
 }
 
-void fn_8021C484(s32 chan)
+void __CARDExiHandler(s32 chan)
 {
-    CardControl *card = &lbl_80641C60[chan];
+    CardControl *card = &__CARDBlock[chan];
     CardCallback callback;
     s32 result;
     u8 status;
 
-    fn_8020A93C(&card->alarm);
+    OSCancelAlarm(&card->alarm);
     if (!card->attached) {
         return;
     }
@@ -58,12 +58,12 @@ void fn_8021C484(s32 chan)
         result = -128;
         goto complete;
     }
-    result = fn_8021C788(chan, &status);
+    result = __CARDReadStatus(chan, &status);
     if (result >= 0) {
-        result = fn_8021C878(chan);
+        result = __CARDClearStatus(chan);
         if (result >= 0) {
             if ((result = CheckStatus(&status)) == -5 && --card->retry > 0) {
-                result = fn_8021C9C8(chan);
+                result = Retry(chan);
                 if (result >= 0) {
                     return;
                 }

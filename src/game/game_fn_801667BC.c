@@ -1,7 +1,7 @@
-extern void fn_8016A700(void*, int);
+extern void lua_tostring(void*, int);
 
-int fn_801667BC(void* context)
+int errormessage(void* context)
 {
-    fn_8016A700(context, 1);
+    lua_tostring(context, 1);
     return 0;
 }

@@ -19,7 +19,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022A4D8(u8 enable, u16 center, GXFogAdjTable *table)
+void GXSetFogRangeAdj(u8 enable, u16 center, GXFogAdjTable *table)
 {
     u32 i;
     u32 range_adj;

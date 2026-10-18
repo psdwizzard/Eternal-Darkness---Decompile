@@ -9,17 +9,17 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F814[];
-extern int fn_801644FC(Parser*, void*, SearchResult*);
-extern void fn_8016209C(Parser*, char*, char*);
-extern int fn_80163FE4(void*, void*);
+extern int search_local(Parser*, void*, SearchResult*);
+extern void luaX_syntaxerror(Parser*, char*, char*);
+extern int string_constant(void*, void*);
 
-void fn_8016457C(Parser* parser, void* value, SearchResult* result)
+void singlevar(Parser* parser, void* value, SearchResult* result)
 {
-    int level = fn_801644FC(parser, value, result);
+    int level = search_local(parser, value, result);
 
     if (level >= 1) {
-        fn_8016209C(parser, lbl_8024F814, (char*)value + 0x14);
+        luaX_syntaxerror(parser, lbl_8024F814, (char*)value + 0x14);
     } else if (level == -1) {
-        result->depth = fn_80163FE4(parser->state, value);
+        result->depth = string_constant(parser->state, value);
     }
 }

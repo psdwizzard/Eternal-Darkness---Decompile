@@ -6,8 +6,8 @@ typedef struct Matrix8009FD08 {
 } Matrix8009FD08;
 
 extern void fn_801A8D38(int);
-extern void fn_802119B0(Matrix8009FD08*, float, float, float, float, float, float);
-extern void fn_8022B4B8(Matrix8009FD08*, int);
+extern void C_MTXOrtho(Matrix8009FD08*, float, float, float, float, float, float);
+extern void GXSetProjection(Matrix8009FD08*, int);
 extern void fn_801A8660(short, short, short, short, int, u32*);
 extern int lbl_8064C938;
 extern int lbl_8064C93C;
@@ -37,9 +37,9 @@ void fn_8009FD08(void)
 
     fn_801A8D38(5);
     if (lbl_8064CBA4 == 1) {
-        fn_802119B0(&first, lbl_8064EDB0, lbl_8064EDF8, lbl_8064EDB0,
+        C_MTXOrtho(&first, lbl_8064EDB0, lbl_8064EDF8, lbl_8064EDB0,
                     lbl_8064EDFC, lbl_8064EDB8, lbl_8064EE00);
-        fn_8022B4B8(&first, 1);
+        GXSetProjection(&first, 1);
     }
 
     color0 = lbl_8064EDE4;
@@ -64,8 +64,8 @@ void fn_8009FD08(void)
                 (short)(480 - 2 * lbl_8064C93C), -1, &color4);
 
     if (lbl_8064CBA4 == 1) {
-        fn_802119B0(&second, lbl_8064EDB0, lbl_8064EDF8, lbl_8064EE04,
+        C_MTXOrtho(&second, lbl_8064EDB0, lbl_8064EDF8, lbl_8064EE04,
                     lbl_8064EE08, lbl_8064EDB8, lbl_8064EE00);
-        fn_8022B4B8(&second, 1);
+        GXSetProjection(&second, 1);
     }
 }

@@ -9,7 +9,7 @@ extern void* lbl_8064C4E0;
 extern float lbl_8065037C;
 extern int fn_801E79FC(void*, int);
 extern int fn_8013E284(const void*, const void*, const void*, Result*);
-extern float fn_80211D4C(const Result*, const void*);
+extern float PSVECSquareDistance(const Result*, const void*);
 
 Entry* fn_8013E188(const void* point, const Group* group, Result* result)
 {
@@ -24,7 +24,7 @@ Entry* fn_8013E188(const void* point, const Group* group, Result* result)
         if (fn_801E79FC(lbl_8064C4E0, (int)entry->resource) &&
             fn_8013E284(point, group->records + entry->index * 56,
                         context, &candidate)) {
-            float distance = fn_80211D4C(&candidate, point);
+            float distance = PSVECSquareDistance(&candidate, point);
             if (distance < best) {
                 best = distance;
                 found = entry;

@@ -3,16 +3,16 @@ typedef struct Parser {
     int token;
 } Parser;
 
-extern int fn_80166440(Parser*);
-extern int fn_80163F00(Parser*, int);
-extern int fn_80165894(int);
+extern int stat(Parser*);
+extern int optional(Parser*, int);
+extern int block_follow(int);
 
-void fn_80166750(Parser* parser)
+void chunk(Parser* parser)
 {
     int result = 0;
 
-    while (!result && !fn_80165894(parser->token)) {
-        result = fn_80166440(parser);
-        fn_80163F00(parser, 0x3B);
+    while (!result && !block_follow(parser->token)) {
+        result = stat(parser);
+        optional(parser, 0x3B);
     }
 }

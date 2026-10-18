@@ -21,10 +21,10 @@ extern StreamThread lbl_8064A1F8;
 extern volatile s32 lbl_8064DC38;
 extern s32 lbl_8064DC6C;
 
-extern void fn_802101F4(void*, s32);
-extern void fn_801BB3A0(u32);
-extern void fn_801BAF90(u32);
-extern void fn_80217324(void);
+extern void OSSetThreadPriority(void*, s32);
+extern void sndStreamDeactivate(u32);
+extern void sndStreamFree(u32);
+extern void VIWaitForRetrace(void);
 extern void fn_801ADC50(void);
 
 void fn_80237C28(void) {
@@ -33,8 +33,8 @@ void fn_80237C28(void) {
     Stream* stream;
     s32 i;
 
-    fn_802101F4(&lbl_8064A1F8, 0x12);
-    fn_802101F4(&lbl_8064A1F8, 0x12);
+    OSSetThreadPriority(&lbl_8064A1F8, 0x12);
+    OSSetThreadPriority(&lbl_8064A1F8, 0x12);
     lbl_8064DC6C = 0x12;
     if (lbl_8064DC38 != 0) {
         lbl_8064A548[0].flags |= 8;
@@ -44,8 +44,8 @@ void fn_80237C28(void) {
         do {
             stream = &lbl_8064A548[i];
             if ((s32)stream->flags != 0) {
-                fn_801BB3A0(stream->handle);
-                fn_801BAF90(stream->handle);
+                sndStreamDeactivate(stream->handle);
+                sndStreamFree(stream->handle);
                 stream->flags = 0;
             }
             i++;
@@ -53,7 +53,7 @@ void fn_80237C28(void) {
     }
     while ((s32)lbl_8064A548[0].flags != 0 || (s32)lbl_8064A548[1].flags != 0 ||
            lbl_8064DC38 != 0) {
-        fn_80217324();
+        VIWaitForRetrace();
     }
     fn_801ADC50();
 }

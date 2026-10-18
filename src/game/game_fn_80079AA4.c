@@ -10,7 +10,7 @@ extern void fn_80064B38(void *object, int value, void *work);
 extern int fn_80079008(void *object, void *resource);
 extern int fn_80128F40(void *object);
 extern int fn_801A74F8(void *object);
-extern float fn_8010181C(float value);
+extern float ceil(float value);
 extern void fn_801A7518(void *object, int value);
 
 void fn_80079AA4(void *object, void *resource, int value, void *work)
@@ -42,7 +42,7 @@ void fn_80079AA4(void *object, void *resource, int value, void *work)
                 }
                 if (allowed) {
                     int original = fn_801A74F8(wrapper);
-                    int randomized = (int)fn_8010181C((float)(short)original * lbl_8064E938);
+                    int randomized = (int)ceil((float)(short)original * lbl_8064E938);
 
                     fn_801A7518(wrapper, randomized);
                     fn_80064B38(object, value, work);

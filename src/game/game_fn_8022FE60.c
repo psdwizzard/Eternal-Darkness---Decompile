@@ -14,8 +14,8 @@ typedef struct Codebook {
     DecodeAux *decode_tree;
     s32 dec_maxlength;
 } Codebook;
-extern void fn_802342DC(MdctLookup *lookup, s32 n);
-extern s32 fn_8023570C(Codebook *dst, StaticCodebook *source);
+extern void mdct_init(MdctLookup *lookup, s32 n);
+extern s32 vorbis_book_init_decode(Codebook *dst, StaticCodebook *source);
 typedef struct MapEntry {
     u8 pad00[0x0C];
     s32 mode;
@@ -73,10 +73,10 @@ typedef struct Mode {
     u8 pad00[8];
     void *(*func)(DecoderState *, MapEntry *, void *);
 } Mode;
-extern Mode *lbl_8064C4D4[];
+extern Mode *_mapping_P[];
 
 /* Initialize the Vorbis synthesis transforms, codebooks, PCM and mappings. */
-s32 fn_8022FE60(register DecoderState *state_arg, register DecoderWrapper *wrapper_arg)
+s32 _vds_shared_init(register DecoderState *state_arg, register DecoderWrapper *wrapper_arg)
 {
     Backend *backend;
     register DecoderConfig *config;
@@ -112,8 +112,8 @@ s32 fn_8022FE60(register DecoderState *state_arg, register DecoderWrapper *wrapp
     backend->mdct1 = fn_8022F780(4);
     *backend->mdct0 = fn_8022F780(0x14);
     *backend->mdct1 = fn_8022F780(0x14);
-    fn_802342DC(*backend->mdct0, config->first);
-    fn_802342DC(*backend->mdct1, config->second);
+    mdct_init(*backend->mdct0, config->first);
+    mdct_init(*backend->mdct1, config->second);
     backend->codebooks = fn_8022F780(config->book_count * 0x1C);
     {
         s32 i;
@@ -122,7 +122,7 @@ s32 fn_8022FE60(register DecoderState *state_arg, register DecoderWrapper *wrapp
         i = 0;
         book_offset = 0;
         for (; i < config->book_count; i++) {
-            fn_8023570C((Codebook *)((u8 *)backend->codebooks + book_offset),
+            vorbis_book_init_decode((Codebook *)((u8 *)backend->codebooks + book_offset),
                         book_cursor->books[0]);
             book_cursor = (DecoderConfig *)((u8 *)book_cursor + 4);
             book_offset += 0x1C;
@@ -158,7 +158,7 @@ s32 fn_8022FE60(register DecoderState *state_arg, register DecoderWrapper *wrapp
          * C hoists the loop zero and table base into a different order. */
         asm {
             li i, 0
-            lis table_hi, lbl_8064C4D4@ha
+            lis table_hi, _mapping_P@ha
         }
         backend->maps = maps;
         /* ASM: or/ori/addi retain the cursor and offset dependencies and
@@ -167,7 +167,7 @@ s32 fn_8022FE60(register DecoderState *state_arg, register DecoderWrapper *wrapp
         asm {
             or cursor, config, config
             ori offset, i, 0
-            addi handlers, table_hi, lbl_8064C4D4@l
+            addi handlers, table_hi, _mapping_P@l
         }
         for (; i < config->modes; i++) {
             MapEntry *entry = cursor->mode_param[0];

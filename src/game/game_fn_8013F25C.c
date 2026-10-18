@@ -2,9 +2,9 @@ typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct Result { Vec3 normal; Vec3 point; } Result;
 
 extern float lbl_80650350, lbl_80650378;
-extern void fn_80211A6C();
-extern void fn_80211A90(Vec3*, const Vec3*, float);
-extern float fn_80211B08(const Vec3*);
+extern void PSVECSubtract();
+extern void PSVECScale(Vec3*, const Vec3*, float);
+extern float PSVECMag(const Vec3*);
 
 int fn_8013F25C(const Vec3* center, const Vec3* point, Result* out,
                 float vertical_radius, float radius,
@@ -26,11 +26,11 @@ int fn_8013F25C(const Vec3* center, const Vec3* point, Result* out,
         outer = radius + extra;
         if (dx2 + dy2 < outer * outer) {
             float length;
-            fn_80211A6C(point, center, &delta);
+            PSVECSubtract(point, center, &delta);
             delta.z = lbl_80650350;
-            length = fn_80211B08(&delta);
+            length = PSVECMag(&delta);
             if (lbl_80650350 != length)
-                fn_80211A90(&delta, &delta, lbl_80650378 / length);
+                PSVECScale(&delta, &delta, lbl_80650378 / length);
             else
                 delta.x = lbl_80650378;
             out->normal.x = center->x + radius * delta.x;

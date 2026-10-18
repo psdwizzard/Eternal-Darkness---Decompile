@@ -1,4 +1,4 @@
-/* fn_8020CA60: SetInterruptMask (Dolphin SDK OSInterrupt.c). */
+/* SetInterruptMask: SetInterruptMask (Dolphin SDK OSInterrupt.c). */
 
 typedef unsigned short u16;
 typedef unsigned int u32;
@@ -84,7 +84,7 @@ volatile u32 __PIRegs[12] : 0xCC003000;
      OS_INTERRUPTMASK_PI_PE_TOKEN | OS_INTERRUPTMASK_PI_PE_FINISH |              \
      OS_INTERRUPTMASK_PI_DEBUG | OS_INTERRUPTMASK_PI_HSP)
 
-u32 fn_8020CA60(OSInterruptMask mask, OSInterruptMask current) {
+u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current) {
     u32 reg;
 
     switch (__cntlzw(mask)) {

@@ -1,6 +1,6 @@
-/* fn_80233D1C: first-stage MDCT butterfly (libvorbis mdct_butterfly_first). */
+/* mdct_butterfly_first: first-stage MDCT butterfly (libvorbis mdct_butterfly_first). */
 
-void fn_80233D1C(float *T, float *x, int points) {
+void mdct_butterfly_first(float *T, float *x, int points) {
     float *x1 = x + points - 8;
     float *x2 = x + (points >> 1) - 8;
     float r0;

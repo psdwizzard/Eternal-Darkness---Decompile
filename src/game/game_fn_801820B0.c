@@ -24,7 +24,7 @@ extern void fn_80180554(void*, void*, void*, SixBytes*, u16, s16);
 extern void fn_801805E0(void*, int, u8, int, float, void*);
 extern void fn_80180518(void*, u8, int);
 extern void fn_8018F014(void*, u8);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8018CEC0(void*, u8);
 extern void fn_8018C540(void*, void*, u8, int, u16);
 extern void fn_801F5A04(void*, s16, void*, void*);
@@ -63,13 +63,13 @@ void fn_801820B0(u8* object, void* arg1, void* arg2, u8* descriptor)
         memcpy(&position, arg2, 6);
         fn_8018F014(&position, descriptor[0x14]);
         if (*(int*)(descriptor + 0x1C) != 0) {
-            variant = (s16)((fn_800FBFB0() & 3) + 1);
+            variant = (s16)((rand() & 3) + 1);
         } else {
             variant = 0;
         }
         fn_80180554(entry, arg1, &position, &setup,
                     *(u16*)(descriptor + 8), variant);
-        random_count = descriptor[1] - ((descriptor[1] - 1) & fn_800FBFB0());
+        random_count = descriptor[1] - ((descriptor[1] - 1) & rand());
         fn_801805E0(entry + 0x20, 4, random_count, (i & 0x3F) << 2,
                     lbl_806509B0, table);
         fn_80180518(object + 0x24, i, 1);

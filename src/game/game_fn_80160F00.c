@@ -10,23 +10,23 @@ typedef struct Value {
 } Value;
 
 extern char lbl_8024F5B0[];
-extern Value* fn_80167BF0(void*, char*);
-extern void fn_8016057C(Object*, int);
-extern void fn_8016A8F8(Object*, void*);
-extern void fn_80160B18(Object*, char*, int);
+extern Value* luaH_getglobal(void*, char*);
+extern void luaD_checkstack(Object*, int);
+extern void lua_pushstring(Object*, void*);
+extern void luaD_call(Object*, char*, int);
 
-void fn_80160F00(Object* object, void* argument)
+void message(Object* object, void* argument)
 {
     char* name = lbl_8024F5B0;
-    Value* value = fn_80167BF0(object, name);
+    Value* value = luaH_getglobal(object, name);
 
     if (*(int*)value == 5) {
         *(Value*)object->current = *value;
         if (object->current == object->end) {
-            fn_8016057C(object, 1);
+            luaD_checkstack(object, 1);
         }
         object->current += sizeof(Value);
-        fn_8016A8F8(object, argument);
-        fn_80160B18(object, object->current - 32, 0);
+        lua_pushstring(object, argument);
+        luaD_call(object, object->current - 32, 0);
     }
 }

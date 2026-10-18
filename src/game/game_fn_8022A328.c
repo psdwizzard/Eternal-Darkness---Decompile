@@ -33,7 +33,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
         GXWGFifo.u32 = (val); \
     } while (0)
 
-void fn_8022A328(GXFogType type, GXColor *color, f32 startz, f32 endz, f32 nearz, f32 farz)
+void GXSetFog(GXFogType type, GXColor *color, f32 startz, f32 endz, f32 nearz, f32 farz)
 {
     u32 fogclr, fog0, fog1, fog2, fog3;
     f32 A, B, B_mant, C, a, c;

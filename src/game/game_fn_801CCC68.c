@@ -10,15 +10,15 @@ typedef struct Entry {
     u32 flagsF0;
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-void fn_801CCC68(u32 index, u8 enabled)
+void hwSetITDMode(u32 index, u8 enabled)
 {
     if (enabled == 0) {
-        lbl_8064D4AC[index].flagsF0 |= 0x80000000;
-        lbl_8064D4AC[index].fieldD0 = 0x10;
-        lbl_8064D4AC[index].fieldD2 = 0x10;
+        dspVoice[index].flagsF0 |= 0x80000000;
+        dspVoice[index].fieldD0 = 0x10;
+        dspVoice[index].fieldD2 = 0x10;
     } else {
-        lbl_8064D4AC[index].flagsF0 &= 0x7FFFFFFF;
+        dspVoice[index].flagsF0 &= 0x7FFFFFFF;
     }
 }

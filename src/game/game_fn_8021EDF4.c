@@ -14,12 +14,12 @@ typedef struct CardControl {
     u8 reserved8C[0x84];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern s32 fn_8021EE90(s32 channel, u16 *fat, CardCallback callback);
+extern CardControl __CARDBlock[];
+extern s32 __CARDUpdateFatBlock(s32 channel, u16 *fat, CardCallback callback);
 
 static inline CardControl *GetCard(s32 channel)
 {
-    return &lbl_80641C60[channel];
+    return &__CARDBlock[channel];
 }
 
 static inline u16 *GetFatBlock(CardControl *card)
@@ -27,7 +27,7 @@ static inline u16 *GetFatBlock(CardControl *card)
     return card->currentFat;
 }
 
-s32 fn_8021EDF4(s32 channel, u16 block, CardCallback callback)
+s32 __CARDFreeBlock(s32 channel, u16 block, CardCallback callback)
 {
     CardControl *card;
     u16 *fat;
@@ -48,5 +48,5 @@ s32 fn_8021EDF4(s32 channel, u16 block, CardCallback callback)
         block = next;
         ++fat[3];
     }
-    return fn_8021EE90(channel, fat, callback);
+    return __CARDUpdateFatBlock(channel, fat, callback);
 }

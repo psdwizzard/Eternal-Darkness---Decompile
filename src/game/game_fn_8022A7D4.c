@@ -14,7 +14,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022A7D4(u8 beforeTexture)
+void GXSetZCompLoc(u8 beforeTexture)
 {
     gx->zControl = (gx->zControl & ~(1UL << 6)) | ((u32)beforeTexture << 6);
     GXWGFifo.byte = 0x61;

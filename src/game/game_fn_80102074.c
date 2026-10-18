@@ -6,10 +6,10 @@ typedef union DoubleBits {
     } words;
 } DoubleBits;
 
-extern const volatile double lbl_8023A1F8[2];
+extern const volatile double TWO52[2];
 
 /* Round to an integer in the current floating-point rounding mode. */
-double fn_80102074(double value)
+double rint(double value)
 {
     DoubleBits rounded;
     DoubleBits bits;
@@ -33,7 +33,7 @@ double fn_80102074(double value)
             high &= ~0x1FFFF;
             high |= ((low | -low) >> 12) & 0x80000;
             bits.words.high = high;
-            bias = lbl_8023A1F8[sign];
+            bias = TWO52[sign];
             rounded.value = (bits.value + bias) - bias;
             rounded.words.high = (rounded.words.high & 0x7FFFFFFF) | (sign << 31);
             return rounded.value;
@@ -62,6 +62,6 @@ double fn_80102074(double value)
     }
     bits.words.high = high;
     bits.words.low = low;
-    bias = lbl_8023A1F8[sign];
+    bias = TWO52[sign];
     return (bits.value + bias) - bias;
 }

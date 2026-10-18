@@ -20,7 +20,7 @@ typedef struct Surface {
 
 extern void fn_80179DB0(float*, short*);
 extern void fn_8013C264(const Vec3*, const Vec3*, Vec3*, const Vec3*, Vec3*);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float lbl_80650318;
 
 float fn_8013C068(const Vec3* point, const Surface* surface,
@@ -43,7 +43,7 @@ float fn_8013C068(const Vec3* point, const Surface* surface,
             next = 0;
         fn_80179DB0(&second.x, (short*)((char*)vertices + surface->indices[next] * 6));
         fn_8013C264(&first, &second, &direction, point, &closest);
-        distance = fn_80211D4C(point, &closest);
+        distance = PSVECSquareDistance(point, &closest);
         if (distance < best) {
             best = distance;
             *result = closest;
@@ -60,7 +60,7 @@ float fn_8013C068(const Vec3* point, const Surface* surface,
                 next = 0;
             fn_80179DB0(&second.x, (short*)((char*)vertices + loop->indices[next] * 6));
             fn_8013C264(&first, &second, &direction, point, &closest);
-            distance = fn_80211D4C(point, &closest);
+            distance = PSVECSquareDistance(point, &closest);
             if (distance < best) {
                 best = distance;
                 *result = closest;

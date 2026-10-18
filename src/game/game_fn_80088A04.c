@@ -27,7 +27,7 @@ typedef struct Work {
 } Work;
 
 extern void fn_8006ED3C(void*, int, int*);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_801F69F0(Int3*, Vec3*, int);
 extern u8 lbl_8063D378[];
 
@@ -52,8 +52,8 @@ int fn_80088A04(Work* work)
         Vec3 output;
         int random;
 
-        rows->first[0] = fn_800FBFB0() % 512;
-        random = fn_800FBFB0() % 352;
+        rows->first[0] = rand() % 512;
+        random = rand() % 352;
         rows->third[0] = 128;
         input.x = rows->first[0] + 64;
         input.z = -1;

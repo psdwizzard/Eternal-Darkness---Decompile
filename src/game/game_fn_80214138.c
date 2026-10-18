@@ -15,7 +15,7 @@ extern void DVDLowStopMotor(void (*)(s32));
 
 volatile u32 __DIRegs[16] : 0xCC006000;
 
-void fn_80214138(u32 error)
+void cbForUnrecoveredErrorRetry(u32 error)
 {
     if (error == 0x10) {
         executing_8064DA00->state = -1;

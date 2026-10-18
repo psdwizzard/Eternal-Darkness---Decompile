@@ -17,7 +17,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_80229B88(int stage, int a, int b, int c, int d)
+void GXSetTevAlphaIn(int stage, int a, int b, int c, int d)
 {
     u32 *reg = &gx->tevAlphaEnv[stage];
 

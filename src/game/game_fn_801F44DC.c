@@ -7,13 +7,13 @@ extern const float lbl_806513E4;
 extern const float lbl_806513FC;
 extern const float lbl_80651400;
 
-extern void fn_802119B0();
-extern void fn_8022B4B8();
-extern void fn_80210FB0();
-extern void fn_80211484();
-extern void fn_8022B690();
+extern void C_MTXOrtho();
+extern void GXSetProjection();
+extern void PSMTXIdentity();
+extern void PSMTXTrans();
+extern void GXLoadPosMtxImm();
 extern void fn_801ED468();
-extern void fn_80226D28();
+extern void GXSetCullMode();
 
 void fn_801F44DC(void)
 {
@@ -21,13 +21,13 @@ void fn_801F44DC(void)
     Matrix34 matrix;
     float one = lbl_80651348;
 
-    fn_802119B0(projection, one, lbl_8065137C,
+    C_MTXOrtho(projection, one, lbl_8065137C,
                 one, lbl_80651378, one,
                 lbl_806513E4);
-    fn_8022B4B8(projection, 1);
-    fn_80210FB0(matrix);
-    fn_80211484(matrix, lbl_806513FC, lbl_80651400, lbl_80651348);
-    fn_8022B690(matrix, 0);
+    GXSetProjection(projection, 1);
+    PSMTXIdentity(matrix);
+    PSMTXTrans(matrix, lbl_806513FC, lbl_80651400, lbl_80651348);
+    GXLoadPosMtxImm(matrix, 0);
     fn_801ED468(0);
-    fn_80226D28(0);
+    GXSetCullMode(0);
 }

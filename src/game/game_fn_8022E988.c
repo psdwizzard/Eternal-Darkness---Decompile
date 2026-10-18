@@ -10,12 +10,12 @@ typedef struct oggpack_buffer {
     s32 storage;
 } oggpack_buffer;
 
-extern const u32 lbl_802FF840[33]; /* mask */
+extern const u32 mask[33]; /* mask */
 
-s32 fn_8022E988(oggpack_buffer *b, s32 bits) {
+s32 oggpack_look(oggpack_buffer *b, s32 bits) {
     s32 storage = b->storage;
     u32 ret;
-    u32 m = lbl_802FF840[bits];
+    u32 m = mask[bits];
 
     bits += b->endbit;
 

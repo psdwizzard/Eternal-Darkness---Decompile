@@ -20,19 +20,19 @@ typedef struct SaveEntry {
     u8 pad3a[6];
 } SaveEntry;
 
-extern s32 fn_8021D2BC(s32, SaveState **);
-extern s32 fn_8021D374(SaveState *, s32);
-extern s32 fn_8021F350(SaveState *);
-extern s32 fn_8021F5D4(SaveState *, s32 *);
-extern s32 fn_8021F814(SaveState *, s32 *);
-extern s32 fn_8021F0DC(s32, void (*)(s32, s32));
-extern s32 fn_8021EE90(s32, u16 *, void (*)(s32, s32));
+extern s32 __CARDGetControlBlock(s32, SaveState **);
+extern s32 __CARDPutControlBlock(SaveState *, s32);
+extern s32 VerifyID(SaveState *);
+extern s32 VerifyDir(SaveState *, s32 *);
+extern s32 VerifyFAT(SaveState *, s32 *);
+extern s32 __CARDUpdateDir(s32, void (*)(s32, s32));
+extern s32 __CARDUpdateFatBlock(s32, u16 *, void (*)(s32, s32));
 extern void *memcpy(void *, const void *, u32);
 extern void *memset(void *, s32, u32);
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
 
-s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
+s32 CARDCheckExAsync(s32 channel, u32 *size, void (*callback)(s32, s32))
 {
     SaveState *state;
     u8 *entry_pages[2];
@@ -59,16 +59,16 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
     changes = 0;
     if (size != 0)
         *size = 0;
-    result = fn_8021D2BC(channel, &state);
+    result = __CARDGetControlBlock(channel, &state);
     if (result < 0)
         return result;
-    result = fn_8021F350(state);
+    result = VerifyID(state);
     if (result < 0)
-        return fn_8021D374(state, result);
-    result = fn_8021F5D4(state, &page_indices[0]);
-    result += fn_8021F814(state, &page_indices[1]);
+        return __CARDPutControlBlock(state, result);
+    result = VerifyDir(state, &page_indices[0]);
+    result += VerifyFAT(state, &page_indices[1]);
     if (result > 1)
-        return fn_8021D374(state, -6);
+        return __CARDPutControlBlock(state, -6);
 
     entry_pages[0] = state->workspace + 0x2000;
     link_pages[0] = state->workspace + 0x6000;
@@ -103,12 +103,12 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
         depth = 0;
         while (link != 0xffff && depth < entry->link_count) {
             if (link < 5 || link >= state->entry_count || ++counts[link] > 1)
-                return fn_8021D374(state, -6);
+                return __CARDPutControlBlock(state, -6);
             link = state->links[link];
             ++depth;
         }
         if (depth != entry->link_count || link != 0xffff)
-            return fn_8021D374(state, -6);
+            return __CARDPutControlBlock(state, -6);
     }
 
     count_cursor = counts + 5;
@@ -124,7 +124,7 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
             }
             ++unused_count;
         } else if ((old_link < 5 || old_link >= entry_limit) && old_link != 0xffff) {
-            return fn_8021D374(state, -6);
+            return __CARDPutControlBlock(state, -6);
         }
         offset += 2;
         ++count_cursor;
@@ -159,14 +159,14 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
     if (entry_changed) {
         if (size != 0)
             *size = 0x2000;
-        return fn_8021F0DC(channel, callback);
+        return __CARDUpdateDir(channel, callback);
     }
     if (link_changed | changes) {
         if (size != 0)
             *size = 0x2000;
-        return fn_8021EE90(channel, state->links, callback);
+        return __CARDUpdateFatBlock(channel, state->links, callback);
     }
-    fn_8021D374(state, 0);
+    __CARDPutControlBlock(state, 0);
     if (callback != 0) {
         saved_interrupts = OSDisableInterrupts();
         callback(channel, 0);

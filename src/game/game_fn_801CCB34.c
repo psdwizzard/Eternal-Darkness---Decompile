@@ -7,12 +7,12 @@ typedef struct Entry {
     u8 padD5[0x1F];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
-extern u8 lbl_8064D4D8;
-extern void fn_801C7580(Entry*, u8);
+extern Entry* dspVoice;
+extern u8 salTimeOffset;
+extern void salActivateVoice(Entry*, u8);
 
-void fn_801CCB34(u32 index, u8 value)
+void hwStart(u32 index, u8 value)
 {
-    lbl_8064D4AC[index].fieldD4 = lbl_8064D4D8;
-    fn_801C7580(&lbl_8064D4AC[index], value);
+    dspVoice[index].fieldD4 = salTimeOffset;
+    salActivateVoice(&dspVoice[index], value);
 }

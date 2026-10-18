@@ -18,7 +18,7 @@ static int append_byte(TRKBuffer *buffer, u8 value)
     return 0;
 }
 
-int fn_800EF994(TRKBuffer *buffer, const void *data, int length)
+int TRKAppendBuffer_ui8(TRKBuffer *buffer, const void *data, int length)
 {
     const u8 *bytes = data;
     int i = 0;

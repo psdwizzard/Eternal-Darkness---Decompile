@@ -68,14 +68,14 @@ extern void fn_801A852C(Color, int, int, u32);
 extern void fn_801A85D4(u32*, s32, s32, u32);
 extern void fn_801ECF50(s32);
 extern void fn_801A8D38(int);
-extern void fn_80226AB4(s32, s32, s32);
-extern void fn_80225F4C(s32, void*, s32);
+extern void GXBegin(s32, s32, s32);
+extern void GXSetArray(s32, void*, s32);
 extern void fn_80026740(void);
 extern void fn_80026754(s32, s32, s32);
 extern void fn_80026DAC(s32, s32);
 extern void fn_80026DBC(u32);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern s32 fn_801ED3F4(void*);
 extern void fn_801A8F08(s32, s32, s32, s32, s32, s32, void*);
 
@@ -171,7 +171,7 @@ void fn_80026768(EffectState* state)
         s16 bot = (s16)(state->top + edge.half[i + 1]);
         u32 top_color = packed[i];
         u32 bottom_color = packed[i + 1];
-        fn_80226AB4(0x80, 5, 4);
+        GXBegin(0x80, 5, 4);
         fn_80026754(quad_left, top, quad_depth);
         fn_80026DBC(top_color);
         fn_80026DAC(0, 0);
@@ -187,7 +187,7 @@ void fn_80026768(EffectState* state)
         fn_80026740();
     }
 
-    fn_80225F4C(13, data->resource, 4);
+    GXSetArray(13, data->resource, 4);
     particle_colors = data->color;
     ((u8*)&particle_colors[variant])[3] = state->alpha;
     particle_color = particle_colors[variant];
@@ -209,9 +209,9 @@ void fn_80026768(EffectState* state)
             }
         }
         if (*age >= 24) {
-            point->y = limit + (fn_800FBFB0() & 0x1F);
-            point->x = (fn_800FBFB0() & 7) + 2;
-            *delay = (fn_800FBFB0() & 3) + 5;
+            point->y = limit + (rand() & 0x1F);
+            point->x = (rand() & 7) + 2;
+            *delay = (rand() & 3) + 5;
             *age = 0;
         }
         if (point->y <= limit) {
@@ -228,7 +228,7 @@ void fn_80026768(EffectState* state)
         }
     }
 
-    fn_80225F4C(13, data->resource, 4);
+    GXSetArray(13, data->resource, 4);
     if (state->mode != 0) {
         u32 color = lbl_8064DF88;
         u32 copy;

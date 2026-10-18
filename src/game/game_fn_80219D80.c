@@ -19,22 +19,22 @@ typedef void (*PADSamplingCallback)(void);
 
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int level);
-extern int fn_802082B4(void);                    /* SIBusy */
-extern u32 fn_80209000(u32 mask);               /* SIDisablePolling */
-extern u32 fn_80209858(s32 chan, SITypeCallback callback); /* SIGetTypeAsync */
-extern PADSamplingCallback fn_80219F74(PADSamplingCallback callback);        /* PADSetSamplingCallback */
+extern int SIBusy(void);                    /* SIBusy */
+extern u32 SIDisablePolling(u32 mask);               /* SIDisablePolling */
+extern u32 SIGetTypeAsync(s32 chan, SITypeCallback callback); /* SIGetTypeAsync */
+extern PADSamplingCallback PADSetSamplingCallback(PADSamplingCallback callback);        /* PADSetSamplingCallback */
 extern void *memset(void *dst, int c, unsigned long n);
-extern void fn_8021897C(s32 chan, u32 type);     /* PADTypeAndStatusCallback */
+extern void PADTypeAndStatusCallback(s32 chan, u32 type);     /* PADTypeAndStatusCallback */
 
-extern PADStatus lbl_80641C20[4];   /* Origin */
-extern s32 lbl_8064C428;            /* ResettingChan */
-extern u32 lbl_8064DAB4;            /* EnabledBits */
-extern u32 lbl_8064DAB8;          /* ResettingBits */
-extern u32 lbl_8064DABC;            /* RecalibrateBits */
-extern u32 lbl_8064DAC0;            /* WaitingBits */
-extern u32 lbl_8064DAC4;            /* CheckingBits */
-extern u32 lbl_8064DAC8;            /* PendingBits */
-extern PADSamplingCallback lbl_8064DACC;          /* SamplingCallback */
+extern PADStatus Origin[4];   /* Origin */
+extern s32 ResettingChan;            /* ResettingChan */
+extern u32 EnabledBits;            /* EnabledBits */
+extern u32 ResettingBits;          /* ResettingBits */
+extern u32 RecalibrateBits;            /* RecalibrateBits */
+extern u32 WaitingBits;            /* WaitingBits */
+extern u32 CheckingBits;            /* CheckingBits */
+extern u32 PendingBits;            /* PendingBits */
+extern PADSamplingCallback SamplingCallback;          /* SamplingCallback */
 extern int lbl_8064DAD0;            /* recalibrated */
 
 /* Low-memory boot flag byte; bit 6 set means keep stored calibration. */
@@ -46,24 +46,24 @@ static inline int PADRecalibrate(u32 mask) {
     u32 chanBit;
 
     enabled = OSDisableInterrupts();
-    mask |= lbl_8064DAC8;
-    lbl_8064DAC8 = 0;
-    mask &= ~(lbl_8064DAC0 | lbl_8064DAC4);
-    lbl_8064DAB8 |= mask;
-    disableBits = lbl_8064DAB8 & lbl_8064DAB4;
-    lbl_8064DAB4 &= ~mask;
+    mask |= PendingBits;
+    PendingBits = 0;
+    mask &= ~(WaitingBits | CheckingBits);
+    ResettingBits |= mask;
+    disableBits = ResettingBits & EnabledBits;
+    EnabledBits &= ~mask;
     if (!(__gUnknown800030E3 & 0x40)) {
-        lbl_8064DABC |= mask;
+        RecalibrateBits |= mask;
     }
-    fn_80209000(disableBits);
-    if (lbl_8064C428 == 32) {
-        disableBits = lbl_8064DAB8;
-        lbl_8064C428 = __cntlzw(disableBits);
-        if (lbl_8064C428 != 32) {
-            chanBit = 0x80000000U >> lbl_8064C428;
-            lbl_8064DAB8 = disableBits & ~chanBit;
-            memset(&lbl_80641C20[lbl_8064C428], 0, sizeof(PADStatus));
-            fn_80209858(lbl_8064C428, fn_8021897C);
+    SIDisablePolling(disableBits);
+    if (ResettingChan == 32) {
+        disableBits = ResettingBits;
+        ResettingChan = __cntlzw(disableBits);
+        if (ResettingChan != 32) {
+            chanBit = 0x80000000U >> ResettingChan;
+            ResettingBits = disableBits & ~chanBit;
+            memset(&Origin[ResettingChan], 0, sizeof(PADStatus));
+            SIGetTypeAsync(ResettingChan, PADTypeAndStatusCallback);
         }
     }
     OSRestoreInterrupts(enabled);
@@ -71,14 +71,14 @@ static inline int PADRecalibrate(u32 mask) {
 }
 
 static inline int PADSync(void) {
-    return lbl_8064DAB8 == 0 && lbl_8064C428 == 32 && !fn_802082B4();
+    return ResettingBits == 0 && ResettingChan == 32 && !SIBusy();
 }
 
 int fn_80219D80(int final) {
     int sync;
 
-    if (lbl_8064DACC) {
-        fn_80219F74(0);
+    if (SamplingCallback) {
+        PADSetSamplingCallback(0);
     }
 
     if (!final) {

@@ -10,7 +10,7 @@ static inline s32 NextRandom(void)
     return (lbl_8064C448 >> 16) & 0x7FFF;
 }
 
-s32 fn_8021D8F0(void)
+s32 DummyLen(void)
 {
     u32 shift = 1;
     u32 retries = 0;

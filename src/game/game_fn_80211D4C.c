@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Squared distance between two points. */
-float fn_80211D4C(register const Vec3 *a, register const Vec3 *b)
+float PSVECSquareDistance(register const Vec3 *a, register const Vec3 *b)
 {
     register float difference, other, yzSquared;
 

@@ -18,8 +18,8 @@ extern int fn_80137658(float, void*, Vec3*, void*, Plane*);
 extern void fn_8011F114(Vec3*, void*);
 extern void fn_8011F104(float, float, float, void*);
 extern void fn_8011F0E8(void*, Vec3*);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
 extern void fn_8013F600(Plane*, Vec3*, float*);
 extern void fn_8013C460(Vec3*, const Vec3*, float, float);
 
@@ -50,11 +50,11 @@ void fn_8013A140(void* object)
                     up.x = lbl_806502B8;
                     up.y = lbl_806502B8;
                     up.z = other_radius;
-                    fn_80211A48(fn_8011F130(other), &up, &position);
+                    PSVECAdd(fn_8011F130(other), &up, &position);
                     fn_8013F600(&contact, &normal, &distance);
                     fn_8013C460(&position, &normal,
                                 lbl_806502BC + other_radius, distance);
-                    fn_80211A6C(&position, &up, fn_8011F130(other));
+                    PSVECSubtract(&position, &up, fn_8011F130(other));
                 } else {
                     Vec3 position;
                     Vec3 normal;
@@ -75,10 +75,10 @@ void fn_8013A140(void* object)
                         fn_8013F600(&contact, &normal, &distance);
                         if (normal.z >= lbl_806502C4 &&
                             normal.z <= lbl_806502C8) {
-                            fn_80211A48(fn_8011F130(other), &up, &adjusted);
+                            PSVECAdd(fn_8011F130(other), &up, &adjusted);
                             fn_8013C460(&adjusted, &normal,
                                         lbl_806502BC + other_radius, distance);
-                            fn_80211A6C(&adjusted, &up,
+                            PSVECSubtract(&adjusted, &up,
                                        fn_8011F130(other));
                         } else {
                             fn_8011F0E8(other, &position);

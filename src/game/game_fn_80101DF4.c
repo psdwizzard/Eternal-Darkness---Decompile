@@ -6,7 +6,7 @@ typedef union DoubleBits {
     } words;
 } DoubleBits;
 
-double fn_80101DF4(double value, double *integral)
+double modf(double value, double *integral)
 {
     DoubleBits bits;
     DoubleBits *integer;

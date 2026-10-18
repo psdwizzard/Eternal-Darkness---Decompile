@@ -3,9 +3,9 @@ typedef struct Args {
     int amount;
 } Args;
 
-extern void fn_80160B18(void*, void*, int);
+extern void luaD_call(void*, void*, int);
 
-void fn_80160CE4(void* object, Args* args)
+void f_call(void* object, Args* args)
 {
-    fn_80160B18(object, args->entry, args->amount);
+    luaD_call(object, args->entry, args->amount);
 }

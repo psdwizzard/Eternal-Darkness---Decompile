@@ -25,7 +25,7 @@ extern void* fn_80201C48(void);
 extern void *fn_80201814();
 extern int fn_802045AC(void*, Vec3i800A24A4*);
 extern u8 fn_80204578(void*, Vec3i800A24A4*);
-extern void fn_80211A6C();
+extern void PSVECSubtract();
 extern int fn_800A4F44(Vec3i800A24A4*, float);
 extern float lbl_8064EE80;
 
@@ -48,7 +48,7 @@ int fn_800A24A4(void* object, void* context, Source800A24A4* source, void* value
     }
     fn_802045AC(object, &second);
     if (source->countdown <= 0 && active != 0 && fn_80204578(object, &second)) {
-        fn_80211A6C(&first, &second, &delta);
+        PSVECSubtract(&first, &second, &delta);
         if (fn_800A4F44(&delta, lbl_8064EE80) <= 0) {
             result = source->vtable->callback(object, context, value);
         }

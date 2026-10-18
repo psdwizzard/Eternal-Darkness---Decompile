@@ -18,12 +18,12 @@ typedef struct McmdCommandArgs {
     u32 value;
 } McmdCommandArgs;
 
-extern u16 fn_801CC2E4(void);
-extern u32 fn_801C267C(McmdVoiceState*);
-extern void fn_801CB470(u8, u8, u8);
-extern void fn_801BD398(McmdVoiceState*, McmdCommandArgs*);
+extern u16 sndRand(void);
+extern u32 voiceIsLastStarted(McmdVoiceState*);
+extern void inpSetMidiLastNote(u8, u8, u8);
+extern void mcmdWait(McmdVoiceState*, McmdCommandArgs*);
 
-void fn_801BE5A0(McmdVoiceState* state, McmdCommandArgs* args)
+void mcmdRandomKey(McmdVoiceState* state, McmdCommandArgs* args)
 {
     u8 tmp;
     s32 rangeHi;
@@ -50,18 +50,18 @@ void fn_801BE5A0(McmdVoiceState* state, McmdCommandArgs* args)
     }
 
     if ((u8)args->value != 0) {
-        detune = (fn_801CC2E4() % 0xc9) - 100;
+        detune = (sndRand() % 0xc9) - 100;
     } else {
         detune = (args->flags >> 0x10) & 0xff;
     }
 
-    args->flags = (detune << 0x10) | 0x19 | ((keyLo + (fn_801CC2E4() % ((keyHi - keyLo) + 1))) << 8);
+    args->flags = (detune << 0x10) | 0x19 | ((keyLo + (sndRand() % ((keyHi - keyLo) + 1))) << 8);
     args->value = 0;
     state->curNote = (args->flags >> 8) & 0x7f;
     state->curDetune = (s8)(args->flags >> 0x10);
-    if (fn_801C267C(state) != 0) {
-        fn_801CB470(state->midi, state->midiSet, state->curNote & 0xff);
+    if (voiceIsLastStarted(state) != 0) {
+        inpSetMidiLastNote(state->midi, state->midiSet, state->curNote & 0xff);
     }
     args->flags = 4;
-    fn_801BD398(state, args);
+    mcmdWait(state, args);
 }

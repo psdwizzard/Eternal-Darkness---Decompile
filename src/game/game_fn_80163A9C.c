@@ -6,13 +6,13 @@ typedef struct Buffer {
     unsigned int accounting;
 } Buffer;
 
-extern void* fn_8016B5CC(void*, void*, unsigned int, char*, int);
+extern void* luaM_realloc(void*, void*, unsigned int, char*, int);
 extern char lbl_8024F750[];
 
-char* fn_80163A9C(Buffer* buffer, unsigned int requested)
+char* luaO_openspace(Buffer* buffer, unsigned int requested)
 {
     if (requested > buffer->capacity) {
-        buffer->data = fn_8016B5CC(buffer, buffer->data, requested,
+        buffer->data = luaM_realloc(buffer, buffer->data, requested,
                                    lbl_8024F750, 0x3C);
         buffer->accounting += requested - buffer->capacity;
         buffer->capacity = requested;

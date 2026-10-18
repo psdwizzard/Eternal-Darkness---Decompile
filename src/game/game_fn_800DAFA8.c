@@ -1,6 +1,6 @@
-extern double fn_801022A8(void);
+extern double tan(void);
 
-float fn_800DAFA8(void)
+float tanf(void)
 {
-    return fn_801022A8();
+    return tan();
 }

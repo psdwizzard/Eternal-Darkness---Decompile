@@ -26,30 +26,30 @@ typedef struct {
 extern GXData *gx;
 extern volatile u16 *__cpReg;
 extern volatile u32 *__piReg;
-extern GXFifoObj *lbl_8064DB90;
-extern u8 lbl_8064DB9C;
+extern GXFifoObj *CPUFifo;
+extern u8 CPGPLinked;
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
-void fn_80226378(void);
-u32 fn_80209B48(void);
+void GXFlush(void);
+u32 PPCMfwpar(void);
 void PPCMtwpar(u32 newWPAR);
 
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-volatile u32 *fn_80224650(volatile u32 *pipeAddress)
+volatile u32 *GXRedirectWriteGatherPipe(volatile u32 *pipeAddress)
 {
     BOOL enabled = OSDisableInterrupts();
     u32 pipePtr;
     u32 previousWritePtr;
 
-    fn_80226378();
-    while (fn_80209B48() & 1) {
+    GXFlush();
+    while (PPCMfwpar() & 1) {
     }
     PPCMtwpar(0x0C008000);
 
-    if (lbl_8064DB9C) {
+    if (CPGPLinked) {
         SET_REG_FIELD(gx->cpEnable, 1, 4, 0);
         __cpReg[1] = gx->cpEnable;
         SET_REG_FIELD(gx->cpEnable, 1, 2, 0);
@@ -61,7 +61,7 @@ volatile u32 *fn_80224650(volatile u32 *pipeAddress)
     SET_REG_FIELD(pipePtr, 1, 26, 0);
     previousWritePtr = __piReg[5];
     previousWritePtr &= ~0x04000000;
-    lbl_8064DB90->wrPtr = (void *)(previousWritePtr + 0x80000000);
+    CPUFifo->wrPtr = (void *)(previousWritePtr + 0x80000000);
     __piReg[3] = 0;
     __piReg[4] = 0x04000000;
     __piReg[5] = pipePtr;

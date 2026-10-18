@@ -5,10 +5,10 @@ extern unsigned char lbl_8064D130;
 extern void fn_8015CDF0(void);
 extern void fn_8015D670(void);
 extern void fn_8015D6A0(void);
-extern void fn_8020D1F0(void*, void*, int);
-extern int fn_8020D318(void*, void*, int);
-extern void fn_8021B730(void*, int, int, int, void*, void*, int, void*);
-extern int fn_80213704(void*, void*, int, int, void*, int);
+extern void OSInitMessageQueue(void*, void*, int);
+extern int OSReceiveMessage(void*, void*, int);
+extern void ARQPostRequest(void*, int, int, int, void*, void*, int, void*);
+extern int DVDReadAsyncPrio(void*, void*, int, int, void*, int);
 
 void fn_8015D7D4(void* output, void* file, int offset, unsigned int remaining,
                  unsigned char* buffers)
@@ -18,9 +18,9 @@ void fn_8015D7D4(void* output, void* file, int offset, unsigned int remaining,
     int chunk;
     unsigned char* next_buffer;
 
-    while (fn_8020D318(lbl_805E295C, &message, 0)) {
+    while (OSReceiveMessage(lbl_805E295C, &message, 0)) {
     }
-    fn_8020D1F0(lbl_805FA1F0, &lbl_8064D130, 2);
+    OSInitMessageQueue(lbl_805FA1F0, &lbl_8064D130, 2);
 
     if (remaining > 0x1000) {
         chunk = 0x1000;
@@ -30,14 +30,14 @@ void fn_8015D7D4(void* output, void* file, int offset, unsigned int remaining,
         remaining = 0;
     }
     fn_8015CDF0();
-    while (!fn_80213704(file, buffers, chunk, offset, fn_8015D6A0, 2)) {
+    while (!DVDReadAsyncPrio(file, buffers, chunk, offset, fn_8015D6A0, 2)) {
     }
     offset += chunk;
 
     while (remaining != 0) {
-        fn_8020D318(lbl_805FA1F0, &message, 1);
+        OSReceiveMessage(lbl_805FA1F0, &message, 1);
         fn_8015CDF0();
-        fn_8021B730(lbl_805FA210, 6, 0, 0,
+        ARQPostRequest(lbl_805FA210, 6, 0, 0,
                     buffers + buffer_index * 0x1000, output, chunk,
                     fn_8015D670);
         output = (char*)output + chunk;
@@ -50,16 +50,16 @@ void fn_8015D7D4(void* output, void* file, int offset, unsigned int remaining,
             remaining = 0;
         }
         next_buffer = buffers + buffer_index * 0x1000;
-        while (!fn_80213704(file, next_buffer, chunk, offset,
+        while (!DVDReadAsyncPrio(file, next_buffer, chunk, offset,
                             fn_8015D6A0, 2)) {
         }
         offset += chunk;
-        fn_8020D318(lbl_805E295C, &message, 1);
+        OSReceiveMessage(lbl_805E295C, &message, 1);
     }
 
-    fn_8020D318(lbl_805FA1F0, &message, 1);
-    fn_8021B730(lbl_805FA210, 6, 0, 0,
+    OSReceiveMessage(lbl_805FA1F0, &message, 1);
+    ARQPostRequest(lbl_805FA210, 6, 0, 0,
                 buffers + buffer_index * 0x1000, output, chunk,
                 fn_8015D670);
-    fn_8020D318(lbl_805E295C, &message, 1);
+    OSReceiveMessage(lbl_805E295C, &message, 1);
 }

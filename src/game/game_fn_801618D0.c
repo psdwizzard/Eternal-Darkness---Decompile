@@ -12,7 +12,7 @@ typedef struct Entry {
     Item* item;
 } Entry;
 
-int fn_801618D0(Entry* entry)
+int hasmark(Entry* entry)
 {
     switch (entry->kind) {
     case 0:

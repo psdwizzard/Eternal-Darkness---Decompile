@@ -9,13 +9,13 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern TRKBuffer lbl_80328610[3];
+extern TRKBuffer gTRKMsgBufs[3];
 
 TRKBuffer *TRKGetBuffer(int id)
 {
     TRKBuffer *buffer = 0;
 
     if (id >= 0 && id < 3)
-        buffer = &lbl_80328610[id];
+        buffer = &gTRKMsgBufs[id];
     return buffer;
 }

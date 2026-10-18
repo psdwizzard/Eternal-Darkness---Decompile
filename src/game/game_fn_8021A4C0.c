@@ -10,19 +10,19 @@ typedef void (*AIDMACallback)(void);
 
 extern OSInterruptHandler __OSSetInterruptHandler(s16, OSInterruptHandler);
 extern u32 __OSUnmaskInterrupts(u32);
-extern void fn_8021A384(u32 sampleRate);
-extern void fn_8021A290(u32 sampleRate);
-extern void fn_8021A624(s16, OSContext*);
-extern void fn_8021A6A0(s16, OSContext*);
-extern AIStreamCallback lbl_8064DAD8;
-extern AIDMACallback lbl_8064DADC;
-extern void* lbl_8064DAE0;
-extern int lbl_8064DAE8;
-extern OSTime lbl_8064DAF0; /* 32 kHz period bound */
-extern OSTime lbl_8064DAF8; /* 48 kHz period bound */
-extern OSTime lbl_8064DB00; /* minimum SRC settling time */
-extern OSTime lbl_8064DB08; /* maximum SRC settling time */
-extern OSTime lbl_8064DB10; /* period tolerance */
+extern void __AI_set_stream_sample_rate(u32 sampleRate);
+extern void AISetDSPSampleRate(u32 sampleRate);
+extern void __AISHandler(s16, OSContext*);
+extern void __AIDHandler(s16, OSContext*);
+extern AIStreamCallback __AIS_Callback;
+extern AIDMACallback __AID_Callback;
+extern void* __CallbackStack;
+extern int __AI_init_flag;
+extern OSTime bound_32KHz; /* 32 kHz period bound */
+extern OSTime bound_48KHz; /* 48 kHz period bound */
+extern OSTime min_wait; /* minimum SRC settling time */
+extern OSTime max_wait; /* maximum SRC settling time */
+extern OSTime buffer; /* period tolerance */
 
 u32 __OSBusClock : 0x800000F8;
 
@@ -38,32 +38,32 @@ static inline void SetVolumeLeft(u8 volume)
     __AIRegs[1] = (__AIRegs[1] & ~0xFF) | volume;
 }
 
-void fn_8021A4C0(void* stack)
+void AIInit(void* stack)
 {
-    if (lbl_8064DAE8 == 1) {
+    if (__AI_init_flag == 1) {
         return;
     }
 
     /* Convert nanoseconds using the bus clock divided by four. */
-    lbl_8064DAF0 = (31524 * ((__OSBusClock / 4) / 125000)) / 8000;
-    lbl_8064DAF8 = (42024 * ((__OSBusClock / 4) / 125000)) / 8000;
-    lbl_8064DB00 = (42000 * ((__OSBusClock / 4) / 125000)) / 8000;
-    lbl_8064DB08 = (63000 * ((__OSBusClock / 4) / 125000)) / 8000;
-    lbl_8064DB10 = (3000 * ((__OSBusClock / 4) / 125000)) / 8000;
+    bound_32KHz = (31524 * ((__OSBusClock / 4) / 125000)) / 8000;
+    bound_48KHz = (42024 * ((__OSBusClock / 4) / 125000)) / 8000;
+    min_wait = (42000 * ((__OSBusClock / 4) / 125000)) / 8000;
+    max_wait = (63000 * ((__OSBusClock / 4) / 125000)) / 8000;
+    buffer = (3000 * ((__OSBusClock / 4) / 125000)) / 8000;
 
     /* Reset the sample counter, mute both channels, and clear its interrupt. */
     ((u32*)__AIRegs)[0] = (((u32*)__AIRegs)[0] & ~0x20) | 0x20;
     SetVolumeRight(0);
     SetVolumeLeft(0);
     __AIRegs[3] = 0;
-    fn_8021A384(1);
-    fn_8021A290(0);
-    lbl_8064DAD8 = 0;
-    lbl_8064DADC = 0;
-    lbl_8064DAE0 = stack;
-    __OSSetInterruptHandler(5, fn_8021A6A0);
+    __AI_set_stream_sample_rate(1);
+    AISetDSPSampleRate(0);
+    __AIS_Callback = 0;
+    __AID_Callback = 0;
+    __CallbackStack = stack;
+    __OSSetInterruptHandler(5, __AIDHandler);
     __OSUnmaskInterrupts(0x04000000);
-    __OSSetInterruptHandler(8, fn_8021A624);
+    __OSSetInterruptHandler(8, __AISHandler);
     __OSUnmaskInterrupts(0x00800000);
-    lbl_8064DAE8 = 1;
+    __AI_init_flag = 1;
 }

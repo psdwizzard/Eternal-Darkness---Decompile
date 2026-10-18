@@ -12,7 +12,7 @@ typedef struct Entry {
     int count12;
 } Entry;
 
-int fn_801611F8(Entry* entry)
+int protosize(Entry* entry)
 {
     return 0x44 + entry->count8 * 8 + entry->count4_a * 4
         + entry->count4_b * 4 + entry->count4_c * 4

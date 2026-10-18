@@ -12,10 +12,10 @@ typedef struct GXData {
 } GXData;
 
 extern GXData *gx;
-extern void fn_80228954(GXTexObjInt *t, GXTexRegionInt *r, u32 id);
+extern void GXLoadTexObjPreLoaded(GXTexObjInt *t, GXTexRegionInt *r, u32 id);
 
-void fn_80228AFC(GXTexObjInt *obj, u32 id)
+void GXLoadTexObj(GXTexObjInt *obj, u32 id)
 {
     GXTexRegionInt *region = gx->texRegionCallback(obj, id);
-    fn_80228954(obj, region, id);
+    GXLoadTexObjPreLoaded(obj, region, id);
 }

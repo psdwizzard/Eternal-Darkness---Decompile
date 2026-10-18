@@ -1,6 +1,6 @@
 extern unsigned int lbl_8064B848;
 
-void fn_800FBFA8(unsigned int seed)
+void srand(unsigned int seed)
 {
     lbl_8064B848 = seed;
 }

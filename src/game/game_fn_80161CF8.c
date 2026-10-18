@@ -7,9 +7,9 @@ typedef struct Collection {
 } Collection;
 
 extern char lbl_8064BA88;
-extern void* fn_8016B5CC(Collection*, void*, unsigned int, char*, int);
+extern void* luaM_realloc(Collection*, void*, unsigned int, char*, int);
 
-void fn_80161CF8(Collection* collection)
+void checkMbuffer(Collection* collection)
 {
     unsigned int capacity = collection->capacity;
 
@@ -17,7 +17,7 @@ void fn_80161CF8(Collection* collection)
         unsigned int new_capacity = capacity >> 1;
         collection->total_size += new_capacity - capacity;
         collection->capacity = new_capacity;
-        collection->allocation = fn_8016B5CC(collection, collection->allocation,
+        collection->allocation = luaM_realloc(collection, collection->allocation,
                                              new_capacity, &lbl_8064BA88, 291);
     }
 }

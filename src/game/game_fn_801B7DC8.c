@@ -14,14 +14,14 @@ typedef struct FXTab {
     u8 volume_group;
 } FXTab;
 
-extern FXTab* fn_801BD1EC(u16);
-extern u32 fn_801B64D0(u16, u8, u8, u8, u8, u8, u8, u8, u8, u16, u16,
+extern FXTab* dataGetFX(u16);
+extern u32 synthStartSound(u16, u8, u8, u8, u8, u8, u8, u8, u8, u16, u16,
                        u8, s16, u8, u32);
 
-u32 fn_801B7DC8(u16 effect_id, u8 volume, u8 panning, u8 studio, u32 itd)
+u32 synthFXStart(u16 effect_id, u8 volume, u8 panning, u8 studio, u32 itd)
 {
     u32 voice_id = -1;
-    FXTab* effect = fn_801BD1EC(effect_id);
+    FXTab* effect = dataGetFX(effect_id);
 
     if (effect != 0) {
         if (volume == 0xFF) {
@@ -30,7 +30,7 @@ u32 fn_801B7DC8(u16 effect_id, u8 volume, u8 panning, u8 studio, u32 itd)
         if (panning == 0xFF) {
             panning = effect->panning;
         }
-        voice_id = fn_801B64D0(effect->macro, effect->priority,
+        voice_id = synthStartSound(effect->macro, effect->priority,
                                effect->max_voices, effect->key | 0x80,
                                volume, panning, 0xFF, 0xFF, 0, 0, 0xFF,
                                effect->volume_group, 0, studio, itd);

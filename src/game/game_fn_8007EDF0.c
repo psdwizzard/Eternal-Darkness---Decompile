@@ -74,9 +74,9 @@ extern float lbl_8064D7A0;
 extern const float lbl_8064EA14, lbl_8064EA30, lbl_8064EA34, lbl_8064EA38;
 extern void fn_8007D848(int);
 extern void fn_8007EC28(void);
-extern void fn_80211AAC(Vec3 *, Vec3 *);
+extern void PSVECNormalize(Vec3 *, Vec3 *);
 extern u32 fn_801E741C(const char *);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void *memset(void *, int, unsigned long);
 
 /* Initialize the menu's icon transforms, selection state and resource IDs. */
@@ -185,16 +185,16 @@ void fn_8007EDF0(void)
     lbl_8031CD84.entries[3].facing = 1;
     lbl_8031CD84.entries[4].facing = 1;
 
-    fn_80211AAC(&lbl_8031CD84.entries[0].direction, &lbl_8031CD84.entries[0].direction);
-    fn_80211AAC(&lbl_8031CD84.entries[1].direction, &lbl_8031CD84.entries[1].direction);
-    fn_80211AAC(&lbl_8031CD84.entries[2].direction, &lbl_8031CD84.entries[2].direction);
-    fn_80211AAC(&lbl_8031CD84.entries[3].direction, &lbl_8031CD84.entries[3].direction);
-    fn_80211AAC(&lbl_8031CD84.entries[4].direction, &lbl_8031CD84.entries[4].direction);
-    fn_80211AAC(&lbl_8031CD84.entries[0].up, &lbl_8031CD84.entries[0].up);
-    fn_80211AAC(&lbl_8031CD84.entries[1].up, &lbl_8031CD84.entries[1].up);
-    fn_80211AAC(&lbl_8031CD84.entries[2].up, &lbl_8031CD84.entries[2].up);
-    fn_80211AAC(&lbl_8031CD84.entries[3].up, &lbl_8031CD84.entries[3].up);
-    fn_80211AAC(&lbl_8031CD84.entries[4].up, &lbl_8031CD84.entries[4].up);
+    PSVECNormalize(&lbl_8031CD84.entries[0].direction, &lbl_8031CD84.entries[0].direction);
+    PSVECNormalize(&lbl_8031CD84.entries[1].direction, &lbl_8031CD84.entries[1].direction);
+    PSVECNormalize(&lbl_8031CD84.entries[2].direction, &lbl_8031CD84.entries[2].direction);
+    PSVECNormalize(&lbl_8031CD84.entries[3].direction, &lbl_8031CD84.entries[3].direction);
+    PSVECNormalize(&lbl_8031CD84.entries[4].direction, &lbl_8031CD84.entries[4].direction);
+    PSVECNormalize(&lbl_8031CD84.entries[0].up, &lbl_8031CD84.entries[0].up);
+    PSVECNormalize(&lbl_8031CD84.entries[1].up, &lbl_8031CD84.entries[1].up);
+    PSVECNormalize(&lbl_8031CD84.entries[2].up, &lbl_8031CD84.entries[2].up);
+    PSVECNormalize(&lbl_8031CD84.entries[3].up, &lbl_8031CD84.entries[3].up);
+    PSVECNormalize(&lbl_8031CD84.entries[4].up, &lbl_8031CD84.entries[4].up);
 
     lbl_8031CD84.entries[0].basis = constants->bases[0];
     lbl_8031CD84.entries[1].basis = constants->bases[1];
@@ -209,7 +209,7 @@ void fn_8007EDF0(void)
     lbl_8031CD84.resources[2].id = fn_801E741C(names + 0x64c);
     lbl_8031CD84.resources[3].id = fn_801E741C(names + 0x65c);
     lbl_8031CD84.resources[4].id = fn_801E741C(names + 0x65c);
-    lbl_8031CBA0.timer = (int)fn_800FBFB0() % 1000 + 700;
+    lbl_8031CBA0.timer = (int)rand() % 1000 + 700;
     lbl_8031CBA0.timerCount = 0;
     lbl_8031CD84.counter = 0;
     lbl_8064C900 = 10800;

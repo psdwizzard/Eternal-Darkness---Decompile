@@ -1,10 +1,10 @@
-extern void fn_80160F00(void*, void*);
-extern void fn_80160FEC(void*, int);
+extern void message(void*, void*);
+extern void luaD_breakrun(void*, int);
 
-void fn_80160FAC(void* object, void* argument)
+void lua_error(void* object, void* argument)
 {
     if (argument != 0) {
-        fn_80160F00(object, argument);
+        message(object, argument);
     }
-    fn_80160FEC(object, 1);
+    luaD_breakrun(object, 1);
 }

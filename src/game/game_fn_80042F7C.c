@@ -22,7 +22,7 @@ extern DataBlock lbl_80304060;
 extern s32 lbl_8064C7C8;
 extern s32 lbl_8064C7CC;
 extern s32 lbl_8064C7F4;
-extern s32 fn_8020D250(void*, void*, s32);
+extern s32 OSSendMessage(void*, void*, s32);
 
 void fn_80042F7C(s32 mode, s32 immediate)
 {
@@ -45,6 +45,6 @@ void fn_80042F7C(s32 mode, s32 immediate)
         message->responseQueue = responseQueue;
         lbl_8064C7C8 = one;
         lbl_8064C7F4 = zero;
-        fn_8020D250(block->queue, message, one);
+        OSSendMessage(block->queue, message, one);
     }
 }

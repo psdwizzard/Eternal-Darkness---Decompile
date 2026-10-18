@@ -21,8 +21,8 @@ extern void fn_8011F114(Vec3*, void*);
 extern void fn_801F68B0(Vec3*);
 extern void fn_80179B64(Vec3*, ShortVec3*);
 extern void fn_8013CCEC(Vec3*, Vec3*, ShortVec3*, int, int);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B08(Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern float PSVECMag(Vec3*);
 extern int fn_801AC908(int, Vec3*, int);
 extern int fn_8015E4E8(void);
 extern int fn_801AC8AC(int, int, int, Vec3*);
@@ -64,17 +64,17 @@ int fn_8019FAB8(u8* object)
         fn_80179B64((Vec3*)(*(u8**)(object + 0x8C) + inner * 0xC + 0xC), point_base + inner);
     }
     fn_8013CCEC(&candidate, &base, points, 4, 1);
-    fn_80211A6C(&candidate, &base, &direction);
-    best_distance = fn_80211B08(&direction);
+    PSVECSubtract(&candidate, &base, &direction);
+    best_distance = PSVECMag(&direction);
 
     for (outer = 1; outer < count; outer++) {
         for (inner = 0; inner < 4; inner++) {
             fn_80179B64((Vec3*)(*(u8**)(object + 0x8C) + outer * 0x3C + inner * 0xC + 0xC), point_base + inner);
         }
         fn_8013CCEC(&loop_position, &base, points, 4, 1);
-        fn_80211A6C(&loop_position, &base, &direction);
+        PSVECSubtract(&loop_position, &base, &direction);
         {
-            float distance = fn_80211B08(&direction);
+            float distance = PSVECMag(&direction);
             if (distance < best_distance) {
                 candidate = loop_position;
                 best_distance = distance;

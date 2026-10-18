@@ -37,7 +37,7 @@ extern void *fn_80201B8C();
 extern int fn_80201B54();
 extern void* fn_80205868(void*, int, Vec3*, int);
 extern void* fn_80201A84(void*);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern int fn_8011F6A4(void*, int, int, int, void*, int);
 extern void fn_8014D478(void*, Vec3*, Vec3*, int, int, void*, int);
 extern unsigned long long fn_8020123C();
@@ -100,8 +100,8 @@ int fn_80089A34(void* arg)
             *(void**)(runtime + 0x94) = 0;
         }
 
-        direction.x = (float)(8 - (int)(fn_800FBFB0() & 15));
-        direction.y = (float)(8 - (int)(fn_800FBFB0() & 15));
+        direction.x = (float)(8 - (int)(rand() & 15));
+        direction.y = (float)(8 - (int)(rand() & 15));
         direction.z = 8.0f;
         if (fn_8011F6A4(scene, 0x14, identifier, -1, &descriptor, 1) != -1) {
             position = *(Vec3*)(descriptor.header + 8);
@@ -153,8 +153,8 @@ int fn_80089A34(void* arg)
                     fn_80158038(animation, handle);
             }
             for (i = 0; i < 16; i++) {
-                direction.x = (float)(8 - (int)(fn_800FBFB0() & 15));
-                direction.y = (float)(8 - (int)(fn_800FBFB0() & 15));
+                direction.x = (float)(8 - (int)(rand() & 15));
+                direction.y = (float)(8 - (int)(rand() & 15));
                 direction.z = 8.0f;
                 fn_8012B690(scene, &table.positions[i], &position);
                 fn_8014D478(scene, &position, &direction, 0, 4,

@@ -6,8 +6,8 @@ typedef unsigned int u32;
 typedef struct Object { u8 bytes[0x1000]; } Object;
 
 extern int fn_801CEB2C(u32);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void* fn_80201890(u32);
 extern void fn_801D73D0(void);
 extern int fn_80142A70(u8, s16*, int, u32, void*, void*, Object*, void*);
@@ -40,8 +40,8 @@ void fn_801D7C24(u32 id, Object* object, float angle, void* target, int emit)
     while (i < count) {
         step = lbl_806510E4 * (float)i / (float)count;
         a = angle + step;
-        point[0] = (s16)(lbl_806510E8 * fn_80048C2C(a) + *(float*)(object->bytes + 0x38));
-        point[1] = (s16)(lbl_806510E8 * fn_80048C50(a) + *(float*)(object->bytes + 0x3C));
+        point[0] = (s16)(lbl_806510E8 * sinf(a) + *(float*)(object->bytes + 0x38));
+        point[1] = (s16)(lbl_806510E8 * cosf(a) + *(float*)(object->bytes + 0x3C));
         point[2] = (s16)*(float*)(object->bytes + 0x40);
         *(u32*)(entry + 0x54) = *(u32*)point;
         *(u16*)(entry + 0x58) = *(u16*)(point + 2);

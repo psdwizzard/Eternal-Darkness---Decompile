@@ -1,4 +1,4 @@
-/* fn_8021CD04: __CARDStart (Dolphin SDK CARDBios.c), with SetupTimeoutAlarm
+/* __CARDStart: __CARDStart (Dolphin SDK CARDBios.c), with SetupTimeoutAlarm
  * inlined. */
 
 typedef unsigned char u8;
@@ -30,18 +30,18 @@ typedef struct CardControl {
     u8 reserved108[8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32 level);
 extern s32 EXILock(s32 channel, u32 device, EXICallback unlockedCallback);
 extern s32 EXIUnlock(s32 channel);
 extern s32 EXISelect(s32 channel, u32 device, u32 freq);
-extern void fn_8020A93C(OSAlarm *alarm);
+extern void OSCancelAlarm(OSAlarm *alarm);
 extern void OSSetAlarm(OSAlarm *alarm, OSTime tick, OSAlarmHandler handler);
-extern void fn_8021CBF4(s32 channel, s32 result);
-extern void fn_8021C644(s32 channel, void *context);
-extern void fn_8021C924(void *alarm, void *context);
+extern void UnlockedCallback(s32 channel, s32 result);
+extern void __CARDUnlockedHandler(s32 channel, void *context);
+extern void TimeoutHandler(void *alarm, void *context);
 
 #define OS_BUS_CLOCK (*(u32 *)0x800000F8)
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
@@ -50,10 +50,10 @@ extern void fn_8021C924(void *alarm, void *context);
 
 static inline void SetupTimeoutAlarm(CardControl *card)
 {
-    fn_8020A93C(&card->alarm);
+    OSCancelAlarm(&card->alarm);
     switch (card->cmd[0]) {
     case 0xF2:
-        OSSetAlarm(&card->alarm, OSMillisecondsToTicks(100), fn_8021C924);
+        OSSetAlarm(&card->alarm, OSMillisecondsToTicks(100), TimeoutHandler);
         break;
     case 0xF3:
         break;
@@ -61,12 +61,12 @@ static inline void SetupTimeoutAlarm(CardControl *card)
     case 0xF1:
         OSSetAlarm(&card->alarm,
                    OSSecondsToTicks((OSTime)2) * (card->sectorSize / 0x2000),
-                   fn_8021C924);
+                   TimeoutHandler);
         break;
     }
 }
 
-s32 fn_8021CD04(s32 chan, CardCallback txCallback, CardCallback exiCallback)
+s32 __CARDStart(s32 chan, CardCallback txCallback, CardCallback exiCallback)
 {
     s32 enabled;
     CardControl *card;
@@ -74,7 +74,7 @@ s32 fn_8021CD04(s32 chan, CardCallback txCallback, CardCallback exiCallback)
 
     enabled = OSDisableInterrupts();
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (!card->attached) {
         result = -3;
     } else {
@@ -82,8 +82,8 @@ s32 fn_8021CD04(s32 chan, CardCallback txCallback, CardCallback exiCallback)
             card->txCallback = txCallback;
         if (exiCallback)
             card->exiCallback = exiCallback;
-        card->unlockCallback = fn_8021CBF4;
-        if (!EXILock(chan, 0, fn_8021C644)) {
+        card->unlockCallback = UnlockedCallback;
+        if (!EXILock(chan, 0, __CARDUnlockedHandler)) {
             result = -1;
         } else {
             card->unlockCallback = 0;

@@ -5,13 +5,13 @@ typedef struct State801B192C {
     u32 value;
 } State801B192C;
 
-extern State801B192C* lbl_8064D348;
-extern u32 fn_801B1924(void);
+extern State801B192C* __DTKCurrentTrack;
+extern u32 DTKGetPosition(void);
 
-u32 fn_801B192C(void)
+u32 DTKGetTrackPosition(void)
 {
-    if (lbl_8064D348 != 0) {
-        return fn_801B1924() - lbl_8064D348->value;
+    if (__DTKCurrentTrack != 0) {
+        return DTKGetPosition() - __DTKCurrentTrack->value;
     }
     return 0;
 }

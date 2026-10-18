@@ -16,10 +16,10 @@ typedef struct EXIControl {
 
 extern EXIControl Ecb_80640AA8[3];
 extern BOOL __EXIProbe_80206F50(s32 chan);
-extern BOOL fn_80207CC8(s32 chan, u32 dev, u32 *id);
+extern BOOL EXIGetID(s32 chan, u32 dev, u32 *id);
 extern BOOL OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(BOOL enabled);
-extern void fn_80206E8C(s32 chan, u32 exi, u32 tc, u32 ext);
+extern void EXIClearInterrupts(s32 chan, u32 exi, u32 tc, u32 ext);
 extern void __OSUnmaskInterrupts(u32 interrupts);
 
 static inline BOOL __EXIAttach(s32 chan, EXICallback extCallback)
@@ -32,7 +32,7 @@ static inline BOOL __EXIAttach(s32 chan, EXICallback extCallback)
         OSRestoreInterrupts(enabled);
         result = 0;
     } else {
-        fn_80206E8C(chan, 1, 0, 0);
+        EXIClearInterrupts(chan, 1, 0, 0);
         exi->extCallback = extCallback;
         __OSUnmaskInterrupts((u32)0x100000 >> (chan * 3));
         exi->state |= 8;
@@ -42,7 +42,7 @@ static inline BOOL __EXIAttach(s32 chan, EXICallback extCallback)
     return result;
 }
 
-BOOL fn_802071F8(s32 chan, EXICallback extCallback)
+BOOL EXIAttach(s32 chan, EXICallback extCallback)
 {
     EXIControl *exi = &Ecb_80640AA8[chan];
     BOOL enabled;
@@ -50,7 +50,7 @@ BOOL fn_802071F8(s32 chan, EXICallback extCallback)
     u32 id[2];
 
     if (__EXIProbe_80206F50(chan) && exi->idTime == 0) {
-        fn_80207CC8(chan, 0, &id[1]);
+        EXIGetID(chan, 0, &id[1]);
     }
 
     enabled = OSDisableInterrupts();

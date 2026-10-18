@@ -16,7 +16,7 @@ extern const Color lbl_8064FFA4;
 extern const Color lbl_8064FFA8;
 extern const Color lbl_8064FFAC;
 
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_801A852C(Color, int, int, u32);
 extern void fn_801A90BC(void *image, void *mask);
 extern void fn_801A9118(int, u16, int);
@@ -44,7 +44,7 @@ void fn_80119224(int mode, u8 alpha)
         base = 7;
     }
 
-    if (lbl_8064CD95 == -30 && (int)fn_800FBFB0() % 100 > 97) {
+    if (lbl_8064CD95 == -30 && (int)rand() % 100 > 97) {
         lbl_8064CD95 = 5;
     }
 

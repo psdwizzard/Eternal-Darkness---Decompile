@@ -45,19 +45,19 @@ typedef struct DVDBootBlock {
 extern DVDCommandBlock *executing_8064DA00;
 extern OSBootInfo *bootInfo_8064DA08;
 extern DVDDiskID tmpBuffer_80641960;
-extern s32 lbl_8064DA34;
+extern s32 NumInternalRetry;
 extern void (*lbl_8064DA48)(DVDCommandBlock *);
 
 extern void __DVDStoreErrorCode(u32);
 extern void DVDReset(void);
 extern void cbForStateError_80213C1C(s32);
-extern void fn_80213B48(DVDCommandBlock *);
-extern void fn_80213B9C(u32);
-extern void fn_80213E3C(u32);
-extern BOOL fn_80212758(void *, u32, u32, void (*)(u32));
-extern void fn_80212BE0(void (*)(u32));
+extern void stateReadingFST(DVDCommandBlock *);
+extern void cbForStateReadingFST(u32);
+extern void cbForStateGettingError(u32);
+extern BOOL DVDLowRead(void *, u32, u32, void (*)(u32));
+extern void DVDLowRequestError(void (*)(u32));
 
-void fn_802145B4(u32 intType)
+void cbForStateCheckID2(u32 intType)
 {
     if (intType == 0x10) {
         executing_8064DA00->state = -1;
@@ -68,12 +68,12 @@ void fn_802145B4(u32 intType)
     }
 
     if (intType & 1) {
-        lbl_8064DA34 = 0;
-        lbl_8064DA48 = fn_80213B48;
-        fn_80212758(bootInfo_8064DA08->FSTLocation,
+        NumInternalRetry = 0;
+        lbl_8064DA48 = stateReadingFST;
+        DVDLowRead(bootInfo_8064DA08->FSTLocation,
                      (((DVDBootBlock *)&tmpBuffer_80641960)->FSTLength + 31) & ~31U,
-                     ((DVDBootBlock *)&tmpBuffer_80641960)->FSTPosition, fn_80213B9C);
+                     ((DVDBootBlock *)&tmpBuffer_80641960)->FSTPosition, cbForStateReadingFST);
     } else {
-        fn_80212BE0(fn_80213E3C);
+        DVDLowRequestError(cbForStateGettingError);
     }
 }

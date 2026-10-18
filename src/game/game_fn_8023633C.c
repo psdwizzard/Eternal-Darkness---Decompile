@@ -1,4 +1,4 @@
-extern double fn_801021D0(double x); /* sin */
+extern double sin(double x); /* sin */
 
 extern float lbl_80651890;
 extern float lbl_80651894;
@@ -13,7 +13,7 @@ typedef union IntToDouble {
 } IntToDouble;
 
 /* Evaluate the rising, flat, or falling portion of the window. */
-float fn_8023633C(int disabled, int pos, register int total,
+float _vorbis_window(int disabled, int pos, register int total,
                   register int fadeIn, register int fadeOut) {
     float result = lbl_80651890;
     register int inBias;
@@ -69,10 +69,10 @@ float fn_8023633C(int disabled, int pos, register int total,
         asm { fsubs width, encodedWidth, bias }
         sample /= width;
         sample *= pi;
-        sine = fn_801021D0(sample * half);
+        sine = sin(sample * half);
         sine *= sine;
         sine *= lbl_8065189C;
-        finalSine = fn_801021D0(sine);
+        finalSine = sin(sine);
         /* ASM: frsp and fmr retain the separate rounding and return transfer.
          * MWCC coalesces the C cast and return into sample single frsp to f1. */
         asm {
@@ -100,10 +100,10 @@ float fn_8023633C(int disabled, int pos, register int total,
         asm { fsubs width, encodedWidth, bias }
         sample /= width;
         sample *= pi;
-        sine = fn_801021D0(sample * half);
+        sine = sin(sample * half);
         sine *= sine;
         sine *= lbl_8065189C;
-        finalSine = fn_801021D0(sine);
+        finalSine = sin(sine);
         /* ASM: frsp and fmr retain the separate rounding and return transfer.
          * MWCC coalesces the C cast and return into sample single frsp to f1. */
         asm {

@@ -1,4 +1,4 @@
-/* fn_8021E97C: __CARDRead (Dolphin SDK CARDRead.c). */
+/* __CARDRead: __CARDRead (Dolphin SDK CARDRead.c). */
 
 typedef unsigned char u8;
 typedef unsigned int u32;
@@ -20,14 +20,14 @@ typedef struct CardControl {
     u8 padD8[0x110 - 0xD8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern void fn_8021E8A0(s32 chan, s32 result);
-extern s32 fn_8021CEB8(s32 chan, CardCallback callback);
+extern CardControl __CARDBlock[];
+extern void BlockReadCallback(s32 chan, s32 result);
+extern s32 __CARDReadSegment(s32 chan, CardCallback callback);
 
-s32 fn_8021E97C(s32 chan, u32 addr, u32 length, void *buffer,
+s32 __CARDRead(s32 chan, u32 addr, u32 length, void *buffer,
                 CardCallback callback)
 {
-    CardControl *card = &lbl_80641C60[chan];
+    CardControl *card = &__CARDBlock[chan];
 
     if (!card->attached) {
         return -3;
@@ -37,5 +37,5 @@ s32 fn_8021E97C(s32 chan, u32 addr, u32 length, void *buffer,
     card->repeat = length >> 9;
     card->addr = addr;
     card->buffer = buffer;
-    return fn_8021CEB8(chan, fn_8021E8A0);
+    return __CARDReadSegment(chan, BlockReadCallback);
 }

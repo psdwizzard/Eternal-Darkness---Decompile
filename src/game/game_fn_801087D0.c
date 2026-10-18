@@ -39,15 +39,15 @@ extern DVDFileInfo* lbl_8064CC78;
 extern int lbl_8064CC7C;
 extern unsigned char* lbl_8064CC84;
 
-extern int fn_80213394(const char*, DVDFileInfo*);
-extern int fn_8021345C(DVDFileInfo*);
-extern int fn_80213704(DVDFileInfo*, void*, int, int, void (*)(int, DVDFileInfo*), int);
-extern int fn_80215C34(DVDFileInfo*);
-extern int fn_8020D318(OSMessageQueue*, void**, int);
-extern int fn_8020D250(OSMessageQueue*, void*, int);
-extern void fn_8020D7E0(void*);
-extern void fn_8020D8BC(void*);
-extern void fn_8020C5D0(const char*, int, const char*, ...);
+extern int DVDOpen(const char*, DVDFileInfo*);
+extern int DVDClose(DVDFileInfo*);
+extern int DVDReadAsyncPrio(DVDFileInfo*, void*, int, int, void (*)(int, DVDFileInfo*), int);
+extern int DVDGetCommandBlockStatus(DVDFileInfo*);
+extern int OSReceiveMessage(OSMessageQueue*, void**, int);
+extern int OSSendMessage(OSMessageQueue*, void*, int);
+extern void OSLockMutex(void*);
+extern void OSUnlockMutex(void*);
+extern void OSPanic(const char*, int, const char*, ...);
 extern void fn_80108BD4(int, DVDFileInfo*);
 
 #define BLOCK_SIZE 0x80000
@@ -75,7 +75,7 @@ static inline void lockStream(register StreamState* stream)
     /* ASM: addi mutex, stream, 0. Retail addresses the pooled mutex object
        with addi +0; C only emits mr. */
     asm { addi mutex, stream, 0 }
-    fn_8020D7E0(mutex);
+    OSLockMutex(mutex);
 }
 
 static inline void unlockStream(register StreamState* stream)
@@ -84,7 +84,7 @@ static inline void unlockStream(register StreamState* stream)
 
     /* ASM: addi mutex, stream, 0. Same pooled-base addi +0 as lockStream. */
     asm { addi mutex, stream, 0 }
-    fn_8020D8BC(mutex);
+    OSUnlockMutex(mutex);
 }
 
 /* ASM (both below): li value, N; addi mutex, stream, 0. Pooled-base addi +0
@@ -101,7 +101,7 @@ static inline void lockStreamRestart(register StreamState* stream)
         addi mutex, stream, 0
     }
     lbl_8064B878 = value;
-    fn_8020D7E0(mutex);
+    OSLockMutex(mutex);
 }
 
 static inline void lockStreamCancel(register StreamState* stream)
@@ -115,7 +115,7 @@ static inline void lockStreamCancel(register StreamState* stream)
         addi mutex, stream, 0
     }
     lbl_8064B878 = value;
-    fn_8020D7E0(mutex);
+    OSLockMutex(mutex);
 }
 
 static inline void streamPanic(register StreamStrings* strings, int line, const char* msg)
@@ -125,7 +125,7 @@ static inline void streamPanic(register StreamStrings* strings, int line, const 
     /* ASM: addi file, strings, 0. The file name string is pooled with the
        other messages and addressed with addi +0; C only emits mr. */
     asm { addi file, strings, 0 }
-    fn_8020C5D0(file, line, msg);
+    OSPanic(file, line, msg);
 }
 
 static inline void initBlocks(register StreamState* stream, unsigned char* buffer)
@@ -147,7 +147,7 @@ static inline void initBlocks(register StreamState* stream, unsigned char* buffe
         block->state = 0;
         offset += BLOCK_SIZE;
     }
-    fn_8020D8BC(mutex);
+    OSUnlockMutex(mutex);
 }
 
 void* fn_801087D0(const char* path)
@@ -166,7 +166,7 @@ void* fn_801087D0(const char* path)
 
     strings = &lbl_8023A220;
     stream = &lbl_8032D648;
-    if (fn_80213394(path, &fileInfo) == 0) {
+    if (DVDOpen(path, &fileInfo) == 0) {
         streamPanic(strings, 0xCC, strings->openFailed);
     }
     lbl_8064CC78 = &fileInfo;
@@ -187,18 +187,18 @@ restart:
         }
         lbl_8064B878 = value;
         flags = 0;
-        fn_8020D7E0(mutex);
+        OSLockMutex(mutex);
     }
     initBlocks(stream, lbl_8064CC84);
 
 rewind:
     remaining = lbl_8064CC7C;
     aligned = (remaining + 0x1F) & ~0x1F;
-    fn_8020D250((OSMessageQueue*)stream->commandQueue, (void*)0, 0);
+    OSSendMessage((OSMessageQueue*)stream->commandQueue, (void*)0, 0);
     offset = 0;
 
     for (;;) {
-        fn_8020D318((OSMessageQueue*)stream->commandQueue, &message, 1);
+        OSReceiveMessage((OSMessageQueue*)stream->commandQueue, &message, 1);
         switch ((unsigned long)message) {
         case 3:
             break;
@@ -207,12 +207,12 @@ rewind:
             block = findBlock(stream, 0);
             if (block != 0) {
                 chunk = length = (aligned < BLOCK_SIZE) ? aligned : BLOCK_SIZE;
-                while (fn_80213704(&fileInfo, block->data, length, offset, fn_80108BD4, 2) == 0) {
+                while (DVDReadAsyncPrio(&fileInfo, block->data, length, offset, fn_80108BD4, 2) == 0) {
                 }
                 block->start = offset;
                 block->state = 1;
             } else {
-                fn_8020D250((OSMessageQueue*)stream->commandQueue, (void*)2, 0);
+                OSSendMessage((OSMessageQueue*)stream->commandQueue, (void*)2, 0);
             }
             unlockStream(stream);
             break;
@@ -237,14 +237,14 @@ rewind:
             if (remaining <= 0) {
                 goto rewind;
             }
-            fn_8020D250((OSMessageQueue*)stream->commandQueue, (void*)0, 0);
+            OSSendMessage((OSMessageQueue*)stream->commandQueue, (void*)0, 0);
             break;
         case 2:
-            fn_8020D318((OSMessageQueue*)stream->commandQueue, &message, 1);
+            OSReceiveMessage((OSMessageQueue*)stream->commandQueue, &message, 1);
             if ((int)message == 3) {
                 message = 0;
             }
-            fn_8020D250((OSMessageQueue*)stream->commandQueue, message, 0);
+            OSSendMessage((OSMessageQueue*)stream->commandQueue, message, 0);
             break;
         case 4:
             lockStreamRestart(stream);
@@ -265,7 +265,7 @@ rewind:
             if (lbl_8064CC74 != 0) {
                 goto done;
             }
-            if (fn_80215C34(lbl_8064CC78) == -1) {
+            if (DVDGetCommandBlockStatus(lbl_8064CC78) == -1) {
                 goto done;
             }
             flags |= 1;
@@ -281,7 +281,7 @@ rewind:
 
 done:
     lbl_8064CC78 = 0;
-    fn_8021345C(&fileInfo);
+    DVDClose(&fileInfo);
     lbl_8064B878 = 3;
     return 0;
 }

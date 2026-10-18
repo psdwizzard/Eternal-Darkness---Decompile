@@ -15,7 +15,7 @@ extern const f32 lbl_8064DFAC;
 extern void fn_801A8D38(int);
 extern void fn_801A852C(Color, int, int, u32);
 extern void fn_801F1034(void);
-extern void fn_80226AB4(s32, s32, s32);
+extern void GXBegin(s32, s32, s32);
 extern void fn_80026754(s16, s16, s32);
 extern void fn_80026DBC(u32);
 extern void fn_80026DAC(s16, s16);
@@ -64,7 +64,7 @@ void fn_80026DC8(s16 left, s32 top, s16 right, s32 bottom, f32 fraction,
     y0 = top;
     y1 = bottom;
     for (i = 0; i < count; i++) {
-        fn_80226AB4(0x80, 5, 4);
+        GXBegin(0x80, 5, 4);
         fn_80026754(x[i], y0, -1);
         fn_80026DBC(color[i]);
         fn_80026DAC(0, 0);

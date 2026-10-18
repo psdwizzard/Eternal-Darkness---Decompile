@@ -92,7 +92,7 @@ extern void fn_801E5FB0(void*);
 extern void* fn_801E5D08(void*);
 extern TextDescriptor* fn_801E6CA0(void*, u32, u32, u32, int);
 extern void fn_801EF5EC(void);
-extern void fn_8020ED80(s32);
+extern void OSSetProgressiveMode(s32);
 extern void fn_8001DFEC(u8, u32);
 extern void fn_8001DE84(u8, u32);
 extern void fn_8001DE68(void);
@@ -105,10 +105,10 @@ extern void fn_800B2548(int, int);
 extern void fn_8002387C(s32);
 extern void fn_80023800(s32);
 extern void fn_80023918(s32);
-extern s64 fn_8020F088(void*);
+extern s64 OSCheckStopwatch(void*);
 extern s64 fn_800F5ECC(s64, s64);
 extern float fn_800F6264(s64);
-extern u32 fn_8020ED10(void);
+extern u32 OSGetProgressiveMode(void);
 extern void fn_8001F758();
 extern void fn_801AD404(u8, u8, s32);
 extern void fn_801AD490(void);
@@ -123,7 +123,7 @@ extern s32 fn_80045230(void);
 extern void fn_800451C4(s32);
 extern u32 fn_801E7578(u32);
 extern s32 fn_801E75A4(u32, s32);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_800427E0(s32);
 extern void fn_80023674(void);
 extern void fn_80023710(void);
@@ -224,14 +224,14 @@ void fn_8001E894(void)
                 *value = lbl_8064C2AC;
             }
             fn_801EF5EC();
-            fn_8020ED80(1);
+            OSSetProgressiveMode(1);
         } else {
             runtime->first_handle = fn_801E6CA0(lbl_8064C504, 0, 36, 0, 1);
             {
                 u32* value = fn_801E5D08(runtime->first_handle);
                 *value = lbl_8064C2AC;
             }
-            fn_8020ED80(0);
+            OSSetProgressiveMode(0);
         }
         runtime->timer = 150;
         runtime->sound_id = 7;
@@ -286,11 +286,11 @@ void fn_8001E894(void)
         RuntimeState* state;
         s32 limit = *(s32*)(root + 0x2CC);
         float now;
-        now = fn_800F6264(fn_800F5ECC(fn_8020F088(root + 0x60),
+        now = fn_800F6264(fn_800F5ECC(OSCheckStopwatch(root + 0x60),
             (*(volatile u32*)0x800000F8 / 4) / 1000));
         lbl_8064C6D4 = 1;
         keep_timer = 0;
-        if (fn_8020ED10() == 1)
+        if (OSGetProgressiveMode() == 1)
             fn_8001F758(0, 0);
         state = runtime_state(root);
         if (state->previous_value == 255 && now > (float)limit) {
@@ -470,7 +470,7 @@ void fn_8001E894(void)
                             fn_801E75A4(lbl_803003C8.slot, 0) - 1);
                     }
                 } else {
-                    fn_8001DFEC(22, (s32)fn_800FBFB0() % 3);
+                    fn_8001DFEC(22, (s32)rand() % 3);
                 }
             }
         }
@@ -493,7 +493,7 @@ void fn_8001E894(void)
         *(s32*)(menu->chapters + 0x3C) = first.words[index];
         menu->choices[15] = second.words[index];
         *game = third.words[index];
-        fn_8001DFEC(22, (s32)fn_800FBFB0() % 3);
+        fn_8001DFEC(22, (s32)rand() % 3);
         runtime_state(root)->selection = 3;
         break;
     }
@@ -503,7 +503,7 @@ void fn_8001E894(void)
         s32 index = runtime->previous_state;
         *(s32*)(menu->chapters + 0x38) = values.words[index];
         {
-            fn_8001DFEC(22, (s32)fn_800FBFB0() % 3);
+            fn_8001DFEC(22, (s32)rand() % 3);
         }
         runtime->selection = 3;
         break;

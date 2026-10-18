@@ -21,9 +21,9 @@ typedef struct {
 
 extern const char lbl_8023BED8[];
 extern const double lbl_8064DCE8;
-extern int fn_8016A598(void*);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_801839A4(EffectDescriptor*);
 extern void fn_801839D8(void);
 extern void* fn_80148008(Vec3f*, const Vec3s*, EffectDescriptor*, void (*)(void));
@@ -42,18 +42,18 @@ s32 fn_80019940(void* script)
     Vec3s* first;
     Vec3s* second;
 
-    if (fn_8016A598(script) != 2) {
-        fn_80163BB4(script, errors + 0x20, 2, fn_8016A598(script));
+    if (lua_gettop(script) != 2) {
+        luaO_verror(script, errors + 0x20, 2, lua_gettop(script));
         return 0;
     }
 
-    first = fn_8016A784(script, 1);
-    second = fn_8016A784(script, 2);
+    first = lua_touserdata(script, 1);
+    second = lua_touserdata(script, 2);
     if (first == 0) {
-        fn_80163BB4(script, errors + 0xC34, 0);
+        luaO_verror(script, errors + 0xC34, 0);
     }
     if (second == 0) {
-        fn_80163BB4(script, errors + 0xC74, 0);
+        luaO_verror(script, errors + 0xC74, 0);
     }
 
     position.x = first->x;

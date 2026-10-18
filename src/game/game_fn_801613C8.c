@@ -10,7 +10,7 @@ typedef struct Object {
     Entry* entries;
 } Object;
 
-void* fn_801613C8(Object* object, int ordinal, int key)
+void* luaF_getlocalname(Object* object, int ordinal, int key)
 {
     int offset;
     int count;

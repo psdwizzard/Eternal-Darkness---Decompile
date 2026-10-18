@@ -22,26 +22,26 @@ typedef struct State {
     TypeInfo types[1];
 } State;
 
-extern State* lbl_8064D380;
-extern Node* lbl_8064D384;
+extern State* cseq;
+extern Node* noteFree;
 
-Node* fn_801B2528(int value, u8 type)
+Node* AllocateNote(int value, u8 type)
 {
     Node* node;
     Node* current;
     Node* previous;
 
-    if ((node = lbl_8064D384) != 0) {
-        if ((lbl_8064D384 = node->next) != 0) {
-            lbl_8064D384->prev = 0;
+    if ((node = noteFree) != 0) {
+        if ((noteFree = node->next) != 0) {
+            noteFree->prev = 0;
         }
 
         node->value = value;
         node->type = type;
-        node->list = lbl_8064D380->types[type].list;
+        node->list = cseq->types[type].list;
 
         previous = 0;
-        current = lbl_8064D380->lists[node->list];
+        current = cseq->lists[node->list];
         while (current != 0) {
             if (current->value > node->value) {
                 node->next = current;
@@ -49,7 +49,7 @@ Node* fn_801B2528(int value, u8 type)
                 if (previous != 0) {
                     previous->next = node;
                 } else {
-                    lbl_8064D380->lists[node->list] = node;
+                    cseq->lists[node->list] = node;
                 }
                 current->prev = node;
                 return node;
@@ -62,7 +62,7 @@ Node* fn_801B2528(int value, u8 type)
         if (previous != 0) {
             previous->next = node;
         } else {
-            lbl_8064D380->lists[node->list] = node;
+            cseq->lists[node->list] = node;
         }
         node->next = 0;
     }

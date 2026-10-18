@@ -1,4 +1,4 @@
-/* fn_800F4A90: MetroTRK TRKTargetAccessFP. Reads/writes FPRs
+/* TRKTargetAccessFP: MetroTRK TRKTargetAccessFP. Reads/writes FPRs
  * firstRegister..lastRegister (plus FPSCR) through the message buffer. */
 
 typedef unsigned char u8;
@@ -22,13 +22,13 @@ typedef struct TRKExceptionStatus {
 
 extern TRKExceptionStatus gTRKExceptionStatus_8024A864;
 
-extern unsigned int fn_800F36A0(void);
-extern void fn_800F36A8(unsigned int value);
-extern DSError fn_800F3A44(void *value, u32 fpr, BOOL read);
-extern DSError fn_800EF604(void *buffer, u64 *data);
-extern DSError fn_800EF9FC(void *buffer, u64 data);
+extern unsigned int __TRK_get_MSR(void);
+extern void __TRK_set_MSR(unsigned int value);
+extern DSError TRKPPCAccessFPRegister(void *value, u32 fpr, BOOL read);
+extern DSError TRKReadBuffer1_ui64(void *buffer, u64 *data);
+extern DSError TRKAppendBuffer1_ui64(void *buffer, u64 data);
 
-DSError fn_800F4A90(u32 firstRegister, u32 lastRegister, void *b,
+DSError TRKTargetAccessFP(u32 firstRegister, u32 lastRegister, void *b,
                     u32 *registersLengthPtr, BOOL read)
 {
     u64 temp;
@@ -43,7 +43,7 @@ DSError fn_800F4A90(u32 firstRegister, u32 lastRegister, void *b,
     savedException = gTRKExceptionStatus_8024A864;
     gTRKExceptionStatus_8024A864.exceptionDetected = 0;
 
-    fn_800F36A8(fn_800F36A0() | 0x2000);
+    __TRK_set_MSR(__TRK_get_MSR() | 0x2000);
 
     *registersLengthPtr = 0;
     error = 0;
@@ -51,11 +51,11 @@ DSError fn_800F4A90(u32 firstRegister, u32 lastRegister, void *b,
     for (current = firstRegister; current <= lastRegister && error == 0;
          current++, *registersLengthPtr += sizeof(u64)) {
         if (read) {
-            fn_800F3A44(&temp, current, read);
-            error = fn_800EF9FC(b, temp);
+            TRKPPCAccessFPRegister(&temp, current, read);
+            error = TRKAppendBuffer1_ui64(b, temp);
         } else {
-            fn_800EF604(b, &temp);
-            error = fn_800F3A44(&temp, current, read);
+            TRKReadBuffer1_ui64(b, &temp);
+            error = TRKPPCAccessFPRegister(&temp, current, read);
         }
     }
 

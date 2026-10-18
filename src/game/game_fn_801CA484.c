@@ -17,7 +17,7 @@ static inline float sqrtf(float x)
     return x;
 }
 
-float fn_801CA484(float* v)
+float salNormalizeVector(float* v)
 {
     float len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     v[0] /= len;

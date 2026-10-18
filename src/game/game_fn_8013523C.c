@@ -15,7 +15,7 @@ typedef struct Object {
 
 extern void* fn_801358AC(Slot*);
 extern int fn_8015E830(u32);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 extern void fn_8013535C(void);
 extern void fn_8013530C(void);
 extern void fn_8015CBB0(u32, u32, void*);
@@ -30,7 +30,7 @@ void* fn_8013523C(void* manager, Object* object)
     void* data = fn_801358AC(object->slot);
 
     if ((object->source & 0x80000000) == 0 && fn_8015E830(object->source) == 0) {
-        fn_80217324();
+        VIWaitForRetrace();
         if ((object->source & 0x80000000) == 0 && fn_8015E830(object->source) == 0) {
             fn_8013535C();
             fn_8013530C();

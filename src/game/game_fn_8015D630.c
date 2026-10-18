@@ -5,14 +5,14 @@ typedef struct Status {
     u32 size;
 } Status;
 
-extern int fn_80213394(void*, Status*);
+extern int DVDOpen(void*, Status*);
 
 u32 fn_8015D630(void* object)
 {
     Status status;
     u32 result = 0;
 
-    if (fn_80213394(object, &status)) {
+    if (DVDOpen(object, &status)) {
         result = status.size;
     }
     return result;

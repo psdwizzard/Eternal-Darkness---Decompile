@@ -10,8 +10,8 @@ typedef struct Entry {
 
 extern unsigned char lbl_8024A59C[];
 extern Entry lbl_8024A368[];
-extern void fn_800F9D4C(void *, const char *, ...);
-extern void fn_800FD39C(void *, Entry *);
+extern void sprintf(void *, const char *, ...);
+extern void strcat(void *, Entry *);
 
 int fn_800EC318(int value, State *state, void *output)
 {
@@ -20,11 +20,11 @@ int fn_800EC318(int value, State *state, void *output)
     int count = 0;
     int result = 3;
 
-    fn_800F9D4C(output, (const char *)lbl_8024A59C + 0x28, value, state);
+    sprintf(output, (const char *)lbl_8024A59C + 0x28, value, state);
     for (i = 0; i < 13; i++) {
         entry = &lbl_8024A368[i];
         if (state->flags & (1 << i)) {
-            fn_800FD39C(output, entry);
+            strcat(output, entry);
             result = entry->value;
             count++;
         }

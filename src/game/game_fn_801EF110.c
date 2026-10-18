@@ -11,7 +11,7 @@ typedef struct CommandCache5 {
 } CommandCache5;
 
 extern CommandCache5 lbl_8063B998[];
-extern void fn_80229CCC(int, int, int, int, int, int);
+extern void GXSetTevAlphaOp(int, int, int, int, int, int);
 
 void fn_801EF110(int index, int value4, int value8, int valueC, int value10,
                  int value14)
@@ -26,6 +26,6 @@ void fn_801EF110(int index, int value4, int value8, int valueC, int value10,
         lbl_8063B998[index].valueC = valueC;
         lbl_8063B998[index].value10 = value10;
         lbl_8063B998[index].value14 = value14;
-        fn_80229CCC(index, value4, value8, valueC, value10, value14);
+        GXSetTevAlphaOp(index, value4, value8, valueC, value10, value14);
     }
 }

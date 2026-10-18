@@ -10,9 +10,9 @@ typedef struct Command {
     Stream* stream;
 } Command;
 
-extern void fn_8020D250(void*, int, int);
+extern void OSSendMessage(void*, int, int);
 
 void fn_8015B7CC(Command* command)
 {
-    fn_8020D250(command->stream->source, 123456, 0);
+    OSSendMessage(command->stream->source, 123456, 0);
 }

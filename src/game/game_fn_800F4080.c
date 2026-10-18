@@ -26,41 +26,41 @@ typedef struct TRKCPUState {
 
 extern TRKCPUState gTRKCPUState;
 
-extern int fn_800EFA84(TRKBuffer *buffer, u32 value);
-extern int fn_800EFAE8(TRKBuffer *buffer, u16 value);
-extern void fn_800EF9FC(TRKBuffer *buffer, u64 value);
-extern DSError fn_800F4CC0(void *data, u32 start, u32 *length, int accessOptions, BOOL read);
+extern int TRKAppendBuffer1_ui32(TRKBuffer *buffer, u32 value);
+extern int TRKAppendBuffer1_ui16(TRKBuffer *buffer, u16 value);
+extern void TRKAppendBuffer1_ui64(TRKBuffer *buffer, u64 value);
+extern DSError TRKTargetAccessMemory(void *data, u32 start, u32 *length, int accessOptions, BOOL read);
 
 #define DS_InvalidMemory 0x700
 
-void fn_800F4080(TRKBuffer *buffer)
+void TRKTargetAddStopInfo(TRKBuffer *buffer)
 {
     DSError error;
     u32 instruction;
     u32 length;
     int i;
 
-    error = fn_800EFA84(buffer, gTRKCPUState.PC);
+    error = TRKAppendBuffer1_ui32(buffer, gTRKCPUState.PC);
     if (error == 0) {
         /* Inlined TRKTargetReadInstruction */
         length = sizeof(instruction);
-        error = fn_800F4CC0(&instruction, gTRKCPUState.PC, &length, 0, 1);
+        error = TRKTargetAccessMemory(&instruction, gTRKCPUState.PC, &length, 0, 1);
         if (error == 0 && length != sizeof(instruction)) {
             error = DS_InvalidMemory;
         }
     }
     if (error == 0) {
-        error = fn_800EFA84(buffer, instruction);
+        error = TRKAppendBuffer1_ui32(buffer, instruction);
     }
     if (error == 0) {
-        error = fn_800EFAE8(buffer, gTRKCPUState.exceptionID);
+        error = TRKAppendBuffer1_ui16(buffer, gTRKCPUState.exceptionID);
     }
     if (error == 0) {
         for (i = 0; i < 32; i++) {
-            fn_800EFA84(buffer, (u16)gTRKCPUState.GPR[i]);
+            TRKAppendBuffer1_ui32(buffer, (u16)gTRKCPUState.GPR[i]);
         }
         for (i = 0; i < 32; i++) {
-            fn_800EF9FC(buffer, (u16)gTRKCPUState.FPR[i]);
+            TRKAppendBuffer1_ui64(buffer, (u16)gTRKCPUState.FPR[i]);
         }
     }
 }

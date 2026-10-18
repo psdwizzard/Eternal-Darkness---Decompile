@@ -16,14 +16,14 @@ extern void* lbl_8064D68C;
 extern void* lbl_8064C4E0;
 extern GameState lbl_80301D08;
 
-extern void fn_8022A814(s32, s32);
+extern void GXSetPixelFmt(s32, s32);
 extern void fn_8011E174(s32, s32);
 extern void fn_8011DFA8(void);
 extern void fn_8016B400(int, int, int);
 extern int fn_80201B44();
 extern void fn_801D0D30(void);
 extern void* memcpy(void*, const void*, u32);
-extern void fn_800FBFA8(s32);
+extern void srand(s32);
 extern void fn_80144EE0(void*, u32);
 extern void fn_80144E78(void*, u32);
 extern void fn_801EBA58(void*);
@@ -42,7 +42,7 @@ void fn_800082A4(void)
     s32 i;
     u32 value;
 
-    fn_8022A814(1, 0);
+    GXSetPixelFmt(1, 0);
     fn_8011E174(0x10, 0);
     fn_8011DFA8();
 
@@ -63,14 +63,14 @@ void fn_800082A4(void)
         memcpy(&lbl_80301D08, lbl_8064C5A0, 0x34);
         lbl_80301D08.count =
             lbl_80301D08.count < 1 ? lbl_80301D08.count : 1;
-        fn_800FBFA8(0);
+        srand(0);
         for (i = 0; i < 1000; i++) {
         }
         fn_80144EE0(lbl_80301D08.data, lbl_80301D08.count);
     } else if (lbl_8064C59C == 1) {
         lbl_80301D08.count =
             max_u32((lbl_80301D08.count = 0x1C1F), 1);
-        fn_800FBFA8(0);
+        srand(0);
         for (i = 0; i < 1000; i++) {
         }
         fn_80144E78(lbl_80301D08.data, lbl_80301D08.count);

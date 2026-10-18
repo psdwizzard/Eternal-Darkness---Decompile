@@ -38,9 +38,9 @@ extern void fn_801A99B4(void);
 extern void fn_80155D9C(int);
 extern void fn_8017AF44(void);
 extern void fn_800BC000(void);
-extern void fn_8020F088(void *);
-extern void fn_8020EFBC(void *);
-extern void fn_8020F0F8(void *);
+extern void OSCheckStopwatch(void *);
+extern void OSStopStopwatch(void *);
+extern void OSResetStopwatch(void *);
 
 void fn_8011B86C(void)
 {
@@ -92,7 +92,7 @@ void fn_8011B86C(void)
         fn_80155D9C(1);
         fn_801EFE84(0);
     }
-    fn_8020F088(lbl_806391F0);
-    fn_8020EFBC(lbl_806391F0);
-    fn_8020F0F8(lbl_806391F0);
+    OSCheckStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_806391F0);
+    OSResetStopwatch(lbl_806391F0);
 }

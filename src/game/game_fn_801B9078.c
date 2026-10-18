@@ -15,42 +15,42 @@ typedef struct AudioState {
     u8 voice_count;
 } AudioState;
 
-extern u32 lbl_8064D3CC;
-extern Voice *lbl_8064D3D0;
-extern AudioState lbl_80619C20;
-extern void fn_801CD418(void);
-extern void fn_801BA15C(void);
+extern u32 synthFlags;
+extern Voice *synthVoice;
+extern AudioState synthInfo;
+extern void hwDisableHRTF(void);
+extern void streamOutputModeChanged(void);
 
-void fn_801B9078(int arg0)
+void sndOutputMode(int arg0)
 {
-    u32 old_flags = lbl_8064D3CC;
+    u32 old_flags = synthFlags;
     switch (arg0) {
     case 0:
-        lbl_8064D3CC |= 1;
-        lbl_8064D3CC &= ~2;
-        fn_801CD418();
+        synthFlags |= 1;
+        synthFlags &= ~2;
+        hwDisableHRTF();
         break;
     case 1:
-        lbl_8064D3CC &= ~1;
-        lbl_8064D3CC &= ~2;
-        fn_801CD418();
+        synthFlags &= ~1;
+        synthFlags &= ~2;
+        hwDisableHRTF();
         break;
     case 2:
-        lbl_8064D3CC &= ~1;
-        lbl_8064D3CC |= 2;
-        fn_801CD418();
+        synthFlags &= ~1;
+        synthFlags |= 2;
+        hwDisableHRTF();
         break;
     }
-    if (old_flags != lbl_8064D3CC) {
+    if (old_flags != synthFlags) {
         int offset;
         u32 i;
         i = 0;
         offset = 0;
-        while (i < lbl_80619C20.voice_count) {
-            ((Voice *)((u8 *)lbl_8064D3D0 + offset))->flags_114 |= 0x0000200000000000ULL;
+        while (i < synthInfo.voice_count) {
+            ((Voice *)((u8 *)synthVoice + offset))->flags_114 |= 0x0000200000000000ULL;
             offset += 0x404;
             i++;
         }
-        fn_801BA15C();
+        streamOutputModeChanged();
     }
 }

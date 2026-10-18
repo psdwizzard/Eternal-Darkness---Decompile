@@ -17,7 +17,7 @@ typedef struct State {
 } State;
 
 extern void fn_8018E230(void*, void*, int, u8, int, int);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_80179904(s16*, s16);
 extern void fn_8018F014(s16*, int);
 extern void fn_80191F04(void*, u8, int);
@@ -35,7 +35,7 @@ void fn_8019120C(State* object, int index)
     entry->velocity[1] = (s16)((float)entry->position[1] - state->position[1]);
     entry->velocity[2] = (int)((float)entry->position[2] - state->position[2]) >> 1;
 
-    fn_80179904(entry->velocity, (s16)((fn_800FBFB0() & 7) + 16));
+    fn_80179904(entry->velocity, (s16)((rand() & 7) + 16));
     fn_8018F014(entry->velocity, 2);
     fn_80191F04(state, (u8)index, 17);
 }

@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 extern u32 lbl_8023B078[4];
 extern u16 lbl_80607120[];
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 
 void fn_8018CEC0(u32* dest, u8 count)
 {
@@ -20,7 +20,7 @@ void fn_8018CEC0(u32* dest, u8 count)
     second = dest + lbl_80607120[1];
     first = dest;
     for (i = 0; i < count; i++) {
-        u32 random = fn_800FBFB0() & 3;
+        u32 random = rand() & 3;
         first[0] = values[random];
         second[0] = first[0];
         random = (random + 1) & 3;

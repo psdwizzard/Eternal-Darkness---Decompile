@@ -20,10 +20,10 @@ typedef struct CardControl {
     u8 padDC[0x110 - 0xDC];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
-extern s32 fn_8021D374(CardControl *card, s32 result);
-extern s32 fn_8021EABC(s32 chan, u32 addr, s32 length, void *dst, CardCallback callback);
+extern s32 __CARDPutControlBlock(CardControl *card, s32 result);
+extern s32 __CARDWrite(s32 chan, u32 addr, s32 length, void *dst, CardCallback callback);
 extern void fn_8021EF44(s32 chan, s32 result);
 
 static inline void *GetDirectoryBlock(CardControl *card)
@@ -39,14 +39,14 @@ void fn_8021F014(s32 chan, s32 result)
     void *dir;
     u32 addr;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (result < 0) {
         goto error;
     }
 
     dir = GetDirectoryBlock(card);
     addr = ((u32)dir - (u32)card->workArea) / 0x2000 * card->sectorSize;
-    result = fn_8021EABC(chan, addr, 0x2000, dir, fn_8021EF44);
+    result = __CARDWrite(chan, addr, 0x2000, dir, fn_8021EF44);
     if (result < 0) {
         goto error;
     }
@@ -54,7 +54,7 @@ void fn_8021F014(s32 chan, s32 result)
 
 error:
     if (card->apiCallback == 0) {
-        fn_8021D374(card, result);
+        __CARDPutControlBlock(card, result);
     }
 
     callback = card->eraseCallback;

@@ -18,9 +18,9 @@ typedef struct LuaState {
     TableState udt;
 } LuaState;
 
-extern HashNode* fn_80166F4C(LuaState*, unsigned int, void*);
+extern HashNode* luaS_newudata(LuaState*, unsigned int, void*);
 
-HashNode* fn_80167014(LuaState* state, void* key, int tag)
+HashNode* luaS_createudata(LuaState* state, void* key, int tag)
 {
     HashNode* node = state->udt.hash[((unsigned int)key >> 3) & (state->udt.size - 1)];
 
@@ -31,7 +31,7 @@ HashNode* fn_80167014(LuaState* state, void* key, int tag)
         node = node->next;
     }
 
-    node = fn_80166F4C(state, 0, key);
+    node = luaS_newudata(state, 0, key);
     if (tag != -1) {
         node->tag = tag;
     }

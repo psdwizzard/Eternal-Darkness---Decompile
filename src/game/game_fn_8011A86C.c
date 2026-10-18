@@ -35,9 +35,9 @@ extern unsigned long long fn_8020123C(int, int, int, int);
 extern int fn_80201B54(int *object);
 extern void *fn_80201B9C(void);
 extern Object *fn_80204844(Object *object, int type);
-extern void fn_8020EFBC(void *);
-extern void fn_8020F088(void *);
-extern void fn_8020F0F8(void *);
+extern void OSStopStopwatch(void *);
+extern void OSCheckStopwatch(void *);
+extern void OSResetStopwatch(void *);
 
 extern unsigned char lbl_8023D020[];
 extern unsigned char lbl_802515D0[];
@@ -177,7 +177,7 @@ void fn_8011A86C(void)
         fn_80155D9C(1);
         fn_801EFE84(0);
     }
-    fn_8020F088(lbl_806391F0);
-    fn_8020EFBC(lbl_806391F0);
-    fn_8020F0F8(lbl_806391F0);
+    OSCheckStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_806391F0);
+    OSResetStopwatch(lbl_806391F0);
 }

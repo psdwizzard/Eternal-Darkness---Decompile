@@ -6,7 +6,7 @@ typedef unsigned int u32;
 
 extern s32 lbl_8064D18C;
 
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8017E1B0(void*, void*);
 extern int fn_80180430(void*, u8);
 extern int fn_80180454(void*);
@@ -47,15 +47,15 @@ int fn_8019AAF0(u8* object)
                     if (entry[0x2B] == 0) {
                         *(u16*)(entry + 0xA) = *(s16*)(object + 0x10) +
                             *(u32*)(object + 0x8C) -
-                            (*(u32*)(object + 0x90) & fn_800FBFB0());
+                            (*(u32*)(object + 0x90) & rand());
                         *(u16*)(entry + 0xC) = *(s16*)(object + 0x12) +
                             *(u32*)(object + 0x8C) -
-                            (*(u32*)(object + 0x90) & fn_800FBFB0());
+                            (*(u32*)(object + 0x90) & rand());
                         *(u16*)(entry + 0xE) = *(s16*)(object + 0x14);
                         *(u16*)(entry + 0x14) = *(s16*)(object + 0x1A) +
-                            (fn_800FBFB0() & 3);
+                            (rand() & 3);
                         *(u16*)(entry + 8) = *(u16*)(object + 0xA) +
-                            *(u16*)(object + 0x94) + (fn_800FBFB0() & 7);
+                            *(u16*)(object + 0x94) + (rand() & 7);
                         fn_8018E230(entry, entry + 0x2B, 1, 0, 0x33, 0xFF);
                     } else {
                         fn_8018E230(entry, entry + 0x2B, 1, entry[0x2B],

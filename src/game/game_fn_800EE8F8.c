@@ -17,7 +17,7 @@ extern void fn_801F3158(s32);
 extern void fn_801F3240(void);
 extern void fn_801F35A8(void);
 extern int fn_801F55A0(void);
-extern void fn_80226D28(s32);
+extern void GXSetCullMode(s32);
 extern s32 fn_8023657C(void);
 extern s32 fn_802365D4(void);
 
@@ -95,7 +95,7 @@ int fn_800EE8F8(void) {
 
     fn_801E5FE4();
     fn_801F35A8();
-    fn_80226D28(1);
+    GXSetCullMode(1);
     if (fn_8023657C() != 0 && lbl_8064C600 <= 0) {
         lbl_8064C600 = 2;
     }

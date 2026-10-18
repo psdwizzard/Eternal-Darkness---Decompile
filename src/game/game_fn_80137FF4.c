@@ -28,7 +28,7 @@ typedef struct Result {
 extern Entry lbl_805ADE20[15];
 extern float lbl_806502A0;
 extern int fn_8013E714(const Capsule*, const Vec3*, Result*, float);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 
 int fn_80137FF4(void* owner, const Capsule* shape, Result* result)
 {
@@ -45,7 +45,7 @@ int fn_80137FF4(void* owner, const Capsule* shape, Result* result)
     do {
         if ((entry->flags & 1) && owner != entry->owner &&
             fn_8013E714(shape, &entry->position, &candidate, entry->radius)) {
-            float distance = fn_80211D4C(&candidate.normal, &shape->point);
+            float distance = PSVECSquareDistance(&candidate.normal, &shape->point);
             if (distance < best) {
                 best = distance;
                 found = 1;

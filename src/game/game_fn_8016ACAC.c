@@ -5,15 +5,15 @@ typedef struct Pair {
 
 typedef struct Context Context;
 
-extern void fn_8016A950(Context*, void*, int);
-extern void fn_8016AB20(Context*, const char*);
+extern void lua_pushcclosure(Context*, void*, int);
+extern void lua_setglobal(Context*, const char*);
 
-void fn_8016ACAC(Context* context, Pair* pairs, int count)
+void luaL_openlib(Context* context, Pair* pairs, int count)
 {
     int i;
 
     for (i = 0; i < count; i++) {
-        fn_8016A950(context, pairs[i].value, 0);
-        fn_8016AB20(context, pairs[i].name);
+        lua_pushcclosure(context, pairs[i].value, 0);
+        lua_setglobal(context, pairs[i].name);
     }
 }

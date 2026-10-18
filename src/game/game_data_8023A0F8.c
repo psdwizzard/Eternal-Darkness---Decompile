@@ -1,5 +1,5 @@
 /* Odd polynomial coefficients used by the trigonometric runtime. */
-const volatile double lbl_8023A0F8[13] = {
+const volatile double xxx[13] = {
     0.3333333333333341,
     0.13333333333320124,
     0.05396825397622605,

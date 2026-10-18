@@ -31,7 +31,7 @@ extern void* fn_801A7778(void*);
 extern int fn_801A7780(void*);
 extern int fn_801A76B8(void*);
 extern unsigned int fn_801578AC(void*);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8006ED3C(void*, int, int*);
 extern void fn_80088D04(void);
 extern void* lbl_8064C8C4;
@@ -103,9 +103,9 @@ int fn_80088060(void* argument)
         second++;
         third++;
         for (; i < limit; i++) {
-            *first = (int)fn_800FBFB0() % 0x200;
-            *second = (int)fn_800FBFB0() % 0x160;
-            *third = 0x80 - ((int)fn_800FBFB0() & 0x3F);
+            *first = (int)rand() % 0x200;
+            *second = (int)rand() % 0x160;
+            *third = 0x80 - ((int)rand() & 0x3F);
             first++;
             second++;
             third++;

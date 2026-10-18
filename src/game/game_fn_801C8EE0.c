@@ -11,10 +11,10 @@ struct Voice {
     u32 handle;
 };
 
-extern Voice* lbl_8064D4BC;
-extern void fn_801B80D8(u32);
+extern Voice* s3dEmitterRoot;
+extern void synthSendKeyOff(u32);
 
-void fn_801C8EE0(Voice* voice)
+void EmitterShutdown(Voice* voice)
 {
     if (voice->previous != 0) {
         voice->previous->next = voice->next;
@@ -22,10 +22,10 @@ void fn_801C8EE0(Voice* voice)
     if (voice->next != 0) {
         voice->next->previous = voice->previous;
     } else {
-        lbl_8064D4BC = voice->previous;
+        s3dEmitterRoot = voice->previous;
     }
     voice->flags &= 0xFFFF;
     if (voice->handle != 0xFFFFFFFF) {
-        fn_801B80D8(voice->handle);
+        synthSendKeyOff(voice->handle);
     }
 }

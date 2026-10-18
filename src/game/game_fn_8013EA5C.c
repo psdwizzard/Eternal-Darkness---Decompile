@@ -9,7 +9,7 @@ typedef struct Shape {
 } Shape;
 
 extern void fn_8013C264(const Vec3*, const Vec3*, Vec3*, const Vec3*, Vec3*);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 
 int fn_8013EA5C(const Shape* shape, const Vec3* point, unsigned short index,
                 float extra)
@@ -23,7 +23,7 @@ int fn_8013EA5C(const Shape* shape, const Vec3* point, unsigned short index,
     first.z = point->z;
     second.z = point->z;
     fn_8013C264(&first, &second, &scratch, point, &closest);
-    if (fn_80211D4C(&closest, point) < radius2) {
+    if (PSVECSquareDistance(&closest, point) < radius2) {
         float amount;
         amount = (closest.x - shape->first.x) / shape->span_x;
         closest.z = amount * shape->span_z + shape->first.z;

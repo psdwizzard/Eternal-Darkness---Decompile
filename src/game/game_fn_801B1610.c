@@ -7,44 +7,44 @@ typedef struct Entry {
     unsigned char callback[1];
 } Entry;
 
-extern Entry* lbl_8064D344;
-extern Entry* lbl_8064D340;
-extern Entry* lbl_8064D348;
-extern u32 lbl_8064D338;
+extern Entry* __DTKPlayListHead;
+extern Entry* __DTKPlayListTail;
+extern Entry* __DTKCurrentTrack;
+extern u32 __DTKRepeatMode;
 
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
-extern void fn_8021345C(void*);
+extern void DVDClose(void*);
 
-int fn_801B1610(Entry* entry)
+int DTKRemoveTrack(Entry* entry)
 {
     u32 interrupts;
 
-    if (entry == lbl_8064D348) {
+    if (entry == __DTKCurrentTrack) {
         return 2;
     }
     interrupts = OSDisableInterrupts();
-    fn_8021345C(entry->callback);
-    if (entry == lbl_8064D344 && entry == lbl_8064D340) {
-        lbl_8064D344 = 0;
-        lbl_8064D340 = 0;
+    DVDClose(entry->callback);
+    if (entry == __DTKPlayListHead && entry == __DTKPlayListTail) {
+        __DTKPlayListHead = 0;
+        __DTKPlayListTail = 0;
         OSRestoreInterrupts(interrupts);
         return 0;
     }
-    if (entry == lbl_8064D344) {
-        lbl_8064D344 = entry->next;
-        lbl_8064D344->previous = 0;
-        if (lbl_8064D338 == 1) {
-            lbl_8064D340->next = lbl_8064D344;
+    if (entry == __DTKPlayListHead) {
+        __DTKPlayListHead = entry->next;
+        __DTKPlayListHead->previous = 0;
+        if (__DTKRepeatMode == 1) {
+            __DTKPlayListTail->next = __DTKPlayListHead;
         }
         OSRestoreInterrupts(interrupts);
         return 0;
     }
-    if (entry == lbl_8064D340) {
-        lbl_8064D340 = entry->previous;
-        lbl_8064D340->next = 0;
-        if (lbl_8064D338 == 1) {
-            lbl_8064D340->next = lbl_8064D344;
+    if (entry == __DTKPlayListTail) {
+        __DTKPlayListTail = entry->previous;
+        __DTKPlayListTail->next = 0;
+        if (__DTKRepeatMode == 1) {
+            __DTKPlayListTail->next = __DTKPlayListHead;
         }
         OSRestoreInterrupts(interrupts);
         return 0;

@@ -15,38 +15,38 @@ typedef struct Entry {
 
 extern char lbl_8024F978[];
 extern char lbl_8024F99C[];
-extern void fn_8016203C(Parser*, int, int, char*);
+extern void luaX_checklimit(Parser*, int, int, char*);
 extern void fn_80163DA4(Parser*);
-extern void fn_80164F7C(Parser*, Entry*);
-extern void fn_80163ED4(Parser*, int, char*);
-extern void fn_80163E94(Parser*, int);
-extern int fn_80164C7C(Parser*);
-extern void fn_80164778(Parser*, int, int);
-extern void fn_8015F048(Parser*, Entry*);
-extern int fn_8015F9D4(State*, int, int, int);
+extern void var_or_func(Parser*, Entry*);
+extern void check_condition(Parser*, int, char*);
+extern void check(Parser*, int);
+extern int explist1(Parser*);
+extern void adjust_mult_assign(Parser*, int, int);
+extern void luaK_storevar(Parser*, Entry*);
+extern int luaK_code2(State*, int, int, int);
 
-int fn_80165934(Parser* parser, Entry* entry, int count)
+int assignment(Parser* parser, Entry* entry, int count)
 {
     int left = 0;
 
-    fn_8016203C(parser, count, 254, lbl_8024F978);
+    luaX_checklimit(parser, count, 254, lbl_8024F978);
     if (parser->token == ',') {
         Entry next;
         fn_80163DA4(parser);
-        fn_80164F7C(parser, &next);
-        fn_80163ED4(parser, next.type != 3, lbl_8024F99C);
-        left = fn_80165934(parser, &next, count + 1);
+        var_or_func(parser, &next);
+        check_condition(parser, next.type != 3, lbl_8024F99C);
+        left = assignment(parser, &next, count + 1);
     } else {
         int expressions;
-        fn_80163E94(parser, '=');
-        expressions = fn_80164C7C(parser);
-        fn_80164778(parser, count, expressions);
+        check(parser, '=');
+        expressions = explist1(parser);
+        adjust_mult_assign(parser, count, expressions);
     }
 
     if (entry->type != 2) {
-        fn_8015F048(parser, entry);
+        luaK_storevar(parser, entry);
     } else {
-        fn_8015F9D4(parser->state, 20, left + count + 2, 1);
+        luaK_code2(parser->state, 20, left + count + 2, 1);
         left += 2;
     }
     return left;

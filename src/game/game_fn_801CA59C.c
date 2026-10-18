@@ -1,6 +1,6 @@
 extern float lbl_80651018;
 
-void fn_801CA59C(float* output, float* input)
+void salInvertMatrix(float* output, float* input)
 {
     float negative_inverse;
     float inverse;

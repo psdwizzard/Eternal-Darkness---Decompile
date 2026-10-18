@@ -12,8 +12,8 @@ extern void* fn_80149D98(void (*)(void));
 extern void fn_80149D64(void*);
 extern void fn_80181F5C(void*);
 extern void fn_80182014(void);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void* memcpy(void*, const void*, u32);
 extern int fn_801E8328();
 
@@ -33,7 +33,7 @@ void fn_80152A88(Vec3f* position, Vec3f* target, u16 kind, u8 mode)
         *(u16*)(work + 4) = kind;
         work[0] = 30;
         work[1] = 4;
-        *(u16*)(work + 6) = (fn_800FBFB0() & 3) + 5;
+        *(u16*)(work + 6) = (rand() & 3) + 5;
         *(u16*)(work + 8) = *(u16*)(work + 6);
         work[0x14] = 4;
         *(u32*)(work + 0x18) = 0;

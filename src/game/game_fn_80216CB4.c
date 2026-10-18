@@ -17,11 +17,11 @@ typedef struct VITiming {
     u16 hbsCCIR656;
 } VITiming;
 
-extern VITiming *fn_80216C24(s32 mode);
+extern VITiming *getTiming(s32 mode);
 volatile u16 VI_REGS[] : 0xCC002000;
 
 /* Initialize the video interface timing and enable the selected mode. */
-void fn_80216CB4(s32 mode)
+void __VIInit(s32 mode)
 {
     volatile u32 delay;
     u32 tv = (u32)mode >> 2;
@@ -34,7 +34,7 @@ void fn_80216CB4(s32 mode)
     u32 hlw;
 
     *(u32 *)0x800000CC = tv;
-    timing = fn_80216C24(mode);
+    timing = getTiming(mode);
     /* Hold the video interface in reset for the startup delay. */
     VI_REGS[1] = 2;
     delay = 0;

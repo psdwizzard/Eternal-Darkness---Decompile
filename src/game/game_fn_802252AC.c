@@ -29,7 +29,7 @@ extern GXData *gx;
 
 #define GET_REG_FIELD(reg, size, shift) (((reg) >> (shift)) & ((1 << (size)) - 1))
 
-void fn_802252AC(GXAttr attr, GXAttrType *type)
+void GXGetVtxDesc(GXAttr attr, GXAttrType *type)
 {
     u32 cpType;
 

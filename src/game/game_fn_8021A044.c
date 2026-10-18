@@ -3,15 +3,15 @@ typedef void (*AIDMACallback)(void);
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern AIDMACallback lbl_8064DADC;
+extern AIDMACallback __AID_Callback;
 
 /* Replace the audio DMA callback and return the previous callback. */
-AIDMACallback fn_8021A044(AIDMACallback callback)
+AIDMACallback AIRegisterDMACallback(AIDMACallback callback)
 {
-    AIDMACallback previous = lbl_8064DADC;
+    AIDMACallback previous = __AID_Callback;
     BOOL level = OSDisableInterrupts();
 
-    lbl_8064DADC = callback;
+    __AID_Callback = callback;
     OSRestoreInterrupts(level);
     return previous;
 }

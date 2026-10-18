@@ -1,8 +1,8 @@
-extern void fn_8015EA7C(void*, char*);
+extern void luaK_error(void*, char*);
 
-void fn_80163ED4(void* lexer, int condition, char* message)
+void check_condition(void* lexer, int condition, char* message)
 {
     if (condition == 0) {
-        fn_8015EA7C(lexer, message);
+        luaK_error(lexer, message);
     }
 }

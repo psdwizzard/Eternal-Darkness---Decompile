@@ -1,6 +1,6 @@
-extern double fn_800FF0CC(double first, double second);
+extern double __ieee754_atan2(double first, double second);
 
-double fn_80102340(double first, double second)
+double atan2(double first, double second)
 {
-    return fn_800FF0CC(first, second);
+    return __ieee754_atan2(first, second);
 }

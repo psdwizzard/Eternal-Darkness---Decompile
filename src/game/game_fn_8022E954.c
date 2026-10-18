@@ -9,7 +9,7 @@ typedef struct oggpack_buffer {
     s32 storage;
 } oggpack_buffer;
 
-void fn_8022E954(oggpack_buffer *b, register s32 bits) {
+void oggpack_adv(oggpack_buffer *b, register s32 bits) {
     register s32 bytes;
     register s32 shifted;
     bits += b->endbit;

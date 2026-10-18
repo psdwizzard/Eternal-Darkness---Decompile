@@ -7,15 +7,15 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EFC6C(TRKBuffer *, u32);
-extern void fn_800EFC9C(TRKBuffer *, u8);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
-extern int fn_800EF7B4(TRKBuffer *, u16 *);
-extern int fn_800EF2A0(TRKBuffer *);
-extern int fn_800F4BCC(u32, u32, TRKBuffer *, u32 *, int);
-extern int fn_800F4A90(u32, u32, TRKBuffer *, u32 *, int);
-extern int fn_800F4920(u32, u32, TRKBuffer *, u32 *, int);
-extern int fn_800F44E8(u32, u32, TRKBuffer *, u32 *, int);
+extern int TRKSetBufferPosition(TRKBuffer *, u32);
+extern void TRKResetBuffer(TRKBuffer *, u8);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
+extern int TRKReadBuffer1_ui16(TRKBuffer *, u16 *);
+extern int TRKMessageSend(TRKBuffer *);
+extern int TRKTargetAccessDefault(u32, u32, TRKBuffer *, u32 *, int);
+extern int TRKTargetAccessFP(u32, u32, TRKBuffer *, u32 *, int);
+extern int TRKTargetAccessExtended1(u32, u32, TRKBuffer *, u32 *, int);
+extern int TRKTargetAccessExtended2(u32, u32, TRKBuffer *, u32 *, int);
 
 static inline void append(TRKBuffer *buffer, u8 value)
 {
@@ -25,7 +25,7 @@ static inline void append(TRKBuffer *buffer, u8 value)
     }
 }
 
-void fn_800F0FBC(TRKBuffer *buffer)
+void TRKDoWriteRegisters(TRKBuffer *buffer)
 {
     u32 size;
     u16 start;
@@ -37,31 +37,31 @@ void fn_800F0FBC(TRKBuffer *buffer)
     u8 status;
 
     if (buffer->length <= 6) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 2);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
         return;
     }
 
-    fn_800EFC6C(buffer, 0);
-    result = fn_800EF86C(buffer, &message_command);
-    if (result == 0) result = fn_800EF86C(buffer, &options);
-    if (result == 0) result = fn_800EF7B4(buffer, &start);
-    if (result == 0) result = fn_800EF7B4(buffer, &end);
+    TRKSetBufferPosition(buffer, 0);
+    result = TRKReadBuffer1_ui8(buffer, &message_command);
+    if (result == 0) result = TRKReadBuffer1_ui8(buffer, &options);
+    if (result == 0) result = TRKReadBuffer1_ui16(buffer, &start);
+    if (result == 0) result = TRKReadBuffer1_ui16(buffer, &end);
 
     if (start > end) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 0x14);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
@@ -70,16 +70,16 @@ void fn_800F0FBC(TRKBuffer *buffer)
 
     switch (options) {
     case 0:
-        result = fn_800F4BCC(start, end, buffer, &size, 0);
+        result = TRKTargetAccessDefault(start, end, buffer, &size, 0);
         break;
     case 1:
-        result = fn_800F4A90(start, end, buffer, &size, 0);
+        result = TRKTargetAccessFP(start, end, buffer, &size, 0);
         break;
     case 2:
-        result = fn_800F4920(start, end, buffer, &size, 0);
+        result = TRKTargetAccessExtended1(start, end, buffer, &size, 0);
         break;
     case 3:
-        result = fn_800F44E8(start, end, buffer, &size, 0);
+        result = TRKTargetAccessExtended2(start, end, buffer, &size, 0);
         break;
     default:
         result = 0x703;
@@ -87,7 +87,7 @@ void fn_800F0FBC(TRKBuffer *buffer)
     }
 
     if (result == 0) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 0);
     }
@@ -103,19 +103,19 @@ void fn_800F0FBC(TRKBuffer *buffer)
         case 0x706: status = 0x20; break;
         default: status = 3; break;
         }
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, status);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
     } else {
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);

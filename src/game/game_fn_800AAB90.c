@@ -4,8 +4,8 @@ typedef struct Vec3i {
     int z;
 } Vec3i;
 
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern int fn_8011F598(int, int, int, int, void*, int);
 extern void fn_80179DB0(Vec3i*, void*);
 extern void* lbl_8064C5A8;
@@ -26,7 +26,7 @@ void fn_800AAB90(int owner, int search, int option, int value, int resource,
 
     goto check_selector;
 choose_selector:
-    selector = fn_800FBFB0() & 0xF;
+    selector = rand() & 0xF;
 check_selector:
     if (selector >= 17) {
         goto choose_selector;
@@ -37,7 +37,7 @@ check_selector:
 
     position_index = position_count;
     while (position_index >= position_count) {
-        position_index = fn_800FBFB0() & 7;
+        position_index = rand() & 7;
     }
     fn_80179DB0(&result, (unsigned char*)positions[position_index] + 0x2C);
 
@@ -45,13 +45,13 @@ check_selector:
     if ((unsigned short)option == 0) {
         position_count |= 0x10;
     }
-    if ((fn_800FBFB0() & 1) != 0) {
+    if ((rand() & 1) != 0) {
         position_count |= 0x10000;
     }
-    if ((fn_800FBFB0() & 1) != 0) {
+    if ((rand() & 1) != 0) {
         position_count |= 0x20000;
     }
-    if ((fn_800FBFB0() & 1) != 0) {
+    if ((rand() & 1) != 0) {
         position_count |= 0x2000;
     }
 

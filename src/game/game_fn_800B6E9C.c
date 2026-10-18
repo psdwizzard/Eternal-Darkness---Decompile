@@ -100,7 +100,7 @@ extern int fn_800B6C00(int);
 extern int fn_800B6C88(int);
 extern void fn_800B6D10(unsigned int, void*);
 extern int fn_800B6E40(int);
-extern void fn_800F9D4C(void*, const char*, ...);
+extern void sprintf(void*, const char*, ...);
 extern void fn_801A85D4(GXColor, u32, u32, u32);
 extern void fn_801A872C(int, s16, s16, s16, int, int, GXColor);
 extern void fn_801A8974(int, s16, s16, s16, int, int);
@@ -120,7 +120,7 @@ extern int fn_801E8D44(void*);
 extern int fn_801E8D4C(void*);
 extern void fn_801ED3F4(int);
 extern void fn_801ED5F4(int, int, int, int, int, float);
-extern void fn_80210D18(long long, CalendarTime*);
+extern void OSTicksToCalendarTime(long long, CalendarTime*);
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -302,7 +302,7 @@ void fn_800B6E9C(u8 alpha, int locked)
             if (i == selected && !(lbl_8064CE44 & 2)) {
                 dateY = y + height - 0x25;
                 buffer = lbl_802397D8;
-                fn_80210D18(entry->playTime, &time);
+                OSTicksToCalendarTime(entry->playTime, &time);
                 fn_801E5594(x - 5, dateY, lbl_8064F074, &shadow, lbl_802FC5BC,
                             lbl_8064B6E8, lbl_8023B9E4[entry->era]);
                 fn_800B6D10(entry->era, buffer.text);
@@ -311,7 +311,7 @@ void fn_800B6E9C(u8 alpha, int locked)
                 fn_801E5AD0(0x72);
                 fn_801E5594(x + width + 5, dateY, lbl_8064F074, &shadow, lbl_802FC5BC,
                             strings + 0xA18);
-                fn_800F9D4C(buffer.text, strings + 0xA28, time.hour, time.min, time.sec);
+                sprintf(buffer.text, strings + 0xA28, time.hour, time.min, time.sec);
                 fn_801E5594(x + width + 5, dateY + 0x14, lbl_8064F074, &shadow,
                             lbl_802FC5BC, lbl_8064B6E8, buffer.text);
             }

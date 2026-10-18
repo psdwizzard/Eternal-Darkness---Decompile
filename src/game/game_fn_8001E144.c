@@ -70,8 +70,8 @@ extern void* fn_801E6CA0(void*, int, int, int, int);
 extern void fn_801E6F9C(void*, u32);
 extern void fn_801E85A8(void);
 extern void fn_801EFE84(u32);
-extern void fn_8020EF54(void*, void*);
-extern void fn_8022A814(u32, u32);
+extern void OSInitStopwatch(void*, void*);
+extern void GXSetPixelFmt(u32, u32);
 
 void fn_8001E144(u32 mode)
 {
@@ -81,7 +81,7 @@ void fn_8001E144(u32 mode)
     Timings* timings = &global->timings;
     void* object;
     u8* initial_data;
-    fn_8022A814(0, 0);
+    GXSetPixelFmt(0, 0);
     memset(context, 0, 0x44);
     context->limit = 200;
     context->kind = 7;
@@ -93,7 +93,7 @@ void fn_8001E144(u32 mode)
     context->flags = 0;
     object = context + 1;
     initial_data = data + 0x83C;
-    fn_8020EF54(object, initial_data);
+    OSInitStopwatch(object, initial_data);
     lbl_8064C6D0 = 0;
     fn_8001DE84(3, 0);
     fn_8001DE84(3, 0);

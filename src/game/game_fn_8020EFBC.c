@@ -1,4 +1,4 @@
-/* fn_8020EFBC (0x8020EFBC, 204 bytes): OSStopStopwatch. */
+/* OSStopStopwatch (0x8020EFBC, 204 bytes): OSStopStopwatch. */
 
 typedef unsigned long long u64;
 typedef long long s64;
@@ -16,7 +16,7 @@ typedef struct OSStopwatch {
     int running;
 } OSStopwatch;
 
-void fn_8020EFBC(OSStopwatch* sw) {
+void OSStopStopwatch(OSStopwatch* sw) {
     s64 interval;
 
     if (sw->running) {

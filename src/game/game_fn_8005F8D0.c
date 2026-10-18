@@ -58,17 +58,17 @@ extern s32 fn_80066D04(void *, s32);
 extern s32 fn_8005EE9C(s32, s32, s32 *);
 extern void fn_8011F114();
 extern s32 fn_8011F6A4(void *, s32, s32, s32, QueryResult *, s32);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8005F758(void *, s32, Vec3 *, s32, s32, s32, u8, u8, s32, u8);
 extern void fn_801AAE68(float, s32, s32, s32, Vec3 *, s32, s32, s32, u16, s32);
 extern void fn_801D62D0(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32,
                        s32, s32, s32, s32, s32, s32, s32, s32, s32, s32,
                        s32, s32, s32, s32, s32, s32);
-extern void fn_80211A6C();
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract();
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 extern s32 fn_801D3A24(s32, s32);
 extern void fn_8015295C(Vec3 *, Vec3 *, s32, s32, s32);
 extern void fn_8020104C(int, void*, void*, int, float);
@@ -119,7 +119,7 @@ void fn_8005F8D0(s32 owner, void *entry, void *manager, SourceObject *source,
     }
 
     random_min = tables->config[config_kind].random_min;
-    random_value = fn_800FBFB0();
+    random_value = rand();
     range = (u16)(random_min + random_value % (tables->config[config_kind].random_max - random_min));
 
     if (position != 0) {
@@ -146,12 +146,12 @@ void fn_8005F8D0(s32 owner, void *entry, void *manager, SourceObject *source,
     }
 
     copied_direction = primary.direction;
-    fn_80211A6C(&secondary.direction, &primary.direction, &direction);
+    PSVECSubtract(&secondary.direction, &primary.direction, &direction);
     if (lbl_8064E5DC != direction.x || lbl_8064E5DC != direction.y ||
         lbl_8064E5DC != direction.z) {
-        fn_80211AAC(&direction, &direction);
-        fn_80211A90(&direction, &direction, lbl_8064E5B8);
-        fn_80211A48(&primary.direction, &direction, &copied_direction);
+        PSVECNormalize(&direction, &direction);
+        PSVECScale(&direction, &direction, lbl_8064E5B8);
+        PSVECAdd(&primary.direction, &direction, &copied_direction);
         fn_8015295C(&primary.direction, &copied_direction,
                     fn_801D3A24(source->object_id, 0x31), 4, 2);
     }

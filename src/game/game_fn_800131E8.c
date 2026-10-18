@@ -3,12 +3,12 @@ typedef int s32;
 extern const char lbl_8023BEF8[];
 extern const double lbl_8064DCE8;
 extern void* fn_80201B3C();
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern void* fn_80049220(void*, s32);
 extern void* fn_80049304(void*, void*);
 extern int fn_80201B54();
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_800131E8(void* script)
 {
@@ -19,8 +19,8 @@ s32 fn_800131E8(void* script)
     void* object;
 
     context = fn_80201B3C();
-    if (fn_8016A598(parser) != 0) {
-        fn_80163BB4(parser, lbl_8023BEF8, 0, fn_8016A598(parser));
+    if (lua_gettop(parser) != 0) {
+        luaO_verror(parser, lbl_8023BEF8, 0, lua_gettop(parser));
         return 0;
     }
 
@@ -29,6 +29,6 @@ s32 fn_800131E8(void* script)
     if (object != 0) {
         value = fn_80201B54(object);
     }
-    fn_8016A830(parser, (double)value);
+    lua_pushnumber(parser, (double)value);
     return 1;
 }

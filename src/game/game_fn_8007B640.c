@@ -26,10 +26,10 @@ extern const float lbl_8064E9AC;
 extern const float lbl_8064E9B0;
 extern void fn_801F74C8(s32, s32, s32);
 extern void fn_801441C0(s32, s32, s32);
-extern void fn_80211A6C();
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract();
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 extern void fn_801AAE68(float intensity, s32 effect_type, s32 value, s32 arg3,
                         Vec3 *position, s32 arg5, s32 arg6, s32 arg7,
                         u16 owner, s32 arg9);
@@ -66,11 +66,11 @@ void fn_8007B640(Object *object, s32 flags)
             fn_801441C0(5, 8, 35);
         }
 
-        fn_80211A6C(object, position, &vector);
-        fn_80211AAC(&vector, &vector);
-        fn_80211A90(&vector, &vector,
+        PSVECSubtract(object, position, &vector);
+        PSVECNormalize(&vector, &vector);
+        PSVECScale(&vector, &vector,
                     (flags & 1) ? lbl_8064E9A4 : lbl_8064E9A8);
-        fn_80211A48(&vector, position, position);
+        PSVECAdd(&vector, position, position);
     }
 
     fn_801AAE68(lbl_8064E9AC, 0x2A1, 100, 0, position, 2, 1, 0,

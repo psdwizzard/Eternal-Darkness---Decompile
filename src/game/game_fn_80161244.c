@@ -8,10 +8,10 @@ typedef struct Entry {
     int count;
 } Entry;
 
-extern int fn_801611F8(Entry*);
+extern int protosize(Entry*);
 
-void fn_80161244(Object* object, Entry* entry, int count)
+void luaF_protook(Object* object, Entry* entry, int count)
 {
     entry->count = count;
-    object->allocation_size += fn_801611F8(entry);
+    object->allocation_size += protosize(entry);
 }

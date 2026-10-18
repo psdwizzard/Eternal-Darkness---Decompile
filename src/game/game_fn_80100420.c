@@ -10,7 +10,7 @@ extern const double lbl_8064FD00;
 extern const double lbl_8064FD08;
 extern const double lbl_8064FD10;
 
-double fn_80100420(double x, double y)
+double __kernel_cos(double x, double y)
 {
     double a, hz, z, r, qx;
     int ix;

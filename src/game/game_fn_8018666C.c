@@ -10,7 +10,7 @@ extern void DCFlushRange(void*, unsigned long);
 extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16);
 extern void fn_801ED494(int, int, int, int, int);
-extern void fn_80229C0C(int, int, int, int, int, int);
+extern void GXSetTevColorOp(int, int, int, int, int, int);
 extern void fn_801ED510(int, int, int);
 extern void fn_80189B70(void*, void*, void*);
 extern void fn_801ECC4C(void);
@@ -64,7 +64,7 @@ void fn_8018666C(u8* self)
     fn_8018D0D0(self, self + 0x5C, *(s16*)(self + 0xE));
     if (self[0x91] & 8) {
         fn_801ED494(3, 0, 0, 0, 3);
-        fn_80229C0C(0, 0, 1, 2, 1, 0);
+        GXSetTevColorOp(0, 0, 1, 2, 1, 0);
         fn_801ED510(0, 3, 3);
     }
     fn_80189B70(buffer0, buffer1, buffer2);

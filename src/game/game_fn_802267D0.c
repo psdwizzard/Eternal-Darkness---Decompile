@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 extern volatile u16 *__peReg;
 
-void fn_802267D0(u8 enabled)
+void GXPokeDither(u8 enabled)
 {
     volatile u16 *blendReg = &__peReg[1];
     u32 value = *blendReg;

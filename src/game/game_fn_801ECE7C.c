@@ -10,7 +10,7 @@ typedef struct Color {
 
 extern Color lbl_8064C370;
 extern Color lbl_8064D66C;
-extern void fn_80229E00(int channel, Color* color);
+extern void GXSetTevKColor(int channel, Color* color);
 
 void fn_801ECE7C(u32 value)
 {
@@ -21,6 +21,6 @@ void fn_801ECE7C(u32 value)
         lbl_8064D66C.r = component;
         lbl_8064C370.g = component;
         copy = lbl_8064C370;
-        fn_80229E00(0, &copy);
+        GXSetTevKColor(0, &copy);
     }
 }

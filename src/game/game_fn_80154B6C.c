@@ -14,8 +14,8 @@ extern int fn_8015C9F0(void);
 extern void fn_80149E28(void*);
 extern void fn_801A1A04(EffectDesc*);
 extern void* fn_80154CB4(Vec3*, short*, EffectDesc*, float);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void* fn_80154D24(Vec3*, void*, EffectWork*);
 
 void fn_80154B6C(void* object)
@@ -38,9 +38,9 @@ void fn_80154B6C(void* object)
                     *(float*)((char*)object + 8));
         if (*(u8*)((char*)object + 0x24)) {
             delay = *(u16*)((char*)object + 0x20) +
-                    fn_800FBFB0() % *(u16*)((char*)object + 0x22);
+                    rand() % *(u16*)((char*)object + 0x22);
         } else {
-            delay = (fn_800FBFB0() & 0xFFF) + 1;
+            delay = (rand() & 0xFFF) + 1;
         }
         *(u16*)((char*)object + 0x1E) = delay;
         *(u8*)((char*)object + 0x26) = 1;
@@ -53,9 +53,9 @@ void fn_80154B6C(void* object)
         fn_80154D24((Vec3*)((char*)object + 0xC), &position, &effect);
         if (*(u8*)((char*)object + 0x24)) {
             delay = *(u16*)((char*)object + 0x20) +
-                    fn_800FBFB0() % *(u16*)((char*)object + 0x22);
+                    rand() % *(u16*)((char*)object + 0x22);
         } else {
-            delay = (fn_800FBFB0() & 0xFFF) + 60;
+            delay = (rand() & 0xFFF) + 60;
         }
         *(u16*)((char*)object + 0x1E) = delay;
     } else {

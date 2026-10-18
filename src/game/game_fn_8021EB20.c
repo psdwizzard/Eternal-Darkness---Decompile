@@ -10,9 +10,9 @@ typedef struct CardControl {
     u8 padBC[0x110 - 0xBC];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
-s32 fn_8021EB20(s32 channel)
+s32 CARDGetXferredBytes(s32 channel)
 {
-    return lbl_80641C60[channel].xferred;
+    return __CARDBlock[channel].xferred;
 }

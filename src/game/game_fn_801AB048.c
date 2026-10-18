@@ -8,7 +8,7 @@ typedef struct Record {
 } Record;
 
 extern void fn_801B05B0(int, int);
-extern void fn_801C934C(Record*);
+extern void sndRemoveEmitter(Record*);
 
 void fn_801AB048(Record* record)
 {
@@ -19,7 +19,7 @@ void fn_801AB048(Record* record)
                 record->handle = -1;
             }
         } else {
-            fn_801C934C(record);
+            sndRemoveEmitter(record);
         }
         record->active = 0;
     }

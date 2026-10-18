@@ -20,10 +20,10 @@ typedef struct RuntimeState {
 } RuntimeState;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
 
@@ -32,12 +32,12 @@ s32 fn_8000E1C4(void* script)
     s32 value = 0;
     RuntimeState* state;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    if (fn_80201814((s32)fn_8016A694(script, 1)) != 0) {
+    if (fn_80201814((s32)lua_tonumber(script, 1)) != 0) {
         state = fn_80201B8C();
         if (state->use_primary == 1) {
             value = state->primary->value;
@@ -46,6 +46,6 @@ s32 fn_8000E1C4(void* script)
         }
     }
 
-    fn_8016A830(script, (double)value);
+    lua_pushnumber(script, (double)value);
     return 1;
 }

@@ -31,17 +31,12 @@ struct SEQ_INSTANCE {
     u8 padEE0[0x1868 - 0xEE0];
 };
 
-extern SEQ_INSTANCE* lbl_8064D39C;
-extern SEQ_INSTANCE* lbl_8064D398;
-extern SEQ_INSTANCE* lbl_8064D394;
-extern void fn_801C21E8(u32);
-extern void fn_801B244C(SEQ_INSTANCE*);
+extern SEQ_INSTANCE* seqActiveRoot;
+extern SEQ_INSTANCE* seqPausedRoot;
+extern SEQ_INSTANCE* seqFreeRoot;
+extern void voiceKillSound(u32);
+extern void ResetNotes(SEQ_INSTANCE*);
 
-#define seqActiveRoot lbl_8064D39C
-#define seqPausedRoot lbl_8064D398
-#define seqFreeRoot lbl_8064D394
-#define voiceKillSound fn_801C21E8
-#define ResetNotes fn_801B244C
 
 static SEQ_INSTANCE seqInstance[8];
 
@@ -98,7 +93,7 @@ static inline void StartPause(SEQ_INSTANCE* si)
     si->state = 2;
 }
 
-void fn_801B35BC(u32 seqId)
+void seqPause(u32 seqId)
 {
     SEQ_INSTANCE* si;
     seqId = seqGetPrivateId(seqId);

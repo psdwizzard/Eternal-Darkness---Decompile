@@ -1,6 +1,6 @@
 extern char jumptable_80246E60[];
 extern char lbl_8064B6C0;
-extern void fn_800F9D4C(void *, const char *, ...);
+extern void sprintf(void *, const char *, ...);
 
 #pragma force_active on
 char lbl_802477B4[0x84] =
@@ -23,40 +23,40 @@ void fn_800B6D10(unsigned int era, void *stream)
 
     switch (era) {
     case 0:
-        fn_800F9D4C(stream, strings + 0x954);
+        sprintf(stream, strings + 0x954);
         break;
     case 1:
-        fn_800F9D4C(stream, &lbl_8064B6C0);
+        sprintf(stream, &lbl_8064B6C0);
         break;
     case 2:
-        fn_800F9D4C(stream, strings + 0x960);
+        sprintf(stream, strings + 0x960);
         break;
     case 3:
-        fn_800F9D4C(stream, strings + 0x96C);
+        sprintf(stream, strings + 0x96C);
         break;
     case 4:
-        fn_800F9D4C(stream, strings + 0x978);
+        sprintf(stream, strings + 0x978);
         break;
     case 5:
-        fn_800F9D4C(stream, strings + 0x984);
+        sprintf(stream, strings + 0x984);
         break;
     case 6:
-        fn_800F9D4C(stream, strings + 0x990);
+        sprintf(stream, strings + 0x990);
         break;
     case 7:
-        fn_800F9D4C(stream, strings + 0x99C);
+        sprintf(stream, strings + 0x99C);
         break;
     case 8:
-        fn_800F9D4C(stream, strings + 0x9A8);
+        sprintf(stream, strings + 0x9A8);
         break;
     case 10:
-        fn_800F9D4C(stream, strings + 0x9B4);
+        sprintf(stream, strings + 0x9B4);
         break;
     case 9:
-        fn_800F9D4C(stream, strings + 0x9C0);
+        sprintf(stream, strings + 0x9C0);
         break;
     case 11:
-        fn_800F9D4C(stream, strings + 0x9CC);
+        sprintf(stream, strings + 0x9CC);
         break;
     }
 }

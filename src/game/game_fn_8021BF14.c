@@ -1,4 +1,4 @@
-/* fn_8021BF14: __DSP_exec_task (SDK dsp_task.c). Sends the outgoing task's
+/* __DSP_exec_task: __DSP_exec_task (SDK dsp_task.c). Sends the outgoing task's
  * DRAM save info and the incoming task's IRAM/DRAM boot info to the DSP. */
 
 typedef unsigned char u8;
@@ -19,52 +19,52 @@ typedef struct DSPTaskInfo {
     u16 dsp_resume_vector;         /* 0x26 */
 } DSPTaskInfo;
 
-extern void fn_8021B8CC(u32 mail);  /* DSPSendMailToDSP */
-extern u32 fn_8021B894(void);       /* DSPCheckMailToDSP */
+extern void DSPSendMailToDSP(u32 mail);  /* DSPSendMailToDSP */
+extern u32 DSPCheckMailToDSP(void);       /* DSPCheckMailToDSP */
 
 #define DSP_TASK_STATE_INIT 0
 
-void fn_8021BF14(DSPTaskInfo* curr, DSPTaskInfo* next) {
+void __DSP_exec_task(DSPTaskInfo* curr, DSPTaskInfo* next) {
     if (curr) {
-        fn_8021B8CC((u32)(curr->dram_mmem_addr));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(curr->dram_length));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(curr->dram_addr));
-        while (fn_8021B894()) ;
+        DSPSendMailToDSP((u32)(curr->dram_mmem_addr));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(curr->dram_length));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(curr->dram_addr));
+        while (DSPCheckMailToDSP()) ;
     } else {
-        fn_8021B8CC((u32)(0));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(0));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(0));
-        while (fn_8021B894()) ;
+        DSPSendMailToDSP((u32)(0));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(0));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(0));
+        while (DSPCheckMailToDSP()) ;
     }
 
-    fn_8021B8CC((u32)(next->iram_mmem_addr));
-    while (fn_8021B894()) ;
-    fn_8021B8CC((u32)(next->iram_length));
-    while (fn_8021B894()) ;
-    fn_8021B8CC((u32)(next->iram_addr));
-    while (fn_8021B894()) ;
+    DSPSendMailToDSP((u32)(next->iram_mmem_addr));
+    while (DSPCheckMailToDSP()) ;
+    DSPSendMailToDSP((u32)(next->iram_length));
+    while (DSPCheckMailToDSP()) ;
+    DSPSendMailToDSP((u32)(next->iram_addr));
+    while (DSPCheckMailToDSP()) ;
 
     if (DSP_TASK_STATE_INIT == next->state) {
-        fn_8021B8CC((u32)(next->dsp_init_vector));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(0));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(0));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(0));
-        while (fn_8021B894()) ;
+        DSPSendMailToDSP((u32)(next->dsp_init_vector));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(0));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(0));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(0));
+        while (DSPCheckMailToDSP()) ;
     } else {
-        fn_8021B8CC((u32)(next->dsp_resume_vector));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(next->dram_mmem_addr));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(next->dram_length));
-        while (fn_8021B894()) ;
-        fn_8021B8CC((u32)(next->dram_addr));
-        while (fn_8021B894()) ;
+        DSPSendMailToDSP((u32)(next->dsp_resume_vector));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(next->dram_mmem_addr));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(next->dram_length));
+        while (DSPCheckMailToDSP()) ;
+        DSPSendMailToDSP((u32)(next->dram_addr));
+        while (DSPCheckMailToDSP()) ;
     }
 }

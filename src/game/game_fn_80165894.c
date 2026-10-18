@@ -1,4 +1,4 @@
-int fn_80165894(int token)
+int block_follow(int token)
 {
     switch (token) {
     case 260:

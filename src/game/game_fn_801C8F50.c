@@ -29,20 +29,20 @@ struct Owner {
     u8 channel;
 };
 
-extern u8 lbl_8064D3A0;
+extern u8 sndActive;
 extern float lbl_80650FD0;
 
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern u32 fn_801C14D0(u32);
-extern void fn_801CD068(u8, u8);
-extern void fn_801B80D8(u32);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern u32 vidGetInternalId(u32);
+extern void hwChangeStudio(u8, u8);
+extern void synthSendKeyOff(u32);
 
-int fn_801C8F50(Voice* voice, Vec3* position, Vec3* velocity, u8 amount,
+int sndUpdateEmitter(Voice* voice, Vec3* position, Vec3* velocity, u8 amount,
                 Owner* owner)
 {
-    if (lbl_8064D3A0 != 0) {
-        fn_801CE2B8();
+    if (sndActive != 0) {
+        hwDisableIrq();
         voice->position = *position;
         voice->velocity = *velocity;
         voice->amount = (float)amount / lbl_80650FD0;
@@ -52,19 +52,19 @@ int fn_801C8F50(Voice* voice, Vec3* position, Vec3* velocity, u8 amount,
         if (voice->owner != owner) {
             if (voice->handle != 0xFFFFFFFF) {
                 if (owner->channel != 0xFF) {
-                    u32 channel = fn_801C14D0(voice->handle);
+                    u32 channel = vidGetInternalId(voice->handle);
                     if (channel != 0xFFFFFFFF) {
-                        fn_801CD068((u8)channel, owner->channel);
+                        hwChangeStudio((u8)channel, owner->channel);
                     }
                 } else {
-                    fn_801B80D8(voice->handle);
+                    synthSendKeyOff(voice->handle);
                     voice->flags |= 0x00080000;
                     voice->handle = 0xFFFFFFFF;
                 }
             }
             voice->owner = owner;
         }
-        fn_801CE280();
+        hwEnableIrq();
         return 1;
     }
     return 0;

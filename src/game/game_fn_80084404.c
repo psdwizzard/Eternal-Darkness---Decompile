@@ -63,11 +63,11 @@ extern void fn_8017A244(void *, Color4 *, f32);
 extern int fn_801A98F4(int, int);
 extern void fn_801E7974(u32 *, u32);
 extern int fn_801E79FC(u32 *, u32);
-extern void fn_80210FDC(Mtx, Mtx, Mtx);
-extern void fn_80211268(Mtx, char, f32);
-extern void fn_80211710(Mtx, const Vec3 *, Vec3 *);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211C78(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSMTXConcat(Mtx, Mtx, Mtx);
+extern void PSMTXRotRad(Mtx, char, f32);
+extern void PSMTXMultVec(Mtx, const Vec3 *, Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern void C_VECReflect(const Vec3 *, const Vec3 *, Vec3 *);
 
 static inline f32 maximum(f32 value, f32 lower)
 {
@@ -123,13 +123,13 @@ void fn_80084404(void *self, int side, f32 delta)
         link->rotation[link->axis] = delta / lbl_8064EA80;
         value = link->rotation[link->axis];
         link->rotation[link->axis] = clampRotation(value);
-        fn_80211268(rotX, 'x', link->rotation[0]);
-        fn_80211268(rotY, 'y', link->rotation[1]);
-        fn_80211268(rotZ, 'z', link->rotation[2]);
-        fn_80210FDC(rotZ, rotY, rotZY);
-        fn_80210FDC(rotZY, rotX, rotation);
-        fn_80211710(rotation, &link->offset, &link->offset);
-        fn_80211710(rotation, &link->object->position, &link->object->position);
+        PSMTXRotRad(rotX, 'x', link->rotation[0]);
+        PSMTXRotRad(rotY, 'y', link->rotation[1]);
+        PSMTXRotRad(rotZ, 'z', link->rotation[2]);
+        PSMTXConcat(rotZ, rotY, rotZY);
+        PSMTXConcat(rotZY, rotX, rotation);
+        PSMTXMultVec(rotation, &link->offset, &link->offset);
+        PSMTXMultVec(rotation, &link->object->position, &link->object->position);
     } else if (link->handles[side] != 0 && link->object->active != 0) {
         newPosition = fn_80084984(side, link, prev, delta / lbl_8064EA80);
         link->object->position = newPosition;
@@ -145,12 +145,12 @@ void fn_80084404(void *self, int side, f32 delta)
         wasMoving = link->object->moving[side];
         if (prev->object->active != 0) {
             fn_80084264(link);
-            fn_80211C78(&prev->object->pivot, &link->object->position, &link->object->pivot);
+            C_VECReflect(&prev->object->pivot, &link->object->position, &link->object->pivot);
             fn_80084264(next);
         }
         if (&lbl_8031CD84.links[lbl_8031CD84.selected] == link && link->handles[side] != 0 &&
             lbl_8064EA14 != delta) {
-            fn_80211A6C(&oldPosition, &link->object->position, &moved);
+            PSVECSubtract(&oldPosition, &link->object->position, &moved);
             moved.x = absolute(moved.x);
             moved.y = absolute(moved.y);
             moved.z = absolute(moved.z);

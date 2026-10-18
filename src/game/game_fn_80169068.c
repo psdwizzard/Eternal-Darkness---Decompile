@@ -19,20 +19,20 @@ typedef struct State {
     Slot* slots;
 } State;
 
-extern Value lbl_8023A868;
-extern Value* fn_801672C8(Value*);
-extern int fn_80167D2C(Value*);
-extern Value* fn_801679F8(State*, Value*, Value*);
-extern void fn_8016057C(State*, int);
-extern void fn_80160B18(State*, Value*, int);
+extern Value luaO_nilobject;
+extern Value* luaH_getstr(Value*);
+extern int luaT_tag(Value*);
+extern Value* luaH_set(State*, Value*, Value*);
+extern void luaD_checkstack(State*, int);
+extern void luaD_call(State*, Value*, int);
 
-void fn_80169068(State* state, void* payload)
+void luaV_setglobal(State* state, void* payload)
 {
-    Value* value = fn_801672C8(state->current);
-    void* target = state->slots[fn_80167D2C(value)].fields[4];
+    Value* value = luaH_getstr(state->current);
+    void* target = state->slots[luaT_tag(value)].fields[4];
 
     if (target == 0) {
-        if (value != &lbl_8023A868) {
+        if (value != &luaO_nilobject) {
             *value = state->top[-1];
         } else {
             Value argument;
@@ -41,13 +41,13 @@ void fn_80169068(State* state, void* payload)
             argument.type = 3;
             argument.data.pointer = payload;
             value = state->top;
-            result = fn_801679F8(state, state->current, &argument);
+            result = luaH_set(state, state->current, &argument);
             *result = value[-1];
         }
         return;
     }
 
-    fn_8016057C(state, 3);
+    luaD_checkstack(state, 3);
     state->top[2] = state->top[-1];
     state->top[1] = *value;
     state->top[0].type = 3;
@@ -55,5 +55,5 @@ void fn_80169068(State* state, void* payload)
     state->top[-1].data.pointer = target;
     state->top[-1].type = 5;
     state->top += 3;
-    fn_80160B18(state, state->top - 4, 0);
+    luaD_call(state, state->top - 4, 0);
 }

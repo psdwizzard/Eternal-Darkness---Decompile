@@ -10,7 +10,7 @@ extern GXData *gx;
 extern volatile u16 *__cpReg;
 
 /* __GXFifoReadEnable: enable the command processor to read the FIFO. */
-void fn_8022441C(void)
+void __GXFifoReadEnable(void)
 {
     gx->cpEnable = (gx->cpEnable & ~1UL) | 1;
     __cpReg[1] = gx->cpEnable;

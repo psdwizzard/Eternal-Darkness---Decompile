@@ -34,16 +34,16 @@ typedef struct CARDControl {
     DVDDiskID *diskID;
 } CARDControl;
 
-extern DVDDiskID lbl_80641E80; /* __CARDDiskNone */
+extern DVDDiskID __CARDDiskNone; /* __CARDDiskNone */
 extern int fn_800F98EC(const void *a, const void *b, unsigned long n); /* memcmp */
 
-s32 fn_80221498(CARDControl *card, CARDDir *ent)
+s32 __CARDAccess(CARDControl *card, CARDDir *ent)
 {
     if (ent->gameName[0] == 0xFF) {
         return -4;
     }
 
-    if (card->diskID == &lbl_80641E80 ||
+    if (card->diskID == &__CARDDiskNone ||
         (fn_800F98EC(ent->gameName, card->diskID->gameName, 4) == 0 &&
          fn_800F98EC(ent->company, card->diskID->company, 2) == 0)) {
         return 0;

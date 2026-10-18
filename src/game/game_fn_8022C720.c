@@ -5,23 +5,23 @@ typedef struct StringEntry {
     unsigned char data[8];
 } StringEntry;
 
-extern int lbl_8064C3C8;
-extern void *fn_8020AD80(int heap, unsigned long size);
-extern void fn_8022C84C(StringEntry **entry);
-extern unsigned long fn_8022C9BC(const char *text);
+extern int __OSCurrHeap;
+extern void *OSAllocFromHeap(int heap, unsigned long size);
+extern void FreeCacheNode(StringEntry **entry);
+extern unsigned long Strlen(const char *text);
 
 /* Allocate an entry and enough space for its null-terminated text. */
-int fn_8022C720(StringEntry **entry, const char *text) {
+int AllocCacheNode(StringEntry **entry, const char *text) {
     if (*entry != 0) {
-        fn_8022C84C(entry);
+        FreeCacheNode(entry);
     }
 
-    *entry = fn_8020AD80(lbl_8064C3C8, sizeof(StringEntry));
+    *entry = OSAllocFromHeap(__OSCurrHeap, sizeof(StringEntry));
     if (*entry == 0) {
         return 0;
     }
 
-    (*entry)->text = fn_8020AD80(lbl_8064C3C8, fn_8022C9BC(text) + 1);
+    (*entry)->text = OSAllocFromHeap(__OSCurrHeap, Strlen(text) + 1);
     if ((*entry)->text == 0) {
         return 0;
     }

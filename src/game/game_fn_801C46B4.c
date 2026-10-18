@@ -1,7 +1,7 @@
 typedef signed short s16;
 typedef unsigned short u16;
 
-int fn_801C46B4(u16* reset, u16* direction, u16* position, u16 target,
+int salCheckVolErrorAndResetDelta(u16* reset, u16* direction, u16* position, u16 target,
                 u16* flags, u16 mask)
 {
     s16 delta;

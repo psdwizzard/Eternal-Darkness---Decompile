@@ -34,19 +34,19 @@ typedef struct CARDControl {
     u8 reservedD4[0x3C];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern u16 *fn_8021EB38(CARDControl *card);
-extern s32 fn_8021F0DC(s32 channel, CARDCallback callback);
-extern s32 fn_8021D108(s32 channel, u32 address, CARDCallback callback);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
+extern CARDControl __CARDBlock[];
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern u16 *__CARDGetFatBlock(CARDControl *card);
+extern s32 __CARDUpdateDir(s32 channel, CARDCallback callback);
+extern s32 __CARDEraseSector(s32 channel, u32 address, CARDCallback callback);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
 extern void fn_80222174(s32 channel, s32 result);
 extern OSTime OSGetTime(void);
 extern s64 fn_800F5ECC(s64 dividend, s64 divisor);
 
 void fn_80222004(s32 channel, s32 result)
 {
-    CARDControl *card = &lbl_80641C60[channel];
+    CARDControl *card = &__CARDBlock[channel];
     CARDFileInfo *fileInfo;
     CARDCallback callback;
 
@@ -61,21 +61,21 @@ void fn_80222004(s32 channel, s32 result)
         if (fileInfo->length <= 0) {
             u32 ticksPerSecond;
             CARDDir *entry;
-            entry = &fn_8021EF3C(card)[fileInfo->fileNo];
+            entry = &__CARDGetDirBlock(card)[fileInfo->fileNo];
             ticksPerSecond = *(u32 *)0x800000F8 >> 2;
             entry->time = (u32)fn_800F5ECC((s64)OSGetTime(), (s64)ticksPerSecond);
             callback = card->callback;
             card->callback = 0;
-            result = fn_8021F0DC(channel, callback);
+            result = __CARDUpdateDir(channel, callback);
         } else {
-            u16 *fat = fn_8021EB38(card);
+            u16 *fat = __CARDGetFatBlock(card);
             fileInfo->offset += card->sectorSize;
             fileInfo->iBlock = fat[fileInfo->iBlock];
             if (fileInfo->iBlock < 5 || fileInfo->iBlock >= card->cBlock) {
                 result = -6;
                 goto error;
             }
-            result = fn_8021D108(channel, card->sectorSize * fileInfo->iBlock,
+            result = __CARDEraseSector(channel, card->sectorSize * fileInfo->iBlock,
                                   fn_80222174);
         }
         if (result >= 0) {
@@ -86,6 +86,6 @@ void fn_80222004(s32 channel, s32 result)
 error:
     callback = card->callback;
     card->callback = 0;
-    fn_8021D374(card, result);
+    __CARDPutControlBlock(card, result);
     callback(channel, result);
 }

@@ -4,7 +4,7 @@ typedef unsigned char char_map[32];
 #define set_char_map(map, ch) ((map)[((ch) & 0xff) >> 3] |= (1 << ((ch) & 7)))
 #define tst_char_map(map, ch) ((map)[((ch) & 0xff) >> 3] & (1 << ((ch) & 7)))
 
-size_t fn_800FD0C8(const char* str, const char* set)
+size_t strcspn(const char* str, const char* set)
 {
     const unsigned char* p;
     int c;

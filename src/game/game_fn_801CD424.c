@@ -8,11 +8,11 @@ typedef struct Entry {
     u8 padED[7];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-u32 fn_801CD424(u32 index)
+u32 hwGetVirtualSampleID(u32 index)
 {
-    Entry* entry = &lbl_8064D4AC[index];
+    Entry* entry = &dspVoice[index];
     if (entry->active == 0) {
         return -1;
     }

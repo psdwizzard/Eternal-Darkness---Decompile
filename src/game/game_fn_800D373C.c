@@ -16,7 +16,7 @@ typedef struct Sample {
     u8 pad[0x14];
 } Sample;
 extern int fn_8011F6A4(void *, int, int, int, void *, int);
-extern void fn_80211A6C();
+extern void PSVECSubtract();
 extern int fn_800E62F8(Vec3 *, Vec3 *);
 extern void fn_800A45B0(ActorState *, int);
 
@@ -45,7 +45,7 @@ int fn_800D373C(void *state, void *object, int alternate)
     fn_8011F6A4(state, 2, mode, -1, &first, 1);
     first.position.z += lbl_8064F394;
     position = &second.position;
-    fn_80211A6C(&first.position, position, &delta);
+    PSVECSubtract(&first.position, position, &delta);
     position->z = (position->z > lbl_8064F398) ? position->z : lbl_8064F368;
     result = fn_800E62F8(position, &delta);
     fn_800A45B0(actor, result);

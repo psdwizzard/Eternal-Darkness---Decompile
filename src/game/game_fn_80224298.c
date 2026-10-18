@@ -19,16 +19,16 @@ typedef struct {
 
 extern volatile u16 *__cpReg;
 extern volatile u32 *__piReg;
-extern GXFifoObj *lbl_8064DB90; /* CPUFifo */
-extern GXFifoObj *lbl_8064DB94; /* GPFifo */
+extern GXFifoObj *CPUFifo; /* CPUFifo */
+extern GXFifoObj *GPFifo; /* GPFifo */
 
 /* GXGetFifoPtrs: refresh active FIFO state and return its read/write pointers. */
-void fn_80224298(GXFifoObj *fifo, void **readPtr, void **writePtr)
+void GXGetFifoPtrs(GXFifoObj *fifo, void **readPtr, void **writePtr)
 {
-    if (fifo == lbl_8064DB90) {
+    if (fifo == CPUFifo) {
         fifo->wrPtr = (void *)((__piReg[5] & ~0x04000000) + 0x80000000);
     }
-    if (fifo == lbl_8064DB94) {
+    if (fifo == GPFifo) {
         u32 readAddress = __cpReg[29] << 16;
         readAddress |= __cpReg[28];
         fifo->rdPtr = (void *)(readAddress + 0x80000000);

@@ -18,12 +18,12 @@ typedef struct HashTable {
     int size;
 } HashTable;
 
-extern Value* fn_8016731C(LuaState*, HashTable*, Value*);
-extern void fn_80160FAC(LuaState*, const char*);
-extern Value lbl_8023A868;
+extern Value* luaH_get(LuaState*, HashTable*, Value*);
+extern void lua_error(LuaState*, const char*);
+extern Value luaO_nilobject;
 extern const char lbl_8024FA5C[];
 
-HashNode* fn_80167380(LuaState* state, HashTable* table, Value* value)
+HashNode* luaH_next(LuaState* state, HashTable* table, Value* value)
 {
     Value* found;
     int offset;
@@ -32,9 +32,9 @@ HashNode* fn_80167380(LuaState* state, HashTable* table, Value* value)
     if (value->type == 1) {
         index = 0;
     } else {
-        found = fn_8016731C(state, table, value);
-        if (found == &lbl_8023A868) {
-            fn_80160FAC(state, lbl_8024FA5C);
+        found = luaH_get(state, table, value);
+        if (found == &luaO_nilobject) {
+            lua_error(state, lbl_8024FA5C);
         }
         index = ((unsigned int)found - ((unsigned int)table->nodes + 0x10)) / 40 + 1;
     }

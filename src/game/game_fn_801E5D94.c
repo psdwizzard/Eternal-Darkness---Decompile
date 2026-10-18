@@ -36,7 +36,7 @@ extern TextDescriptor lbl_80633440[];
 extern char lbl_80264994[];
 
 extern void* memset(void*, int, unsigned long);
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern void fn_801E5920(char*);
 extern void fn_801E6A8C(TextDescriptor*);
 extern void fn_801E7DCC(const char*, ...);
@@ -65,7 +65,7 @@ TextDescriptor* fn_801E5D94(s16 x, s16 y, u8 font, s8 align, float scale,
 
     memset(text_ptr, 0, sizeof(*text_ptr));
     va_start(args, format);
-    fn_800F9E2C((char*)text_ptr->text, format, args);
+    vsprintf((char*)text_ptr->text, format, args);
     text_ptr->x = x;
     text_ptr->y = y;
     text_ptr->font = font;

@@ -20,22 +20,22 @@ typedef struct Parser {
     Input* input;
 } Parser;
 
-extern int fn_800F8D74(int);
-extern void fn_80163A9C(Buffer*, unsigned int);
+extern int isalnum(int);
+extern void luaO_openspace(Buffer*, unsigned int);
 
-char* fn_801623B4(Parser* parser)
+char* readname(Parser* parser)
 {
     Buffer* buffer = parser->buffer;
     unsigned int index = 0;
     int token;
 
     if (buffer->capacity < 10) {
-        fn_80163A9C(buffer, 0x8A);
+        luaO_openspace(buffer, 0x8A);
     }
 
     do {
         if (index + 10 > buffer->capacity) {
-            fn_80163A9C(buffer, index + 0x8A);
+            luaO_openspace(buffer, index + 0x8A);
         }
         buffer->data[index] = parser->current_token;
         index++;
@@ -46,7 +46,7 @@ char* fn_801623B4(Parser* parser)
             token = parser->input->read(parser->input);
         }
         parser->current_token = token;
-    } while (fn_800F8D74(parser->current_token) || parser->current_token == '_');
+    } while (isalnum(parser->current_token) || parser->current_token == '_');
 
     buffer->data[index] = 0;
     return buffer->data;

@@ -15,7 +15,7 @@ extern void fn_801F3528(u32*);
 extern void* fn_801397F8(void*, int, int, int);
 extern void DCInvalidateRange(void*, u32);
 extern void fn_801F50EC(void*, void*);
-extern void fn_8020B774(void*, u32);
+extern void DCStoreRange(void*, u32);
 extern void fn_801F5240(int);
 extern int fn_80133300(void);
 extern void fn_80134BFC(void);
@@ -38,7 +38,7 @@ void fn_801F53E8(int value)
     lbl_8064D6B8 = buffer;
     DCInvalidateRange(source, 0x96000);
     fn_801F50EC(source, buffer);
-    fn_8020B774(buffer, 0x96000);
+    DCStoreRange(buffer, 0x96000);
     lbl_8064D780 = value;
     lbl_8064D76C = value;
     fn_801F5240(1);

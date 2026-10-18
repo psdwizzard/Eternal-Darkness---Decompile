@@ -11,8 +11,8 @@ extern unsigned int fn_8011FAEC(void* object);
 extern unsigned short fn_8011F760(void* object);
 extern float fn_8011F6F0(void* object);
 extern Vec3* fn_8011F130(void* object);
-extern void fn_80211A48(const Vec3* a, const Vec3* b, Vec3* out);
-extern void fn_80211A6C(const Vec3* a, const Vec3* b, Vec3* out);
+extern void PSVECAdd(const Vec3* a, const Vec3* b, Vec3* out);
+extern void PSVECSubtract(const Vec3* a, const Vec3* b, Vec3* out);
 extern int fn_80136F04(const Vec3* point, void* object, Result* out,
                       float radius, float height);
 extern int fn_80136E30(const Vec3* point, void* object, Result* out,
@@ -34,7 +34,7 @@ int fn_80137658(void* self, const Vec3* point, void* object, Result* out,
             offset.z = radius;
             offset.x = lbl_80650288;
             offset.y = lbl_80650288;
-            fn_80211A6C(point, &offset, &bottom);
+            PSVECSubtract(point, &offset, &bottom);
             return fn_80136F04(&bottom, object, out, radius,
                                fn_8011F760(self));
         }
@@ -45,7 +45,7 @@ int fn_80137658(void* self, const Vec3* point, void* object, Result* out,
         up.x = lbl_80650288;
         up.y = lbl_80650288;
         up.z = objectRadius;
-        fn_80211A48(fn_8011F130(object), &up, &center);
+        PSVECAdd(fn_8011F130(object), &up, &center);
         return fn_80136A30(&center, self, out, objectRadius);
     }
     return 0;

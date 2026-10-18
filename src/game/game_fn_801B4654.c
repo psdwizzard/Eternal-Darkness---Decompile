@@ -12,7 +12,7 @@ typedef struct List {
     Node* head;
 } List;
 
-void fn_801B4654(List* list, Node* node)
+void InsertGlobalEvent(List* list, Node* node)
 {
     Node* current = list->head;
     Node* previous = 0;

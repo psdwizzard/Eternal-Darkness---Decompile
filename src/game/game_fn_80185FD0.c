@@ -32,7 +32,7 @@ extern void fn_801869F8(void*, int, u16);
 extern void fn_8018E26C(void*, void*);
 extern void fn_8018680C(void*, void*, Vec3*, int, SixBytes*, u8);
 extern void fn_8018E230(void*, void*, int, u8, u8, int);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
 extern void fn_80198154(void*, u32, int, int, Vec3*);
 
 int fn_80185FD0(u8* self)
@@ -88,7 +88,7 @@ int fn_80185FD0(u8* self)
         span.offset += 0xC;
     }
 
-    fn_80211A48((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),
+    PSVECAdd((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),
                 (Vec3*)(state + 0x60));
     value = *(float*)(state + 0x60);
     if (value > lbl_80650A20) {

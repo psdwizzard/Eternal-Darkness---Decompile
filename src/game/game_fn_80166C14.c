@@ -21,15 +21,15 @@ typedef struct LuaState {
     int nblocks;
 } LuaState;
 
-extern void* fn_8016B5CC(LuaState*, void*, int, const char*, int);
+extern void* luaM_realloc(LuaState*, void*, int, const char*, int);
 extern const char lbl_8024FA38[];
 
-void fn_80166C14(LuaState* state, TableState* table, int newsize)
+void luaS_resize(LuaState* state, TableState* table, int newsize)
 {
     HashNode** newhash;
     int i;
 
-    newhash = fn_8016B5CC(state, 0, newsize * sizeof(HashNode*), lbl_8024FA38, 57);
+    newhash = luaM_realloc(state, 0, newsize * sizeof(HashNode*), lbl_8024FA38, 57);
     for (i = 0; i < newsize; i++) {
         newhash[i] = 0;
     }
@@ -55,7 +55,7 @@ void fn_80166C14(LuaState* state, TableState* table, int newsize)
         }
     }
 
-    fn_8016B5CC(state, table->hash, 0, lbl_8024FA38, 75);
+    luaM_realloc(state, table->hash, 0, lbl_8024FA38, 75);
     state->nblocks += (newsize - table->size) * sizeof(HashNode*);
     table->size = newsize;
     table->hash = newhash;

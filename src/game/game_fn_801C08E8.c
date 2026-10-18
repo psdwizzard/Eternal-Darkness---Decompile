@@ -17,18 +17,18 @@ struct Voice {
 };
 #pragma pack()
 
-extern Voice* lbl_8064D440;
-extern u64 lbl_8064D448;
-extern void fn_801B7910(Voice*);
+extern Voice* macTimeQueueRoot;
+extern u64 macRealTime;
+extern void synthForceLowPrecisionUpdate(Voice*);
 
-void fn_801C08E8(Voice* voice, u32 skip_callback)
+void UnYieldMacro(Voice* voice, u32 skip_callback)
 {
     if (voice->scheduled_time_098 == 0) {
         return;
     }
     if (voice->scheduled_time_098 != ~0ULL) {
         if (voice->scheduled_prev_048 == 0) {
-            lbl_8064D440 = voice->scheduled_next_044;
+            macTimeQueueRoot = voice->scheduled_next_044;
         } else {
             voice->scheduled_prev_048->scheduled_next_044 = voice->scheduled_next_044;
         }
@@ -37,9 +37,9 @@ void fn_801C08E8(Voice* voice, u32 skip_callback)
         }
     }
     if (skip_callback == 0) {
-        fn_801B7910(voice);
+        synthForceLowPrecisionUpdate(voice);
     }
     voice->scheduled_time_098 = 0;
-    voice->current_time_0A0 = lbl_8064D448;
+    voice->current_time_0A0 = macRealTime;
     voice->flags_114 &= ~0x40004ULL;
 }

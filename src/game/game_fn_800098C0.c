@@ -15,11 +15,11 @@ extern const char lbl_8023BEF8[];
 
 extern unsigned int fn_800F5C54(double);
 extern Player* fn_8015C28C(s32);
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
-extern void fn_8016A7D8(void*);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
+extern void lua_pushnil(void*);
 extern u16 fn_80034054(void*, s32);
 
 s32 fn_800098C0(void* script)
@@ -31,13 +31,13 @@ s32 fn_800098C0(void* script)
     s32 value;
 
     player = fn_8015C28C(2);
-    if (fn_8016A598(script) != 2) {
-        fn_80163BB4(script, lbl_8023BEF8, 2, fn_8016A598(script));
+    if (lua_gettop(script) != 2) {
+        luaO_verror(script, lbl_8023BEF8, 2, lua_gettop(script));
         return 0;
     }
 
-    object_id = fn_800F5C54(fn_8016A694(script, 1));
-    value = (s32)fn_8016A694(script, 2);
+    object_id = fn_800F5C54(lua_tonumber(script, 1));
+    value = (s32)lua_tonumber(script, 2);
     i = 0;
     entry_offset = 0;
     for (; i < player->count; entry_offset += 0x74, i++) {
@@ -51,11 +51,11 @@ s32 fn_800098C0(void* script)
 
         result = fn_80034054(entry, value);
         if (result > 0) {
-            fn_8016A830(script, (double)result);
+            lua_pushnumber(script, (double)result);
             return 1;
         }
     }
 
-    fn_8016A7D8(script);
+    lua_pushnil(script);
     return 1;
 }

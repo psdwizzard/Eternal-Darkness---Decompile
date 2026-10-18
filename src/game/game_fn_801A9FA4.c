@@ -34,7 +34,7 @@ extern s32 fn_80052228(void);
 extern s32 fn_800522A4(void);
 extern u16 fn_80052250(void);
 extern s32 fn_8005227C(void);
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern void fn_801ACACC(u16, u8, s32, short);
 
 extern u32 lbl_8064D18C;
@@ -164,7 +164,7 @@ s32 fn_801A9FA4(void* input, u32 value)
                     adjusted = 127;
                 }
                 volume = (u8)adjusted;
-                fn_801ACACC(sound, volume, 0, (short)((fn_800FBFB0() & 15) + 120));
+                fn_801ACACC(sound, volume, 0, (short)((rand() & 15) + 120));
             }
         }
     }

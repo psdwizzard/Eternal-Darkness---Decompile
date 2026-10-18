@@ -9,7 +9,7 @@ extern int fn_8017B1AC(int, void*);
 extern void fn_8017B294(int);
 extern void fn_800B2548(int, int);
 extern int fn_8017B47C(int, int*, int*);
-extern int fn_8021D408(int, int*, int*);
+extern int CARDFreeBlocks(int, int*, int*);
 extern void fn_800B6024(int, int);
 extern void fn_8017B80C(int);
 extern void fn_800B261C(int);
@@ -33,7 +33,7 @@ void fn_800B6718(int value)
 
     result = fn_8017B47C(value, &primary_value, &primary_level);
     if (result == 0) {
-        result = fn_8021D408(value, &fallback_value, &fallback_level);
+        result = CARDFreeBlocks(value, &fallback_value, &fallback_level);
     }
     if (result == 0) {
         if (fallback_level < 1) {

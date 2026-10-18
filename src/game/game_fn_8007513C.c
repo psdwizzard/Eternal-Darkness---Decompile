@@ -106,7 +106,7 @@ extern void fn_800CD094(void *, void *, s32);
 extern void fn_800CF598(void *);
 extern void fn_800EA0FC(void *, AiActor *, s32, void *, u32 *);
 extern void fn_800EA3A0(void *, AiActor *);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8011F0E8(void *, Vec3 *);
 extern void fn_8011F114(Vec3 *, void *);
 extern void fn_8011FA8C(void *, s32, s32);
@@ -494,7 +494,7 @@ s32 fn_8007513C(void *ctx, s32 state, void *event, u32 *out) {
         }
     } else if (state == 0x2D) {
         if (kind == 1) {
-            work->waitCount = fn_800FBFB0() & 0x1E;
+            work->waitCount = rand() & 0x1E;
             fn_80077704(ctx);
             fn_802045AC(ctx, &searchPos);
             work->homeDist = fn_80178E94(&pos, &searchPos);
@@ -565,7 +565,7 @@ s32 fn_8007513C(void *ctx, s32 state, void *event, u32 *out) {
         }
     } else if (state == 0x2C) {
         if (kind == 1) {
-            work->waitCount = fn_800FBFB0() & 0x1E;
+            work->waitCount = rand() & 0x1E;
             work->homePos = pos;
             fn_802045AC(ctx, &searchPos);
             work->homeDist = fn_80178E94(&pos, &searchPos);

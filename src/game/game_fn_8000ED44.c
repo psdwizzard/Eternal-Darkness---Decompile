@@ -11,9 +11,9 @@ typedef struct Object {
 } Object;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern void fn_8016A830(void*, double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void lua_pushnumber(void*, double);
+extern void luaO_verror(void*, const char*, ...);
 extern void* fn_80201B3C();
 extern void *fn_80201B8C();
 
@@ -22,8 +22,8 @@ s32 fn_8000ED44(void* script)
     s32 value = 0;
     void* object;
 
-    if (fn_8016A598(script) != 0) {
-        fn_80163BB4(script, lbl_8023BEF8, 0, fn_8016A598(script));
+    if (lua_gettop(script) != 0) {
+        luaO_verror(script, lbl_8023BEF8, 0, lua_gettop(script));
         return 0;
     }
 
@@ -31,6 +31,6 @@ s32 fn_8000ED44(void* script)
     if (object != 0) {
         value = ((Object*)((ObjectInfo*)fn_80201B8C(object))->object)->value;
     }
-    fn_8016A830(script, value);
+    lua_pushnumber(script, value);
     return 1;
 }

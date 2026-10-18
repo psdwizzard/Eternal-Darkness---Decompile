@@ -1,4 +1,4 @@
-/* fn_8022EBD4: ogg_stream_pagein -- submit a page of Ogg bitstream data
+/* ogg_stream_pagein: ogg_stream_pagein -- submit a page of Ogg bitstream data
  * into a logical stream (early libogg, without the buffer expand calls). */
 
 typedef unsigned int u32;
@@ -27,7 +27,7 @@ typedef struct OggStreamState {
     long pageno;
 } OggStreamState;
 
-extern void *fn_800F9990(void *dest, const void *src, u32 size);
+extern void *memmove(void *dest, const void *src, u32 size);
 extern void *memcpy(void *, const void *, u32);
 
 static inline long ogg_page_granulepos(OggPage *og) {
@@ -52,7 +52,7 @@ static inline long ogg_page_pageno(OggPage *og) {
            (og->header[21] << 24);
 }
 
-int fn_8022EBD4(OggStreamState *os, OggPage *og) {
+int ogg_stream_pagein(OggStreamState *os, OggPage *og) {
     int segptr = 0;
     unsigned char *header = og->header;
     unsigned char *body = og->body;
@@ -78,16 +78,16 @@ int fn_8022EBD4(OggStreamState *os, OggPage *og) {
         if (br) {
             os->body_fill -= br;
             if (os->body_fill)
-                fn_800F9990(os->body_data, os->body_data + br, os->body_fill);
+                memmove(os->body_data, os->body_data + br, os->body_fill);
             os->body_returned = 0;
         }
 
         if (lr) {
             /* segment table */
             if (os->lacing_fill - lr) {
-                fn_800F9990(os->lacing_vals, os->lacing_vals + lr,
+                memmove(os->lacing_vals, os->lacing_vals + lr,
                             (os->lacing_fill - lr) * sizeof(*os->lacing_vals));
-                fn_800F9990(os->granule_vals, os->granule_vals + lr,
+                memmove(os->granule_vals, os->granule_vals + lr,
                             (os->lacing_fill - lr) * sizeof(*os->granule_vals));
             }
             os->lacing_fill -= lr;

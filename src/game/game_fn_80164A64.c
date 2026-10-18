@@ -29,35 +29,35 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F8B0[];
-extern void fn_8015F988(ParserState*, int);
-extern int fn_8015EC10(ParserState*);
-extern void* fn_8016B5CC(void*, void*, unsigned int, char*, int);
-extern void fn_8016437C(Parser*, int);
-extern void fn_80161244(void*, RuntimeObject*, int);
+extern void luaK_code0(ParserState*, int);
+extern int luaK_getlabel(ParserState*);
+extern void* luaM_realloc(void*, void*, unsigned int, char*, int);
+extern void removelocalvars(Parser*, int);
+extern void luaF_protook(void*, RuntimeObject*, int);
 
-void fn_80164A64(Parser* parser)
+void close_func(Parser* parser)
 {
     void* allocator = parser->allocator;
     ParserState* state = parser->state;
     RuntimeObject* object = state->object;
 
-    fn_8015F988(state, 0);
-    fn_8015EC10(state);
-    object->values_18 = fn_8016B5CC(allocator, object->values_18,
+    luaK_code0(state, 0);
+    luaK_getlabel(state);
+    object->values_18 = luaM_realloc(allocator, object->values_18,
                                     state->value_10 * 4, lbl_8024F8B0, 0x14D);
-    object->values_08 = fn_8016B5CC(allocator, object->values_08,
+    object->values_08 = luaM_realloc(allocator, object->values_08,
                                     object->count_0C * 4, lbl_8024F8B0, 0x14E);
-    object->values_00 = fn_8016B5CC(allocator, object->values_00,
+    object->values_00 = luaM_realloc(allocator, object->values_00,
                                     object->count_04 * 8, lbl_8024F8B0, 0x14F);
-    object->values_10 = fn_8016B5CC(allocator, object->values_10,
+    object->values_10 = luaM_realloc(allocator, object->values_10,
                                     object->count_14 * 4, lbl_8024F8B0, 0x150);
-    fn_8016437C(parser, state->value_1E);
-    object->values_38 = fn_8016B5CC(allocator, object->values_38,
+    removelocalvars(parser, state->value_1E);
+    object->values_38 = luaM_realloc(allocator, object->values_38,
                                     object->count_34 * 12, lbl_8024F8B0, 0x152);
-    object->values_2C = fn_8016B5CC(allocator, object->values_2C,
+    object->values_2C = luaM_realloc(allocator, object->values_2C,
                                     (object->count_30 + 1) * 4,
                                     lbl_8024F8B0, 0x153);
     object->values_2C[object->count_30++] = 0x7FFFFFFD;
-    fn_80161244(allocator, object, state->value_10);
+    luaF_protook(allocator, object, state->value_10);
     parser->state = state->parent;
 }

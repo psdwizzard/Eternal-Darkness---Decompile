@@ -57,7 +57,7 @@ extern void fn_801B2348(s32 value);
 extern void fn_801ACD8C(void);
 extern void fn_801AD404(s32, s32, s32);
 extern void fn_801AD490(void);
-extern void fn_800F9D4C(char* output, const char* format, ...);
+extern void sprintf(char* output, const char* format, ...);
 extern s32 fn_80144628(s32, void*, s32);
 extern void fn_80144430(s32, s32);
 extern void fn_801F3528(u32* value);
@@ -115,9 +115,9 @@ void fn_80052670(void)
         fn_801AD490();
         fn_801AD404(100, 100, 1);
 
-        fn_800F9D4C(lbl_803282E0, (char*)types + 0x2180,
+        sprintf(lbl_803282E0, (char*)types + 0x2180,
                     types[lbl_8030F540.type].name);
-        fn_800F9D4C(lbl_80328360, (char*)types + 0x2190,
+        sprintf(lbl_80328360, (char*)types + 0x2190,
                     types[lbl_8030F540.type].value0C);
 
         lbl_8064C85C = fn_80144628(3, (u8*)types + 0x2120, 0);

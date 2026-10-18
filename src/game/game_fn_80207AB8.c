@@ -26,7 +26,7 @@ typedef struct EXIControl {
 extern EXIControl Ecb_80640AA8[3];
 extern BOOL OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(BOOL enabled);
-extern void fn_80206778(s32 chan, EXIControl *exi);
+extern void SetExiInterruptMask(s32 chan, EXIControl *exi);
 
 BOOL EXILock(s32 chan, u32 dev, EXICallback unlockedCallback)
 {
@@ -52,7 +52,7 @@ BOOL EXILock(s32 chan, u32 dev, EXICallback unlockedCallback)
 
     exi->state |= 0x10;
     exi->dev = dev;
-    fn_80206778(chan, exi);
+    SetExiInterruptMask(chan, exi);
     OSRestoreInterrupts(enabled);
     return 1;
 }

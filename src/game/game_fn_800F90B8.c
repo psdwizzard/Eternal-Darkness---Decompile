@@ -29,16 +29,16 @@ enum { CLOSED_FILE = 0, DISK_FILE = 1 };
 enum { READ_MODE = 1 };
 enum { NEUTRAL = 0, WRITING = 1, READING = 2, REREADING = 3 };
 
-int fn_800F6E38(void); /* __flush_all */
-unsigned int fn_800F950C(FileRecord *); /* ftell */
+int __flush_all(void); /* __flush_all */
+unsigned int ftell(FileRecord *); /* ftell */
 int __flush_buffer(FileRecord *, unsigned int *);
 
-int fn_800F90B8(FileRecord *file)
+int fflush(FileRecord *file)
 {
     unsigned int position;
 
     if (file == 0) {
-        return fn_800F6E38();
+        return __flush_all();
     }
     if (file->error || file->mode.file_kind == CLOSED_FILE) {
         return -1;
@@ -59,7 +59,7 @@ int fn_800F90B8(FileRecord *file)
     if (file->mode.file_kind != DISK_FILE) {
         position = 0;
     } else {
-        position = fn_800F950C(file);
+        position = ftell(file);
     }
     if (__flush_buffer(file, 0)) {
         file->error = 1;

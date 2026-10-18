@@ -13,35 +13,35 @@ typedef struct Entry {
     int extra;
 } Entry;
 
-extern void fn_80165F70(Parser*, Entry*);
-extern int fn_8015EAD0(State*);
-extern void fn_8015F2B0(State*, int*, int);
-extern int fn_8015EC10(State*);
-extern void fn_8015F1F8(State*, int, int);
+extern void test_then_block(Parser*, Entry*);
+extern int luaK_jump(State*);
+extern void luaK_concat(State*, int*, int);
+extern int luaK_getlabel(State*);
+extern void luaK_patchlist(State*, int, int);
 extern void fn_80163DA4(Parser*);
-extern void fn_801658D0(Parser*);
-extern void fn_80163F38(Parser*, int, int, Entry*);
+extern void block(Parser*);
+extern void check_match(Parser*, int, int, Entry*);
 
-void fn_80165FC8(Parser* parser, Entry* output)
+void ifstat(Parser* parser, Entry* output)
 {
     State* state = parser->state;
     int start = -1;
     Entry entry;
 
-    fn_80165F70(parser, &entry);
+    test_then_block(parser, &entry);
     while (parser->token == 0x105) {
-        fn_8015F2B0(state, &start, fn_8015EAD0(state));
-        fn_8015F1F8(state, entry.extra, fn_8015EC10(state));
-        fn_80165F70(parser, &entry);
+        luaK_concat(state, &start, luaK_jump(state));
+        luaK_patchlist(state, entry.extra, luaK_getlabel(state));
+        test_then_block(parser, &entry);
     }
     if (parser->token == 0x104) {
-        fn_8015F2B0(state, &start, fn_8015EAD0(state));
-        fn_8015F1F8(state, entry.extra, fn_8015EC10(state));
+        luaK_concat(state, &start, luaK_jump(state));
+        luaK_patchlist(state, entry.extra, luaK_getlabel(state));
         fn_80163DA4(parser);
-        fn_801658D0(parser);
+        block(parser);
     } else {
-        fn_8015F2B0(state, &start, entry.extra);
+        luaK_concat(state, &start, entry.extra);
     }
-    fn_8015F1F8(state, start, fn_8015EC10(state));
-    fn_80163F38(parser, 0x106, 0x109, output);
+    luaK_patchlist(state, start, luaK_getlabel(state));
+    check_match(parser, 0x106, 0x109, output);
 }

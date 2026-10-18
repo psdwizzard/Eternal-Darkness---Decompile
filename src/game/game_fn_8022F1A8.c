@@ -9,7 +9,7 @@ typedef struct AudioSync {
     int bodyBytes;
 } AudioSync;
 
-int fn_8022F1A8(AudioSync *sync, int bytes) {
+int ogg_sync_wrote(AudioSync *sync, int bytes) {
     int newFill = sync->fill + bytes;
 
     if (newFill > sync->storage) {

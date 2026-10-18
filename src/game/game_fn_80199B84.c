@@ -7,7 +7,7 @@ extern int lbl_8064D18C;
 extern void* memset(void*, int, unsigned long);
 extern void fn_801991E0(void*, void*, int);
 extern int fn_80199108(void*);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8018E230(void*, void*, int, u8, u8, u8);
 extern void fn_8018E260(void*, u8, u8);
 extern void fn_80180518(void*, u8, int);
@@ -41,7 +41,7 @@ int fn_80199B84(u8* object)
             if (fn_80199108(object) != 0) {
                 entry = *(u8**)(object + 0x4c) + object[0x91] * 0x38;
                 fn_8018E230(entry, entry + 0x2b, 2,
-                            (u8)(fn_800FBFB0() % 8 * 10 + 180),
+                            (u8)(rand() % 8 * 10 + 180),
                             object[4], object[0x90]);
                 fn_8018E260(entry, object[0x8f], object[0x90]);
                 fn_80180518(object + 0x24, object[0x91], 1);

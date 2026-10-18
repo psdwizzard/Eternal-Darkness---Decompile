@@ -26,7 +26,7 @@ typedef struct Mapping {
     s32 couplingAng[256];
 } Mapping;
 
-extern s32 fn_8022E868(void *, s32);
+extern s32 oggpack_read(void *, s32);
 extern void *fn_8022F780(s32);
 extern void *memset(void *, int, unsigned long);
 
@@ -39,27 +39,27 @@ static inline s32 ilog2(u32 v) {
     return n;
 }
 
-Mapping *fn_80233118(Source *source, void *stream) {
+Mapping *mapping0_unpack(Source *source, void *stream) {
     Mapping *map = fn_8022F780(sizeof(Mapping));
     Data *data = source->data;
     s32 i;
 
     memset(map, 0, sizeof(Mapping));
 
-    if (fn_8022E868(stream, 1) != 0) {
-        map->submaps = fn_8022E868(stream, 4) + 1;
+    if (oggpack_read(stream, 1) != 0) {
+        map->submaps = oggpack_read(stream, 4) + 1;
     } else {
         map->submaps = 1;
     }
 
-    if (fn_8022E868(stream, 1) != 0) {
-        map->couplingSteps = fn_8022E868(stream, 8) + 1;
+    if (oggpack_read(stream, 1) != 0) {
+        map->couplingSteps = oggpack_read(stream, 8) + 1;
         for (i = 0; i < map->couplingSteps; i++) {
             s32 mag;
             s32 ang;
-            mag = fn_8022E868(stream, ilog2(source->channels));
+            mag = oggpack_read(stream, ilog2(source->channels));
             map->couplingMag[i] = mag;
-            ang = fn_8022E868(stream, ilog2(source->channels));
+            ang = oggpack_read(stream, ilog2(source->channels));
             map->couplingAng[i] = ang;
             if (mag < 0 || ang < 0 || mag == ang || mag >= (s32)source->channels ||
                 ang >= (s32)source->channels) {
@@ -68,13 +68,13 @@ Mapping *fn_80233118(Source *source, void *stream) {
         }
     }
 
-    if (fn_8022E868(stream, 2) > 0) {
+    if (oggpack_read(stream, 2) > 0) {
         goto error;
     }
 
     if (map->submaps > 1) {
         for (i = 0; i < (s32)source->channels; i++) {
-            map->chmuxlist[i] = fn_8022E868(stream, 4);
+            map->chmuxlist[i] = oggpack_read(stream, 4);
             if (map->chmuxlist[i] >= map->submaps) {
                 goto error;
             }
@@ -82,15 +82,15 @@ Mapping *fn_80233118(Source *source, void *stream) {
     }
 
     for (i = 0; i < map->submaps; i++) {
-        map->floorsubmap[i] = fn_8022E868(stream, 8);
+        map->floorsubmap[i] = oggpack_read(stream, 8);
         if (map->floorsubmap[i] >= data->dCount) {
             goto error;
         }
-        map->residuesubmap[i] = fn_8022E868(stream, 8);
+        map->residuesubmap[i] = oggpack_read(stream, 8);
         if (map->residuesubmap[i] >= data->aCount) {
             goto error;
         }
-        map->timesubmap[i] = fn_8022E868(stream, 8);
+        map->timesubmap[i] = oggpack_read(stream, 8);
         if (map->timesubmap[i] >= data->bCount) {
             goto error;
         }

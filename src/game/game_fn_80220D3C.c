@@ -45,13 +45,13 @@ typedef struct SramEx {
     u8 flashID[2][12];
 } SramEx;
 
-extern s32 fn_8021D2BC(s32 channel, CardControl **control);
-extern s32 fn_8021D374(CardControl *control, s32 result);
-extern s32 fn_8021D108(s32 channel, u32 address, CardCallback callback);
-extern void fn_8021C374(s32 channel, s32 result);
-extern void fn_80220BF8(s32 channel, s32 result);
-extern void fn_8021F1A0(void *data, s32 length, u16 *checksum, u16 *inverse);
-extern void fn_8020B774(void *data, u32 length);
+extern s32 __CARDGetControlBlock(s32 channel, CardControl **control);
+extern s32 __CARDPutControlBlock(CardControl *control, s32 result);
+extern s32 __CARDEraseSector(s32 channel, u32 address, CardCallback callback);
+extern void __CARDDefaultApiCallback(s32 channel, s32 result);
+extern void FormatCallback(s32 channel, s32 result);
+extern void __CARDCheckSum(void *data, s32 length, u16 *checksum, u16 *inverse);
+extern void DCStoreRange(void *data, u32 length);
 extern void *memset(void *data, int value, unsigned long size);
 extern Sram *__OSLockSram(void);
 extern SramEx *__OSLockSramEx(void);
@@ -59,7 +59,7 @@ extern s32 __OSUnlockSram(s32 commit);
 extern s32 __OSUnlockSramEx(s32 commit);
 extern s64 OSGetTime(void);
 
-s32 fn_80220D3C(s32 channel, u16 format, CardCallback callback)
+s32 __CARDFormatRegionAsync(s32 channel, u16 format, CardCallback callback)
 {
     CardControl *control;
     CardHeader *header;
@@ -73,7 +73,7 @@ s32 fn_80220D3C(s32 channel, u16 format, CardCallback callback)
     u8 *block;
     u8 *trailer;
 
-    result = fn_8021D2BC(channel, &control);
+    result = __CARDGetControlBlock(channel, &control);
     if (result < 0) {
         return result;
     }
@@ -98,7 +98,7 @@ s32 fn_80220D3C(s32 channel, u16 format, CardCallback callback)
     *(u64 *)header->formatTime = time;
     header->encoding = 0;
     header->size = control->size;
-    fn_8021F1A0(header, 0x1FC, (u16 *)((u8 *)header + 0x1FC),
+    __CARDCheckSum(header, 0x1FC, (u16 *)((u8 *)header + 0x1FC),
                (u16 *)((u8 *)header + 0x1FE));
     /* Initialize the two directory copies and their checksum trailers. */
     for (i = 0; i < 2; ++i) {
@@ -106,7 +106,7 @@ s32 fn_80220D3C(s32 channel, u16 format, CardCallback callback)
         memset(block, 0xFF, 0x2000);
         trailer = block + 0x1FC0;
         *(u16 *)(trailer + 0x3A) = i;
-        fn_8021F1A0(block, 0x1FFC, (u16 *)(trailer + 0x3C),
+        __CARDCheckSum(block, 0x1FFC, (u16 *)(trailer + 0x3C),
                    (u16 *)(trailer + 0x3E));
     }
     /* Initialize both allocation tables with all data blocks free. */
@@ -116,15 +116,15 @@ s32 fn_80220D3C(s32 channel, u16 format, CardCallback callback)
         *(u16 *)(block + 4) = i;
         *(u16 *)(block + 6) = control->blockCount - 5;
         *(u16 *)(block + 8) = 4;
-        fn_8021F1A0(block + 4, 0x1FFC, (u16 *)block, (u16 *)(block + 2));
+        __CARDCheckSum(block + 4, 0x1FFC, (u16 *)block, (u16 *)(block + 2));
     }
-    control->callback = callback ? callback : fn_8021C374;
-    fn_8020B774(control->workArea, 0xA000);
+    control->callback = callback ? callback : __CARDDefaultApiCallback;
+    DCStoreRange(control->workArea, 0xA000);
     control->formatStep = 0;
-    result = fn_8021D108(channel, control->sectorSize * control->formatStep,
-                         fn_80220BF8);
+    result = __CARDEraseSector(channel, control->sectorSize * control->formatStep,
+                         FormatCallback);
     if (result < 0) {
-        fn_8021D374(control, result);
+        __CARDPutControlBlock(control, result);
     }
     return result;
 }

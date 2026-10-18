@@ -10,7 +10,7 @@ typedef struct Result {
 extern unsigned int fn_8011FAEC(void* object);
 extern float fn_8011F6F0(void* object);
 extern Vec3* fn_8011F130(void* object);
-extern void fn_80211A48(const Vec3* a, const Vec3* b, Vec3* out);
+extern void PSVECAdd(const Vec3* a, const Vec3* b, Vec3* out);
 extern int fn_8013E714(const void* shape, const Vec3* center, Result* out,
                       float radius);
 extern int fn_80136C20(const void* shape, void* object, Result* out);
@@ -26,7 +26,7 @@ int fn_80136FF8(const void* shape, void* object, Result* out)
         up.x = lbl_80650288;
         up.y = lbl_80650288;
         up.z = radius;
-        fn_80211A48(fn_8011F130(object), &up, &center);
+        PSVECAdd(fn_8011F130(object), &up, &center);
         return fn_8013E714(shape, &center, out, radius);
     }
     return fn_80136C20(shape, object, out);

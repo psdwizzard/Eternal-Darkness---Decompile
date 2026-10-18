@@ -3,7 +3,7 @@ typedef struct Input {
     signed char* cursor;
 } Input;
 
-signed char* fn_80167D68(Input* input)
+signed char* ZNAME(Input* input)
 {
     signed char* cursor = input->cursor;
     if (*cursor == '@') {

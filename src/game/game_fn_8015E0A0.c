@@ -18,7 +18,7 @@ extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
 extern void fn_80158E84(int);
 extern void fn_8015C020(int);
-extern int fn_8020D318(void*, void*, int);
+extern int OSReceiveMessage(void*, void*, int);
 
 void fn_8015E0A0(u32 amount)
 {
@@ -41,7 +41,7 @@ void fn_8015E0A0(u32 amount)
         if (retry) {
             fn_80158E84(4);
             fn_8015C020(0);
-            fn_8020D318(lbl_805E2600, &message, 1);
+            OSReceiveMessage(lbl_805E2600, &message, 1);
             lbl_805BB1E0.queue = 0;
         }
     } while (retry);

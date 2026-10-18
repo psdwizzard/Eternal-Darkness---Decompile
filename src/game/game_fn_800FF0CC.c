@@ -1,4 +1,4 @@
-/* fn_800FF0CC: fdlibm __ieee754_atan2 (MSL e_atan2.c). */
+/* __ieee754_atan2: fdlibm __ieee754_atan2 (MSL e_atan2.c). */
 
 #define __HI(x) *(int *)&x
 #define __LO(x) *(1 + (int *)&x)
@@ -19,9 +19,9 @@ extern const double lbl_8064FA68; /* pi_lo */
 #define pi_lo lbl_8064FA68
 
 /* atan */
-extern double fn_8010161C(double x);
+extern double atan(double x);
 
-double fn_800FF0CC(double y, double x) {
+double __ieee754_atan2(double y, double x) {
     double z;
     int k, m, hx, hy, ix, iy;
     unsigned int lx, ly;
@@ -37,7 +37,7 @@ double fn_800FF0CC(double y, double x) {
         return x + y;
     }
     if ((hx - 0x3ff00000 | lx) == 0) {
-        return fn_8010161C(y);
+        return atan(y);
     }
     m = ((hy >> 31) & 1) | ((hx >> 30) & 2);
 
@@ -91,7 +91,7 @@ double fn_800FF0CC(double y, double x) {
     } else if (hx < 0 && k < -60) {
         z = lbl_8064FA58;
     } else {
-        z = fn_8010161C(__fabs(y / x));
+        z = atan(__fabs(y / x));
     }
     switch (m) {
     case 0:

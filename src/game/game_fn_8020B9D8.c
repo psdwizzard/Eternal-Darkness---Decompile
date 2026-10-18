@@ -1,5 +1,5 @@
 /* Return the number of queued locked-cache DMA transfers. */
-unsigned int fn_8020B9D8(void)
+unsigned int LCQueueLength(void)
 {
     register unsigned int count;
     register unsigned int status;

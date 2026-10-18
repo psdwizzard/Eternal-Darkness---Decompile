@@ -18,8 +18,8 @@ extern const float lbl_8064E034;
 extern const float lbl_8064E138;
 
 extern void fn_801D38BC(s32 object_id, s32* value, short* type);
-extern void fn_80211A90(Vec3* output, const Vec3* input, float scale);
-extern void fn_80211A48(Vec3* output, const Vec3* left, const Vec3* right);
+extern void PSVECScale(Vec3* output, const Vec3* input, float scale);
+extern void PSVECAdd(Vec3* output, const Vec3* left, const Vec3* right);
 extern void fn_80152530(Vec3* position, short type, s32 owner, s32 mode,
                         s32* value, Vec3* direction);
 extern short fn_801D3A24(s32 object_id, s32 property);
@@ -45,8 +45,8 @@ void fn_800337C8(Vec3* position, const Vec3* offset, s32 object_id,
         s32 value_copy;
 
         direction = *offset;
-        fn_80211A90(&direction, &direction, lbl_8064E138);
-        fn_80211A48(&direction, position, &direction);
+        PSVECScale(&direction, &direction, lbl_8064E138);
+        PSVECAdd(&direction, position, &direction);
         value_copy = value;
         fn_80152530(position, type, owner, 4, &value_copy, &direction);
     } else {

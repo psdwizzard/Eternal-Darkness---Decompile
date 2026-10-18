@@ -30,7 +30,7 @@ extern float lbl_80650040;
 extern float lbl_80650044;
 
 extern int fn_801E8D34(RangeControl*);
-extern void fn_80225F4C(s32, void*, s32);
+extern void GXSetArray(s32, void*, s32);
 extern void fn_801ECEC8(u8, int, u8);
 extern void fn_801A852C(u32*, int, int, u32);
 extern void fn_801A85D4(u32*, int, int, u32);
@@ -100,7 +100,7 @@ void fn_8011C900(register s16 input_x, register s16 input_y0,
 
     level = fn_801E8D34(lbl_8064CE68) * 237 / 127;
     bar_x = lbl_8064CE60 + 59 + level;
-    fn_80225F4C(13, lbl_802515D0, 4);
+    GXSetArray(13, lbl_802515D0, 4);
     fn_801ECEC8(1, 7, 1);
     fg_copy = fg;
     fn_801A852C(&fg_copy.word, 5, x, 0x80000000);

@@ -5,7 +5,7 @@ typedef struct Cell {
     unsigned long size;
 } Cell;
 
-Cell *fn_8020ACD4(Cell *list, Cell *cell) {
+Cell *DLInsert(Cell *list, Cell *cell) {
     Cell *prev;
     Cell *next;
 

@@ -4,7 +4,7 @@ typedef struct Context {
     char* stack;
 } Context;
 
-int fn_8016A598(Context* context)
+int lua_gettop(Context* context)
 {
     return (context->top - context->stack) / 16;
 }

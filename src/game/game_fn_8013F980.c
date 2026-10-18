@@ -27,7 +27,7 @@ extern void fn_801E8E68(Iterator*, int);
 extern int fn_801E8E94(Iterator*);
 extern int fn_8013C7BC(const Vec3*, const Vec3*, const Vec3*, float, float);
 extern int fn_8013E284(const void*, const Shape*, const void*, Result*);
-extern float fn_80211D4C(const Vec3*, const void*);
+extern float PSVECSquareDistance(const Vec3*, const void*);
 extern void fn_80140AEC(Shape*, Collection*);
 
 Shape* fn_8013F980(Collection* collection, const Input* value, Result* out)
@@ -63,7 +63,7 @@ Shape* fn_8013F980(Collection* collection, const Input* value, Result* out)
                     for (i = 0, offset = 0; i < count; offset += 2, i++) {
                         shape = &shapes[*(unsigned short*)((unsigned char*)node->indices + offset)];
                         if (fn_8013E284(value, shape, collection->context, &candidate)) {
-                            float distance = fn_80211D4C(candidate_point, value);
+                            float distance = PSVECSquareDistance(candidate_point, value);
                             if (distance < best) {
                                 best = distance;
                                 result = shape;

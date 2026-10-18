@@ -1,6 +1,6 @@
-extern void fn_8010242C(void);
+extern void init_global_constants(void);
 
-void fn_80106A6C(void)
+void HVQM4InitDecoder(void)
 {
-    fn_8010242C();
+    init_global_constants();
 }

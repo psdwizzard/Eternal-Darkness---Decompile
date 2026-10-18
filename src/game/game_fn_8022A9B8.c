@@ -12,7 +12,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022A9B8(u8 evenMask, u8 oddMask)
+void GXSetFieldMask(u8 evenMask, u8 oddMask)
 {
     u32 fieldMask = oddMask;
     fieldMask = (fieldMask & ~(1UL << 1)) | ((u32)evenMask << 1);

@@ -1,4 +1,4 @@
-/* fn_8021CFEC: __CARDWritePage (Dolphin SDK CARDRdwr.c). */
+/* __CARDWritePage: __CARDWritePage (Dolphin SDK CARDRdwr.c). */
 
 typedef unsigned char u8;
 typedef unsigned int u32;
@@ -23,21 +23,21 @@ typedef struct CardControl {
     u8 padD0[0x110 - 0xD0];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
-extern s32 fn_8021CD04(s32 chan, CardCallback txCallback, CardCallback exiCallback);
-extern BOOL fn_80206AC8(s32 chan, void *buf, s32 len, u32 type);
+extern s32 __CARDStart(s32 chan, CardCallback txCallback, CardCallback exiCallback);
+extern BOOL EXIImmEx(s32 chan, void *buf, s32 len, u32 type);
 extern BOOL EXIDma(s32 chan, void *buf, s32 len, u32 type, void *callback);
 extern BOOL EXIDeselect(s32 chan);
 extern BOOL EXIUnlock(s32 chan);
-extern void fn_8021C59C(s32 chan, void *context);
+extern void __CARDTxHandler(s32 chan, void *context);
 
-s32 fn_8021CFEC(s32 chan, CardCallback callback)
+s32 __CARDWritePage(s32 chan, CardCallback callback)
 {
     CardControl *card;
     s32 result;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     card->cmd[0] = 0xF2;
     card->cmd[1] = (u8)((card->addr >> 17) & 0x7F);
     card->cmd[2] = (u8)(card->addr >> 9);
@@ -47,12 +47,12 @@ s32 fn_8021CFEC(s32 chan, CardCallback callback)
     card->mode = 1;
     card->retry = 3;
 
-    result = fn_8021CD04(chan, 0, callback);
+    result = __CARDStart(chan, 0, callback);
     if (result == -1) {
         result = 0;
     } else if (result >= 0) {
-        if (!fn_80206AC8(chan, card->cmd, card->cmdlen, 1) ||
-            !EXIDma(chan, card->buffer, 0x80, card->mode, fn_8021C59C)) {
+        if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1) ||
+            !EXIDma(chan, card->buffer, 0x80, card->mode, __CARDTxHandler)) {
             card->exiCallback = 0;
             EXIDeselect(chan);
             EXIUnlock(chan);

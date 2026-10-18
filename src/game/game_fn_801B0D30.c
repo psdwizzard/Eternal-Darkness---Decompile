@@ -8,7 +8,7 @@ typedef struct Entry {
 
 extern Entry lbl_8060B5E0[];
 extern void fn_801B01F8(Entry*, int, int);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 extern void fn_801A99B4(void);
 extern void fn_801E81C8(void);
 extern void fn_801B0E6C(void);
@@ -32,7 +32,7 @@ void fn_801B0D30(void)
             }
         }
         if (active != 0) {
-            fn_80217324();
+            VIWaitForRetrace();
             fn_801A99B4();
             fn_801E81C8();
             fn_801B0E6C();

@@ -8,10 +8,10 @@ typedef struct Vec3f {
 
 extern const char lbl_8023BEF8[];
 extern const float lbl_8064DD00;
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_8016A830(void*, double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void lua_pushnumber(void*, double);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void fn_8011F114();
@@ -25,11 +25,11 @@ s32 fn_8000AEB4(void* script)
     Vec3f source;
     Vec3f position;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
-    entry = fn_80201814((s32)fn_8016A694(script, 1));
+    entry = fn_80201814((s32)lua_tonumber(script, 1));
     if (entry != 0) {
         info = fn_80201BC8(entry);
     } else {
@@ -40,6 +40,6 @@ s32 fn_8000AEB4(void* script)
         position = source;
         result = fn_801FBC18(&position, lbl_8064DD00);
     }
-    fn_8016A830(script, result);
+    lua_pushnumber(script, result);
     return 1;
 }

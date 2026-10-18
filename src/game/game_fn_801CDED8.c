@@ -1,10 +1,10 @@
 typedef unsigned int u32;
 
-extern u32 lbl_8064D518;
-extern u32 lbl_8064D528;
+extern u32 salDspIsDone;
+extern u32 salDspInitIsDone;
 
-void fn_801CDED8(void)
+void dspInitCallback(void)
 {
-    lbl_8064D518 = 1;
-    lbl_8064D528 = 1;
+    salDspIsDone = 1;
+    salDspInitIsDone = 1;
 }

@@ -17,14 +17,14 @@ typedef struct TRKExceptionStatus {
 extern TRKExceptionStatus gTRKExceptionStatus_8024A864;
 extern u8 gTRKCPUState[];
 
-extern unsigned int fn_800F5030(unsigned int address);
-extern DSError fn_800F4E0C(u32 address, u32 length, BOOL readOnly);
-extern unsigned int fn_800F36A0(void);
-extern void fn_800F36B0(void *destination, const void *source, unsigned int length,
+extern unsigned int TRKTargetTranslate(unsigned int address);
+extern DSError TRKValidMemory32(u32 address, u32 length, BOOL readOnly);
+extern unsigned int __TRK_get_MSR(void);
+extern void TRK_ppc_memcpy(void *destination, const void *source, unsigned int length,
                         unsigned int read_msr, unsigned int write_msr);
-extern void fn_800F35AC(void *address, unsigned int length);
+extern void TRK_flush_cache(void *address, unsigned int length);
 
-DSError fn_800F4CC0(register void *dataArg, register u32 startArg,
+DSError TRKTargetAccessMemory(register void *dataArg, register u32 startArg,
                     register u32 *lengthArg, int accessOptions,
                     register BOOL readArg)
 {
@@ -46,21 +46,21 @@ DSError fn_800F4CC0(register void *dataArg, register u32 startArg,
 
     gTRKExceptionStatus_8024A864.exceptionDetected = 0;
 
-    addr = (void *)fn_800F5030(start);
-    error = fn_800F4E0C((u32)addr, *length, read == 0);
+    addr = (void *)TRKTargetTranslate(start);
+    error = TRKValidMemory32((u32)addr, *length, read == 0);
 
     if (error != 0) {
         *length = 0;
     } else {
-        target_msr = fn_800F36A0();
+        target_msr = __TRK_get_MSR();
         trans_msr = target_msr | (*(u32 *)(gTRKCPUState + 0x1F8) & 0x10);
         if (read) {
-            fn_800F36B0(data, addr, *length, target_msr, trans_msr);
+            TRK_ppc_memcpy(data, addr, *length, target_msr, trans_msr);
         } else {
-            fn_800F36B0(addr, data, *length, trans_msr, target_msr);
-            fn_800F35AC(addr, *length);
+            TRK_ppc_memcpy(addr, data, *length, trans_msr, target_msr);
+            TRK_flush_cache(addr, *length);
             if ((void *)start != addr) {
-                fn_800F35AC((void *)start, *length);
+                TRK_flush_cache((void *)start, *length);
             }
         }
     }

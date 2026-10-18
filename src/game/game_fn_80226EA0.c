@@ -14,7 +14,7 @@ extern GXData *gx;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80226EA0(u16 left, u16 top, u16 width, u16 height)
+void GXSetTexCopySrc(u16 left, u16 top, u16 width, u16 height)
 {
     gx->cpTexSrc = 0;
     SET_REG_FIELD(gx->cpTexSrc, 10, 0, left);

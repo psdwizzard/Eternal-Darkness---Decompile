@@ -12,7 +12,7 @@ typedef struct Candidate {
 extern int fn_8003B794(void *, Candidate *, int, void *);
 extern int fn_8003B878(const void *, const void *);
 extern int fn_80066D80(void *, int);
-extern void fn_800FBE38(void *, unsigned long, unsigned long, int (*)(const void *, const void *));
+extern void qsort(void *, unsigned long, unsigned long, int (*)(const void *, const void *));
 extern void *fn_8011F130(void *);
 extern int fn_80135D80(Vec3 *, Vec3 *, Vec3 *, Vec3 *, void *, void *, unsigned char, unsigned char, float);
 extern unsigned int fn_80178E94(void *, void *);
@@ -113,7 +113,7 @@ int fn_8003AD00(void *obj, void *target, void *area, int *outId, int *outBit) {
         i = 0;
         found = 0;
         if (count > 1) {
-            fn_800FBE38(list, count, sizeof(Candidate), fn_8003B878);
+            qsort(list, count, sizeof(Candidate), fn_8003B878);
         }
         if (list[0].id == areaId) {
             list[0].hit = 1 << bit;

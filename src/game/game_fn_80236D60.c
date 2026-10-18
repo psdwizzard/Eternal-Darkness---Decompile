@@ -15,7 +15,7 @@ typedef struct AudioQueue {
 extern AudioQueue lbl_806481D8;
 extern s32 lbl_8064DC4C;
 
-extern int fn_8020D318(void*, void**, int);
+extern int OSReceiveMessage(void*, void**, int);
 extern u8* fn_80236AF8(u8*, s32);
 extern void fn_80237224(s32);
 
@@ -29,7 +29,7 @@ void fn_80236D60(void) {
 
         /* ASM: or (mr) keeps the retail register copy where C emits addi. */
         asm { or queue, queueAddress, queueAddress }
-        fn_8020D318(queue, &message, 1);
+        OSReceiveMessage(queue, &message, 1);
         request = (AudioRequest*)message;
         switch (request->type) {
         case 3: {

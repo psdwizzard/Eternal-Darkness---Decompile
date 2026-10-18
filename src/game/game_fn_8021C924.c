@@ -1,4 +1,4 @@
-/* fn_8021C924: TimeoutHandler (Dolphin SDK CARDBios.c). */
+/* TimeoutHandler: TimeoutHandler (Dolphin SDK CARDBios.c). */
 
 typedef unsigned char u8;
 typedef signed int s32;
@@ -15,18 +15,18 @@ typedef struct CardControl {
     u8 alarm[0x30];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
-extern EXICallback fn_80206ED4(s32 chan, EXICallback exiCallback);
+extern EXICallback EXISetExiCallback(s32 chan, EXICallback exiCallback);
 
-void fn_8021C924(void *alarm, void *context)
+void TimeoutHandler(void *alarm, void *context)
 {
     s32 chan;
     CardControl *card;
     CardCallback callback;
 
     for (chan = 0; chan < 2; ++chan) {
-        card = &lbl_80641C60[chan];
+        card = &__CARDBlock[chan];
         if (alarm == &card->alarm) {
             break;
         }
@@ -36,7 +36,7 @@ void fn_8021C924(void *alarm, void *context)
         return;
     }
 
-    fn_80206ED4(chan, 0);
+    EXISetExiCallback(chan, 0);
     callback = card->exiCallback;
     if (callback) {
         card->exiCallback = 0;

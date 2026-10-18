@@ -16,7 +16,7 @@ typedef struct GXLightObjInt {
     f32 ldir[3];
 } GXLightObjInt;
 
-void fn_80227BE0(GXLightObjInt *obj, GXColor color)
+void GXInitLightColor(GXLightObjInt *obj, GXColor color)
 {
     obj->Color = ((u32)color.r << 24) | ((u32)color.g << 16) |
                  ((u32)color.b << 8) | color.a;

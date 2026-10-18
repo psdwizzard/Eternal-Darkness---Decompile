@@ -20,7 +20,7 @@ volatile u32 __EXIRegs[15] : 0xCC006800;
 #define REG(chan, index) (__EXIRegs[(chan) * 5 + (index)])
 
 /* Select device 0 on channel 2 at the given frequency (EXISelect). */
-s32 fn_8022DF68(u32 freq)
+s32 AmcEXISelect(u32 freq)
 {
     volatile u32 *state;
     int enabled;

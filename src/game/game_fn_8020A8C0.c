@@ -23,7 +23,7 @@ extern u64 __OSTimeToSystemTime(u64 time);
 extern void InsertAlarm_8020A608(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler);
 
 /* OSSetPeriodicAlarm */
-void fn_8020A8C0(OSAlarm* alarm, OSTime start, OSTime period, OSAlarmHandler handler)
+void OSSetPeriodicAlarm(OSAlarm* alarm, OSTime start, OSTime period, OSAlarmHandler handler)
 {
     BOOL enabled;
 

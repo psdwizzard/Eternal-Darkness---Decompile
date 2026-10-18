@@ -4,11 +4,11 @@ typedef struct Value {
     void** pointer;
 } Value;
 
-extern Value* fn_8016A55C(void*, int);
+extern Value* luaA_indexAcceptable(void*, int);
 
-void* fn_8016A784(void* context, int index)
+void* lua_touserdata(void* context, int index)
 {
-    Value* value = fn_8016A55C(context, index);
+    Value* value = luaA_indexAcceptable(context, index);
     int invalid = value == 0 || value->type != 0;
     return invalid ? 0 : value->pointer[1];
 }

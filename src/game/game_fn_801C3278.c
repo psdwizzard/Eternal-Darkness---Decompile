@@ -31,10 +31,10 @@ typedef struct VirtualSamples {
 } VirtualSamples;
 
 static VirtualSamples vs;
-extern u32 fn_801CDD00(u8, u32*);
-extern void fn_801CCAC4(u32, u32, u32);
-extern u16 fn_801CCB0C(u32);
-extern u8 fn_801CCAF8(u32);
+extern u32 aramGetStreamBufferAddress(u8, u32*);
+extern void hwSetVirtualSampleLoopBuffer(u32, u32, u32);
+extern u16 hwGetSampleID(u32);
+extern u8 hwGetSampleType(u32);
 
 static inline void vsFreeBuffer(u8 entryIndex)
 {
@@ -76,7 +76,7 @@ static inline u16 vsNewInstanceID(void)
     return instID;
 }
 
-u32 fn_801C3278(u8 voiceID)
+u32 vsSampleStartNotify(u8 voiceID)
 {
     u8 sb;
     u8 i;
@@ -91,19 +91,19 @@ u32 fn_801C3278(u8 voiceID)
 
     sb = vs.voices[voiceID] = vsAllocateBuffer();
     if (sb != 0xFF) {
-        addr = fn_801CDD00(vs.voices[voiceID], 0);
-        fn_801CCAC4(voiceID, addr, vs.bufferLength);
-        vs.streamBuffer[sb].info.smpID = fn_801CCB0C(voiceID);
+        addr = aramGetStreamBufferAddress(vs.voices[voiceID], 0);
+        hwSetVirtualSampleLoopBuffer(voiceID, addr, vs.bufferLength);
+        vs.streamBuffer[sb].info.smpID = hwGetSampleID(voiceID);
         vs.streamBuffer[sb].info.instID = vsNewInstanceID();
-        vs.streamBuffer[sb].smpType = fn_801CCAF8(voiceID);
+        vs.streamBuffer[sb].smpType = hwGetSampleType(voiceID);
         vs.streamBuffer[sb].voice = voiceID;
         if (vs.callback != 0) {
             vs.callback(0, &vs.streamBuffer[sb].info);
             return (vs.streamBuffer[sb].info.instID << 8) | voiceID;
         }
-        fn_801CCAC4(voiceID, 0, 0);
+        hwSetVirtualSampleLoopBuffer(voiceID, 0, 0);
     } else {
-        fn_801CCAC4(voiceID, 0, 0);
+        hwSetVirtualSampleLoopBuffer(voiceID, 0, 0);
     }
 
     return 0xFFFFFFFF;

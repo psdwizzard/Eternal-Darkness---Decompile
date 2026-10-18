@@ -10,7 +10,7 @@ extern int fn_8015C9F0(void);
 extern u32 fn_8015E780(void);
 extern void* fn_801552AC(void*);
 extern void *fn_80156938();
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_80179B08(void*, void*);
 extern void fn_80154D24(void*, void*, void*);
 
@@ -41,7 +41,7 @@ void fn_80155158(void* work)
         void* effect = fn_801552AC(data);
         if (effect != 0) {
             *(void**)(data + 0x94) = fn_80156938(effect);
-            *(u16*)(data + 0xB4) = (fn_800FBFB0() & 0xFFF) + 1000;
+            *(u16*)(data + 0xB4) = (rand() & 0xFFF) + 1000;
             *(u8*)(data + 0xBA) = 1;
         } else {
             fn_80149E28(work);
@@ -52,7 +52,7 @@ void fn_80155158(void* work)
     if (count == 0) {
         a.word = lbl_8065060C;
         a.half = lbl_80650610;
-        random = fn_800FBFB0();
+        random = rand();
         count = *(u16*)(data + 0x64);
         selected = ((u16*)(data + 0x24))[random % count];
         entry = *(char**)(data + 0x14) + selected * 24;
@@ -60,7 +60,7 @@ void fn_80155158(void* work)
         b.half = *(u16*)(entry + 4);
         fn_80179B08(&b, c);
         fn_80154D24(c, &a, buffer);
-        *(u16*)(data + 0xB4) = (fn_800FBFB0() & 0x7FF) + 60;
+        *(u16*)(data + 0xB4) = (rand() & 0x7FF) + 60;
     } else {
         *(u16*)(data + 0xB4) = count - 1;
     }

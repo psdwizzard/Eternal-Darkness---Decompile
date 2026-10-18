@@ -16,7 +16,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022A094(s32 operation, s32 format, s32 bias)
+void GXSetZTexture(s32 operation, s32 format, s32 bias)
 {
     u32 zenv0, zenv1;
 

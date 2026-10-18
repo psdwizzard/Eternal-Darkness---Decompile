@@ -20,7 +20,7 @@ typedef struct Entry {
     u8 pad34[0xAC];
 } Entry;
 
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void *fn_80201B8C(u8 *object);
 extern Entry *fn_80072354(s32 index);
 extern s32 fn_800360B0(void *object, u16 *flags);
@@ -34,7 +34,7 @@ void fn_80073AE8(s32 context, s32 *action, s16 *value, u8 *type)
     s32 random;
     Entry *entry;
 
-    random = (s32)fn_800FBFB0() % 100;
+    random = (s32)rand() % 100;
     *action = -1;
     *type = 0;
     entry = fn_80072354(((ObjectData *)fn_80201B8C((u8 *)context))->entryIndex);
@@ -62,7 +62,7 @@ void fn_80073AE8(s32 context, s32 *action, s16 *value, u8 *type)
     } else {
         if (random <= chance) {
             *action = 4;
-            if (fn_800FBFB0() & 1) {
+            if (rand() & 1) {
                 *action = 5;
             }
             *type = entry->specialType;

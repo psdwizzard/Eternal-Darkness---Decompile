@@ -1,3 +1,3 @@
-int fn_80236308(void) {
+int time0_inverse(void) {
     return 0;
 }

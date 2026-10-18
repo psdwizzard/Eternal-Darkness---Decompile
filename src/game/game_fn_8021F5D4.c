@@ -1,4 +1,4 @@
-/* fn_8021F5D4: CARD VerifyDir (SDK CARDCheck.c) with __CARDCheckSum inlined. */
+/* VerifyDir: CARD VerifyDir (SDK CARDCheck.c) with __CARDCheckSum inlined. */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
@@ -47,7 +47,7 @@ static inline void __CARDCheckSum(void *ptr, int length, u16 *checksum, u16 *che
     }
 }
 
-s32 fn_8021F5D4(CARDControl *card, int *outCurrent)
+s32 VerifyDir(CARDControl *card, int *outCurrent)
 {
     CARDDir *dir[2];
     CARDDirCheck *check[2];

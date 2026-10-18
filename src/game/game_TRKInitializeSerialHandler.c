@@ -8,12 +8,12 @@ typedef struct TRKSerialState {
     int count;
 } TRKSerialState;
 
-extern TRKSerialState lbl_80329FC4;
+extern TRKSerialState gTRKFramingState;
 
 int TRKInitializeSerialHandler(void)
 {
-    lbl_80329FC4.buffer_id = -1;
-    lbl_80329FC4.state = 0;
-    lbl_80329FC4.count = 0;
+    gTRKFramingState.buffer_id = -1;
+    gTRKFramingState.state = 0;
+    gTRKFramingState.count = 0;
     return 0;
 }

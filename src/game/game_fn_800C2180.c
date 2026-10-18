@@ -6,7 +6,7 @@ typedef int (*Fn80130428Callback)(void *);
 extern int fn_800460EC(void);
 extern void *fn_8004918C(void);
 extern void *fn_80049194(void);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern int fn_8011EB04(Object *);
 extern int fn_8011EB14(Object *);
 extern int fn_80128EAC(void *);
@@ -42,7 +42,7 @@ int fn_800C2180(void *object, int mode) {
     if (mode != 0) {
         if (fn_80128EAC(obj) == 0xF) {
             entry = fn_80201814(fn_80201A84(obj));
-            level = fn_800FBFB0() & 0xFF;
+            level = rand() & 0xFF;
             isSpecial = fn_80201B64((int *)entry) == 0x52;
             notExcluded = 1;
             if (fn_80201B64((int *)entry) != 0x45 && fn_80201B64((int *)entry) != 0x43) {

@@ -30,7 +30,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
         GX_WRITE_U32(v);    \
     } while (0)
 
-void fn_802272F8(u8 aa, u8 sample_pattern[12][2], u8 vf, u8 vfilter[7])
+void GXSetCopyFilter(u8 aa, u8 sample_pattern[12][2], u8 vf, u8 vfilter[7])
 {
     u32 samples[4];
     u32 filter0;

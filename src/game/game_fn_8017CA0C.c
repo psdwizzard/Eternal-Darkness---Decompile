@@ -6,19 +6,19 @@ extern SlotInfo lbl_8064A6C8[];
 extern SlotData lbl_8064A6F0[];
 extern char lbl_80251070[];
 extern char lbl_8025108C[];
-extern int fn_80222984(u8, int, SlotData*);
-extern int fn_802226E4(u8, int, SlotData*);
+extern int CARDSetStatus(u8, int, SlotData*);
+extern int CARDGetStatus(u8, int, SlotData*);
 extern void fn_8017BA60(char*, int);
 
 void fn_8017CA0C(Request* request)
 {
     switch (request->result) {
     case 0:
-        request->result = fn_80222984(request->value,
+        request->result = CARDSetStatus(request->value,
                                      lbl_8064A6C8[request->value].field_04,
                                      &lbl_8064A6F0[request->value]);
         if (request->result == 0) {
-            fn_802226E4(request->value,
+            CARDGetStatus(request->value,
                         lbl_8064A6C8[request->value].field_04,
                         &lbl_8064A6F0[request->value]);
             request->state = 2;
@@ -31,7 +31,7 @@ void fn_8017CA0C(Request* request)
     default:
         fn_8017BA60(lbl_80251070, request->result);
         request->state = 2;
-        request->result = fn_80222984(request->value,
+        request->result = CARDSetStatus(request->value,
                                      lbl_8064A6C8[request->value].field_04,
                                      &lbl_8064A6F0[request->value]);
         fn_8017BA60(lbl_8025108C, request->result);

@@ -6,10 +6,10 @@ extern void fn_801082D4(void*);
 extern int fn_801083B4(void*, int);
 extern int fn_80108470(void);
 extern void fn_80108478(void);
-extern int fn_800FD1E8(const char*, void*, unsigned long);
-extern u32 fn_8021A370(void);
-extern void fn_80106A8C(void*, void*);
-extern u32 fn_80106AC0(void*);
+extern int strncmp(const char*, void*, unsigned long);
+extern u32 AIGetDSPSampleRate(void);
+extern void HVQM4InitSeqObj(void*, void*);
+extern u32 HVQM4BuffSize(void*);
 extern void* memset(void*, int, unsigned long);
 extern unsigned long strlen(const char*);
 extern const char lbl_8023A268[];
@@ -32,7 +32,7 @@ int fn_801098C0(void* source, void* state)
     if (fn_801083B4(state, 0x44) == -1) {
         return 1;
     }
-    if (fn_800FD1E8(lbl_8023A268, state, strlen(lbl_8023A268)) != 0) {
+    if (strncmp(lbl_8023A268, state, strlen(lbl_8023A268)) != 0) {
         return 1;
     }
 
@@ -40,14 +40,14 @@ int fn_801098C0(void* source, void* state)
     format = U32(state, 0x40);
     if (format != 0) {
         if (format == 0xBBAA) {
-            if (fn_8021A370() != 1) {
+            if (AIGetDSPSampleRate() != 1) {
                 fn_80108478();
                 while (fn_80108470() != 0) {}
                 return 1;
             }
             U8(state, 0x1AF) = 1;
         } else if (format == 0x7D1C) {
-            if (fn_8021A370() != 0) {
+            if (AIGetDSPSampleRate() != 0) {
                 fn_80108478();
                 while (fn_80108470() != 0) {}
                 return 1;
@@ -60,8 +60,8 @@ int fn_801098C0(void* source, void* state)
         }
     }
 
-    fn_80106A8C((u8*)state + 0xA0, (u8*)state + 0x34);
-    if (fn_80106AC0((u8*)state + 0xA0) == 0) {
+    HVQM4InitSeqObj((u8*)state + 0xA0, (u8*)state + 0x34);
+    if (HVQM4BuffSize((u8*)state + 0xA0) == 0) {
         return 1;
     }
 

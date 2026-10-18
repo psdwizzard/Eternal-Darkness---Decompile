@@ -10,13 +10,13 @@ typedef struct List {
     Node* head;
 } List;
 
-extern void fn_80161428(void*);
+extern void protomark(void*);
 
-void fn_8016160C(List* list, Node* node)
+void markclosure(List* list, Node* node)
 {
     if (node->next == node) {
         if (node->count == 0)
-            fn_80161428(node->object);
+            protomark(node->object);
         node->next = list->head;
         list->head = node;
     }

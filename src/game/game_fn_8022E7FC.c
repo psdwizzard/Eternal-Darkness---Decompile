@@ -9,7 +9,7 @@ typedef struct oggpack_buffer {
     s32 storage;
 } oggpack_buffer;
 
-s32 fn_8022E7FC(oggpack_buffer *b) {
+s32 oggpack_read1(oggpack_buffer *b) {
     s32 ret;
 
     if (b->endbyte >= b->storage) {

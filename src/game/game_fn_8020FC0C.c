@@ -37,8 +37,8 @@ struct OSMutex {
 
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
-extern s32 fn_8020F3D0(OSThread *thread);
-extern OSThread *fn_8020F40C(OSThread *thread, s32 priority);
+extern s32 __OSGetEffectivePriority(OSThread *thread);
+extern OSThread *SetEffectivePriority(OSThread *thread, s32 priority);
 extern void SelectThread_8020F61C(s32 yield);
 extern volatile u32 RunQueueBits_8064D988;
 extern volatile s32 RunQueueHint_8064D98C;
@@ -67,16 +67,16 @@ static inline void UpdatePriority(OSThread *thread)
         if (0 < thread->suspend) {
             break;
         }
-        priority = fn_8020F3D0(thread);
+        priority = __OSGetEffectivePriority(thread);
         if (thread->priority == priority) {
             break;
         }
-        thread = fn_8020F40C(thread, priority);
+        thread = SetEffectivePriority(thread, priority);
     } while (thread);
 }
 
 /* OSResumeThread */
-s32 fn_8020FC0C(OSThread *thread)
+s32 OSResumeThread(OSThread *thread)
 {
     s32 enabled;
     s32 suspendCount;

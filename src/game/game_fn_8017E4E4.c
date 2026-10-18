@@ -24,7 +24,7 @@ extern void* fn_8015C2FC(int);
 extern void fn_8017DCE8(Vec3*, Vec3*, float);
 extern void fn_8013F3C0(Shape*, Vec3*, Vec3*, float);
 extern int fn_80142808(void*, Shape*, Contact*, float, float);
-extern void fn_80211A48(Shape*, Vec3*, Vec3*);
+extern void PSVECAdd(Shape*, Vec3*, Vec3*);
 extern void fn_8013F600(Contact*, Vec3*, float*);
 extern int fn_8013F680(Vec3*);
 
@@ -49,7 +49,7 @@ u16 fn_8017E4E4(Vec3* position, Vec3* velocity, float acceleration,
         velocity->x = speed * (shape.axis.x * shape.length);
         velocity->y = speed * (shape.axis.y * shape.length);
         velocity->z = speed * (shape.axis.z * shape.length);
-        fn_80211A48(&shape, velocity, position);
+        PSVECAdd(&shape, velocity, position);
         break;
     case 3:
         result |= 1;

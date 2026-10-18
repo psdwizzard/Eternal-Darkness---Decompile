@@ -15,17 +15,17 @@ typedef struct CardControl {
     u8 reserved28[0xE8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern s32 lbl_802FECE0[];
+extern CardControl __CARDBlock[];
+extern s32 SectorSizeTable[];
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern s32 fn_80207144(s32 channel);
-extern u32 fn_80207C88(s32 channel);
-extern s32 fn_80207CC8(s32 channel, u32 device, u32 *id);
-extern s32 fn_80220130(u32 id);
+extern s32 EXIProbeEx(s32 channel);
+extern u32 EXIGetState(s32 channel);
+extern s32 EXIGetID(s32 channel, u32 device, u32 *id);
+extern s32 IsCard(u32 id);
 
 /* CARDProbeEx */
-s32 fn_80220234(s32 chan, s32 *memSize, s32 *sectorSize)
+s32 CARDProbeEx(s32 chan, s32 *memSize, s32 *sectorSize)
 {
     CardControl *card;
     BOOL enabled;
@@ -40,10 +40,10 @@ s32 fn_80220234(s32 chan, s32 *memSize, s32 *sectorSize)
         return -3;
     }
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     enabled = OSDisableInterrupts();
 
-    probe = fn_80207144(chan);
+    probe = EXIProbeEx(chan);
     if (probe == -1) {
         result = -3;
     } else if (probe == 0) {
@@ -60,16 +60,16 @@ s32 fn_80220234(s32 chan, s32 *memSize, s32 *sectorSize)
             }
             result = 0;
         }
-    } else if (fn_80207C88(chan) & 8) {
+    } else if (EXIGetState(chan) & 8) {
         result = -2;
-    } else if (!fn_80207CC8(chan, 0, &id)) {
+    } else if (!EXIGetID(chan, 0, &id)) {
         result = -1;
-    } else if (fn_80220130(id)) {
+    } else if (IsCard(id)) {
         if (memSize) {
             *memSize = (s32)(id & 0xFC);
         }
         if (sectorSize) {
-            *sectorSize = lbl_802FECE0[(id & 0x00003800) >> 11];
+            *sectorSize = SectorSizeTable[(id & 0x00003800) >> 11];
         }
         result = 0;
     } else {

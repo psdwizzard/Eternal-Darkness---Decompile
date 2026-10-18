@@ -6,9 +6,9 @@ struct InputStream {
     int (*refill)(InputStream*);
 };
 
-extern void fn_80167D80(void*, InputStream*);
+extern void unexpectedEOZ(void*, InputStream*);
 
-int fn_80167DC8(void* object, InputStream* input)
+int ezgetc(void* object, InputStream* input)
 {
     int result;
 
@@ -19,7 +19,7 @@ int fn_80167DC8(void* object, InputStream* input)
     }
 
     if (result == -1) {
-        fn_80167D80(object, input);
+        unexpectedEOZ(object, input);
     }
     return result;
 }

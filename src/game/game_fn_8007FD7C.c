@@ -40,7 +40,7 @@ extern float lbl_8064EA60;
 extern void *fn_80201ADC(void);
 extern int fn_80201EB8(void *);
 extern void *fn_80201BC8(void *);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern Room *fn_8015C28C(int);
 extern u16 fn_80050730(int type, int mode, u8 *out_level, u8 *out_flags,
                        u16 *out_time, u32 *out_value);
@@ -83,7 +83,7 @@ void fn_8007FD7C(void)
         return;
     }
     if (lbl_8064C900 == 0) {
-        lbl_8064C900 = (fn_800FBFB0() & 0x1FFF) + 0x2A30;
+        lbl_8064C900 = (rand() & 0x1FFF) + 0x2A30;
         room = fn_8015C28C(2);
         if (room->active != 0 && room->loaded != 0) {
             spawnType = fn_80050730(0x50, 0, 0, 0, 0, 0);
@@ -102,7 +102,7 @@ void fn_8007FD7C(void)
                     u16 seen;
                     chosen = 0;
                     seen = 0;
-                    pick = fn_800FBFB0() % matches;
+                    pick = rand() % matches;
                     for (j = 0; j < count; j++) {
                         if (spawns[j].id == type) {
                             if (++seen == pick) {

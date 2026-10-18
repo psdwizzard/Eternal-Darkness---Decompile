@@ -14,24 +14,24 @@ typedef struct TRKEventQueue {
     u32 next_id;
 } TRKEventQueue;
 
-extern TRKEventQueue lbl_803285E0;
-extern void fn_800F34C4(void *);
-extern void fn_800F34BC(void *);
-extern void fn_80003130(void *, const void *, u32);
+extern TRKEventQueue gTRKEventQueue;
+extern void TRKAcquireMutex(void *);
+extern void TRKReleaseMutex(void *);
+extern void TRK_memcpy(void *, const void *, u32);
 
 int TRKGetNextEvent(TRKEvent *event)
 {
     int result = 0;
 
-    fn_800F34C4(&lbl_803285E0);
-    if (lbl_803285E0.count > 0) {
-        fn_80003130(event, &lbl_803285E0.events[lbl_803285E0.next], 12);
-        lbl_803285E0.count--;
-        lbl_803285E0.next++;
-        if (lbl_803285E0.next == 2)
-            lbl_803285E0.next = 0;
+    TRKAcquireMutex(&gTRKEventQueue);
+    if (gTRKEventQueue.count > 0) {
+        TRK_memcpy(event, &gTRKEventQueue.events[gTRKEventQueue.next], 12);
+        gTRKEventQueue.count--;
+        gTRKEventQueue.next++;
+        if (gTRKEventQueue.next == 2)
+            gTRKEventQueue.next = 0;
         result = 1;
     }
-    fn_800F34BC(&lbl_803285E0);
+    TRKReleaseMutex(&gTRKEventQueue);
     return result;
 }

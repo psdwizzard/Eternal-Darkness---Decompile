@@ -45,10 +45,10 @@ extern void fn_8013915C(void);
 extern void* fn_801397F8(u32*, int, int, int);
 extern void fn_80139940(int);
 extern void fn_8015E9EC(u32, void*, u32);
-extern int fn_80213320(int, void*);
-extern int fn_802137F4(void*, void*, u32, u32, int);
-extern int fn_80213704(void*, void*, u32, u32, void*, int);
-extern void fn_8021345C(void*);
+extern int DVDFastOpen(int, void*);
+extern int DVDReadPrio(void*, void*, u32, u32, int);
+extern int DVDReadAsyncPrio(void*, void*, u32, u32, void*, int);
+extern void DVDClose(void*);
 
 void fn_801392A8(int index, int async)
 {
@@ -74,21 +74,21 @@ void fn_801392A8(int index, int async)
         fn_8013915C();
         fn_80139940(0);
     } else if (lbl_805AE780.file != -1 &&
-               fn_80213320(lbl_805AE780.file, lbl_805AE020.slots[index].handle)) {
+               DVDFastOpen(lbl_805AE780.file, lbl_805AE020.slots[index].handle)) {
         fn_801397F8(0, 1, 1, 2);
         if (async == 0) {
             async = entry_data;
             do {
-            } while (fn_802137F4(lbl_805AE020.slots[index].handle, data, amount,
+            } while (DVDReadPrio(lbl_805AE020.slots[index].handle, data, amount,
                                   async, 2) == -1);
             fn_80138FE4(index, (u32)data + amount);
             fn_8013915C();
-            fn_8021345C(lbl_805AE020.slots[index].handle);
+            DVDClose(lbl_805AE020.slots[index].handle);
             fn_80139940(0);
         } else {
             async = entry_data;
             do {
-            } while (fn_80213704(lbl_805AE020.slots[index].handle, data, amount,
+            } while (DVDReadAsyncPrio(lbl_805AE020.slots[index].handle, data, amount,
                                   async,
                                   fn_801390D4, 2) == 0);
         }

@@ -1,4 +1,4 @@
-int fn_8015F0C0(int value)
+int invertjump(int value)
 {
     switch (value) {
     case 32:

@@ -1,6 +1,6 @@
-extern double fn_80101988(double value);
+extern double cos(double value);
 
-float fn_80048C50(float value)
+float cosf(float value)
 {
-    return fn_80101988(value);
+    return cos(value);
 }

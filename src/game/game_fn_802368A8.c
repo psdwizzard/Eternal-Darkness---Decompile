@@ -22,7 +22,7 @@ typedef struct StreamPair {
 
 extern StreamPair lbl_8064A548;
 extern s32 lbl_8064DC38;
-extern u32 fn_801BB1A0(u32 id);
+extern u32 sndStreamActivate(u32 id);
 
 void fn_802368A8(void)
 {
@@ -45,13 +45,13 @@ void fn_802368A8(void)
             stw r0, 0x14(streams)
             stw r0, 0x30(streams)
         }
-        fn_801BB1A0(streams->first.handle);
+        sndStreamActivate(streams->first.handle);
         /* ASM: lis/addi reload the stream pair address after the call;
          * MWCC otherwise retains it in a callee-saved register. */
         asm {
             lis secondStreams, lbl_8064A548@ha
             addi secondStreams, secondStreams, lbl_8064A548@l
         }
-        fn_801BB1A0(secondStreams->second.handle);
+        sndStreamActivate(secondStreams->second.handle);
     }
 }

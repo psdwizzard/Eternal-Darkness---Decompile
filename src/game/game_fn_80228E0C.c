@@ -24,7 +24,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define GX_WRITE_RAS_REG(v) \
     do { GXWGFifo.u8 = 0x61; GXWGFifo.u32 = (u32)(v); } while (0)
 
-void fn_80228E0C(u32 tmap, u32 tcoord)
+void __SetSURegs(u32 tmap, u32 tcoord)
 {
     u32 w, h;
     u8 s_bias, t_bias;

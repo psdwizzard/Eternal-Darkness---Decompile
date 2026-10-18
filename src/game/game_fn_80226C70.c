@@ -19,7 +19,7 @@ typedef union {
 volatile GXFifo GXWGFifo : 0xCC008000;
 
 /* GXSetPointSize: set point size and the texture-coordinate offset. */
-void fn_80226C70(u8 size, int texOffset)
+void GXSetPointSize(u8 size, int texOffset)
 {
     gx->lpSize = (gx->lpSize & ~0xFF00UL) | ((size << 8) & 0xFF00);
     gx->lpSize = (gx->lpSize & ~0x380000UL) | ((u32)texOffset << 19);

@@ -14,7 +14,7 @@ extern u32 lbl_8064D858[2];
 extern char lbl_802FC880[];
 extern char lbl_802FC8AC[];
 
-extern void fn_800F8BAC(const char*, const char*, int);
+extern void __assertion_failed(const char*, const char*, int);
 
 void fn_801FEB54(int frame, int effects, int particles, int trails,
                  int textures, int anims)
@@ -43,6 +43,6 @@ void fn_801FEB54(int frame, int effects, int particles, int trails,
     SLOT(lbl_8064D808) = base - address;
 
     if (SLOT(lbl_8064D808) >= 0x86470) {
-        fn_800F8BAC(lbl_802FC880, lbl_802FC8AC, 0x81);
+        __assertion_failed(lbl_802FC880, lbl_802FC8AC, 0x81);
     }
 }

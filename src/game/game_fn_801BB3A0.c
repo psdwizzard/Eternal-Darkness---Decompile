@@ -14,11 +14,11 @@ typedef struct StreamSlot {
 } StreamSlot;
 
 static StreamSlot streamInfo[64];
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern int fn_801B9D1C(u32);
-extern void fn_801C20C8(u32);
-void fn_801BB3A0(u32 id);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern int GetPrivateIndex(u32);
+extern void voiceUnblock(u32);
+void sndStreamDeactivate(u32 id);
 
 static inline u32 find_stream(u32 id)
 {
@@ -36,34 +36,34 @@ static inline void deactivate_linked(u32 id)
 {
     u32 i;
 
-    fn_801CE2B8();
-    i = fn_801B9D1C(id);
+    hwDisableIrq();
+    i = GetPrivateIndex(id);
     if (i != -1) {
         if (streamInfo[i].state == 1 || streamInfo[i].state == 2) {
-            fn_801C20C8(streamInfo[i].voice);
+            voiceUnblock(streamInfo[i].voice);
             streamInfo[i].state = 3;
         }
         if (streamInfo[i].cache != 0xFFFFFFFF) {
-            fn_801BB3A0(streamInfo[i].cache);
+            sndStreamDeactivate(streamInfo[i].cache);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }
 
-void fn_801BB3A0(u32 id)
+void sndStreamDeactivate(u32 id)
 {
     u32 i;
 
-    fn_801CE2B8();
+    hwDisableIrq();
     i = find_stream(id);
     if (i != -1) {
         if (streamInfo[i].state == 1 || streamInfo[i].state == 2) {
-            fn_801C20C8(streamInfo[i].voice);
+            voiceUnblock(streamInfo[i].voice);
             streamInfo[i].state = 3;
         }
         if (streamInfo[i].cache != 0xFFFFFFFF) {
             deactivate_linked(streamInfo[i].cache);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }

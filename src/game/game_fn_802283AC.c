@@ -2,7 +2,7 @@ typedef unsigned long u32;
 typedef unsigned short u16;
 
 /* Like GXGetTexBufferSize helpers: compute tile counts for a texture format. */
-void fn_802283AC(int fmt, u16 width, u16 height, u32* rowTiles, u32* colTiles, u32* cmpTiles) {
+void __GetImageTileCount(int fmt, u16 width, u16 height, u32* rowTiles, u32* colTiles, u32* cmpTiles) {
     u32 shiftX;
     u32 shiftY;
 

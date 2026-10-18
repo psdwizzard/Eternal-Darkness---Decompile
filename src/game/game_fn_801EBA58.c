@@ -10,8 +10,8 @@ extern void* memset(void*, int, u32);
 extern void fn_801EC318(void*, int, int, int);
 extern void fn_801EC350(void*, int, int, int, int);
 extern void DCInvalidateRange(void*, u32);
-extern volatile u32* fn_80224650(volatile u32*);
-extern void fn_80224754(void);
+extern volatile u32* GXRedirectWriteGatherPipe(volatile u32*);
+extern void GXRestoreWriteGatherPipe(void);
 
 void fn_801EBA58(void* enabled)
 {
@@ -33,7 +33,7 @@ void fn_801EBA58(void* enabled)
         fn_801EC318(image, 0x100, 0, 0x78);
         fn_801EC350(image, 0, 0, 0x101, 0x101);
         DCInvalidateRange((void*)lbl_8064D68C, 0x10000);
-        fifo = fn_80224650(lbl_8064D68C);
+        fifo = GXRedirectWriteGatherPipe(lbl_8064D68C);
 
         row = 0;
         base = image;
@@ -70,6 +70,6 @@ void fn_801EBA58(void* enabled)
             row += 4;
             base += 0x100;
         } while (row < 0x100);
-        fn_80224754();
+        GXRestoreWriteGatherPipe();
     }
 }

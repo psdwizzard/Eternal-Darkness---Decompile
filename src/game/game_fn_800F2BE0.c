@@ -1,6 +1,6 @@
-extern int lbl_80329FE0;
+extern int IsTRKConnected;
 
-void fn_800F2BE0(int value)
+void SetTRKConnected(int value)
 {
-    lbl_80329FE0 = value;
+    IsTRKConnected = value;
 }

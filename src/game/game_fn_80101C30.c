@@ -11,7 +11,7 @@ extern const double lbl_8064FE28;
 extern const double lbl_8064FE30;
 extern const double lbl_8064FE38;
 extern const double lbl_8064FE40;
-extern double fn_80101960(double magnitude, double sign);
+extern double copysign(double magnitude, double sign);
 
 static inline int classify(double value)
 {
@@ -30,7 +30,7 @@ static inline int classify(double value)
     }
 }
 
-double fn_80101C30(double value, int n)
+double ldexp(double value, int n)
 {
     DoubleBits *bits = (DoubleBits *)&value;
     int exponent;
@@ -56,15 +56,15 @@ double fn_80101C30(double value, int n)
         return bits->value + bits->value;
     exponent += n;
     if (exponent > 0x7FE)
-        return lbl_8064FE38 * fn_80101960(lbl_8064FE38, bits->value);
+        return lbl_8064FE38 * copysign(lbl_8064FE38, bits->value);
     if (exponent > 0) {
         bits->words.high = (high & 0x800FFFFF) | (exponent << 20);
         return bits->value;
     }
     if (exponent <= -54) {
         if (n > 50000)
-            return lbl_8064FE38 * fn_80101960(lbl_8064FE38, bits->value);
-        return lbl_8064FE30 * fn_80101960(lbl_8064FE30, bits->value);
+            return lbl_8064FE38 * copysign(lbl_8064FE38, bits->value);
+        return lbl_8064FE30 * copysign(lbl_8064FE30, bits->value);
     }
     exponent += 54;
     bits->words.high = (high & 0x800FFFFF) | (exponent << 20);

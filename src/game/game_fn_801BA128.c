@@ -1,11 +1,11 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-extern u32 lbl_8064D3CC;
+extern u32 synthFlags;
 
-void fn_801BA128(u8* first, u8* second)
+void CheckOutputMode(u8* first, u8* second)
 {
-    u32 flags = lbl_8064D3CC;
+    u32 flags = synthFlags;
 
     if (flags & 1) {
         *first = 0x40;

@@ -11,7 +11,7 @@ extern int fn_80201C48(void*);
 extern void *fn_80201814(int);
 extern u16 fn_800A30CC(void*);
 extern void fn_802045AC(void*, Vec3_800A3180*);
-extern void fn_80211A6C(Vec3_800A3180*, Vec3_800A3180*, Vec3_800A3180*);
+extern void PSVECSubtract(Vec3_800A3180*, Vec3_800A3180*, Vec3_800A3180*);
 extern int fn_800A4F44(Vec3_800A3180*, float);
 
 int fn_800A3180(void* object, Vec3_800A3180* target)
@@ -30,7 +30,7 @@ int fn_800A3180(void* object, Vec3_800A3180* target)
 
         radius = fn_800A30CC(object);
         fn_802045AC(object, &position);
-        fn_80211A6C(&position, target, &delta);
+        PSVECSubtract(&position, target, &delta);
         if (fn_800A4F44(&delta, radius) <= 0) {
             result = 1;
         }

@@ -38,7 +38,7 @@ extern void fn_80180554(void*, void*, void*, void*, u16, int);
 extern void fn_801805E0(void*, int, u8, u32, void*, float);
 extern void fn_80180518(void*, int, int);
 extern void fn_8018EFB0(void*, u16, int);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8018E230(void*, u8*, int, int, s8, u8);
 extern void fn_8018CB70(void*, u8, u16);
 extern void fn_8018CEC0(void*, u8);
@@ -85,9 +85,9 @@ void fn_80182514(u8* self, void* arg1, ShortCoord3* arg2, u8* desc)
         fn_8018EFB0(&work, *((u16*)(detail + 8)), 0);
         fn_8018EFB0(&work, *((u16*)(detail + 8)), 1);
         work.z *= detail[0xB];
-        work.z += detail[0xC] & fn_800FBFB0();
+        work.z += detail[0xC] & rand();
         fn_80180554(item, arg1, &work, &setup,
-                    *((u16*)(desc + 8)) + (fn_800FBFB0() & 0xF), 0);
+                    *((u16*)(desc + 8)) + (rand() & 0xF), 0);
         fn_801805E0(item->effect, 4, desc[1], ((u8)i & 0x3F) * 4,
                     &effect, lbl_806509C0);
         item++;

@@ -78,7 +78,7 @@ static inline s16 decode_symbol(register BitReader *reader)
 }
 
 /* Set the block modes, decoding luma and paired chroma symbols as needed. */
-void fn_80105350(register Decoder *decoder, register FrameContext *context,
+void decode_PB_cc(register Decoder *decoder, register FrameContext *context,
                  register s32 mode, register s32 flags)
 {
     register s32 base = (flags << 5) | (mode << 4);

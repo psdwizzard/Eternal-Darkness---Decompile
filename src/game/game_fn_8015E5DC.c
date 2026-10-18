@@ -48,7 +48,7 @@ extern void fn_80138860(int);
 extern int fn_80054844(int, int);
 extern ModeState* fn_8015C28C(int);
 extern void fn_80046B0C(ModeState*);
-extern u32 fn_8022658C(void);
+extern u32 GXReadDrawSync(void);
 extern void fn_8015C880(void);
 extern void fn_80159440(int, int);
 
@@ -82,7 +82,7 @@ void fn_8015E5DC(int active, int value)
                 fn_80046B0C(state);
         }
     } else {
-        while ((u16)fn_8022658C() == 0xCACE) {}
+        while ((u16)GXReadDrawSync() == 0xCACE) {}
         fn_8015C880();
         fn_80138860(0);
     }

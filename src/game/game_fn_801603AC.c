@@ -2,21 +2,21 @@ typedef struct Entry {
     int type;
 } Entry;
 
-extern char* fn_80160280(void*, Entry*, char**);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void* lbl_8023A878[];
+extern char* getobjname(void*, Entry*, char**);
+extern void luaO_verror(void*, const char*, ...);
+extern void* luaO_typenames[];
 extern char lbl_8024F504[];
 extern char lbl_8024F534[];
 
-void fn_801603AC(void* object, Entry* entry, char* text)
+void luaG_typeerror(void* object, Entry* entry, char* text)
 {
     char* value;
-    char* kind = fn_80160280(object, entry, &value);
-    void* descriptor = lbl_8023A878[entry->type];
+    char* kind = getobjname(object, entry, &value);
+    void* descriptor = luaO_typenames[entry->type];
 
     if (kind != 0) {
-        fn_80163BB4(object, lbl_8024F504, text, kind, value, descriptor);
+        luaO_verror(object, lbl_8024F504, text, kind, value, descriptor);
     } else {
-        fn_80163BB4(object, lbl_8024F534, text, descriptor);
+        luaO_verror(object, lbl_8024F534, text, descriptor);
     }
 }

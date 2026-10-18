@@ -29,25 +29,25 @@ typedef struct CARDControl {
     u8 reserved108[8];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
+extern CARDControl __CARDBlock[];
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL enabled);
-extern EXICallback fn_80206ED4(s32 channel, EXICallback callback);
-extern BOOL fn_80207304(s32 channel);
-extern void fn_8020A93C(OSAlarm *alarm);
+extern EXICallback EXISetExiCallback(s32 channel, EXICallback callback);
+extern BOOL EXIDetach(s32 channel);
+extern void OSCancelAlarm(OSAlarm *alarm);
 
 /* Detach the card's EXI connection and record the result (DoUnmount). */
-void fn_80220AB0(s32 channel, s32 result)
+void DoUnmount(s32 channel, s32 result)
 {
     CARDControl *card;
     BOOL enabled;
 
-    card = &lbl_80641C60[channel];
+    card = &__CARDBlock[channel];
     enabled = OSDisableInterrupts();
     if (card->attached) {
-        fn_80206ED4(channel, 0);
-        fn_80207304(channel);
-        fn_8020A93C(&card->alarm);
+        EXISetExiCallback(channel, 0);
+        EXIDetach(channel);
+        OSCancelAlarm(&card->alarm);
         card->attached = 0;
         card->result = result;
         card->mountStep = 0;

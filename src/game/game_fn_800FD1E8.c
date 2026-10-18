@@ -1,4 +1,4 @@
-int fn_800FD1E8(const char* left, const char* right, unsigned long count)
+int strncmp(const char* left, const char* right, unsigned long count)
 {
     const unsigned char* a = (const unsigned char*)left - 1;
     const unsigned char* b = (const unsigned char*)right - 1;

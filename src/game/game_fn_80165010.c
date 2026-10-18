@@ -4,28 +4,28 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F8E8[];
-extern int fn_80164120(Parser*);
-extern void fn_8015ECCC(Parser*, int);
+extern int checkname(Parser*);
+extern void luaK_kstr(Parser*, int);
 extern void fn_80163DA4(Parser*);
-extern void fn_801655CC(Parser*);
-extern void fn_80163E94(Parser*, int);
-extern void fn_8015EA7C(Parser*, char*);
+extern void exp1(Parser*);
+extern void check(Parser*, int);
+extern void luaK_error(Parser*, char*);
 
-void fn_80165010(Parser* parser)
+void recfield(Parser* parser)
 {
     switch (parser->token) {
     case 0x113:
-        fn_8015ECCC(parser, fn_80164120(parser));
+        luaK_kstr(parser, checkname(parser));
         break;
     case 0x5B:
         fn_80163DA4(parser);
-        fn_801655CC(parser);
-        fn_80163E94(parser, 0x5D);
+        exp1(parser);
+        check(parser, 0x5D);
         break;
     default:
-        fn_8015EA7C(parser, lbl_8024F8E8);
+        luaK_error(parser, lbl_8024F8E8);
         break;
     }
-    fn_80163E94(parser, 0x3D);
-    fn_801655CC(parser);
+    check(parser, 0x3D);
+    exp1(parser);
 }

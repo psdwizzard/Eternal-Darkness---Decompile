@@ -45,9 +45,9 @@ typedef struct Model {
 } Model;
 
 extern unsigned int fn_8011FAEC(void *object);
-extern void fn_80210FB0(Matrix m);
-extern unsigned int fn_802110A8(const Matrix src, Matrix dst);
-extern void fn_802114E0(Matrix m, const Quat *q);
+extern void PSMTXIdentity(Matrix m);
+extern unsigned int PSMTXInverse(const Matrix src, Matrix dst);
+extern void PSMTXQuat(Matrix m, const Quat *q);
 extern void fn_8012E3AC(void *track, Matrix m);
 extern const float lbl_80650188;
 
@@ -70,9 +70,9 @@ void fn_801279E8(Model *model, int index, Matrix m, int noOverride) {
         track = anims[index].track;
     } else {
         if (def->hasMtx != 0) {
-            fn_802110A8(def->mtx, m);
+            PSMTXInverse(def->mtx, m);
         } else {
-            fn_80210FB0(m);
+            PSMTXIdentity(m);
         }
         return;
     }
@@ -84,14 +84,14 @@ void fn_801279E8(Model *model, int index, Matrix m, int noOverride) {
         q = &model->rot[index];
         if (q->x == lbl_80650188 && q->y == lbl_80650188 && q->z == lbl_80650188 &&
             q->w == lbl_80650188) {
-            fn_80210FB0(m);
+            PSMTXIdentity(m);
         } else {
-            fn_802114E0(m, q);
+            PSMTXQuat(m, q);
         }
     } else if (def->hasMtx != 0) {
-        fn_802110A8(def->mtx, m);
+        PSMTXInverse(def->mtx, m);
     } else {
-        fn_80210FB0(m);
+        PSMTXIdentity(m);
     }
     if (flags & 2) {
         m[0][3] += model->trans[index].x;

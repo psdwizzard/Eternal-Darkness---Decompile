@@ -25,9 +25,9 @@ typedef struct {
 
 extern const char lbl_8023CBC8[];
 
-extern double fn_8016A694(void*, int);
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern double lua_tonumber(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80196578(void*);
 extern void fn_8018F81C(void*, u8);
 extern int fn_801D3974(s32);
@@ -49,13 +49,13 @@ s32 fn_80018CC4(void* script)
     ValuePair values;
 
     body = &descriptor.bytes[40];
-    count = (s32)fn_8016A694(script, 1);
-    if (fn_8016A598(script) != count + 2) {
-        fn_80163BB4(script, lbl_8023CBC8, count + 2, fn_8016A598(script));
+    count = (s32)lua_tonumber(script, 1);
+    if (lua_gettop(script) != count + 2) {
+        luaO_verror(script, lbl_8023CBC8, count + 2, lua_gettop(script));
         return 0;
     }
 
-    kind = (s32)fn_8016A694(script, 2);
+    kind = (s32)lua_tonumber(script, 2);
     fn_80196578(&descriptor);
     *(s16*)&descriptor.bytes[4] = -1;
     *(u16*)&descriptor.bytes[6] = 20;
@@ -97,7 +97,7 @@ s32 fn_80018CC4(void* script)
 
     for (i = 0; i < count; i++) {
         Vec3s* point = fn_80158ABC(
-            fn_8015C4A4(fn_800F5C54(fn_8016A694(script, i + 3)), 2),
+            fn_8015C4A4(fn_800F5C54(lua_tonumber(script, i + 3)), 2),
             2, 0);
         *(Vec3s*)&body[64] = *point;
         body += 6;

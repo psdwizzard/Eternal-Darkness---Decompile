@@ -27,10 +27,10 @@ extern s32 lbl_8064DC44;
 extern s32 lbl_8064DC58;
 extern s32 lbl_8064DC5C;
 
-extern void fn_801BB3A0(u32);
-extern u32 fn_801BB1A0(u32);
+extern void sndStreamDeactivate(u32);
+extern u32 sndStreamActivate(u32);
 extern u8 fn_801A9B94(u8, s32);
-extern void fn_801BA94C(u32, u8, u8, u8, u8, u8);
+extern void sndStreamMixParameterEx(u32, u8, u8, u8, u8, u8);
 
 static s32 fn_IsStreamActive(void) {
     s32 active = lbl_8064DC38 == 1;
@@ -58,9 +58,9 @@ static inline void fn_PauseStreams(void)
 
     if (lbl_8064DC38 != 0) {
         streams = streamPair();
-        fn_801BB3A0(streams->first.handle);
+        sndStreamDeactivate(streams->first.handle);
         streams = streamPair();
-        fn_801BB3A0(streams->second.handle);
+        sndStreamDeactivate(streams->second.handle);
         /* ASM: lis/li/addi/stb/stb/lbz/stb/lbz keep the address and zero
          * setup local; C retains the address across calls and reorders setup. */
         asm {
@@ -76,7 +76,7 @@ static inline void fn_PauseStreams(void)
         if (current != streams->first.newVolume) {
             volume = fn_801A9B94(streams->first.newVolume, 2);
             streams = streamPair();
-            fn_801BA94C(streams->first.handle, volume, streams->first.pan, 0, 0, 0);
+            sndStreamMixParameterEx(streams->first.handle, volume, streams->first.pan, 0, 0, 0);
         }
         streams = streamPair();
         streams->first.curVolume = streams->first.newVolume;
@@ -84,7 +84,7 @@ static inline void fn_PauseStreams(void)
         if (streams->second.curVolume != streams->second.newVolume) {
             volume = fn_801A9B94(streams->second.newVolume, 2);
             streams = streamPair();
-            fn_801BA94C(streams->second.handle, volume, streams->second.pan, 0, 0, 0);
+            sndStreamMixParameterEx(streams->second.handle, volume, streams->second.pan, 0, 0, 0);
         }
         streams = streamPair();
         streams->second.curVolume = streams->second.newVolume;
@@ -111,9 +111,9 @@ static inline void fn_ResumeStreams(void) {
         streams->second.flags = flags;
         streams->first.delay = delay;
         streams->second.delay = delay;
-        fn_801BB1A0(streams->first.handle);
+        sndStreamActivate(streams->first.handle);
         streams = streamPair();
-        fn_801BB1A0(streams->second.handle);
+        sndStreamActivate(streams->second.handle);
     }
 }
 

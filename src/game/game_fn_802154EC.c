@@ -1,4 +1,4 @@
-/* fn_802154EC: DVDReadAbsAsyncPrio (Dolphin SDK dvd.c), issueCommand inlined */
+/* DVDReadAbsAsyncPrio: DVDReadAbsAsyncPrio (Dolphin SDK dvd.c), issueCommand inlined */
 typedef unsigned int u32;
 typedef int s32;
 typedef int BOOL;
@@ -50,7 +50,7 @@ static inline BOOL issueCommand(s32 prio, DVDCommandBlock *block) {
     return result;
 }
 
-BOOL fn_802154EC(DVDCommandBlock *block, void *addr, s32 length, s32 offset,
+BOOL DVDReadAbsAsyncPrio(DVDCommandBlock *block, void *addr, s32 length, s32 offset,
                  DVDCBCallback callback, s32 prio) {
     BOOL idle;
 

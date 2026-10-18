@@ -1,6 +1,6 @@
-int fn_800F96E0(void* output, const char* input, unsigned long count);
+int utf8_to_unicode(void* output, const char* input, unsigned long count);
 
-int fn_800F96C0(void* output, const char* input, unsigned long count)
+int mbtowc(void* output, const char* input, unsigned long count)
 {
-    return fn_800F96E0(output, input, count);
+    return utf8_to_unicode(output, input, count);
 }

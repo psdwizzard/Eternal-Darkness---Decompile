@@ -23,8 +23,8 @@ extern const float lbl_80650998;
 extern ShortCoord3 lbl_80651CE0;
 
 extern void fn_8018163C(void*, ShortCoord3*, u8, u16);
-extern void fn_80211380(void*, void*, float);
-extern void fn_80211710(void*, FloatCoord3*, FloatCoord3*);
+extern void PSMTXRotAxisRad(void*, void*, float);
+extern void PSMTXMultVec(void*, FloatCoord3*, FloatCoord3*);
 
 void fn_80181BD8(u8* object, u8* config)
 {
@@ -60,11 +60,11 @@ void fn_80181BD8(u8* object, u8* config)
         vector.x = (float)*(s16*)(entry + 0xA);
         vector.y = (float)*(s16*)(entry + 0xC);
         vector.z = (float)*(s16*)(entry + 0xE);
-        fn_80211380(state + 0x78, state + 0x60,
+        PSMTXRotAxisRad(state + 0x78, state + 0x60,
                     lbl_80650998 * (*(float*)(state + 0x68) < lbl_80650994
                                             ? -*(float*)(state + 0x68)
                                             : *(float*)(state + 0x68)));
-        fn_80211710(state + 0x78, &vector, &vector);
+        PSMTXMultVec(state + 0x78, &vector, &vector);
         *(s16*)(entry + 0xA) = (s16)(vector.x + (float)*(s16*)(object + 0x10));
         *(s16*)(entry + 0xC) = (s16)(vector.y + (float)*(s16*)(object + 0x12));
         *(s16*)(entry + 0xE) = *(s16*)(object + 0x14);

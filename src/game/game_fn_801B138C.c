@@ -7,34 +7,34 @@ typedef struct Entry {
     u8 callback[1];
 } Entry;
 
-extern void (*lbl_8064D320)(void);
-extern int lbl_8064D328;
-extern int lbl_8064D33C;
-extern Entry* lbl_8064D340;
-extern Entry* lbl_8064D344;
-extern Entry* lbl_8064D348;
+extern void (*__DTKFlushCallback)(void);
+extern int __DTKShutdownFlag;
+extern int __DTKState;
+extern Entry* __DTKPlayListTail;
+extern Entry* __DTKPlayListHead;
+extern Entry* __DTKCurrentTrack;
 
-extern void fn_8021345C(void*);
-extern void fn_8021A1A8(int);
+extern void DVDClose(void*);
+extern void AISetStreamPlayState(int);
 
-void fn_801B138C(void)
+void __DTKCallbackForFlush(void)
 {
     Entry* entry;
 
-    fn_8021A1A8(0);
-    entry = lbl_8064D344;
+    AISetStreamPlayState(0);
+    entry = __DTKPlayListHead;
     while (entry != 0) {
-        fn_8021345C(entry->callback);
+        DVDClose(entry->callback);
         entry = entry->next;
     }
-    lbl_8064D344 = 0;
-    lbl_8064D340 = 0;
-    lbl_8064D348 = 0;
-    lbl_8064D33C = 0;
-    if (lbl_8064D320 != 0) {
-        lbl_8064D320();
-        lbl_8064D320 = 0;
+    __DTKPlayListHead = 0;
+    __DTKPlayListTail = 0;
+    __DTKCurrentTrack = 0;
+    __DTKState = 0;
+    if (__DTKFlushCallback != 0) {
+        __DTKFlushCallback();
+        __DTKFlushCallback = 0;
     }
-    lbl_8064D33C = 0;
-    lbl_8064D328 = 0;
+    __DTKState = 0;
+    __DTKShutdownFlag = 0;
 }

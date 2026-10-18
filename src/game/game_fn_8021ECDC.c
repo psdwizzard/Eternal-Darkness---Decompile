@@ -1,4 +1,4 @@
-/* fn_8021ECDC (0x8021ECDC, 280 bytes): __CARDAllocBlock. */
+/* __CARDAllocBlock (0x8021ECDC, 280 bytes): __CARDAllocBlock. */
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -18,15 +18,15 @@ typedef struct CARDControl {
     u8 padC0[0x50];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
-extern s32 fn_8021EE90(s32, void *, CARDCallback);
+extern CARDControl __CARDBlock[];
+extern s32 __CARDUpdateFatBlock(s32, void *, CARDCallback);
 
 static inline void *__CARDGetFatBlock(CARDControl *card)
 {
     return card->currentFat;
 }
 
-s32 fn_8021ECDC(s32 chan, u32 cBlock, CARDCallback callback)
+s32 __CARDAllocBlock(s32 chan, u32 cBlock, CARDCallback callback)
 {
     u16 *fat;
     CARDControl *card;
@@ -35,7 +35,7 @@ s32 fn_8021ECDC(s32 chan, u32 cBlock, CARDCallback callback)
     u16 prevBlock;
     u16 count;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (!card->attached)
         return -3;
 
@@ -69,5 +69,5 @@ s32 fn_8021ECDC(s32 chan, u32 cBlock, CARDCallback callback)
     fat[4] = iBlock;
     card->startBlock = startBlock;
 
-    return fn_8021EE90(chan, fat, callback);
+    return __CARDUpdateFatBlock(chan, fat, callback);
 }

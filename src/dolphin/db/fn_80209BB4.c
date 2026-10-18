@@ -6,7 +6,7 @@ extern void OSReport(const char* format, ...);
 extern void OSDumpContext(OSContext* context);
 extern void PPCHalt(void);
 
-void fn_80209BB4(void)
+void __DBExceptionDestinationAux(void)
 {
     volatile u32 unused;
     OSContext* context = (OSContext*)(*(u32*)0xC0 + 0x80000000);

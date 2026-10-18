@@ -1,4 +1,4 @@
-char* fn_800FD350(char* destination, const char* source, unsigned long count)
+char* strncat(char* destination, const char* source, unsigned long count)
 {
     const char* s = source - 1;
     char* end = destination - 1;

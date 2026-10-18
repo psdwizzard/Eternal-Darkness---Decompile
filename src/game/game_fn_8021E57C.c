@@ -17,13 +17,13 @@ typedef struct Channel {
     u8 pad84[0x8c];
 } Channel;
 
-extern Channel lbl_80641C60[];
-extern s32 fn_8021D8F0(void);
-extern s32 fn_8021D7AC(s32, u32, void *, s32, s32);
-extern s32 fn_8021C788(s32, void *);
-extern s32 fn_802070C4(s32);
+extern Channel __CARDBlock[];
+extern s32 DummyLen(void);
+extern s32 ReadArrayUnlock(s32, u32, void *, s32, s32);
+extern s32 __CARDReadStatus(s32, void *);
+extern s32 EXIProbe(s32);
 extern s32 EXIUnlock(s32);
-extern void fn_802207C0(s32, s32);
+extern void __CARDMountCallback(s32, s32);
 
 #define LEFT_FEEDBACK(x) (~((x) ^ ((x) << 7) ^ ((x) << 15) ^ ((x) << 23)))
 #define LEFT_STEP(x) ((x) = ((x) << 1) | ((LEFT_FEEDBACK(x) >> 30) & 2))
@@ -36,7 +36,7 @@ static inline u32 AdvanceState(u32 seed, u32 bit_count)
     return seed | (LEFT_FEEDBACK(seed) >> 31);
 }
 
-void fn_8021E57C(DspTask *task)
+void DoneCallback(DspTask *task)
 {
     register s32 device;
     u32 key;
@@ -50,45 +50,45 @@ void fn_8021E57C(DspTask *task)
     u8 stack_padding[0x1c];
 
     for (device = 0; device < 2; ++device) {
-        channel = &lbl_80641C60[device];
+        channel = &__CARDBlock[device];
         if (&channel->task == task)
             break;
     }
 
     key = *(u32 *)(((channel->packet + 0x2f) & 0xffffffe0) + 0x20);
-    length = fn_8021D8F0();
+    length = DummyLen();
     {
         /* The API takes a signed length. This scoped copy also preserves
          * MWCC's retail ordering of the argument register moves. */
         s32 read_length = length;
         code = (key ^ channel->state) & 0xffff0000;
-        if (fn_8021D7AC(device, code, transfer, read_length, 1) < 0) {
+        if (ReadArrayUnlock(device, code, transfer, read_length, 1) < 0) {
             EXIUnlock(device);
-            fn_802207C0(device, -3);
+            __CARDMountCallback(device, -3);
             return;
         }
     }
     channel->state = AdvanceState(channel->state,
                                   (4 + length + channel->latency) * 8 + 1);
 
-    length = fn_8021D8F0();
+    length = DummyLen();
     code = ((key << 16) ^ channel->state) & 0xffff0000;
-    if (fn_8021D7AC(device, code,
+    if (ReadArrayUnlock(device, code,
                     transfer, length, 1) < 0) {
         EXIUnlock(device);
-        fn_802207C0(device, -3);
+        __CARDMountCallback(device, -3);
         return;
     }
 
-    result = fn_8021C788(device, &response);
-    if (fn_802070C4(device) == 0) {
+    result = __CARDReadStatus(device, &response);
+    if (EXIProbe(device) == 0) {
         EXIUnlock(device);
-        fn_802207C0(device, -3);
+        __CARDMountCallback(device, -3);
         return;
     }
     if (result == 0 && !(response & 0x40)) {
         EXIUnlock(device);
         result = -5;
     }
-    fn_802207C0(device, result);
+    __CARDMountCallback(device, result);
 }

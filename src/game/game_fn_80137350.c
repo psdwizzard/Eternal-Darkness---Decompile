@@ -37,7 +37,7 @@ extern void* fn_80201BC8(void* node);
 extern void* fn_80201B94(unsigned char* node);
 extern unsigned int fn_80201CDC(Object80201CDC* node);
 extern int fn_80201EB8(Object80201EB8* node);
-extern float fn_80211D4C(const Vec3* a, const Vec3* b);
+extern float PSVECSquareDistance(const Vec3* a, const Vec3* b);
 extern int lbl_8064D18C;
 extern float lbl_806502A0;
 
@@ -59,7 +59,7 @@ int fn_80137350(void* object, const Shape* shape,
     if (obstacle != 0) {
         found = 1;
         *obstacle_id = obstacle->id;
-        best = fn_80211D4C(&shape->first, &result->point);
+        best = PSVECSquareDistance(&shape->first, &result->point);
     }
     if (flags & 2) {
         node = fn_80201B9C();
@@ -71,7 +71,7 @@ int fn_80137350(void* object, const Shape* shape,
                 (fn_8011FAEC(other) & 0x80) &&
                 (fn_80201CDC(node) & 4) &&
                 fn_80136FF8(shape, other, &candidate) != 0) {
-                float distance = fn_80211D4C(&shape->first, &candidate.point);
+                float distance = PSVECSquareDistance(&shape->first, &candidate.point);
                 found = 1;
                 if (distance < best) {
                     best = distance;

@@ -6,14 +6,14 @@ typedef struct Lexer {
 } Lexer;
 
 extern char lbl_8024F7F4[];
-extern void fn_80163ED4(Lexer*, int, char*);
+extern void check_condition(Lexer*, int, char*);
 extern void fn_80163DA4(Lexer*);
 
-void* fn_801640C4(Lexer* lexer)
+void* str_checkname(Lexer* lexer)
 {
     void* value;
 
-    fn_80163ED4(lexer, lexer->current_kind == 0x113, lbl_8024F7F4);
+    check_condition(lexer, lexer->current_kind == 0x113, lbl_8024F7F4);
     value = lexer->current_value;
     fn_80163DA4(lexer);
     return value;

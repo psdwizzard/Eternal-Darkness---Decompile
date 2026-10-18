@@ -2,7 +2,7 @@ typedef float Mtx34[3][4];
 typedef float Mtx43[4][3];
 
 /* Transpose a 3-by-4 matrix, including when source and destination coincide. */
-void fn_80212154(register const Mtx34 source, register Mtx43 destination)
+void PSMTXReorder(register const Mtx34 source, register Mtx43 destination)
 {
     register float row0, row1;
 

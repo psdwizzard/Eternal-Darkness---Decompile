@@ -1,9 +1,9 @@
-extern int fn_80160E50(void*, void*, void*, void*);
-extern void fn_80160D10(void*, int, int);
+extern int parse_buffer(void*, void*, void*, void*);
+extern void lua_call(void*, int, int);
 
-void fn_80160EBC(void* object, void* text, void* value, void* context)
+void lua_dobuffer(void* object, void* text, void* value, void* context)
 {
-    if (fn_80160E50(object, text, value, context) == 0) {
-        fn_80160D10(object, 0, -1);
+    if (parse_buffer(object, text, value, context) == 0) {
+        lua_call(object, 0, -1);
     }
 }

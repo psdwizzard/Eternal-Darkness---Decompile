@@ -37,9 +37,9 @@ typedef struct ResourceTable {
 } ResourceTable;
 
 extern EntryPair* fn_8015DB74(ResourceTable*, u32);
-extern void fn_80228B50(void*, void*, u32, u16);
-extern void fn_802286E8(void*, void*, u16, u16, u32, u32, u32, int, u32);
-extern void fn_80228730(void*, u32, u32, float, float, float, int, u8, int);
+extern void GXInitTlutObj(void*, void*, u32, u16);
+extern void GXInitTexObjCI(void*, void*, u16, u16, u32, u32, u32, int, u32);
+extern void GXInitTexObjLOD(void*, u32, u32, float, float, float, int, u8, int);
 
 void fn_8015DC54(ResourceTable* table, register void* first_context,
                  register void* second_context, register u32 final_argument,
@@ -56,14 +56,14 @@ void fn_8015DC54(ResourceTable* table, register void* first_context,
         different = 1;
     }
 
-    fn_80228B50(second_context, pair->second->field8,
+    GXInitTlutObj(second_context, pair->second->field8,
                 pair->second->field4, pair->second->field0);
     entry = pair->first;
-    fn_802286E8(first_context, entry->data, entry->field2, entry->field0,
+    GXInitTexObjCI(first_context, entry->data, entry->field2, entry->field0,
                 entry->field4, entry->fieldC, entry->field10, different,
                 final_argument);
 
-    fn_80228730(first_context, pair->first->field14, pair->first->field18,
+    GXInitTexObjLOD(first_context, pair->first->field14, pair->first->field18,
                 (float)pair->first->field21, (float)pair->first->field22,
                 pair->first->field1C, 0, pair->first->field20, 0);
 }

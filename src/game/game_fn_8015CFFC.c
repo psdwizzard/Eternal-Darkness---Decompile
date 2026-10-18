@@ -24,8 +24,8 @@ typedef struct ReadState {
 
 #pragma use_lmw_stmw on
 
-extern int fn_8020D318(void*, Message**, int);
-extern void fn_8020D250(void*, Message*, int);
+extern int OSReceiveMessage(void*, Message**, int);
+extern void OSSendMessage(void*, Message*, int);
 extern void fn_80158850(Message*);
 extern void* memcpy(void*, const void*, u32);
 extern void DCFlushRange(void*, u32);
@@ -38,7 +38,7 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
     Message* message;
 
     if (state->mode == 1) {
-        amount = fn_8020D318(state->input_queue, &message, 0);
+        amount = OSReceiveMessage(state->input_queue, &message, 0);
 
         if (state->message != 0) {
             fn_80158850(state->message);
@@ -50,7 +50,7 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
                 return 1;
             }
             if (state->reply_queue != 0) {
-                fn_8020D250(state->reply_queue, message, 1);
+                OSSendMessage(state->reply_queue, message, 1);
             }
         }
         return 1;
@@ -58,7 +58,7 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
 
     do {
         if (state->remaining == 0) {
-            fn_8020D318(state->input_queue, &message, 1);
+            OSReceiveMessage(state->input_queue, &message, 1);
             ((volatile ReadState*)state)->message = message;
             if (state->message->type == 2 || state->mode == 1) {
                 state->mode = 1;
@@ -85,7 +85,7 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
         state->progress -= amount;
 
         if (state->remaining == 0) {
-            fn_8020D250(state->reply_queue, state->message, 1);
+            OSSendMessage(state->reply_queue, state->message, 1);
             state->message = 0;
         }
     } while (length != 0);

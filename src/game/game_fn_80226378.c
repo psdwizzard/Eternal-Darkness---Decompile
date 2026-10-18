@@ -12,13 +12,13 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80226A28(void); /* __GXSetDirtyState */
-void fn_80209AD4(void); /* PPCSync */
+void __GXSetDirtyState(void); /* __GXSetDirtyState */
+void PPCSync(void); /* PPCSync */
 
-void fn_80226378(void)
+void GXFlush(void)
 {
     if (gx->dirtyState) {
-        fn_80226A28();
+        __GXSetDirtyState();
     }
     GXWGFifo.word = 0;
     GXWGFifo.word = 0;
@@ -28,5 +28,5 @@ void fn_80226378(void)
     GXWGFifo.word = 0;
     GXWGFifo.word = 0;
     GXWGFifo.word = 0;
-    fn_80209AD4();
+    PPCSync();
 }

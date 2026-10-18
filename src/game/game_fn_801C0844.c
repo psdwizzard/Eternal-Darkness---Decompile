@@ -13,11 +13,11 @@ struct Voice {
 };
 #pragma pack()
 
-extern Voice* lbl_8064D440;
+extern Voice* macTimeQueueRoot;
 
-void fn_801C0844(Voice* voice)
+void TimeQueueAdd(Voice* voice)
 {
-    Voice* current = lbl_8064D440;
+    Voice* current = macTimeQueueRoot;
     Voice* previous = 0;
 
     while (current != 0 && current->scheduled_time_098 < voice->scheduled_time_098) {
@@ -27,7 +27,7 @@ void fn_801C0844(Voice* voice)
 
     if (current == 0) {
         if (previous == 0) {
-            lbl_8064D440 = voice;
+            macTimeQueueRoot = voice;
             voice->scheduled_next_044 = 0;
             voice->scheduled_prev_048 = 0;
         } else {
@@ -40,7 +40,7 @@ void fn_801C0844(Voice* voice)
         if ((voice->scheduled_prev_048 = current->scheduled_prev_048) != 0) {
             current->scheduled_prev_048->scheduled_next_044 = voice;
         } else {
-            lbl_8064D440 = voice;
+            macTimeQueueRoot = voice;
         }
         current->scheduled_prev_048 = voice;
     }

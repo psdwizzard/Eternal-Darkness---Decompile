@@ -46,7 +46,7 @@ extern s32 fn_8003CC48(s32, OwnerData *, s32, short);
 extern s32 fn_8006D3E4(s32, s32);
 extern SettingTable *fn_80072354(s32);
 extern void fn_800CF6AC(void *, SettingTable *, OwnerData *, void *, s32, s32);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern s32 fn_8011EB04(void *);
 extern void fn_8011F114(Vec3 *, void *);
 extern void fn_801287C4(void *, void *, u32, u32);
@@ -145,7 +145,7 @@ s32 fn_8003CD0C(void *owner, void *object, void *event)
         case 2: kind = 6; break;
         default:
             {
-                s32 flags = fn_800FBFB0();
+                s32 flags = rand();
                 s32 choice = 5;
                 if (flags & 1) choice = 4;
                 kind = choice;

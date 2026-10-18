@@ -10,9 +10,9 @@ typedef struct Vec3f {
 extern const char lbl_8023BEF8[];
 extern const char lbl_8023CB0C[];
 extern float lbl_8064DE5C;
-extern int fn_8016A598(void*);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80152838(Vec3f*, Vec3f*, s32);
 
 s32 fn_80016128(void* script)
@@ -21,14 +21,14 @@ s32 fn_80016128(void* script)
     Vec3f start;
     Vec3f end;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    position = fn_8016A784(script, 1);
+    position = lua_touserdata(script, 1);
     if (position == 0) {
-        fn_80163BB4(script, lbl_8023CB0C, 0);
+        luaO_verror(script, lbl_8023CB0C, 0);
     }
 
     start.x = position[0];

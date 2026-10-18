@@ -1,16 +1,16 @@
-/* fn_800FF7F4: fdlibm __ieee754_pow (MSL e_pow.c). */
+/* __ieee754_pow: fdlibm __ieee754_pow (MSL e_pow.c). */
 
 #define __HI(x) *(int *)&x
 #define __LO(x) *(1 + (int *)&x)
 
-extern double fn_80101C30(double x, int n); /* scalbn */
+extern double ldexp(double x, int n); /* scalbn */
 
-extern int lbl_8064CC50;     /* errno */
-extern int lbl_8064B850[];   /* __float_nan */
-extern int lbl_8064B854[];   /* __float_huge */
+extern int errno;     /* errno */
+extern int __float_nan[];   /* __float_nan */
+extern int __float_huge[];   /* __float_huge */
 
-#define NAN (*(float *)lbl_8064B850)
-#define INFINITY (*(float *)lbl_8064B854)
+#define NAN (*(float *)__float_nan)
+#define INFINITY (*(float *)__float_huge)
 
 typedef struct PowTable {
     double bp[2];
@@ -101,7 +101,7 @@ static inline double sqrt_inline(double x) {
     return INFINITY;
 }
 
-double fn_800FF7F4(double x, double y) {
+double __ieee754_pow(double x, double y) {
     double z, ax, z_h, z_l, p_h, p_l;
     double y1, t1, t2, r, s, t, u, v, w;
     int i, j, k, n, yisint;
@@ -194,7 +194,7 @@ double fn_800FF7F4(double x, double y) {
     n = (hx >> 31) + 1;
 
     if ((n | yisint) == 0) {
-        lbl_8064CC50 = 33;
+        errno = 33;
         return NAN;
     }
 
@@ -327,7 +327,7 @@ double fn_800FF7F4(double x, double y) {
     j = __HI(z);
     j += (n << 20);
     if ((j >> 20) <= 0) {
-        z = fn_80101C30(z, n);
+        z = ldexp(z, n);
     } else {
         __HI(z) += (n << 20);
     }

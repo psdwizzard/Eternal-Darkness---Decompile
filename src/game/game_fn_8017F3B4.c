@@ -10,7 +10,7 @@ extern void fn_80180518(void*, u8, int);
 extern u8 fn_8018E26C(void*, void*);
 extern void fn_8018EFB0(void*, int, int);
 extern void fn_8017D2B4(void*, void*, void*);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8018E230(void*, void*, int, int, int, int);
 extern float lbl_8063D378[];
 
@@ -71,10 +71,10 @@ int fn_8017F3B4(u8* object)
                     pair[0] = 0;
                     if (*(int*)(state_cursor + 0x20)) {
                         *(s16*)(entry + 0x1A) = -1;
-                        pair[0x10] = (fn_800FBFB0() & 3) + 1;
+                        pair[0x10] = (rand() & 3) + 1;
                     } else {
                         *(s16*)(entry + 0x1A) = 0;
-                        pair[0x10] = (fn_800FBFB0() & 15) + 0x20;
+                        pair[0x10] = (rand() & 15) + 0x20;
                     }
                     pair[0x11] = pair[0x10];
                     *(int*)(state_cursor + 0x24) = *(int*)(state_cursor + 0x20);

@@ -20,9 +20,9 @@ struct Voice {
 };
 #pragma pack()
 
-extern void fn_801C09C4(Voice*);
+extern void macMakeActive(Voice*);
 
-void fn_801C0738(Voice* voice, u32 enabled)
+void macSetPedalState(Voice* voice, u32 enabled)
 {
     u32 changed;
 
@@ -35,14 +35,14 @@ void fn_801C0738(Voice* voice, u32 enabled)
                 voice->value_038 = voice->value_05C;
                 voice->value_034 = voice->value_050;
                 voice->value_050 = 0;
-                fn_801C09C4(voice);
+                macMakeActive(voice);
                 changed = 1;
             } else {
                 changed = 0;
             }
 
             if (changed == 0 && (voice->flags_114 & 4) != 0) {
-                fn_801C09C4(voice);
+                macMakeActive(voice);
             }
         }
         voice->flags_114 &= ~0x50000000000ULL;

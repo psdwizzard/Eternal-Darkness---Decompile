@@ -8,27 +8,27 @@ typedef struct InputFunction {
     void* source;
 } InputFunction;
 
-extern void* fn_80161164(void*);
-extern void* fn_80168080(void*, void*, int);
-extern int fn_80167FE4(void*, void*, int);
-extern int fn_80167DC8(void*, void*);
-extern void fn_801681DC(void*, void*, void*, int);
-extern void fn_801682B0(void*, void*, void*, int);
-extern void fn_80168334(void*, void*, void*, int);
-extern void fn_80168114(void*, void*, void*, int);
+extern void* luaF_newproto(void*);
+extern void* LoadString(void*, void*, int);
+extern int LoadInt(void*, void*, int);
+extern int ezgetc(void*, void*);
+extern void LoadLocals(void*, void*, void*, int);
+extern void LoadLines(void*, void*, void*, int);
+extern void LoadConstants(void*, void*, void*, int);
+extern void LoadCode(void*, void*, void*, int);
 
-InputFunction* fn_80168490(void* object, void* input, int reverse)
+InputFunction* LoadFunction(void* object, void* input, int reverse)
 {
-    InputFunction* function = fn_80161164(object);
+    InputFunction* function = luaF_newproto(object);
 
-    function->source = fn_80168080(object, input, reverse);
-    function->max_stack = fn_80167FE4(object, input, reverse);
-    function->line_defined = fn_80167FE4(object, input, reverse);
-    function->source_line = fn_80167DC8(object, input);
-    function->num_params = fn_80167FE4(object, input, reverse);
-    fn_801681DC(object, function, input, reverse);
-    fn_801682B0(object, function, input, reverse);
-    fn_80168334(object, function, input, reverse);
-    fn_80168114(object, function, input, reverse);
+    function->source = LoadString(object, input, reverse);
+    function->max_stack = LoadInt(object, input, reverse);
+    function->line_defined = LoadInt(object, input, reverse);
+    function->source_line = ezgetc(object, input);
+    function->num_params = LoadInt(object, input, reverse);
+    LoadLocals(object, function, input, reverse);
+    LoadLines(object, function, input, reverse);
+    LoadConstants(object, function, input, reverse);
+    LoadCode(object, function, input, reverse);
     return function;
 }

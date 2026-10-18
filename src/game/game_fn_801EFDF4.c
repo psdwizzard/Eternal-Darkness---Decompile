@@ -3,9 +3,9 @@ typedef unsigned int u32;
 
 extern int lbl_8064D6FC;
 
-extern void fn_80224124(u8*, u8*, u8*, u8*, u8*);
-extern void fn_80224188(void*, u8*, u8*, u32*, u8*, u8*, u8*);
-extern void fn_80226408(void);
+extern void GXGetGPStatus(u8*, u8*, u8*, u8*, u8*);
+extern void GXGetFifoStatus(void*, u8*, u8*, u32*, u8*, u8*, u8*);
+extern void __GXAbortWaitPECopyDone(void);
 
 void fn_801EFDF4(void)
 {
@@ -22,11 +22,11 @@ void fn_801EFDF4(void)
     u32 field_14;
     u8 data[0x80];
 
-    fn_80224124(&field_11, &field_10, &field_F, &field_E, &field_D);
-    fn_80224188(data, &field_C, &field_B, &field_14, &field_A, &field_9,
+    GXGetGPStatus(&field_11, &field_10, &field_F, &field_E, &field_D);
+    GXGetFifoStatus(data, &field_C, &field_B, &field_14, &field_A, &field_9,
                 &field_8);
     if (field_D != 0 && field_11 != 0) {
-        fn_80226408();
+        __GXAbortWaitPECopyDone();
     }
     if (lbl_8064D6FC != 0 && field_B != 0) {
         lbl_8064D6FC = 0;

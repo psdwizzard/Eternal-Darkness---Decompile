@@ -8,7 +8,7 @@ extern float lbl_8064CF04;
 extern float lbl_8064CF08;
 
 extern void fn_801E7EFC(void);
-extern void fn_8022D180(int);
+extern void PERFEventEnd(int);
 extern void fn_801EAA04(float, float);
 
 void fn_80024468(void)
@@ -24,7 +24,7 @@ void fn_80024468(void)
     lbl_8064CF08 = first;
     lbl_8064CF04 = second;
     if (mode == 0) {
-        fn_8022D180(0);
+        PERFEventEnd(0);
     } else if (lbl_8064C368 != 2) {
         fn_801EAA04(lbl_8064D5DC, lbl_8064D5D8);
     }

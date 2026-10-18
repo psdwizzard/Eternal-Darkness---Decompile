@@ -13,9 +13,9 @@ typedef struct Context {
 typedef void (*Callback)(Object*, void*);
 
 extern char lbl_8064BA60;
-extern void fn_801607D8(Object*, Context*, Callback);
+extern void dohook(Object*, Context*, Callback);
 
-void fn_80160848(Object* object, void* source, void* value, Callback callback)
+void luaD_lineHook(Object* object, void* source, void* value, Callback callback)
 {
     Context context;
 
@@ -23,6 +23,6 @@ void fn_80160848(Object* object, void* source, void* value, Callback callback)
         context.source = source;
         context.value = value;
         context.handler = &lbl_8064BA60;
-        fn_801607D8(object, &context, callback);
+        dohook(object, &context, callback);
     }
 }

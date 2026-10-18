@@ -63,9 +63,9 @@ extern void *fn_8011F770(void *);
 extern u32 fn_8011FAEC(void *);
 extern void *fn_8011FE34(void *);
 extern void fn_80179B08(void *, Vec3 *);
-extern void fn_802114E0(Matrix34, void *);
-extern void fn_80211710(Matrix34, Vec3 *, Vec3 *);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSMTXQuat(Matrix34, void *);
+extern void PSMTXMultVec(Matrix34, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 
 void fn_80137AF0(CollisionObject *object) {
     QueryResult query;
@@ -92,7 +92,7 @@ void fn_80137AF0(CollisionObject *object) {
         fn_8011F6F8(object);
         size = fn_8011F6F0(object);
         offset = fn_8011F770(object);
-        fn_80211A48(base, offset, &position);
+        PSVECAdd(base, offset, &position);
         if (fn_8011EB1C(object) == 2) {
             pointColor = lbl_802FC5BC[11];
             fn_800EBA80(0, &position, &pointColor, 0xB4, size);
@@ -115,21 +115,21 @@ void fn_80137AF0(CollisionObject *object) {
     modelColor = lbl_802FC5BC[13];
     fn_800EBA80(0, fn_8011F130(object), &modelColor, 0xB4, lbl_806502B0);
 
-    fn_802114E0(mtx, fn_8011FE34(object));
+    PSMTXQuat(mtx, fn_8011FE34(object));
     for (i = 0; i < count; i++, box++) {
         for (j = 0; j < 6; j++) {
             fn_80179B08(box->vertex[box->face[j].vertex[0]], &quad[0]);
-            fn_80211710(mtx, &quad[0], &quad[0]);
-            fn_80211A48(&quad[0], origin, &quad[0]);
+            PSMTXMultVec(mtx, &quad[0], &quad[0]);
+            PSVECAdd(&quad[0], origin, &quad[0]);
             fn_80179B08(box->vertex[box->face[j].vertex[1]], &quad[1]);
-            fn_80211710(mtx, &quad[1], &quad[1]);
-            fn_80211A48(&quad[1], origin, &quad[1]);
+            PSMTXMultVec(mtx, &quad[1], &quad[1]);
+            PSVECAdd(&quad[1], origin, &quad[1]);
             fn_80179B08(box->vertex[box->face[j].vertex[2]], &quad[2]);
-            fn_80211710(mtx, &quad[2], &quad[2]);
-            fn_80211A48(&quad[2], origin, &quad[2]);
+            PSMTXMultVec(mtx, &quad[2], &quad[2]);
+            PSVECAdd(&quad[2], origin, &quad[2]);
             fn_80179B08(box->vertex[box->face[j].vertex[3]], &quad[3]);
-            fn_80211710(mtx, &quad[3], &quad[3]);
-            fn_80211A48(&quad[3], origin, &quad[3]);
+            PSMTXMultVec(mtx, &quad[3], &quad[3]);
+            PSVECAdd(&quad[3], origin, &quad[3]);
             faceColor = lbl_802FC5BC[6];
             normal = box->face[j].normal;
             fn_800EB750(quad, &normal, &faceColor, 0x28);

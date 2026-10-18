@@ -9,8 +9,8 @@ typedef struct ValueSet {
 extern void* lbl_8064D5FC;
 extern u16 fn_801F6034(short, int);
 extern void fn_8015DB84(void*, void*, int);
-extern u16 fn_8022892C(void*);
-extern u16 fn_8022893C(void*);
+extern u16 GXGetTexObjWidth(void*);
+extern u16 GXGetTexObjHeight(void*);
 
 int fn_801EF2BC(ValueSet* set, int index, int value, int* out0, int* out1)
 {
@@ -24,8 +24,8 @@ int fn_801EF2BC(ValueSet* set, int index, int value, int* out0, int* out1)
             selected = set->values[index];
         }
         fn_8015DB84(lbl_8064D5FC, data, selected);
-        *out0 = fn_8022892C(data);
-        *out1 = fn_8022893C(data);
+        *out0 = GXGetTexObjWidth(data);
+        *out1 = GXGetTexObjHeight(data);
     }
     return 0;
 }

@@ -8,7 +8,7 @@ extern float lbl_806503D8;
 extern void* fn_80140010(void*, const Vec3*, Vec3*);
 extern void* fn_8013DAA8(const Vec3*, const void*, Vec3*);
 extern void* fn_8014317C(const Vec3*, Vec3*, void*, int, int);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 
 void* fn_80140258(Owner* owner, const Vec3* value, Vec3* out, int flags, void* filter)
 {
@@ -25,9 +25,9 @@ void* fn_80140258(Owner* owner, const Vec3* value, Vec3* out, int flags, void* f
         other_hit = fn_8014317C(value, &b, filter, 0,
                                 (flags & 0x10) ? query_flags | 2 : query_flags);
     }
-    if (tree_hit) { best = fn_80211D4C(value, &a); selected = 1; }
-    if (plane_hit) { float d = fn_80211D4C(value, &c); if (d < best) { best = d; selected = 2; } }
-    if (other_hit && fn_80211D4C(value, &b) < best) selected = 3;
+    if (tree_hit) { best = PSVECSquareDistance(value, &a); selected = 1; }
+    if (plane_hit) { float d = PSVECSquareDistance(value, &c); if (d < best) { best = d; selected = 2; } }
+    if (other_hit && PSVECSquareDistance(value, &b) < best) selected = 3;
     if (selected == 1) { *out = a; return tree_hit; }
     if (selected == 2) { *out = c; return owner->entries + plane_hit->index * 0x38; }
     if (selected == 3) { *out = b; return other_hit; }

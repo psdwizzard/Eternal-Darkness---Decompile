@@ -11,15 +11,13 @@ typedef struct Entry {
     u8 padE8[8]; u32 flags;
 } Entry;
 
-extern Entry* lbl_8064D4AC;
-#define dspVoice lbl_8064D4AC
-#define salTimeOffset lbl_8064D4D8
-extern u8 lbl_8064D4D8;
-extern void fn_801CCC10(u32, u32);
-extern void fn_801CCC3C(u32, u32);
-extern void fn_801CCC68(u32, u32);
+extern Entry* dspVoice;
+extern u8 salTimeOffset;
+extern void hwSetSRCType(u32, u32);
+extern void hwSetPolyPhaseFilter(u32, u32);
+extern void hwSetITDMode(u32, u32);
 
-void fn_801CC718(u32 voiceIndex, u16 sampleId, Block32* sampleInfo, u32 resetAdsr, u32 priority,
+void hwInitSamplePlayback(u32 voiceIndex, u16 sampleId, Block32* sampleInfo, u32 resetAdsr, u32 priority,
                  u32 callbackUserValue, u32 resetSrc, u32 itdMode)
 {
     u8 timeOffset;
@@ -52,8 +50,8 @@ void fn_801CC718(u32 voiceIndex, u16 sampleId, Block32* sampleInfo, u32 resetAds
     dspVoice[voiceIndex].lastVolB = 0xff;
 
     if (resetSrc != 0) {
-        fn_801CCC10(voiceIndex, 0);
-        fn_801CCC3C(voiceIndex, 1);
+        hwSetSRCType(voiceIndex, 0);
+        hwSetPolyPhaseFilter(voiceIndex, 1);
     }
-    fn_801CCC68(voiceIndex, itdMode);
+    hwSetITDMode(voiceIndex, itdMode);
 }

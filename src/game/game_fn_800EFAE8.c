@@ -11,9 +11,9 @@ typedef struct TRKBuffer {
 } TRKBuffer;
 
 extern int gTRKBigEndian[];
-extern int fn_800EFBC8(TRKBuffer *, const void *, u32);
+extern int TRKAppendBuffer(TRKBuffer *, const void *, u32);
 
-int fn_800EFAE8(TRKBuffer *buffer, u16 value)
+int TRKAppendBuffer1_ui16(TRKBuffer *buffer, u16 value)
 {
     u8 swapped[2];
     void *source;
@@ -25,5 +25,5 @@ int fn_800EFAE8(TRKBuffer *buffer, u16 value)
         swapped[0] = ((u8 *)&value)[1];
         swapped[1] = ((u8 *)&value)[0];
     }
-    return fn_800EFBC8(buffer, source, sizeof(value));
+    return TRKAppendBuffer(buffer, source, sizeof(value));
 }

@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Request drive error status and allow ten seconds for completion. */
-s32 fn_80212BE0(DVDLowCallback callback) {
+s32 DVDLowRequestError(DVDLowCallback callback) {
     Callback_8064D9A0 = callback;
     StopAtNextInt_8064D998 = 0;
     __DIRegs[2] = 0xE0000000;

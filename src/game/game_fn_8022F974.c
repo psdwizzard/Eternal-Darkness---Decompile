@@ -35,7 +35,7 @@ typedef struct AudioState {
 
 extern void fn_8022F8FC(void);
 
-int fn_8022F974(AudioState *state, s16 ***pcm)
+int vorbis_synthesis_pcmout(AudioState *state, s16 ***pcm)
 {
     AudioInfo *info = state->info;
     fn_8022F8FC();

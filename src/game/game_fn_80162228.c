@@ -15,9 +15,9 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F658[];
-extern void fn_8016203C(Parser*, int, int, char*);
+extern void luaX_checklimit(Parser*, int, int, char*);
 
-void fn_80162228(Parser* parser)
+void inclinenumber(Parser* parser)
 {
     int token;
 
@@ -28,5 +28,5 @@ void fn_80162228(Parser* parser)
     }
     parser->current_token = token;
     parser->position++;
-    fn_8016203C(parser, parser->position, 0x7FFFFFFD, lbl_8024F658);
+    luaX_checklimit(parser, parser->position, 0x7FFFFFFD, lbl_8024F658);
 }

@@ -61,14 +61,14 @@ extern u32 lbl_8064D140;
 extern int lbl_8064BA30, lbl_8064BA38;
 extern char lbl_8064DC80[];
 
-extern int fn_8020D318(void*, void*, int);
-extern int fn_8020D250(void*, void*, int);
-extern int fn_800F9D4C(char*, const char*, ...);
-extern void fn_802136A4(void*);
-extern int fn_80213394(char*, void*);
-extern void fn_8021345C(void*);
-extern int fn_802137F4(void*, void*, u32, u32, int);
-extern void fn_8021B730(void*, int, int, int, void*, void*, u32, void*);
+extern int OSReceiveMessage(void*, void*, int);
+extern int OSSendMessage(void*, void*, int);
+extern int sprintf(char*, const char*, ...);
+extern void DVDChangeDir(void*);
+extern int DVDOpen(char*, void*);
+extern void DVDClose(void*);
+extern int DVDReadPrio(void*, void*, u32, u32, int);
+extern void ARQPostRequest(void*, int, int, int, void*, void*, u32, void*);
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
 extern void DCInvalidateRange(void*, u32);
@@ -117,10 +117,10 @@ void fn_8015A340(void)
 
     for (;;) {
         u32 tag, slot, bank, command;
-        fn_8020D318(context->messageQueue, &message, 1);
+        OSReceiveMessage(context->messageQueue, &message, 1);
         if (message == 0xFFFFFFFF) {
-            fn_8020D250((upper + 0x4440), (void*)0x2A, 1);
-            do fn_8020D318(context->messageQueue, &message, 1);
+            OSSendMessage((upper + 0x4440), (void*)0x2A, 1);
+            do OSReceiveMessage(context->messageQueue, &message, 1);
             while (message != 0xFFFFFFFE);
             continue;
         }
@@ -128,16 +128,16 @@ void fn_8015A340(void)
         slot = (message >> 12) & 0xFF;
         bank = (message >> 20) & 1;
         command = message & 0xFFE00000;
-        fn_800F9D4C(name, strings + 0x10, lbl_8064DC80, tag);
+        sprintf(name, strings + 0x10, lbl_8064DC80, tag);
 
         switch (command) {
         case 0x80000000: {
             u32 remaining, position, destination, amount, actual;
             int alternate;
             int opened;
-            fn_802136A4(&lbl_8064BA30);
-            opened = fn_80213394(name, &file);
-            fn_802136A4(&lbl_8064BA38);
+            DVDChangeDir(&lbl_8064BA30);
+            opened = DVDOpen(name, &file);
+            DVDChangeDir(&lbl_8064BA38);
             if (opened == 0) break;
             remaining = file.length;
             alternate = 0;
@@ -149,22 +149,22 @@ void fn_8015A340(void)
             context->transfers[slot].offset = 0;
             context->transfers[slot].address = remaining;
             OSRestoreInterrupts(interrupts);
-            while (fn_8020D318(context->transferQueue, &reply, 0) != 0) {}
-            fn_8020D250(context->transferQueue, 0, 1);
+            while (OSReceiveMessage(context->transferQueue, &reply, 0) != 0) {}
+            OSSendMessage(context->transferQueue, 0, 1);
             while (remaining != 0) {
                 actual = remaining < 0x10000 ? remaining : 0x10000;
                 amount = (actual + 0x1F) & ~0x1F;
-                while (fn_802137F4(&file, lbl_805BB240 + (alternate << 16), amount, position, 2) == -1) {}
-                fn_8020D318(context->transferQueue, &reply, 1);
-                fn_8021B730(&request, 1, 0, 0, lbl_805BB240 + (alternate << 16),
+                while (DVDReadPrio(&file, lbl_805BB240 + (alternate << 16), amount, position, 2) == -1) {}
+                OSReceiveMessage(context->transferQueue, &reply, 1);
+                ARQPostRequest(&request, 1, 0, 0, lbl_805BB240 + (alternate << 16),
                             (void*)destination, amount, fn_8015A17C);
                 alternate ^= 1;
                 destination += actual;
                 remaining -= actual;
                 position += actual;
             }
-            fn_8020D318(context->transferQueue, &reply, 1);
-            fn_8021345C(&file);
+            OSReceiveMessage(context->transferQueue, &reply, 1);
+            DVDClose(&file);
             interrupts = OSDisableInterrupts();
             if (context->transfers[slot].tag == tag && context->transfers[slot].address != 0)
                 context->transfers[slot].done = 1;
@@ -182,7 +182,7 @@ void fn_8015A340(void)
             OSRestoreInterrupts(interrupts);
             fn_80159088(bank);
             if (context->queues[bank] != 0) {
-                fn_8020D250(context->queues[bank], 0, 1);
+                OSSendMessage(context->queues[bank], 0, 1);
                 context->queues[bank] = 0;
             }
             fn_80158E7C(4);
@@ -193,7 +193,7 @@ void fn_8015A340(void)
             u32 base;
             int descriptorValue = (s16)lbl_80241DE8[context->stream.index].value;
             fn_80008014(descriptorValue, lbl_80241DE8[context->stream.index].kind);
-            fn_800F9D4C(streamName, strings + 0x1C, descriptorValue);
+            sprintf(streamName, strings + 0x1C, descriptorValue);
             record = fn_8015A314(tag);
             fn_8015D304(streamName, record);
             state->start = 0xDBCAA0;
@@ -222,7 +222,7 @@ void fn_8015A340(void)
             state->state = 2;
             if (state->loaded > 0x7380)
                 fn_80155BB0(strings + 0x30, strings + 0x54, state->loaded, 0x7380);
-            if (fn_8020D250(lbl_805E2600, 0, 0) == 0)
+            if (OSSendMessage(lbl_805E2600, 0, 0) == 0)
                 fn_80155BB0(strings + 0x30, strings + 0x98);
             handled = 1;
             break;
@@ -231,7 +231,7 @@ void fn_8015A340(void)
             Record* record = fn_8015A314(tag);
             u32 amount, destination;
             if (!record->active) break;
-            while (fn_8020D318(context->transferQueue, &message, 0) != 0) {}
+            while (OSReceiveMessage(context->transferQueue, &message, 0) != 0) {}
             interrupts = OSDisableInterrupts();
             if (state->cursor >= state->end) {
                 state->cursor = state->start;
@@ -243,9 +243,9 @@ void fn_8015A340(void)
             destination = state->cursor;
             fn_8015D4EC(dmaBuffer, amount, record);
             DCInvalidateRange(invalidateBuffer, amount);
-            fn_8021B730(lbl_805E2620, 3, 0, 0, dmaBuffer,
+            ARQPostRequest(lbl_805E2620, 3, 0, 0, dmaBuffer,
                         (void*)destination, amount, fn_8015A17C);
-            fn_8020D318(context->transferQueue, &message, 1);
+            OSReceiveMessage(context->transferQueue, &message, 1);
             interrupts = OSDisableInterrupts();
             state->cursor += amount;
             state->loaded += amount;
@@ -257,7 +257,7 @@ void fn_8015A340(void)
             } else state->state = 3;
             OSRestoreInterrupts(interrupts);
             if (*streamQueue != 0)
-                fn_8020D250(*streamQueue, 0, 0);
+                OSSendMessage(*streamQueue, 0, 0);
             handled = 1;
             break;
         }

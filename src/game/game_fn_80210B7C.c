@@ -19,8 +19,8 @@ typedef struct OSCalendarTime {
 #define WEEK_DAY_MAX 7
 #define YEAR_DAY_MAX 365
 
-extern int lbl_802FE0F0[MONTH_MAX]; /* YearDays */
-extern int lbl_802FE120[MONTH_MAX]; /* LeapYearDays */
+extern int YearDays[MONTH_MAX]; /* YearDays */
+extern int LeapYearDays[MONTH_MAX]; /* LeapYearDays */
 
 static inline BOOL IsLeapYear(int year) {
     return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
@@ -33,7 +33,7 @@ static inline int GetLeapDays(int year) {
     return (year + 3) / 4 - (year - 1) / 100 + (year - 1) / 400;
 }
 
-void fn_80210B7C(int days, OSCalendarTime *td) {
+void GetDates(int days, OSCalendarTime *td) {
     int year;
     int n;
     int month;
@@ -48,7 +48,7 @@ void fn_80210B7C(int days, OSCalendarTime *td) {
     td->year = year;
     td->yday = days;
 
-    p_days = IsLeapYear(year) ? lbl_802FE120 : lbl_802FE0F0;
+    p_days = IsLeapYear(year) ? LeapYearDays : YearDays;
     for (month = MONTH_MAX; days < p_days[--month];) {
         ;
     }

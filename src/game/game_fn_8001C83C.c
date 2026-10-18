@@ -14,8 +14,8 @@ typedef struct Status {
 
 extern void fn_80201ADC(void);
 extern void *fn_80201B8C();
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_80070A6C(int);
 extern void fn_8001C310(void*);
 extern void fn_8001C500(void*);
@@ -33,8 +33,8 @@ s32 fn_8001C83C(void* arg)
 
     fn_80201ADC();
     status = fn_80201B8C();
-    if (fn_8016A598(arg) != 6) {
-        fn_80163BB4(arg, lbl_8023BEF8, 6, fn_8016A598(arg));
+    if (lua_gettop(arg) != 6) {
+        luaO_verror(arg, lbl_8023BEF8, 6, lua_gettop(arg));
         return 0;
     }
 

@@ -34,28 +34,28 @@ typedef struct PackedInput {
 } PackedInput;
 
 typedef void (*PadDecoder)(s32, PadStatus*, u32*);
-extern void fn_802196A0(s32 chan, PadStatus* status, u32* data);
-extern void fn_80219814(s32 chan, PadOut* status, u32* data);
-extern void fn_80219988(int chan, DecodedInput* out, PackedInput* in);
+extern void SPEC0_MakeStatus(s32 chan, PadStatus* status, u32* data);
+extern void SPEC1_MakeStatus(s32 chan, PadOut* status, u32* data);
+extern void SPEC2_MakeStatus(int chan, DecodedInput* out, PackedInput* in);
 extern unsigned int __PADSpec;
-extern unsigned int lbl_8064C434;
-extern PadDecoder lbl_8064C438;
+extern unsigned int Spec;
+extern PadDecoder MakeStatus;
 
-void fn_80219640(unsigned int spec) {
+void PADSetSpec(unsigned int spec) {
     __PADSpec = 0;
     switch (spec) {
     case 0:
-        lbl_8064C438 = fn_802196A0;
+        MakeStatus = SPEC0_MakeStatus;
         break;
     case 1:
-        lbl_8064C438 = (PadDecoder)fn_80219814;
+        MakeStatus = (PadDecoder)SPEC1_MakeStatus;
         break;
     case 2:
     case 3:
     case 4:
     case 5:
-        lbl_8064C438 = (PadDecoder)fn_80219988;
+        MakeStatus = (PadDecoder)SPEC2_MakeStatus;
         break;
     }
-    lbl_8064C434 = spec;
+    Spec = spec;
 }

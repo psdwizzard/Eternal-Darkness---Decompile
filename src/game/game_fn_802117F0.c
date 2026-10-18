@@ -3,7 +3,7 @@ typedef struct Vec3 { float x, y, z; } Vec3;
 
 /* Transform a direction by the linear part of an affine matrix.
  * Each paired product holds the separate x and y contributions. */
-void fn_802117F0(register const Mtx matrix, register const Vec3* source,
+void PSMTXMultVecSR(register const Mtx matrix, register const Vec3* source,
                  register Vec3* destination)
 {
     register float tail0, tail1, tail2, outZ;

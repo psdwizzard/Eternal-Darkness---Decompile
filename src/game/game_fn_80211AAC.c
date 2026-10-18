@@ -6,7 +6,7 @@ extern const float lbl_8065162C;
 extern const float lbl_80651630;
 
 /* Normalize a vector, allowing the source and destination to coincide. */
-void fn_80211AAC(register Vec3 *source, register Vec3 *destination)
+void PSVECNormalize(register Vec3 *source, register Vec3 *destination)
 {
     register float half = lbl_8065162C;
     register float three = lbl_80651630;

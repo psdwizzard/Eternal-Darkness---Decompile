@@ -16,7 +16,7 @@ typedef struct decimal {
 } decimal;
 
 /* MSL __timesdec: result = x * y in decimal digits, rounded half-even */
-void fn_800F87A0(decimal *result, const decimal *x, const decimal *y)
+void __timesdec(decimal *result, const decimal *x, const decimal *y)
 {
     u32 accumulator = 0;
     u8 mantissa[SIGDIGLEN * 2];

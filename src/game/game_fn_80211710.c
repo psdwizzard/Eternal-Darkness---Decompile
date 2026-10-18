@@ -2,7 +2,7 @@ typedef float Mtx[3][4];
 typedef struct Vec3 { float x, y, z; } Vec3;
 
 /* Transform a position by an affine matrix; source may equal destination. */
-void fn_80211710(register const Mtx matrix, register const Vec3 *source,
+void PSMTXMultVec(register const Mtx matrix, register const Vec3 *source,
                  register Vec3 *destination)
 {
     register float xy, zw, rowXY, rowZW;

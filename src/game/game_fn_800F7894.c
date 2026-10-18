@@ -15,7 +15,7 @@ typedef struct decform {
 
 #define SIGDIGLEN 36
 
-extern void fn_800F7A38(decimal *d, double x);
+extern void __num2dec_internal(decimal *d, double x);
 
 static int __must_round(const decimal *d, int digits)
 {
@@ -71,12 +71,12 @@ static void __rounddec(decimal *d, int digits)
     }
 }
 
-void fn_800F7894(const decform *f, decimal *d, double x)
+void __num2dec(const decform *f, decimal *d, double x)
 {
     short digits = f->digits;
     int i;
 
-    fn_800F7A38(d, x);
+    __num2dec_internal(d, x);
     if (d->sig.text[0] > 9) {
         return;
     }

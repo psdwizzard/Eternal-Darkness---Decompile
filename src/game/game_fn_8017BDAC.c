@@ -19,7 +19,7 @@ typedef struct Request {
 
 extern s64 OSGetTime(void);
 extern s64 fn_800F5ECC(s64, s64);
-extern int fn_8021D3D8(u8);
+extern int CARDGetResultCode(u8);
 extern int fn_8017BD78(Request*);
 extern void fn_8017AF78(void);
 extern void fn_8017B440(u8);
@@ -89,7 +89,7 @@ int fn_8017BDAC(Request* request)
         }
         break;
     case 1:
-        request->result = fn_8021D3D8(request->value);
+        request->result = CARDGetResultCode(request->value);
         switch (request->kind) {
         case 1: fn_8017C724(request); break;
         case 3: fn_8017C810(request); break;

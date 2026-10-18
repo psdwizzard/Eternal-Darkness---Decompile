@@ -20,9 +20,9 @@ struct Voice {
 };
 #pragma pack()
 
-extern void fn_801C09C4(Voice*);
+extern void macMakeActive(Voice*);
 
-void fn_801C0644(Voice* voice)
+void macSetExternalKeyoff(Voice* voice)
 {
     u32 changed;
 
@@ -33,14 +33,14 @@ void fn_801C0644(Voice* voice)
                 voice->value_038 = voice->value_05C;
                 voice->value_034 = voice->value_050;
                 voice->value_050 = 0;
-                fn_801C09C4(voice);
+                macMakeActive(voice);
                 changed = 1;
             } else {
                 changed = 0;
             }
 
             if (changed == 0 && (voice->flags_114 & 4) != 0) {
-                fn_801C09C4(voice);
+                macMakeActive(voice);
             }
         } else {
             voice->flags_114 |= 0x40000000000ULL;

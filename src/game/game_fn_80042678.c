@@ -23,7 +23,7 @@ extern void* memset(void*, int, unsigned long);
 extern int fn_801391AC(void);
 extern int fn_80042808(void);
 extern void fn_8015E9EC(u32 value, void* destination, u32 size);
-extern int fn_800F9D4C(char* buffer, const char* format, ...);
+extern int sprintf(char* buffer, const char* format, ...);
 extern u32 fn_800244C4(void* object, u32 first, u32 second);
 extern u32 fn_801E97D4(const u8* source, Header* header);
 extern char lbl_8023E9B8[];
@@ -40,7 +40,7 @@ void fn_80042678(u16 id, const char* prefix, Header* destination)
     if (fn_801391AC() != 0 && id == fn_80042808()) {
         fn_8015E9EC(0xFA63D0, lbl_8064D0BC, lbl_8064D0B8);
     } else {
-        fn_800F9D4C(filename, lbl_8023E9B8, prefix, id);
+        sprintf(filename, lbl_8023E9B8, prefix, id);
         fn_800244C4(filename, (u32)lbl_8064D0BC, lbl_8064D0B8);
     }
     fn_801E97D4((const u8*)lbl_8064D0BC, lbl_8064D0BC);

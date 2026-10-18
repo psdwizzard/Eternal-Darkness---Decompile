@@ -1,9 +1,9 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 
-extern void fn_801C38CC(u16, void*, u8, void*);
+extern void InsertData(u16, void*, u8, void*);
 
-void fn_801C3BCC(u16* ids, void* archive, u8 type, void* direct)
+void ScanIDListReverse(u16* ids, void* archive, u8 type, void* direct)
 {
     short id;
     u16* cursor;
@@ -23,16 +23,16 @@ void fn_801C3BCC(u16* ids, void* archive, u8 type, void* direct)
             if (cursor[-1] & 0x8000) {
                 id = *cursor;
                 while (id >= (short)(cursor[-1] & 0x3FFF)) {
-                    fn_801C38CC(id, archive, type, direct);
+                    InsertData(id, archive, type, direct);
                     id--;
                 }
                 cursor -= 2;
             } else {
-                fn_801C38CC(*cursor, archive, type, direct);
+                InsertData(*cursor, archive, type, direct);
                 cursor--;
             }
         } else {
-            fn_801C38CC(*cursor, archive, type, direct);
+            InsertData(*cursor, archive, type, direct);
             cursor--;
         }
     }

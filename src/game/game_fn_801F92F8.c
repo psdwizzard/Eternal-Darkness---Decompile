@@ -12,7 +12,7 @@ extern float fn_8017968C(Vec3*, Vec3*);
 extern float fn_801796D4(float, float, float, float, float, float);
 extern void fn_80179814(short*, short*, short*, short*, Vec3*, float);
 extern void fn_8013C264(const Vec3*, const Vec3*, Vec3*, const Vec3*, Vec3*);
-extern float fn_80211B44(const Vec3*, const Vec3*);
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
 
 float fn_801F92F8(Vec3* point, Vec3* output, MotionResource* resource)
 {
@@ -97,9 +97,9 @@ float fn_801F92F8(Vec3* point, Vec3* output, MotionResource* resource)
             query.x = point->x; query.y = point->y; query.z = point->z;
             fn_8013C264(&first, &second, &direction, &query, &closest);
             output->x = closest.x; output->y = closest.y; output->z = closest.z;
-            first_dot = fn_80211B44(&first, &direction);
-            interval = fn_80211B44(&second, &direction) - first_dot;
-            projection = fn_80211B44(&closest, &direction) - fn_80211B44(&first, &direction);
+            first_dot = PSVECDotProduct(&first, &direction);
+            interval = PSVECDotProduct(&second, &direction) - first_dot;
+            projection = PSVECDotProduct(&closest, &direction) - PSVECDotProduct(&first, &direction);
             amount = 0.0f;
             start = resource->linear_keys[best_index].time;
             if (interval != 0.0f)

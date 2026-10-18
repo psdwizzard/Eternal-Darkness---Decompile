@@ -41,9 +41,9 @@ extern MemPool lbl_8032C8B8;      /* protopool */
 extern unsigned char lbl_8064CC48; /* initialized */
 
 extern void* memset(void* dst, int value, unsigned long size);
-extern void fn_800F6A04(struct __mem_pool_obj* pool_obj, void* ptr, unsigned long size); /* deallocate_from_fixed_pools */
-extern void fn_800F6CBC(struct Block* bp, struct SubBlock* sb);                         /* Block_link */
-extern void fn_800F66DC(void* p);                                                       /* __sys_free */
+extern void deallocate_from_fixed_pools(struct __mem_pool_obj* pool_obj, void* ptr, unsigned long size); /* deallocate_from_fixed_pools */
+extern void Block_link(struct Block* bp, struct SubBlock* sb);                         /* Block_link */
+extern void __sys_free(void* p);                                                       /* __sys_free */
 
 static inline MemPool* get_malloc_pool(void)
 {
@@ -94,14 +94,14 @@ static inline void deallocate_from_var_pools(MemPool* pool_obj, void* ptr)
     MemSubBlock* sb = (MemSubBlock*)((char*)ptr - sizeof(MemSubBlock));
     MemBlock* bp = (MemBlock*)((unsigned long)sb->bp_ & ~1);
 
-    fn_800F6CBC((struct Block*)bp, (struct SubBlock*)sb);
+    Block_link((struct Block*)bp, (struct SubBlock*)sb);
     if (Block_empty(bp)) {
         unlink(pool_obj, bp);
-        fn_800F66DC(bp);
+        __sys_free(bp);
     }
 }
 
-void fn_800F68D0(void* ptr)
+void free(void* ptr)
 {
     MemPool* pool_obj = get_malloc_pool();
     unsigned long size;
@@ -111,7 +111,7 @@ void fn_800F68D0(void* ptr)
     }
     size = __msize_inline(ptr);
     if (size <= 0x44) {
-        fn_800F6A04((struct __mem_pool_obj*)pool_obj, ptr, size);
+        deallocate_from_fixed_pools((struct __mem_pool_obj*)pool_obj, ptr, size);
     } else {
         deallocate_from_var_pools(pool_obj, ptr);
     }

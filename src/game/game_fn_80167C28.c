@@ -8,7 +8,7 @@ typedef struct Parser {
     ParserRow* volatile rows;
 } Parser;
 
-void fn_80167C28(Parser* parser, int row)
+void init_entry(Parser* parser, int row)
 {
     int i;
 

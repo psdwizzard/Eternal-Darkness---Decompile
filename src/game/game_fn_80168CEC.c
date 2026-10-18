@@ -25,14 +25,14 @@ typedef struct State {
     Slot* slots;
 } State;
 
-extern Value* fn_8016731C(State*, Object*, Value*);
-extern int fn_80167D2C(Value*);
-extern void fn_8016057C(State*, int);
-extern void fn_80160B18(State*, Value*, int);
-extern void fn_801603AC(State*, Value*, char*);
+extern Value* luaH_get(State*, Object*, Value*);
+extern int luaT_tag(Value*);
+extern void luaD_checkstack(State*, int);
+extern void luaD_call(State*, Value*, int);
+extern void luaG_typeerror(State*, Value*, char*);
 extern char lbl_8064BBE8;
 
-Value* fn_80168CEC(State* state, Value* value)
+Value* luaV_gettable(State* state, Value* value)
 {
     void* target;
     int index;
@@ -41,7 +41,7 @@ Value* fn_80168CEC(State* state, Value* value)
         Object* object = value->data.pointer;
         index = object->index;
         if (index == 4 || state->slots[index].first == 0) {
-            Value* found = fn_8016731C(state, object, state->top - 1);
+            Value* found = luaH_get(state, object, state->top - 1);
             if (found->type == 1) {
                 target = state->slots[index].second;
                 if (target != 0)
@@ -53,22 +53,22 @@ Value* fn_80168CEC(State* state, Value* value)
         }
     } else {
 resolve:
-        index = fn_80167D2C(value);
+        index = luaT_tag(value);
         target = state->slots[index].first;
     }
 
 resolved:
     if (target != 0) {
-        fn_8016057C(state, 2);
+        luaD_checkstack(state, 2);
         state->top[1] = state->top[-1];
         state->top[0] = *value;
         state->top[-1].data.pointer = target;
         state->top[-1].type = 5;
         state->top += 2;
-        fn_80160B18(state, state->top - 3, 1);
+        luaD_call(state, state->top - 3, 1);
         return state->top - 1;
     }
 
-    fn_801603AC(state, value, &lbl_8064BBE8);
+    luaG_typeerror(state, value, &lbl_8064BBE8);
     return 0;
 }

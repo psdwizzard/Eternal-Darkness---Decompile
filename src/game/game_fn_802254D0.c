@@ -15,7 +15,7 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_802254D0(void)
+void GXClearVtxDesc(void)
 {
     gx->vcdLo = 0;
     gx->vcdLo = (gx->vcdLo & ~(3UL << 9)) | (1UL << 9);

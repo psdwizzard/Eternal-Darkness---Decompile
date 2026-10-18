@@ -32,10 +32,10 @@ typedef struct WeightDecoder {
     u8 transposed;
 } WeightDecoder;
 
-extern s32 lbl_8032CE08[];
+extern s32 divTable[];
 
 /* Read one 4x4 block of 8-bit samples and its differential Huffman-coded weight. */
-s32 fn_801036AC(register WeightDecoder *decoder, register u8 *block, register s32 *state,
+s32 GetAotBasis(register WeightDecoder *decoder, register u8 *block, register s32 *state,
                 register u8 *base, register s32 stride, register s32 index)
 {
     register s16 node;
@@ -163,7 +163,7 @@ s32 fn_801036AC(register WeightDecoder *decoder, register u8 *block, register s3
     *state += tree->zero[node];
     packed = code;
     if (code & 0x8000) {
-        return (*state + ((packed >> 13) & 3)) * -*(s32 *)((u8 *)lbl_8032CE08 + (maximum - minimum) * 4);
+        return (*state + ((packed >> 13) & 3)) * -*(s32 *)((u8 *)divTable + (maximum - minimum) * 4);
     }
-    return (*state + ((packed >> 13) & 3)) * *(s32 *)((u8 *)lbl_8032CE08 + (maximum - minimum) * 4);
+    return (*state + ((packed >> 13) & 3)) * *(s32 *)((u8 *)divTable + (maximum - minimum) * 4);
 }

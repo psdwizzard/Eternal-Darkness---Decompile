@@ -16,7 +16,7 @@ typedef struct GXTexObjInt {
     u8 flags;
 } GXTexObjInt;
 
-void fn_802288C4(void *obj, void **image, u16 *width, u16 *height,
+void GXGetTexObjAll(void *obj, void **image, u16 *width, u16 *height,
                  u32 *format, u32 *wrap_s, u32 *wrap_t, u8 *mipmap)
 {
     GXTexObjInt *t = (GXTexObjInt *)obj;

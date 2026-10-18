@@ -23,15 +23,15 @@ typedef struct EffectParams {
 extern volatile s32 lbl_8064D18C;
 extern const float lbl_8064E998;
 extern const float lbl_8064E9BC;
-extern void fn_80211A6C();
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern void fn_80211C78(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
+extern void PSVECSubtract();
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern void C_VECReflect(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
 extern void fn_801AAE68(float, s32, s32, s32, Vec3 *, s32, s32, s32,
                         u16, s32);
 extern void fn_8018358C(EffectParams *);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern s32 fn_8007BC44(Vec3 *);
 extern void* fn_80148008(Vec3 *, void *, EffectParams *, void (*)(void));
 extern void fn_801834F0(void);
@@ -50,16 +50,16 @@ void fn_8007B828(Object *object)
     EffectParams params;
     Vec3 *position = &object->position;
 
-    fn_80211A6C(position, object, &direction);
-    fn_80211AAC(&direction, &direction);
+    PSVECSubtract(position, object, &direction);
+    PSVECNormalize(&direction, &direction);
     if (object->link != 0) {
-        fn_80211C78(&direction, (Vec3 *)((char *)object->link + 0x14),
+        C_VECReflect(&direction, (Vec3 *)((char *)object->link + 0x14),
                      &linked_direction);
-        fn_80211AAC(&linked_direction, &linked_direction);
+        PSVECNormalize(&linked_direction, &linked_direction);
     } else {
-        fn_80211A6C(object, position, &linked_direction);
+        PSVECSubtract(object, position, &linked_direction);
     }
-    fn_80211A90(&linked_direction, &linked_direction, lbl_8064E9BC);
+    PSVECScale(&linked_direction, &linked_direction, lbl_8064E9BC);
 
     fn_801AAE68(lbl_8064E998, 0xC3, 127, 0, position, 2, 2, 0,
                 (u16)lbl_8064D18C, 0);
@@ -69,13 +69,13 @@ void fn_8007B828(Object *object)
     fn_8018358C(&params);
     params.value2 = 100;
     params.value3 = -10;
-    params.value6 = (fn_800FBFB0() + 10) & 0x1F;
+    params.value6 = (rand() + 10) & 0x1F;
     params.value17 = 2;
     params.value18 = 1;
     params.value14 = 100;
     params.value15 = 100;
-    params.value19 = (fn_800FBFB0() & 7) + 1;
-    params.value16 = (fn_800FBFB0() & 0xF) + 1;
+    params.value19 = (rand() & 7) + 1;
+    params.value16 = (rand() & 0xF) + 1;
 
     if (fn_8007BC44(position) == 0) {
         effect_position = *position;

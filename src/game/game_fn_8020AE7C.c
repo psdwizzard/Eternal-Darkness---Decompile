@@ -11,8 +11,8 @@ typedef struct HeapDesc {
     Cell *allocated;
 } HeapDesc;
 
-extern HeapDesc *lbl_8064D920;
-extern Cell *fn_8020ACD4(Cell *list, Cell *cell);
+extern HeapDesc *HeapArray;
+extern Cell *DLInsert(Cell *list, Cell *cell);
 
 static Cell *DLExtract(Cell *list, Cell *cell) {
     if (cell->next) {
@@ -26,12 +26,12 @@ static Cell *DLExtract(Cell *list, Cell *cell) {
     }
 }
 
-void fn_8020AE7C(int heap, void *ptr) {
+void OSFreeToHeap(int heap, void *ptr) {
     HeapDesc *hd;
     Cell *cell;
 
     cell = (Cell *)((char *)ptr - 0x20);
-    hd = &lbl_8064D920[heap];
+    hd = &HeapArray[heap];
     hd->allocated = DLExtract(hd->allocated, cell);
-    hd->free = fn_8020ACD4(hd->free, cell);
+    hd->free = DLInsert(hd->free, cell);
 }

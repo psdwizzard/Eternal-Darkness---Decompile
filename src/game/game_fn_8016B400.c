@@ -7,7 +7,7 @@ extern void* lbl_8064D1DC;
 extern void* lbl_8064D1E0;
 extern char lbl_8024FEE8[];
 
-extern int fn_800F9D4C(char*, const char*, ...);
+extern int sprintf(char*, const char*, ...);
 extern void fn_8016B4B4(void*, u32, char*, void*, void*);
 
 void fn_8016B400(int id, void* context, void* value)
@@ -30,7 +30,7 @@ void fn_8016B400(int id, void* context, void* value)
         size = tbl[index + 1];
         data = base + tbl[index];
         if (size != 0) {
-            fn_800F9D4C(name, lbl_8024FEE8, id);
+            sprintf(name, lbl_8024FEE8, id);
             fn_8016B4B4(data, size, name, lbl_8064D1E0, lbl_8064D1DC);
         }
         lbl_8064D1BC = 0;

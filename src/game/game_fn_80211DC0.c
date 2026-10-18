@@ -3,7 +3,7 @@ typedef struct Quaternion {
 } Quaternion;
 
 /* Hamilton product. Either input may also be the destination. */
-void fn_80211DC0(register const Quaternion *a, register const Quaternion *b,
+void PSQUATMultiply(register const Quaternion *a, register const Quaternion *b,
                  register Quaternion *out)
 {
     register float xy, zw, bxy, bzw;

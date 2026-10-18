@@ -1,36 +1,36 @@
 typedef unsigned int u32;
 typedef unsigned char u8;
 
-extern void* lbl_8064D514;
-extern volatile u32 lbl_8064D518;
-extern u32 lbl_8064D51C;
-extern u32 lbl_8064D520;
-extern volatile u32 lbl_8064D524;
-extern void (*lbl_8064D510)(void);
-extern u8 lbl_8064D534;
+extern void* salAIBufferBase;
+extern volatile u32 salDspIsDone;
+extern u32 salLogicIsWaiting;
+extern u32 salLogicActive;
+extern volatile u32 salLastTick;
+extern void (*userCallback)(void);
+extern u8 salAIBufferIndex;
 
-extern void fn_8021A088(void*, u32);
+extern void AIInitDMA(void*, u32);
 extern u32 OSGetTick(void);
 extern void OSEnableInterrupts(void);
 extern void OSDisableInterrupts(void);
 
-void fn_801CDE34(void)
+void salCallback(void)
 {
     char* base;
 
-    lbl_8064D534 = (lbl_8064D534 + 1) % 4;
-    base = (char*)lbl_8064D514 + 0x80000000;
-    fn_8021A088(base + lbl_8064D534 * 640, 640);
-    lbl_8064D524 = OSGetTick();
-    if (lbl_8064D518 != 0) {
-        if (lbl_8064D520 == 0) {
-            lbl_8064D520 = 1;
+    salAIBufferIndex = (salAIBufferIndex + 1) % 4;
+    base = (char*)salAIBufferBase + 0x80000000;
+    AIInitDMA(base + salAIBufferIndex * 640, 640);
+    salLastTick = OSGetTick();
+    if (salDspIsDone != 0) {
+        if (salLogicActive == 0) {
+            salLogicActive = 1;
             OSEnableInterrupts();
-            lbl_8064D510();
+            userCallback();
             OSDisableInterrupts();
-            lbl_8064D520 = 0;
+            salLogicActive = 0;
         }
     } else {
-        lbl_8064D51C = 1;
+        salLogicIsWaiting = 1;
     }
 }

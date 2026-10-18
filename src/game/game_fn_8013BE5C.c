@@ -22,12 +22,12 @@ extern int fn_8011F958(void*, void*);
 extern void* fn_8011F130(void*);
 extern void* fn_8011FE34(void*);
 extern void fn_80179DB0(float*, short*);
-extern void fn_802114E0(Mtx, const Quaternion*);
-extern void fn_80211710(const Mtx, const Vec3*, Vec3*);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211AAC(Vec3*, Vec3*);
-extern float fn_80211B44(Vec3*, Vec3*);
+extern void PSMTXQuat(Mtx, const Quaternion*);
+extern void PSMTXMultVec(const Mtx, const Vec3*, Vec3*);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECNormalize(Vec3*, Vec3*);
+extern float PSVECDotProduct(Vec3*, Vec3*);
 extern void* fn_80201B9C(void);
 extern Entry80201B3C* fn_80201B3C(void);
 extern void* fn_80201BC0(void*);
@@ -64,21 +64,21 @@ int fn_8013BE5C(void* target, void* object)
         current = fn_80201B3C();
         fn_80179DB0(&start.x, first[index].position);
         fn_80179DB0(&end.x, second[index].position);
-        fn_802114E0(transform, rotation);
-        fn_80211710(transform, &start, &start);
-        fn_80211710(transform, &end, &end);
-        fn_80211A48(translation, &start, &start);
-        fn_80211A48(translation, &end, &end);
-        fn_80211A6C(&end, &start, &direction);
-        fn_80211AAC(&direction, &direction);
-        plane = -fn_80211B44(&start, &direction);
+        PSMTXQuat(transform, rotation);
+        PSMTXMultVec(transform, &start, &start);
+        PSMTXMultVec(transform, &end, &end);
+        PSVECAdd(translation, &start, &start);
+        PSVECAdd(translation, &end, &end);
+        PSVECSubtract(&end, &start, &direction);
+        PSVECNormalize(&direction, &direction);
+        plane = -PSVECDotProduct(&start, &direction);
 
         while (node != 0) {
             void* body;
             if (node != current && fn_80201EB8(node) == lbl_8064D18C &&
                 (body = fn_80201BC8(node)) != 0) {
                 Vec3* position = fn_8011F130(body);
-                float distance = plane + fn_80211B44(position, &direction);
+                float distance = plane + PSVECDotProduct(position, &direction);
                 float limit = lbl_8065030C;
                 float magnitude;
                 if (fn_80201B5C(node) == 5)

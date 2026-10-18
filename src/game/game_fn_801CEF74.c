@@ -62,8 +62,8 @@ extern void fn_801B05B0(int, u32);
 extern void fn_801A9E40(int);
 extern void fn_801D0E78(void*);
 extern void fn_800A0B68(u32);
-extern f32 fn_80048C2C(f32);
-extern f32 fn_80048C50(f32);
+extern f32 sinf(f32);
+extern f32 cosf(f32);
 extern void fn_801CEBC4(void*, void*, int, int, s16, void*);
 
 extern int fn_80128258(void);
@@ -217,9 +217,9 @@ void fn_801CEF74(Object* object)
                 u32 scratch;
                 f32 trig;
 
-                trig = fn_80048C2C(angle);
+                trig = sinf(angle);
                 point[0] = (f32)work[4] * trig + *(f32*)(work + 0x30);
-                trig = fn_80048C50(angle);
+                trig = cosf(angle);
                 point[1] = (f32)work[4] * trig + *(f32*)(work + 0x34);
                 point[2] = *(f32*)(work + 0x38);
                 scratch = *(u32*)(work + 0x1CC);

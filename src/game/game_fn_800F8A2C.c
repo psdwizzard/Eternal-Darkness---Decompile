@@ -10,7 +10,7 @@ typedef struct decimal {
 } decimal;
 
 /* Convert an unsigned 64-bit integer to decimal form. */
-void fn_800F8A2C(decimal *d, unsigned long long x)
+void __ull2dec(decimal *d, unsigned long long x)
 {
     u8 *start;
     u8 *end;

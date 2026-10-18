@@ -20,11 +20,11 @@ struct Target {
     u8 state;
 };
 
-extern Sample* lbl_8064D4C0;
-extern Target* lbl_8064D4C4;
+extern Sample* s3dListenerRoot;
+extern Target* s3dRoomRoot;
 extern float lbl_80650FB0;
 
-void fn_801C8160(void)
+void UpdateRoomDistances(void)
 {
     Sample* sample;
     Target* target;
@@ -33,18 +33,18 @@ void fn_801C8160(void)
     float sum;
 
     count = 0;
-    sample = lbl_8064D4C0;
+    sample = s3dListenerRoot;
     while (sample != 0) {
         sample = sample->next;
         count++;
     }
 
     if (count != 0) {
-        target = lbl_8064D4C4;
+        target = s3dRoomRoot;
         while (target != 0) {
             if (target->state != 0xFF) {
                 sum = lbl_80650FB0;
-                sample = lbl_8064D4C0;
+                sample = s3dListenerRoot;
                 while (sample != 0) {
                     delta[0] = target->x - sample->x;
                     delta[1] = target->y - sample->y;

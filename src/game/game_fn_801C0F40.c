@@ -8,22 +8,22 @@ typedef struct Link {
 } Link;
 
 extern Link lbl_80626DA0[];
-extern Link* lbl_8064D458;
-extern Link* lbl_8064D45C;
-extern Link* lbl_8064D460;
+extern Link* vidCurrentId;
+extern Link* vidRoot;
+extern Link* vidFree;
 
-void fn_801C0F40(void)
+void vidInit(void)
 {
     u32 i;
     Link* link;
     Link* previous;
 
     link = lbl_80626DA0;
-    lbl_8064D460 = link;
+    vidFree = link;
     i = 0;
-    lbl_8064D458 = 0;
+    vidCurrentId = 0;
     previous = 0;
-    lbl_8064D45C = 0;
+    vidRoot = 0;
 
     for (; i < 128; i++) {
         link->prev = previous;

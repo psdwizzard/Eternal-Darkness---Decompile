@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Return the scalar product, accumulating the x/y products before the z product. */
-float fn_80211B44(register Vec3 *a, register Vec3 *b)
+float PSVECDotProduct(register Vec3 *a, register Vec3 *b)
 {
     register float result, yzProduct, partial, bXY, aXY;
 

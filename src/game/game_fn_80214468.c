@@ -13,10 +13,10 @@ typedef struct DVDDiskID {
 } DVDDiskID;
 
 extern DVDDiskID tmpBuffer_80641960;
-extern BOOL fn_80212758(void *, u32, u32, void (*)(u32));
-extern void fn_802145B4(u32);
+extern BOOL DVDLowRead(void *, u32, u32, void (*)(u32));
+extern void cbForStateCheckID2(u32);
 
-void fn_80214468(void)
+void stateCheckID2(void)
 {
-    fn_80212758(&tmpBuffer_80641960, 0x20, 0x420, fn_802145B4);
+    DVDLowRead(&tmpBuffer_80641960, 0x20, 0x420, cbForStateCheckID2);
 }

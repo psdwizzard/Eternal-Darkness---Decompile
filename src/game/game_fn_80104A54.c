@@ -22,9 +22,9 @@ typedef struct Work80104980 {
     u8 byte14;
 } Work80104980;
 
-extern void fn_80104980(Entry80104980 *, int *, int, Work80104980 *, int);
+extern void IpicLineDec(Entry80104980 *, int *, int, Work80104980 *, int);
 
-void fn_80104A54(register Entry80104980 *entries, int index, register int *output)
+void IpicPlaneDec(register Entry80104980 *entries, int index, register int *output)
 {
     Work80104980 work;
     register Entry80104980 *entry;
@@ -72,7 +72,7 @@ void fn_80104A54(register Entry80104980 *entries, int index, register int *outpu
             work.current = (int *)initial;
             work.start = initial;
             work.end = (int *)((u8 *)initial + stride);
-            fn_80104980(entries, callOutput, callWidth, &work, callColumns);
+            IpicLineDec(entries, callOutput, callWidth, &work, callColumns);
         }
     }
     output = (int *)((u8 *)output + outputStride);
@@ -93,7 +93,7 @@ void fn_80104A54(register Entry80104980 *entries, int index, register int *outpu
                 addi callWidth, width, 0
                 addi callColumns, columns, 0
             }
-            fn_80104980(callEntries, callOutput, callWidth, &work, callColumns);
+            IpicLineDec(callEntries, callOutput, callWidth, &work, callColumns);
         }
         output = (int *)((u8 *)output + outputStride);
         row--;
@@ -113,6 +113,6 @@ void fn_80104A54(register Entry80104980 *entries, int index, register int *outpu
             addi callWidth, width, 0
             addi callColumns, columns, 0
         }
-        fn_80104980(callEntries, callOutput, callWidth, &work, callColumns);
+        IpicLineDec(callEntries, callOutput, callWidth, &work, callColumns);
     }
 }

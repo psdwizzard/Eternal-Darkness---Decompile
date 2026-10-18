@@ -3,10 +3,10 @@
 typedef unsigned char u8;
 typedef signed int s32;
 
-extern s32 fn_801036AC(void *ctx, u8 *block, s32 *state,
+extern s32 GetAotBasis(void *ctx, u8 *block, s32 *state,
                       u8 *table, s32 stride, s32 index);
 
-s32 fn_80104044(void *ctx, s32 *out, u8 count,
+s32 GetAotSum(void *ctx, s32 *out, u8 count,
                 u8 *table, s32 stride, s32 index)
 {
     s32 state = 0;
@@ -31,7 +31,7 @@ s32 fn_80104044(void *ctx, s32 *out, u8 count,
     out[0] = 0;
 
     while (count--) {
-        weight = fn_801036AC(ctx, block, &state, table, stride, index);
+        weight = GetAotBasis(ctx, block, &state, table, stride, index);
         out[0] += weight * block[0];
         out[1] += weight * block[1];
         out[2] += weight * block[2];

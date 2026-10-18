@@ -25,21 +25,21 @@ typedef struct CardControl {
     u8 alarm[0x30];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern u32 fn_80207C88(s32 channel);
-extern BOOL fn_802071F8(s32 channel, EXICallback callback);
-extern EXICallback fn_80206ED4(s32 channel, EXICallback callback);
-extern void fn_8020A93C(void *alarm);
+extern u32 EXIGetState(s32 channel);
+extern BOOL EXIAttach(s32 channel, EXICallback callback);
+extern EXICallback EXISetExiCallback(s32 channel, EXICallback callback);
+extern void OSCancelAlarm(void *alarm);
 extern BOOL EXILock(s32 channel, u32 device, EXICallback unlockedCallback);
-extern void fn_8021C374(s32 channel, s32 result);
-extern void fn_8021C3AC(s32 channel, void *context);
-extern void fn_8021C644(s32 channel, void *context);
-extern void fn_802207C0(s32 channel, s32 result);
-extern s32 fn_802203B0(s32 channel);
+extern void __CARDDefaultApiCallback(s32 channel, s32 result);
+extern void __CARDExtHandler(s32 channel, void *context);
+extern void __CARDUnlockedHandler(s32 channel, void *context);
+extern void __CARDMountCallback(s32 channel, s32 result);
+extern s32 DoMount(s32 channel);
 
-s32 fn_802208C8(s32 channel, void *workArea, CardCallback detachCallback, CardCallback attachCallback)
+s32 CARDMountAsync(s32 channel, void *workArea, CardCallback detachCallback, CardCallback attachCallback)
 {
     CardControl *card;
     BOOL enabled;
@@ -51,13 +51,13 @@ s32 fn_802208C8(s32 channel, void *workArea, CardCallback detachCallback, CardCa
         return -3;
     }
 
-    card = &lbl_80641C60[channel];
+    card = &__CARDBlock[channel];
     enabled = OSDisableInterrupts();
     if (card->result == -1) {
         OSRestoreInterrupts(enabled);
         return -1;
     }
-    if (!card->attached && (fn_80207C88(channel) & 8)) {
+    if (!card->attached && (EXIGetState(channel) & 8)) {
         OSRestoreInterrupts(enabled);
         return -2;
     }
@@ -65,10 +65,10 @@ s32 fn_802208C8(s32 channel, void *workArea, CardCallback detachCallback, CardCa
     card->result = -1;
     card->workArea = workArea;
     card->extCallback = detachCallback;
-    card->apiCallback = attachCallback ? attachCallback : fn_8021C374;
+    card->apiCallback = attachCallback ? attachCallback : __CARDDefaultApiCallback;
     card->exiCallback = 0;
 
-    if (!card->attached && !fn_802071F8(channel, fn_8021C3AC)) {
+    if (!card->attached && !EXIAttach(channel, __CARDExtHandler)) {
         card->result = -3;
         OSRestoreInterrupts(enabled);
         return -3;
@@ -76,16 +76,16 @@ s32 fn_802208C8(s32 channel, void *workArea, CardCallback detachCallback, CardCa
 
     card->mountStep = 0;
     card->attached = 1;
-    fn_80206ED4(channel, 0);
-    fn_8020A93C(card->alarm);
+    EXISetExiCallback(channel, 0);
+    OSCancelAlarm(card->alarm);
     card->currentDir = 0;
     card->currentFat = 0;
     OSRestoreInterrupts(enabled);
 
-    card->unlockCallback = fn_802207C0;
-    if (!EXILock(channel, 0, fn_8021C644)) {
+    card->unlockCallback = __CARDMountCallback;
+    if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
         return 0;
     }
     card->unlockCallback = 0;
-    return fn_802203B0(channel);
+    return DoMount(channel);
 }

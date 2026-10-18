@@ -1,12 +1,12 @@
-extern void fn_80209AF0(int);
-extern void fn_80209AF8(int);
-extern void fn_80209B00(void);
-extern void fn_800FBFA8(void);
+extern void PPCMtmmcr0(int);
+extern void PPCMtmmcr1(int);
+extern void PPCMfpmc1(void);
+extern void srand(void);
 
 void fn_80024D08(void)
 {
-    fn_80209AF0(0);
-    fn_80209AF8(0);
-    fn_80209B00();
-    fn_800FBFA8();
+    PPCMtmmcr0(0);
+    PPCMtmmcr1(0);
+    PPCMfpmc1();
+    srand();
 }

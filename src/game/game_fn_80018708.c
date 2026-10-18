@@ -33,9 +33,9 @@ extern s32 lbl_8064D18C;
 extern const f32 lbl_8064DCF4;
 extern const f32 lbl_8064DE78;
 
-extern double fn_8016A694(void*, int);
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern double lua_tonumber(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern void fn_80196578(void*);
 extern void fn_8018F81C(void*, u8);
@@ -72,17 +72,17 @@ s32 fn_80018708(void* script)
     f32 best_high;
     ValuePair values;
 
-    arg1 = (s32)fn_8016A694(script, 1);
-    arg2 = (s32)fn_8016A694(script, 2);
-    count = (s32)fn_8016A694(script, 3);
-    if (fn_8016A598(script) != count + 4) {
-        fn_80163BB4(script, lbl_8023CBC8, count + 2, fn_8016A598(script));
+    arg1 = (s32)lua_tonumber(script, 1);
+    arg2 = (s32)lua_tonumber(script, 2);
+    count = (s32)lua_tonumber(script, 3);
+    if (lua_gettop(script) != count + 4) {
+        luaO_verror(script, lbl_8023CBC8, count + 2, lua_gettop(script));
         return 0;
     }
 
     body = descriptor.layout.body;
     flags = 0;
-    kind = (s32)fn_8016A694(script, 4);
+    kind = (s32)lua_tonumber(script, 4);
     fn_80196578(&descriptor);
     *(s16*)&descriptor.bytes[4] = -1;
     fn_8018F81C(&descriptor, (u8)count);
@@ -122,9 +122,9 @@ s32 fn_80018708(void* script)
     descriptor.bytes[43] = 0;
 
     endpoints[0] = *fn_80158ABC(
-        fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 5)), 2), 2, 0);
+        fn_8015C4A4(fn_800F5C54(lua_tonumber(script, 5)), 2), 2, 0);
     endpoints[1] = *fn_80158ABC(
-        fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 7)), 2), 2, 0);
+        fn_8015C4A4(fn_800F5C54(lua_tonumber(script, 7)), 2), 2, 0);
     dx = (f32)(endpoints[1].x - endpoints[0].x);
     dy = (f32)(endpoints[1].y - endpoints[0].y);
     dz = (f32)(endpoints[1].z - endpoints[0].z);
@@ -138,7 +138,7 @@ s32 fn_80018708(void* script)
         f32 distance;
 
         point = fn_80158ABC(
-            fn_8015C4A4(fn_800F5C54(fn_8016A694(script, i + 5)), 2),
+            fn_8015C4A4(fn_800F5C54(lua_tonumber(script, i + 5)), 2),
             2, 0);
         distance = dx * point->x + dy * point->y + dz * point->z;
         if ((f32)point->z < min_z) {

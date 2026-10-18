@@ -2,7 +2,7 @@
 
 /* libvorbis vorbis_info_clear-style teardown of the codec setup:
  * free each floor/residue/mapping param through its type's handler,
- * then free the codebooks. Mirrors the unpack in fn_80232078. */
+ * then free the codebooks. Mirrors the unpack in _vorbis_unpack_books. */
 
 typedef struct Data {
     u8 pad0[8];
@@ -38,12 +38,12 @@ typedef struct Source {
     Data *data;
 } Source;
 
-extern void fn_802357B4(void *);
-extern Handler *lbl_8064C4CC[];
-extern Handler *lbl_80300160[];
-extern Handler *lbl_8064C4D4[];
+extern void vorbis_staticbook_destroy(void *);
+extern Handler *_floor_P[];
+extern Handler *_residue_P[];
+extern Handler *_mapping_P[];
 
-void fn_802326F8(Source *source) {
+void vorbis_info_clear(Source *source) {
     register Data *data;
     register Handler **handlers;
     Handler *handler;
@@ -58,9 +58,9 @@ void fn_802326F8(Source *source) {
     /* ASM: lis/or/addi preserve the table-address and cursor-copy order;
      * C folds the cursor copy into its induction variable's initial addi. */
     asm {
-        lis r3, lbl_8064C4D4@ha
+        lis r3, _mapping_P@ha
         or cursor, data, data
-        addi handlers, r3, lbl_8064C4D4@l
+        addi handlers, r3, _mapping_P@l
     }
     for (i = 0; i < data->dCount; i++) {
         handler = handlers[cursor->dTypes[0]];
@@ -71,9 +71,9 @@ void fn_802326F8(Source *source) {
     /* ASM: lis/or/addi preserve the table-address and cursor-copy order;
      * C folds the cursor copy into its induction variable's initial addi. */
     asm {
-        lis r3, lbl_8064C4CC@ha
+        lis r3, _floor_P@ha
         or cursor, data, data
-        addi handlers, r3, lbl_8064C4CC@l
+        addi handlers, r3, _floor_P@l
     }
     for (i = 0; i < data->bCount; i++) {
         handler = handlers[cursor->bTypes[0]];
@@ -84,9 +84,9 @@ void fn_802326F8(Source *source) {
     /* ASM: lis/or/addi preserve the table-address and cursor-copy order;
      * C folds the cursor copy into its induction variable's initial addi. */
     asm {
-        lis r3, lbl_80300160@ha
+        lis r3, _residue_P@ha
         or cursor, data, data
-        addi handlers, r3, lbl_80300160@l
+        addi handlers, r3, _residue_P@l
     }
     for (i = 0; i < data->cCount; i++) {
         handler = handlers[cursor->cTypes[0]];
@@ -103,7 +103,7 @@ void fn_802326F8(Source *source) {
         asm { or book, data, data }
         for (j = 0; j < data->objectCount; j++) {
             if (book->objects[0] != 0) {
-                fn_802357B4(book->objects[0]);
+                vorbis_staticbook_destroy(book->objects[0]);
             }
             book = (Data *)((char *)book + 4);
         }

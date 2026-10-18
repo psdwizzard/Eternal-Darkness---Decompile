@@ -13,9 +13,9 @@ extern int lbl_8064D738;
 extern float lbl_80650C68, lbl_80650C74, lbl_80650C78;
 extern void fn_8018D788(int, void*, Buffers*, u16);
 extern void fn_8018D020(void*, float, float, float, float, float);
-extern void fn_80211484(float (*)[3][4], float, float, float);
-extern void fn_80211268(float (*)[3][4], float, int);
-extern void fn_80210FDC(float (*)[3][4], float (*)[3][4], float (*)[3][4]);
+extern void PSMTXTrans(float (*)[3][4], float, float, float);
+extern void PSMTXRotRad(float (*)[3][4], float, int);
+extern void PSMTXConcat(float (*)[3][4], float (*)[3][4], float (*)[3][4]);
 extern int fn_801ED57C(int);
 extern void DCFlushRange(void*, u32);
 extern void fn_8018D0D0(void*, void*, int);
@@ -57,13 +57,13 @@ void fn_8019ECA0(u8* obj)
                         (float)*(s16*)(obj + 0x14));
             for (j = 0; j < entry[0x20]; j++, color += 4)
                 color[3] = entry[0x2B];
-            fn_80211484(&first, lbl_80650C74, lbl_80650C74, lbl_80650C68);
-            fn_80211268((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30),
+            PSMTXTrans(&first, lbl_80650C74, lbl_80650C74, lbl_80650C68);
+            PSMTXRotRad((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30),
                         *(float*)(fields + 0x30 + i * 4), 90);
-            fn_80210FDC((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30),
+            PSMTXConcat((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30),
                         &first, &second);
-            fn_80211484(&first, lbl_80650C78, lbl_80650C78, lbl_80650C68);
-            fn_80210FDC(&first, &second,
+            PSMTXTrans(&first, lbl_80650C78, lbl_80650C78, lbl_80650C68);
+            PSMTXConcat(&first, &second,
                         (float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30));
             entry += 0x38;
         }

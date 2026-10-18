@@ -8,7 +8,7 @@ typedef struct Value {
     } data;
 } Value;
 
-int fn_801639E8(Value* left, Value* right)
+int luaO_equalObj(Value* left, Value* right)
 {
     if (left->type != right->type) {
         return 0;

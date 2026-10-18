@@ -1,6 +1,6 @@
-extern void fn_801CD7C8(void);
+extern void aramSyncTransferQueue(void);
 
-void fn_801CD3E0(void)
+void hwSyncSampleMem(void)
 {
-    fn_801CD7C8();
+    aramSyncTransferQueue();
 }

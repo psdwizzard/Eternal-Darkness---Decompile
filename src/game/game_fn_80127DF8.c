@@ -36,10 +36,10 @@ extern void *fn_80128E6C(void *);
 extern int fn_80124128(Model *, unsigned int);
 extern void fn_801279E8(Model *model, int index, Matrix m, int noOverride);
 extern void fn_8012E3AC(void *track, Matrix m);
-extern void fn_80210FB0(Matrix m);
-extern void fn_80210FDC(const Matrix a, const Matrix b, Matrix out);
-extern void fn_802110A8(const Matrix src, Matrix dst);
-extern void fn_802114B8(Matrix m, float x, float y, float z);
+extern void PSMTXIdentity(Matrix m);
+extern void PSMTXConcat(const Matrix a, const Matrix b, Matrix out);
+extern void PSMTXInverse(const Matrix src, Matrix dst);
+extern void PSMTXScale(Matrix m, float x, float y, float z);
 
 void fn_80127DF8(Model *model, int index, Matrix m) {
     Matrix parentMtx;
@@ -65,11 +65,11 @@ void fn_80127DF8(Model *model, int index, Matrix m) {
             fn_801279E8(model, index, m, attached);
             if (joint->parent != 0) {
                 fn_80127DF8(model, joint->parent - data->joints, parentMtx);
-                fn_80210FDC(parentMtx, m, m);
+                PSMTXConcat(parentMtx, m, m);
             }
         } else {
             track = model->ext->track;
-            fn_80210FB0(m);
+            PSMTXIdentity(m);
             if (track != 0) {
                 fn_8012E3AC(track, m);
             }
@@ -78,12 +78,12 @@ void fn_80127DF8(Model *model, int index, Matrix m) {
         parentIndex = fn_80124128(parent, data->joints[index].parentJoint);
         fn_80127DF8(parent, parentIndex, m);
         if (data->joints[index].parent != 0) {
-            fn_802114B8(scaleMtx, data->joints[index].scale[0], data->joints[index].scale[1],
+            PSMTXScale(scaleMtx, data->joints[index].scale[0], data->joints[index].scale[1],
                         data->joints[index].scale[2]);
-            fn_80210FDC(scaleMtx, data->joints[index].mtx, scaleMtx);
-            fn_802110A8(scaleMtx, inv);
-            fn_80210FDC(data->joints[index].parent->mtx, inv, inv);
-            fn_80210FDC(m, inv, m);
+            PSMTXConcat(scaleMtx, data->joints[index].mtx, scaleMtx);
+            PSMTXInverse(scaleMtx, inv);
+            PSMTXConcat(data->joints[index].parent->mtx, inv, inv);
+            PSMTXConcat(m, inv, m);
         }
     }
 }

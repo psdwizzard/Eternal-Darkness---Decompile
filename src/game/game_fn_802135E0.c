@@ -11,9 +11,9 @@ typedef struct FSTEntry {
 } FSTEntry;
 
 extern FSTEntry *FstStart_8064D9E4;
-extern u32 lbl_8064D9F0; /* currentDirectory */
+extern u32 currentDirectory; /* currentDirectory */
 
-u32 fn_80213480(u32 entry, char *path, u32 maxLength);
+u32 entryToPath(u32 entry, char *path, u32 maxLength);
 
 #define entryIsDir(i) (((FstStart_8064D9E4[i].isDirAndStringOff & 0xff000000) == 0) ? FALSE : TRUE)
 
@@ -22,7 +22,7 @@ static inline BOOL convertEntrynumToPath(u32 entry, char *path, u32 maxlen)
 {
     u32 loc;
 
-    loc = fn_80213480(entry, path, maxlen);
+    loc = entryToPath(entry, path, maxlen);
     if (loc == maxlen) {
         path[maxlen - 1] = '\0';
         return FALSE;
@@ -41,7 +41,7 @@ static inline BOOL convertEntrynumToPath(u32 entry, char *path, u32 maxlen)
 }
 
 /* DVDGetCurrentDir */
-BOOL fn_802135E0(char *path, u32 maxlen)
+BOOL DVDGetCurrentDir(char *path, u32 maxlen)
 {
-    return convertEntrynumToPath(lbl_8064D9F0, path, maxlen);
+    return convertEntrynumToPath(currentDirectory, path, maxlen);
 }

@@ -1,4 +1,4 @@
-/* fn_8021A788: __AI_SRC_INIT (Dolphin SDK ai.c). */
+/* __AI_SRC_INIT: __AI_SRC_INIT (Dolphin SDK ai.c). */
 
 typedef unsigned int u32;
 typedef long long s64;
@@ -15,13 +15,13 @@ volatile u32 __AIRegs[8] : 0xCC006C00;
 
 extern OSTime OSGetTime(void);
 
-extern OSTime lbl_8064DAF0; /* bound_32KHz */
-extern OSTime lbl_8064DAF8; /* bound_48KHz */
-extern OSTime lbl_8064DB00; /* min_wait */
-extern OSTime lbl_8064DB08; /* max_wait */
-extern OSTime lbl_8064DB10; /* buffer */
+extern OSTime bound_32KHz; /* bound_32KHz */
+extern OSTime bound_48KHz; /* bound_48KHz */
+extern OSTime min_wait; /* min_wait */
+extern OSTime max_wait; /* max_wait */
+extern OSTime buffer; /* buffer */
 
-void fn_8021A788(void) {
+void __AI_SRC_INIT(void) {
     OSTime rise32 = 0;
     OSTime rise48 = 0;
     OSTime diff = 0;
@@ -59,12 +59,12 @@ void fn_8021A788(void) {
         __AIRegs[AI_CONTROL] &= ~AI_CONTROL_AFR;
         __AIRegs[AI_CONTROL] &= ~AI_CONTROL_PSTAT;
 
-        if (diff < (lbl_8064DAF0 - lbl_8064DB10)) {
-            temp = lbl_8064DB00;
+        if (diff < (bound_32KHz - buffer)) {
+            temp = min_wait;
             done = 1;
             ++initCnt;
-        } else if (diff >= (lbl_8064DAF0 + lbl_8064DB10) && diff < (lbl_8064DAF8 - lbl_8064DB10)) {
-            temp = lbl_8064DB08;
+        } else if (diff >= (bound_32KHz + buffer) && diff < (bound_48KHz - buffer)) {
+            temp = max_wait;
             done = 1;
             ++initCnt;
         } else {

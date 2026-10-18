@@ -46,10 +46,10 @@ extern Vec3s *fn_80158ABC(s32 value, s32 kind, void *extra);
 extern void fn_8011F114();
 extern s32 fn_8011F6A4(void *object, s32 first, s32 second, s32 index,
                        QueryResult *result, s32 mode);
-extern void fn_80211A6C();
-extern void fn_80211AAC(Vec3 *input, Vec3 *output);
-extern void fn_80211A90(Vec3 *input, Vec3 *output, float scale);
-extern void fn_80211A48(Vec3 *left, Vec3 *right, Vec3 *output);
+extern void PSVECSubtract();
+extern void PSVECNormalize(Vec3 *input, Vec3 *output);
+extern void PSVECScale(Vec3 *input, Vec3 *output, float scale);
+extern void PSVECAdd(Vec3 *left, Vec3 *right, Vec3 *output);
 extern void fn_801AAE68(float intensity, s32 effect_type, s32 value, s32 arg3,
                         Vec3 *position, s32 arg5, s32 arg6, s32 arg7,
                         u16 owner, s32 arg9);
@@ -90,10 +90,10 @@ void fn_8005EC6C(s32 owner, s32 unused, void *object, Context *context,
         source_kind = 2;
     }
 
-    fn_80211A6C(&second.position, &direction, &position);
-    fn_80211AAC(&position, &position);
-    fn_80211A90(&position, &position, lbl_8064E5B8);
-    fn_80211A48(&second.position, &position, &direction);
+    PSVECSubtract(&second.position, &direction, &position);
+    PSVECNormalize(&position, &position);
+    PSVECScale(&position, &position, lbl_8064E5B8);
+    PSVECAdd(&second.position, &position, &direction);
 
     if (lbl_8064C590++ < 2) {
         fn_801AAE68(lbl_8064E5BC, 0x289, 0x5A, 0, &first.position, 2, 2, 0,

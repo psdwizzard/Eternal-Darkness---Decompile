@@ -1,4 +1,4 @@
-/* fn_8020D7E0 (0x8020D7E0, 220 bytes): OSLockMutex. */
+/* OSLockMutex (0x8020D7E0, 220 bytes): OSLockMutex. */
 
 typedef struct OSThread OSThread;
 typedef struct OSMutex OSMutex;
@@ -31,13 +31,13 @@ struct OSThread {
 
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int level);
-extern OSThread* fn_8020F2DC(void);
-extern int fn_8020F5CC(OSThread* thread, int priority);
-extern void fn_80210004(OSThreadQueue* queue);
+extern OSThread* OSGetCurrentThread(void);
+extern int __OSPromoteThread(OSThread* thread, int priority);
+extern void OSSleepThread(OSThreadQueue* queue);
 
-void fn_8020D7E0(OSMutex* mutex) {
+void OSLockMutex(OSMutex* mutex) {
     int enabled = OSDisableInterrupts();
-    OSThread* currentThread = fn_8020F2DC();
+    OSThread* currentThread = OSGetCurrentThread();
     OSThread* ownerThread;
 
     while (1) {
@@ -61,8 +61,8 @@ void fn_8020D7E0(OSMutex* mutex) {
             break;
         } else {
             currentThread->mutex = mutex;
-            fn_8020F5CC(mutex->thread, currentThread->priority);
-            fn_80210004(&mutex->queue);
+            __OSPromoteThread(mutex->thread, currentThread->priority);
+            OSSleepThread(&mutex->queue);
             currentThread->mutex = 0;
         }
     }

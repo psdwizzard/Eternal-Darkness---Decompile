@@ -11,10 +11,10 @@ typedef struct TRKBuffer {
 
 typedef int (*TRKDispatchHandler)(TRKBuffer *);
 
-extern u32 lbl_80329FD8;
-extern TRKDispatchHandler lbl_8024A798[];
-extern int fn_800EFC6C(TRKBuffer *, u32);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
+extern u32 gTRKDispatchTableSize;
+extern TRKDispatchHandler gTRKDispatchTable[];
+extern int TRKSetBufferPosition(TRKBuffer *, u32);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
 
 int TRKDispatchMessage(TRKBuffer *buffer)
 {
@@ -22,11 +22,11 @@ int TRKDispatchMessage(TRKBuffer *buffer)
     u8 command;
 
     error = 0x500;
-    fn_800EFC6C(buffer, 0);
-    fn_800EF86C(buffer, &command);
+    TRKSetBufferPosition(buffer, 0);
+    TRKReadBuffer1_ui8(buffer, &command);
     command &= 0xFF;
-    if (command < lbl_80329FD8) {
-        error = lbl_8024A798[command](buffer);
+    if (command < gTRKDispatchTableSize) {
+        error = gTRKDispatchTable[command](buffer);
     }
     return error;
 }

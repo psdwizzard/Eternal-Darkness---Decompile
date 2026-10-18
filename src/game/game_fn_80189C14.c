@@ -20,7 +20,7 @@ extern void fn_8017ACE0(const Matrix44*, const Vec3*, Vec3*);
 extern void DCFlushRange(void*, unsigned long);
 extern void fn_80188584(void*, void*), fn_8018D0D0(void*, void*, s16);
 extern int fn_801ED57C(int);
-extern void fn_801889D8(void*, void*, void*), fn_80226D78(int);
+extern void fn_801889D8(void*, void*, void*), GXSetCoPlanar(int);
 
 /* An integral incoming address lets MWCC allocate self independently. */
 void fn_80189C14(unsigned long arg)
@@ -95,5 +95,5 @@ void fn_80189C14(unsigned long arg)
     fn_8018D0D0(self, self + 0x5C, *(s16*)(self + 0xE));
     fn_801889D8(buffer0, buffer1, buffer2);
     fn_801ED57C(saved);
-    fn_80226D78(0);
+    GXSetCoPlanar(0);
 }

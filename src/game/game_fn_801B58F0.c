@@ -26,17 +26,12 @@ static NOTE seqNote[256];
 static SEQ_INSTANCE seqInstance[8];
 static u16 seqMIDIPriority[8][16];
 
-extern SEQ_INSTANCE* lbl_8064D39C;
-extern SEQ_INSTANCE* lbl_8064D398;
-extern SEQ_INSTANCE* lbl_8064D394;
-extern NOTE* lbl_8064D384;
-extern u32 lbl_8064D390;
+extern SEQ_INSTANCE* seqActiveRoot;
+extern SEQ_INSTANCE* seqPausedRoot;
+extern SEQ_INSTANCE* seqFreeRoot;
+extern NOTE* noteFree;
+extern u32 seq_next_id;
 
-#define seqActiveRoot lbl_8064D39C
-#define seqPausedRoot lbl_8064D398
-#define seqFreeRoot lbl_8064D394
-#define noteFree lbl_8064D384
-#define seq_next_id lbl_8064D390
 
 static inline void ClearNotes(void)
 {
@@ -60,7 +55,7 @@ static inline void InitPublicIds(void)
     seq_next_id = 0;
 }
 
-void fn_801B58F0(void)
+void seqInit(void)
 {
     u32 i;
     u32 j;

@@ -10,15 +10,15 @@ typedef struct DVDCommandBlock {
 typedef void (*DVDLowCallback)(u32);
 
 extern DVDCommandBlock *executing_8064DA00;
-extern s32 lbl_8064DA34;
+extern s32 NumInternalRetry;
 extern void __DVDStoreErrorCode(u32);
 extern void DVDReset(void);
 extern void cbForStateError_80213C1C(s32);
-extern void fn_80214350(void);
-extern void fn_80213E3C(u32);
-extern s32 fn_80212BE0(DVDLowCallback);
+extern void stateCheckID(void);
+extern void cbForStateGettingError(u32);
+extern s32 DVDLowRequestError(DVDLowCallback);
 
-void fn_80214894(u32 intType)
+void cbForStateCoverClosed(u32 intType)
 {
     if (intType == 0x10) {
         executing_8064DA00->state = -1;
@@ -26,9 +26,9 @@ void fn_80214894(u32 intType)
         DVDReset();
         cbForStateError_80213C1C(0);
     } else if (intType & 1) {
-        lbl_8064DA34 = 0;
-        fn_80214350();
+        NumInternalRetry = 0;
+        stateCheckID();
     } else {
-        fn_80212BE0(fn_80213E3C);
+        DVDLowRequestError(cbForStateGettingError);
     }
 }

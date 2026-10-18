@@ -5,7 +5,7 @@ typedef struct {
     float k[3];
 } GXLightObjInt;
 
-void fn_80227874(GXLightObjInt *lt_obj, float a0, float a1, float a2,
+void GXInitLightAttn(GXLightObjInt *lt_obj, float a0, float a1, float a2,
                  float k0, float k1, float k2)
 {
     lt_obj->a[0] = a0;

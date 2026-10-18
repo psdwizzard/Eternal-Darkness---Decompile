@@ -6,7 +6,7 @@ extern const float lbl_80651618;
 extern const float lbl_8065161C;
 
 /* Build a perspective projection matrix from the viewing frustum. */
-void fn_80211844(Mtx44 m, float top, float bottom, float left,
+void C_MTXFrustum(Mtx44 m, float top, float bottom, float left,
                  float right, float near, float far)
 {
     float reciprocal;

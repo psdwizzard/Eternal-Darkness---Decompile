@@ -24,12 +24,12 @@ typedef void (*AIStreamCallback)(u32 sampleCount);
 
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
-extern AIStreamCallback lbl_8064DAD8;
+extern AIStreamCallback __AIS_Callback;
 
 volatile u32 __AIRegs[8] : 0xCC006C00;
 
 /* Acknowledge the stream interrupt and invoke its callback in a clean context. */
-void fn_8021A624(s16 interrupt, OSContext *context)
+void __AISHandler(s16 interrupt, OSContext *context)
 {
     OSContext exceptionContext;
 
@@ -37,8 +37,8 @@ void fn_8021A624(s16 interrupt, OSContext *context)
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(&exceptionContext);
 
-    if (lbl_8064DAD8 != 0) {
-        lbl_8064DAD8(__AIRegs[2]);
+    if (__AIS_Callback != 0) {
+        __AIS_Callback(__AIRegs[2]);
     }
 
     OSClearContext(&exceptionContext);

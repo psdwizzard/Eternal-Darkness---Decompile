@@ -36,21 +36,21 @@ typedef struct CardControl {
     u8 reserved108[8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern EXICallback fn_80206ED4(s32 channel, EXICallback callback);
-extern void fn_8020A93C(OSAlarm* alarm);
+extern CardControl __CARDBlock[];
+extern EXICallback EXISetExiCallback(s32 channel, EXICallback callback);
+extern void OSCancelAlarm(OSAlarm* alarm);
 
 /* EXI external-interrupt handler: the memory card in this channel was removed. */
-void fn_8021C3AC(s32 channel, void *context)
+void __CARDExtHandler(s32 channel, void *context)
 {
     CardControl *card;
     CardCallback callback;
 
-    card = &lbl_80641C60[channel];
+    card = &__CARDBlock[channel];
     if (card->attached) {
         card->attached = 0;
-        fn_80206ED4(channel, 0);
-        fn_8020A93C(&card->alarm);
+        EXISetExiCallback(channel, 0);
+        OSCancelAlarm(&card->alarm);
 
         callback = card->exiCallback;
         if (callback) {

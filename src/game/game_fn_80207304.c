@@ -20,7 +20,7 @@ extern BOOL OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(BOOL enabled);
 extern void __OSMaskInterrupts(u32 interrupts);
 
-BOOL fn_80207304(s32 chan)
+BOOL EXIDetach(s32 chan)
 {
     EXIControl *exi = &Ecb_80640AA8[chan];
     BOOL enabled = OSDisableInterrupts();

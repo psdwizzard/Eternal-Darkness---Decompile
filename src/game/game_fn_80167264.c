@@ -15,9 +15,9 @@ typedef struct HashTable {
     int size;
 } HashTable;
 
-extern Value lbl_8023A868;
+extern Value luaO_nilobject;
 
-Value* fn_80167264(HashTable* table, double number)
+Value* luaH_getnum(HashTable* table, double number)
 {
     HashNode* node = &table->nodes[((int)number) & (table->size - 1)];
 
@@ -27,5 +27,5 @@ Value* fn_80167264(HashTable* table, double number)
         }
         node = node->next;
     } while (node != 0);
-    return &lbl_8023A868;
+    return &luaO_nilobject;
 }

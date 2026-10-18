@@ -22,36 +22,36 @@ extern const float lbl_80651380, lbl_80651384, lbl_80651388, lbl_8065138C;
 extern const float lbl_80651390;
 extern u8 lbl_802FC5BC[];
 
-extern void fn_802118E0(void*, float, float, float, float);
-extern void fn_8022B94C(float, float, float, float, float, float);
-extern void fn_8022B970(int, int, int, int);
-extern void fn_8022B4B8(void*, int);
+extern void C_MTXPerspective(void*, float, float, float, float);
+extern void GXSetViewport(float, float, float, float, float, float);
+extern void GXSetScissor(int, int, int, int);
+extern void GXSetProjection(void*, int);
 extern void fn_8017AD7C(void*, void*);
-extern void fn_80211584(void*, void*, void*, void*);
-extern void fn_802110A8(void*, void*);
-extern void fn_80212154(void*, void*);
-extern float fn_80211B08(void*);
-extern void fn_8022B690(void*, int);
-extern void fn_8022B6CC(void*, int);
-extern void fn_80227290(Color*, int);
-extern void fn_8022A5D8(int, int, int, int);
-extern void fn_80226D28(int);
+extern void C_MTXLookAt(void*, void*, void*, void*);
+extern void PSMTXInverse(void*, void*);
+extern void PSMTXReorder(void*, void*);
+extern float PSVECMag(void*);
+extern void GXLoadPosMtxImm(void*, int);
+extern void GXLoadNrmMtxImm(void*, int);
+extern void GXSetCopyClear(Color*, int);
+extern void GXSetBlendMode(int, int, int, int);
+extern void GXSetCullMode(int);
 extern void fn_801F10BC(int, int, int);
 extern void fn_801ECF50(int);
 extern void fn_801F0044(void);
 extern void fn_801ECC4C(void);
 extern void fn_801ECEC8(int, int, int);
-extern void fn_80225F4C(int, void*, int);
+extern void GXSetArray(int, void*, int);
 extern void fn_801ECD74(void*);
 extern Vec3* fn_8015AB00(int);
-extern void fn_80211484(void*, float, float, float);
-extern void fn_80210FDC(void*, void*, void*);
+extern void PSMTXTrans(void*, float, float, float);
+extern void PSMTXConcat(void*, void*, void*);
 extern void DCFlushRange(void*, u32);
-extern void fn_8022A6DC(int);
-extern void fn_8022A71C(int);
-extern void fn_80228020(int);
-extern void fn_8022806C(int, int, int, int, int, int, int);
-extern void fn_80229FA4(int, int, int, int, int);
+extern void GXSetColorUpdate(int);
+extern void GXSetAlphaUpdate(int);
+extern void GXSetNumChans(int);
+extern void GXSetChanCtrl(int, int, int, int, int, int, int);
+extern void GXSetTevSwapModeTable(int, int, int, int, int);
 extern void fn_801ECD48(int);
 extern void fn_801ECD50(float);
 
@@ -86,15 +86,15 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         ((u32*)&target)[2] = c;
     }
     if (alternate)
-        fn_802118E0(state + 0x88, in->projection, projection,
+        C_MTXPerspective(state + 0x88, in->projection, projection,
                     lbl_8065134C, lbl_80651370);
     else
-        fn_802118E0(state + 0x88, in->projection, projection,
+        C_MTXPerspective(state + 0x88, in->projection, projection,
                     lbl_8065134C, lbl_80651374);
-    fn_8022B94C(lbl_80651348, lbl_80651348, lbl_80651378,
+    GXSetViewport(lbl_80651348, lbl_80651348, lbl_80651378,
                 lbl_8065137C, lbl_80651348, lbl_8065134C);
-    fn_8022B970(0, 0, 0x280, 0x1E0);
-    fn_8022B4B8(state + 0x88, 0);
+    GXSetScissor(0, 0, 0x280, 0x1E0);
+    GXSetProjection(state + 0x88, 0);
     fn_8017AD7C(state + 0x88, state + 0x188);
 
     if (in->min_x == in->max_x && in->min_y == in->max_y &&
@@ -102,9 +102,9 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         in->min_x += lbl_80651380;
         in->min_y += lbl_80651380;
     }
-    fn_80211584(state + 0x1C8, in, &target, &in->max_x);
-    fn_802110A8(state + 0x1C8, state + 0x1F8);
-    fn_80212154(state + 0x1C8, state + 0x228);
+    C_MTXLookAt(state + 0x1C8, in, &target, &in->max_x);
+    PSMTXInverse(state + 0x1C8, state + 0x1F8);
+    PSMTXReorder(state + 0x1C8, state + 0x228);
 
     {
         float delta_x = in->max_x - in->min_x;
@@ -114,15 +114,15 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         *(float*)(state + 0x7C) = delta_x;
         normalized[2] = lbl_80651348;
     }
-    projection = fn_80211B08(normalized);
+    projection = PSVECMag(normalized);
     *(float*)(state + 0x7C) /= projection;
     normalized[1] /= projection;
-    fn_8022B690(state + 0x1C8, 0x1B);
-    fn_8022B6CC(state + 0x1C8, 0x1B);
+    GXLoadPosMtxImm(state + 0x1C8, 0x1B);
+    GXLoadNrmMtxImm(state + 0x1C8, 0x1B);
 
     if (lbl_8064CB50) {
         Color enabledColor = *(Color*)(lbl_802FC5BC + 0x28);
-        fn_80227290(&enabledColor, 0xFFFFFF);
+        GXSetCopyClear(&enabledColor, 0xFFFFFF);
     } else {
         Color fallbackColor;
         constructedColor.r = lbl_8064CBA0;
@@ -130,10 +130,10 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         constructedColor.b = lbl_8064CBA0;
         constructedColor.a = 0xFF;
         fallbackColor = constructedColor;
-        fn_80227290(&fallbackColor, 0xFFFFFF);
+        GXSetCopyClear(&fallbackColor, 0xFFFFFF);
     }
-    fn_8022A5D8(1, 4, 5, 0);
-    fn_80226D28(1);
+    GXSetBlendMode(1, 4, 5, 0);
+    GXSetCullMode(1);
     fn_801F10BC(0, 0, 0);
     fn_801ECF50(2);
     fn_801F0044();
@@ -142,7 +142,7 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
     {
         u8* command = state + 0x258;
         int command_offset = lbl_8064D738 * 0x200;
-        fn_80225F4C(0x18, command + command_offset, 0x40);
+        GXSetArray(0x18, command + command_offset, 0x40);
     }
     {
         Color color = *(Color*)(lbl_802FC5BC + 0xC);
@@ -155,7 +155,7 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         float* view = (float*)(state + 0x1C8);
         float y, x, z, w, divisor;
         float* matrix2;
-        fn_80211484(rotation, lbl_80651348, lbl_80651348,
+        PSMTXTrans(rotation, lbl_80651348, lbl_80651348,
                     lbl_80651384 - motion->x);
         divisor = lbl_80651388;
         y = -view[9];
@@ -178,7 +178,7 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         matrix[9] = lbl_80651348;
         matrix[10] = lbl_80651348;
         matrix[11] = lbl_80651348;
-        fn_80210FDC(matrix, rotation, matrix);
+        PSMTXConcat(matrix, rotation, matrix);
 
         matrix2 = (float*)(state + 0xF8 + lbl_8064D738 * 0x60);
         matrix2[0] = lbl_80651390;
@@ -193,23 +193,23 @@ void fn_801F03F0(BoundsCamera* in, int alternate)
         matrix2[9] = lbl_80651348;
         matrix2[10] = lbl_80651348;
         matrix2[11] = lbl_80651348;
-        fn_80211484(rotation, lbl_8064D6C8, lbl_8064D6CC, lbl_80651348);
-        fn_80210FDC(matrix2, rotation, matrix2);
+        PSMTXTrans(rotation, lbl_8064D6C8, lbl_8064D6CC, lbl_80651348);
+        PSMTXConcat(matrix2, rotation, matrix2);
         {
             u8* base = state + 0xC8;
             int offset = lbl_8064D738 * 0x60;
             DCFlushRange(base + offset, 0x60);
         }
-        fn_80225F4C(0x17, state + 0xC8 + lbl_8064D738 * 0x60, 0x30);
+        GXSetArray(0x17, state + 0xC8 + lbl_8064D738 * 0x60, 0x30);
     }
-    fn_8022A6DC(1);
-    fn_8022A71C(0);
-    fn_80228020(1);
+    GXSetColorUpdate(1);
+    GXSetAlphaUpdate(0);
+    GXSetNumChans(1);
     lbl_8064D638 = 1;
-    fn_8022806C(4, 0, 0, 0, 0, 0, 2);
-    fn_8022806C(5, 0, 0, 0, 0, 0, 2);
-    fn_80229FA4(0, 0, 1, 2, 3);
-    fn_80229FA4(1, 0, 0, 0, 0);
+    GXSetChanCtrl(4, 0, 0, 0, 0, 0, 2);
+    GXSetChanCtrl(5, 0, 0, 0, 0, 0, 2);
+    GXSetTevSwapModeTable(0, 0, 1, 2, 3);
+    GXSetTevSwapModeTable(1, 0, 0, 0, 0);
     fn_801ECD48(0);
     fn_801ECD50(lbl_8065134C);
 }

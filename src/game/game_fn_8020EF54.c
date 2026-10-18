@@ -12,7 +12,7 @@ typedef struct OSStopwatch {
     int running;
 } OSStopwatch;
 
-void fn_8020EF54(OSStopwatch* sw, char* name) {
+void OSInitStopwatch(OSStopwatch* sw, char* name) {
     sw->name = name;
     sw->total = 0;
     sw->hits = 0;

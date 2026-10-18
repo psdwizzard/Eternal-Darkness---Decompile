@@ -10,15 +10,15 @@ typedef struct Value {
     void* value;
 } Value;
 
-extern void* fn_80167798(Context*, int);
-extern void fn_8016057C(Context*, int);
+extern void* luaH_new(Context*, int);
+extern void luaD_checkstack(Context*, int);
 
-void fn_8016AAB4(Context* context)
+void lua_newtable(Context* context)
 {
-    ((Value*)context->current)->value = fn_80167798(context, 0);
+    ((Value*)context->current)->value = luaH_new(context, 0);
     ((Value*)context->current)->type = 4;
     if (context->current == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     context->current = (char*)context->current + 16;
 }

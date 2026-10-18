@@ -44,8 +44,8 @@ extern s32 fn_8012FA54(void*, s32);
 extern void fn_8012C478(void*, s32, s32);
 extern void fn_801499C4(void*, s16*, s32, s32, s32);
 extern void fn_8011F114();
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8011FB54(void*, s32);
 extern void fn_8011F0E8(void*, Vec3*);
 
@@ -134,7 +134,7 @@ active:
                 next.x = lbl_8064E12C + current.x;
             else if (distance > 4)
                 next.x = lbl_8064E138 + current.x;
-            else if (fn_800FBFB0() & 1)
+            else if (rand() & 1)
                 next.x = lbl_8064E064 + current.x;
             else
                 next.x = current.x - lbl_8064E064;
@@ -144,7 +144,7 @@ active:
                 next.x = current.x - lbl_8064E12C;
             else if (distance > 4)
                 next.x = current.x - lbl_8064E138;
-            else if (fn_800FBFB0() & 1)
+            else if (rand() & 1)
                 next.x = lbl_8064E064 + current.x;
             else
                 next.x = current.x - lbl_8064E064;
@@ -159,7 +159,7 @@ active:
                 next.y = lbl_8064E12C + current.y;
             else if (distance > 4)
                 next.y = lbl_8064E138 + current.y;
-            else if (fn_800FBFB0() & 1)
+            else if (rand() & 1)
                 next.y = lbl_8064E064 + current.y;
             else
                 next.y = current.y - lbl_8064E064;
@@ -170,7 +170,7 @@ active:
                 next.y = current.y - lbl_8064E12C;
             else if (distance > 4)
                 next.y = current.y - lbl_8064E138;
-            else if (fn_800FBFB0() & 1)
+            else if (rand() & 1)
                 next.y = lbl_8064E064 + current.y;
             else
                 next.y = current.y - lbl_8064E064;

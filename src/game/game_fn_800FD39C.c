@@ -1,4 +1,4 @@
-char* fn_800FD39C(char* destination, const char* source)
+char* strcat(char* destination, const char* source)
 {
     const char* s = source - 1;
     char* end = destination - 1;

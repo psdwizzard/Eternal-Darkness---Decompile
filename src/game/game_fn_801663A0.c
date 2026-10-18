@@ -16,24 +16,24 @@ typedef struct Parser {
     State* state;
 } Parser;
 
-extern void fn_8015EA7C(Parser*, const char*);
+extern void luaK_error(Parser*, const char*);
 extern void fn_80163DA4(Parser*);
-extern void fn_8015EE54(State*, int);
-extern int fn_8015EAD0(State*);
-extern void fn_8015F2B0(State*, void*, int);
+extern void luaK_adjuststack(State*, int);
+extern int luaK_jump(State*);
+extern void luaK_concat(State*, void*, int);
 extern const char lbl_8024F9D0[];
 
-void fn_801663A0(Parser* parser)
+void breakstat(Parser* parser)
 {
     State* state = parser->state;
     int position = state->position;
     Node* node = state->node;
 
     if (node == 0) {
-        fn_8015EA7C(parser, lbl_8024F9D0);
+        luaK_error(parser, lbl_8024F9D0);
     }
     fn_80163DA4(parser);
-    fn_8015EE54(state, position - node->position);
-    fn_8015F2B0(state, &node->value, fn_8015EAD0(state));
-    fn_8015EE54(state, node->position - position);
+    luaK_adjuststack(state, position - node->position);
+    luaK_concat(state, &node->value, luaK_jump(state));
+    luaK_adjuststack(state, node->position - position);
 }

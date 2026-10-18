@@ -24,7 +24,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022A814(int pixelFormat, int depthFormat)
+void GXSetPixelFmt(int pixelFormat, int depthFormat)
 {
     u32 oldZControl = gx->zControl;
     u8 multisample;

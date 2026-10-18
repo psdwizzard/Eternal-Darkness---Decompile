@@ -21,14 +21,13 @@ typedef struct SynthState {
     u8 pad3C0[0xE20 - 0x3C0];
 } SynthState;
 
-extern SynthState lbl_80619860;
-#define synthState lbl_80619860
-extern u8 lbl_8064D3A1;
+extern SynthState synthTicksPerSecond;
+#define synthState synthTicksPerSecond
+extern u8 synthJobTableIndex;
 
 #define synthJobTable synth->jobs
-#define synthJobTableIndex lbl_8064D3A1
 
-void fn_801B775C(SynthDelayedNode* fade, int mode, u32 delay)
+void synthAddJob(SynthDelayedNode* fade, int mode, u32 delay)
 {
     SynthDelayedNode* newJq;
     SynthDelayedNode** root;

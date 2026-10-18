@@ -9,17 +9,17 @@ typedef struct Value {
     double second;
 } Value;
 
-extern void* fn_801670A8(Context*, const char*);
-extern Value* fn_80168F84(Context*, void*);
-extern void fn_8016057C(Context*, int);
+extern void* luaS_new(Context*, const char*);
+extern Value* luaV_getglobal(Context*, void*);
+extern void luaD_checkstack(Context*, int);
 
-void fn_8016AA34(Context* context, const char* name)
+void lua_getglobal(Context* context, const char* name)
 {
     Value* current = (Value*)context->current;
-    *current = *fn_80168F84(context, fn_801670A8(context, name));
+    *current = *luaV_getglobal(context, luaS_new(context, name));
     context->current = current;
     if (context->current == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     context->current = (char*)context->current + 16;
 }

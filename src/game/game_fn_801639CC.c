@@ -1,4 +1,4 @@
-unsigned int fn_801639CC(unsigned int value)
+unsigned int luaO_power2(unsigned int value)
 {
     unsigned int size = 4;
 

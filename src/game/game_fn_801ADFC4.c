@@ -23,8 +23,8 @@ extern void fn_801ADBC0(void);
 extern u32 fn_801AD9F4(Entry**);
 extern u32 fn_801ADE0C(Entry*, Source*, u8, u8, u8, u8, u8);
 extern void fn_801AE6B0(void);
-extern void fn_80213394(void*, void*);
-extern int fn_80213704(void*, void*, u32, u32, void (*)(void), u32);
+extern void DVDOpen(void*, void*);
+extern int DVDReadAsyncPrio(void*, void*, u32, u32, void (*)(void), u32);
 
 u32 fn_801ADFC4(Source* first_source, Source* second_source, u8 value1,
                 u8 value69, u8 value6A)
@@ -46,12 +46,12 @@ u32 fn_801ADFC4(Source* first_source, Source* second_source, u8 value1,
             second_amount = fn_801ADE0C(second, second_source, value1, 0x7F,
                                         0, value69, value6A);
             fn_801ADBC0();
-            fn_80213394(first->source->owner, first->work);
-            fn_80213394(second->source->owner, second->work);
-            while (fn_80213704(first->work, first->buffer, first_amount,
+            DVDOpen(first->source->owner, first->work);
+            DVDOpen(second->source->owner, second->work);
+            while (DVDReadAsyncPrio(first->work, first->buffer, first_amount,
                                first->source->value08, fn_801AE6B0, 2) == 0) {
             }
-            while (fn_80213704(second->work, second->buffer, second_amount,
+            while (DVDReadAsyncPrio(second->work, second->buffer, second_amount,
                                second->source->value08, fn_801AE6B0, 2) == 0) {
             }
             return id;

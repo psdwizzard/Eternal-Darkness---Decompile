@@ -1,25 +1,25 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-extern void* lbl_8064D4BC;
-extern void* lbl_8064D4C0;
-extern void* lbl_8064D4C4;
-extern void* lbl_8064D4C8;
-extern void* lbl_8064D4CC;
-extern u8 lbl_8064D4D0;
-extern u8 lbl_8064D4D1;
-extern u8 lbl_8064D4B8;
-extern u8 lbl_8064D4D2;
+extern void* s3dEmitterRoot;
+extern void* s3dListenerRoot;
+extern void* s3dRoomRoot;
+extern void* s3dDoorRoot;
+extern void* snd_used_studios;
+extern u8 snd_base_studio;
+extern u8 snd_max_studios;
+extern u8 s3dCallCnt;
+extern u8 s3dUseMaxVoices;
 
-void fn_801CA240(u32 flags)
+void s3dInit(u32 flags)
 {
-    lbl_8064D4BC = 0;
-    lbl_8064D4C0 = 0;
-    lbl_8064D4C4 = 0;
-    lbl_8064D4C8 = 0;
-    lbl_8064D4CC = 0;
-    lbl_8064D4D0 = 1;
-    lbl_8064D4D1 = 3;
-    lbl_8064D4B8 = 0;
-    lbl_8064D4D2 = (flags & 2) != 0;
+    s3dEmitterRoot = 0;
+    s3dListenerRoot = 0;
+    s3dRoomRoot = 0;
+    s3dDoorRoot = 0;
+    snd_used_studios = 0;
+    snd_base_studio = 1;
+    snd_max_studios = 3;
+    s3dCallCnt = 0;
+    s3dUseMaxVoices = (flags & 2) != 0;
 }

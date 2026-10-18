@@ -2,14 +2,14 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
-extern void fn_80211AAC(Vec3 *in, Vec3 *out);
-extern float fn_80211B44(Vec3 *a, Vec3 *b);
+extern void PSVECNormalize(Vec3 *in, Vec3 *out);
+extern float PSVECDotProduct(Vec3 *a, Vec3 *b);
 
 extern const float lbl_80651634;
 
 /* Reflect the normalized, reversed incident direction about the unit normal,
  * then normalize the result. Keep the products rounded before subtracting. */
-void fn_80211C78(Vec3 *in, register Vec3 *normal, register Vec3 *out) {
+void C_VECReflect(Vec3 *in, register Vec3 *normal, register Vec3 *out) {
     Vec3 dir;
     Vec3 n;
     float dot;
@@ -38,16 +38,16 @@ void fn_80211C78(Vec3 *in, register Vec3 *normal, register Vec3 *out) {
             or destination, source, source
         }
         dir.z = -z;
-        fn_80211AAC(source, destination);
+        PSVECNormalize(source, destination);
     }
     {
         register Vec3 *source;
         /* ASM: or (mr) preserves the normal argument register copy;
          * C selects addi with zero. */
         asm { or source, normalInput, normalInput }
-        fn_80211AAC(source, &n);
+        PSVECNormalize(source, &n);
     }
-    dot = fn_80211B44(&dir, &n);
+    dot = PSVECDotProduct(&dir, &n);
     scale = lbl_80651634 * n.x;
     scale *= dot;
     result->x = scale - dir.x;
@@ -57,7 +57,7 @@ void fn_80211C78(Vec3 *in, register Vec3 *normal, register Vec3 *out) {
     scale = lbl_80651634 * n.z;
     dot = scale * dot;
     result->z = dot - dir.z;
-    fn_80211AAC(result, result);
+    PSVECNormalize(result, result);
     /* The assembly returns directly; the loop prevents a second C epilogue. */
     for (;;) {
         /* ASM: lwz, mtlr, addi and blr restore the two saved pointer registers,

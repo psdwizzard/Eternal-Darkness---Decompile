@@ -9,7 +9,7 @@ typedef struct Entry {
 extern Entry lbl_805B6E00[];
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 
 Entry* fn_801587C4(void)
 {
@@ -28,7 +28,7 @@ Entry* fn_801587C4(void)
         if ((u32)index >= 16) {
             index = 0;
             OSRestoreInterrupts(interrupts);
-            fn_80217324();
+            VIWaitForRetrace();
             interrupts = OSDisableInterrupts();
         }
     }

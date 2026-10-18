@@ -36,7 +36,7 @@ struct OSMutex {
 };
 
 /* Validate the endpoints and reciprocal links of a thread queue. */
-s32 fn_802102B4(OSThreadQueue *queue)
+s32 CheckThreadQueue(OSThreadQueue *queue)
 {
     OSThread *thread;
 

@@ -15,9 +15,9 @@ typedef struct EffectParams {
     u8 pad20[0x70];
 } EffectParams;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
@@ -55,22 +55,22 @@ int fn_80173F04(void* state)
     descriptor.half = lbl_80651CAC;
     value = lbl_806506FC;
 
-    if (fn_8016A598(state) != 11) {
-        fn_80163BB4(state, lbl_8024FF00, 11, fn_8016A598(state));
+    if (lua_gettop(state) != 11) {
+        luaO_verror(state, lbl_8024FF00, 11, lua_gettop(state));
         return 0;
     }
 
-    resource = fn_800F5C54(fn_8016A694(state, 1));
-    kind = fn_8016A694(state, 2);
-    arg3 = fn_8016A694(state, 3);
-    arg4 = fn_8016A694(state, 4);
-    arg5 = fn_8016A694(state, 5);
-    arg6 = fn_8016A694(state, 6);
-    arg7 = fn_8016A694(state, 7);
-    arg8 = fn_8016A694(state, 8);
-    arg9 = fn_8016A694(state, 9);
-    arg10 = fn_8016A694(state, 10);
-    arg11 = fn_8016A694(state, 11);
+    resource = fn_800F5C54(lua_tonumber(state, 1));
+    kind = lua_tonumber(state, 2);
+    arg3 = lua_tonumber(state, 3);
+    arg4 = lua_tonumber(state, 4);
+    arg5 = lua_tonumber(state, 5);
+    arg6 = lua_tonumber(state, 6);
+    arg7 = lua_tonumber(state, 7);
+    arg8 = lua_tonumber(state, 8);
+    arg9 = lua_tonumber(state, 9);
+    arg10 = lua_tonumber(state, 10);
+    arg11 = lua_tonumber(state, 11);
 
     source = fn_80158ABC(fn_8015C4A4(resource, 2), 2, 0);
     position.x = source->x;

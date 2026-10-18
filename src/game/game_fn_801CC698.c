@@ -1,16 +1,16 @@
-extern void fn_801CE2B8(void);
-extern void fn_801CE15C(void);
-extern void fn_801C44B0(void);
-extern void fn_801CE03C(void);
-extern void fn_801CE280(void);
-extern void fn_801CE27C(void);
+extern void hwDisableIrq(void);
+extern void salExitDsp(void);
+extern void salExitDspCtrl(void);
+extern void salExitAi(void);
+extern void hwEnableIrq(void);
+extern void hwExitIrq(void);
 
-void fn_801CC698(void)
+void hwExit(void)
 {
-    fn_801CE2B8();
-    fn_801CE15C();
-    fn_801C44B0();
-    fn_801CE03C();
-    fn_801CE280();
-    fn_801CE27C();
+    hwDisableIrq();
+    salExitDsp();
+    salExitDspCtrl();
+    salExitAi();
+    hwEnableIrq();
+    hwExitIrq();
 }

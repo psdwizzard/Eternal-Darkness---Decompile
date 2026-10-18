@@ -12,8 +12,8 @@ extern void DCFlushRange(void*, unsigned int);
 extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16), fn_801ED468(int);
 extern int fn_8017FFB8(void), fn_8017FFB0(void), fn_8017FF98(void);
-extern void fn_80225F4C(int, void*, u8), fn_801ECEC8(int, int, int);
-extern void fn_8022B448(void*, int);
+extern void GXSetArray(int, void*, u8), fn_801ECEC8(int, int, int);
+extern void GXCallDisplayList(void*, int);
 
 void fn_8018D7DC(u8* object)
 {
@@ -67,10 +67,10 @@ void fn_8018D7DC(u8* object)
     saved = fn_801ED57C(0);
     fn_8018D0D0(self, state, *(s16*)(self + 0xE));
     fn_801ED468(0x1B);
-    fn_80225F4C(9, buffers.vertices, (u8)fn_8017FFB8());
-    fn_80225F4C(13, buffers.colors, (u8)fn_8017FFB0());
-    fn_80225F4C(11, buffers.indices, (u8)fn_8017FF98());
+    GXSetArray(9, buffers.vertices, (u8)fn_8017FFB8());
+    GXSetArray(13, buffers.colors, (u8)fn_8017FFB0());
+    GXSetArray(11, buffers.indices, (u8)fn_8017FF98());
     fn_801ECEC8(1, 3, 1);
-    fn_8022B448(lbl_80606AE0, lbl_8064D24C);
+    GXCallDisplayList(lbl_80606AE0, lbl_8064D24C);
     fn_801ED57C(saved);
 }

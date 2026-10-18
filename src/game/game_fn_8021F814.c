@@ -48,7 +48,7 @@ static inline void __CARDCheckSum(void *ptr, int length, u16 *checksum, u16 *che
     }
 }
 
-s32 fn_8021F814(SaveCtx* ctx, s32* outIndex) {
+s32 VerifyFAT(SaveCtx* ctx, s32* outIndex) {
     SaveBlock* blocks[2];
     SaveBlock* blk;
     u16* q;

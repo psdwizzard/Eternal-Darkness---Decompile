@@ -14,17 +14,17 @@ typedef struct DistanceThresholds {
 } DistanceThresholds;
 
 extern DistanceThresholds lbl_8064B730;
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 #define FN_80201E78_RETURN void
 #define FN_80201E78_PARAMETERS Vec3 *, void *
 extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern void* fn_80201B3C();
-extern void fn_80211A6C();
-extern float fn_80211B08(const Vec3 *);
+extern void PSVECSubtract();
+extern float PSVECMag(const Vec3 *);
 
 int fn_800CFF04(void *object)
 {
-    int alternate = fn_800FBFB0() & 1;
+    int alternate = rand() & 1;
     Vec3 position_copy;
     Vec3 other_position;
     Vec3 delta;
@@ -40,8 +40,8 @@ int fn_800CFF04(void *object)
     other = fn_80201B3C();
     fn_80201E78(&other_position_temp, other);
     other_position = other_position_temp;
-    fn_80211A6C(&position_copy, &other_position, &delta);
-    distance = (u16)fn_80211B08(&delta);
+    PSVECSubtract(&position_copy, &other_position, &delta);
+    distance = (u16)PSVECMag(&delta);
 
     if (distance < lbl_8064B730.near_distance) {
         alternate_result = 6;

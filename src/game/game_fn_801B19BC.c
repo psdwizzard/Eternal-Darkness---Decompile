@@ -3,12 +3,12 @@ typedef struct State801B19BC {
     unsigned char data;
 } State801B19BC;
 
-extern State801B19BC* lbl_8064D348;
+extern State801B19BC* __DTKCurrentTrack;
 
-void* fn_801B19BC(void)
+void* DTKGetCurrentTrackFileInfo(void)
 {
-    if (lbl_8064D348 != 0) {
-        return &lbl_8064D348->data;
+    if (__DTKCurrentTrack != 0) {
+        return &__DTKCurrentTrack->data;
     }
     return 0;
 }

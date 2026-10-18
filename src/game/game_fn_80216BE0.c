@@ -4,15 +4,15 @@ typedef void (*VIRetraceCallback)(u32 retraceCount);
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern VIRetraceCallback lbl_8064DA74;
+extern VIRetraceCallback PostCB;
 
 /* Set the post-retrace callback and return the previous callback. */
-VIRetraceCallback fn_80216BE0(VIRetraceCallback callback)
+VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 {
-    VIRetraceCallback previous = lbl_8064DA74;
+    VIRetraceCallback previous = PostCB;
     BOOL level = OSDisableInterrupts();
 
-    lbl_8064DA74 = callback;
+    PostCB = callback;
     OSRestoreInterrupts(level);
     return previous;
 }

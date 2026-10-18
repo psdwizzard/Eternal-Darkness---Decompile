@@ -7,23 +7,23 @@ typedef struct Object {
     ObjectData* data;
 } Object;
 
-extern int fn_8015EBDC(Object*, int);
-extern void fn_8015EB30(Object*, int, int);
+extern int luaK_getjump(Object*, int);
+extern void luaK_fixjump(Object*, int, int);
 
 #pragma use_lmw_stmw on
 
-void fn_8015F12C(Object* object, int index, int value, int match, int replacement)
+void luaK_patchlistaux(Object* object, int index, int value, int match, int replacement)
 {
     unsigned int* entries = object->data->entries;
 
     while (index != -1) {
-        int next = fn_8015EBDC(object, index);
+        int next = luaK_getjump(object, index);
         int type = entries[index] & 0x3F;
 
         if (type == match) {
-            fn_8015EB30(object, index, replacement);
+            luaK_fixjump(object, index, replacement);
         } else {
-            fn_8015EB30(object, index, value);
+            luaK_fixjump(object, index, value);
             if (type == 40) {
                 entries[index] = (entries[index] & ~0x3F) | 38;
             } else if (type == 41) {

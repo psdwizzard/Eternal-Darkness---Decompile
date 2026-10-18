@@ -34,7 +34,7 @@ extern void fn_800ECBE4(int, int, int);
 extern void fn_800ECE44(int);
 extern void fn_800ED024();
 extern void fn_800ED4BC(Vec3*, int, const char*, ...);
-extern int fn_800F9D4C(char*, const char*, ...);
+extern int sprintf(char*, const char*, ...);
 extern Vec3* fn_8011F130(void*);
 extern float fn_8011F6F0(void*);
 extern float fn_8011F6F8(void*);
@@ -90,7 +90,7 @@ extern float lbl_8064F8D8;
 static inline void DrawObjectInfo(Vec3* position, void* object, char* text, float x, float y)
 {
     fn_80137AF0(object);
-    fn_800F9D4C(text, "CRad:%4.2f ERad:%4.2f", x, y);
+    sprintf(text, "CRad:%4.2f ERad:%4.2f", x, y);
     fn_800ED4BC(position, 3, text);
 }
 

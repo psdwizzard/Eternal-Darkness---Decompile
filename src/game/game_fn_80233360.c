@@ -47,11 +47,11 @@ typedef struct Instance {
 } Instance;
 
 extern void *fn_8022F780(s32);
-extern Handler *lbl_8064C4C8[];
-extern Handler *lbl_8064C4CC[];
-extern Handler *lbl_80300160[];
+extern Handler *_time_P[];
+extern Handler *_floor_P[];
+extern Handler *_residue_P[];
 
-Instance *fn_80233360(Source **ctx, void *owner, Layout *layout) {
+Instance *mapping0_look(Source **ctx, void *owner, Layout *layout) {
     Layout *cursor;
     s32 i;
     Instance *inst;
@@ -74,11 +74,11 @@ Instance *fn_80233360(Source **ctx, void *owner, Layout *layout) {
         s32 a = cursor->aIndex[0];
         s32 b = cursor->bIndex[0];
         s32 c = cursor->cIndex[0];
-        inst->aHandlers[i] = lbl_8064C4C8[data->aTypes[a]];
+        inst->aHandlers[i] = _time_P[data->aTypes[a]];
         inst->aInstances[i] = inst->aHandlers[i]->create(ctx, owner, data->aObjects[a]);
-        inst->bHandlers[i] = lbl_8064C4CC[data->bTypes[b]];
+        inst->bHandlers[i] = _floor_P[data->bTypes[b]];
         inst->bInstances[i] = inst->bHandlers[i]->create(ctx, owner, data->bObjects[b]);
-        inst->cHandlers[i] = lbl_80300160[data->cTypes[c]];
+        inst->cHandlers[i] = _residue_P[data->cTypes[c]];
         inst->cInstances[i] = inst->cHandlers[i]->create(ctx, owner, data->cObjects[c]);
         cursor = (Layout *)((char *)cursor + 4);
     }

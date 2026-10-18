@@ -5,7 +5,7 @@ typedef float Mtx[3][4];
  * translation column is cleared. Returns 0 if the matrix is singular.
  * Rows zero and one of the cofactors are built as paired singles; row
  * two and the third column use scalar arithmetic. */
-unsigned int fn_802111A0(register const Mtx src, register Mtx invX)
+unsigned int PSMTXInvXpose(register const Mtx src, register Mtx invX)
 {
     register float a;
     register float bc;

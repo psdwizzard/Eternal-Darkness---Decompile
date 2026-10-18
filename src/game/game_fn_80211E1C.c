@@ -8,7 +8,7 @@ extern const float lbl_80651658;
 extern double __frsqrte(double);
 
 /* Normalize a quaternion, selecting zero below the squared-length threshold. */
-void fn_80211E1C(register const Quaternion *in, register Quaternion *out)
+void PSQUATNormalize(register const Quaternion *in, register Quaternion *out)
 {
     register float xy, zw, lengthSquared;
     register double reciprocal;

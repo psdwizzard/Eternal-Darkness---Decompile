@@ -30,7 +30,7 @@ typedef int GXCompType;
 
 #define GET_REG_FIELD(reg, size, shift) (((reg) >> (shift)) & ((1 << (size)) - 1))
 
-void fn_80225C90(GXVtxFmt fmt, GXAttr attr, GXCompCnt *cnt, GXCompType *type, u8 *frac)
+void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt *cnt, GXCompType *type, u8 *frac)
 {
     u32 *va = &gx->vatA[fmt];
     u32 *vb = &gx->vatB[fmt];

@@ -40,9 +40,9 @@ extern const char lbl_8023BEF8[];
 extern const u32 lbl_806518D0;
 extern const u16 lbl_806518D4;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern EffectRecordTable* fn_8015C390(s32);
@@ -61,12 +61,12 @@ s32 fn_800194D0(void* script)
     s32 record_id;
     s32 doubled_size;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    record_id = fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 1)), 2);
+    record_id = fn_8015C4A4(fn_800F5C54(lua_tonumber(script, 1)), 2);
     if (record_id != -1) {
         table = fn_8015C390(2);
         if (table != 0 && record_id < table->count) {

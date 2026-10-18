@@ -17,8 +17,8 @@ typedef struct {
     u8 wrap;
 } __GXFifoObj;
 
-void fn_80223D94(__GXFifoObj *fifo, u32 hiWatermark, u32 loWatermark);
-void fn_80223D24(__GXFifoObj *fifo, void *readPtr, void *writePtr);
+void GXInitFifoLimits(__GXFifoObj *fifo, u32 hiWatermark, u32 loWatermark);
+void GXInitFifoPtrs(__GXFifoObj *fifo, void *readPtr, void *writePtr);
 
 void GXInitFifoBase(__GXFifoObj *fifo, void *base, u32 size) {
     __GXFifoObj *realFifo = fifo;
@@ -27,6 +27,6 @@ void GXInitFifoBase(__GXFifoObj *fifo, void *base, u32 size) {
     realFifo->top = (u8 *)((u32)base + size - 4);
     realFifo->size = size;
     fifo->count = 0;
-    fn_80223D94(fifo, size - 0x4000, (size / 2) & ~0x1F);
-    fn_80223D24(fifo, base, base);
+    GXInitFifoLimits(fifo, size - 0x4000, (size / 2) & ~0x1F);
+    GXInitFifoPtrs(fifo, base, base);
 }

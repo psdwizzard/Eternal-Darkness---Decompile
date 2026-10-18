@@ -20,12 +20,12 @@ typedef struct SynthInfo {
 } SynthInfo;
 
 static StreamSlot streamInfo[64];
-extern SynthInfo lbl_80619C20;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern int fn_801B9D1C(u32);
-extern void fn_801CCB98(u32, u32);
-void fn_801BACE8(u32 id, u32 frq);
+extern SynthInfo synthInfo;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern int GetPrivateIndex(u32);
+extern void hwSetPitch(u32, u32);
+void sndStreamFrq(u32 id, u32 frq);
 
 static inline u32 find_stream(u32 id)
 {
@@ -44,37 +44,37 @@ static inline void frq_linked(u32 id, u32 frq)
     u32 i;
     s32 pitch;
 
-    fn_801CE2B8();
-    i = fn_801B9D1C(id);
+    hwDisableIrq();
+    i = GetPrivateIndex(id);
     if (i != -1) {
         streamInfo[i].frq = frq;
         if (streamInfo[i].state == 2) {
-            pitch = (4096.f * frq) / lbl_80619C20.mixFrq;
-            fn_801CCB98(streamInfo[i].voice, pitch);
+            pitch = (4096.f * frq) / synthInfo.mixFrq;
+            hwSetPitch(streamInfo[i].voice, pitch);
         }
         if (streamInfo[i].cache != 0xFFFFFFFF) {
-            fn_801BACE8(streamInfo[i].cache, frq);
+            sndStreamFrq(streamInfo[i].cache, frq);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }
 
-void fn_801BACE8(u32 id, u32 frq)
+void sndStreamFrq(u32 id, u32 frq)
 {
     u32 i;
     s32 pitch;
 
-    fn_801CE2B8();
+    hwDisableIrq();
     i = find_stream(id);
     if (i != -1) {
         streamInfo[i].frq = frq;
         if (streamInfo[i].state == 2) {
-            pitch = (4096.f * frq) / lbl_80619C20.mixFrq;
-            fn_801CCB98(streamInfo[i].voice, pitch);
+            pitch = (4096.f * frq) / synthInfo.mixFrq;
+            hwSetPitch(streamInfo[i].voice, pitch);
         }
         if (streamInfo[i].cache != 0xFFFFFFFF) {
             frq_linked(streamInfo[i].cache, frq);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }

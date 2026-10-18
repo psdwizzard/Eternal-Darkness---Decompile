@@ -25,8 +25,8 @@ typedef struct EffectState {
 __declspec(section ".sdata") extern u8 lbl_8064C8DC[];
 extern u8 lbl_8064B588[4];
 extern u8 lbl_8064B58C[4];
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern EffectState *fn_801FD6F4(void *);
 extern void *fn_80201814(u32);
 extern void *fn_80201BC8(void *);
@@ -78,7 +78,7 @@ s32 fn_8007BD40(void *input)
                 if (red == lbl_8064B58C[0] &&
                     color[1] == lbl_8064B58C[1] &&
                     color[2] == lbl_8064B58C[2]) {
-                    random = fn_800FBFB0() & 63;
+                    random = rand() & 63;
                     color[0] = lbl_8064B58C[0] +
                         (((lbl_8064B588[0] - lbl_8064B58C[0]) * random) >> 6);
                     color[1] = lbl_8064B58C[1] +
@@ -89,9 +89,9 @@ s32 fn_8007BD40(void *input)
                     color[1] = color[1] < 255 ? color[1] : 255;
                     color[2] = color[2] < 255 ? color[2] : 255;
                     lifetime = ((random * -200) >> 6) + 1300;
-                    velocity[0] = (fn_800FBFB0() & 31) - 16;
-                    velocity[1] = (fn_800FBFB0() & 31) - 16;
-                    velocity[2] = (fn_800FBFB0() & 31) - 16;
+                    velocity[0] = (rand() & 31) - 16;
+                    velocity[1] = (rand() & 31) - 16;
+                    velocity[2] = (rand() & 31) - 16;
                 } else {
                     s32 value;
                     value = red - 2;

@@ -8,9 +8,9 @@ typedef struct Object {
 
 typedef void (*Callback)(Object*, void*);
 
-extern void fn_8016057C(Object*, int);
+extern void luaD_checkstack(Object*, int);
 
-void fn_801607D8(Object* object, void* argument, Callback callback)
+void dohook(Object* object, void* argument, Callback callback)
 {
     char* current;
     char* saved;
@@ -19,7 +19,7 @@ void fn_801607D8(Object* object, void* argument, Callback callback)
     current = object->current;
 
     object->saved = current;
-    fn_8016057C(object, 20);
+    luaD_checkstack(object, 20);
     object->active = 0;
     callback(object, argument);
     object->active = 1;

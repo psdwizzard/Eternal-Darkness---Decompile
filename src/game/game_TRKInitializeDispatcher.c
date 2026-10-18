@@ -1,7 +1,7 @@
-extern unsigned int lbl_80329FD8;
+extern unsigned int gTRKDispatchTableSize;
 
 int TRKInitializeDispatcher(void)
 {
-    lbl_80329FD8 = 0x20;
+    gTRKDispatchTableSize = 0x20;
     return 0;
 }

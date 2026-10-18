@@ -3,20 +3,20 @@ typedef struct Entry {
     char pad4[12];
 } Entry;
 
-extern char* const lbl_8023A878[6];
+extern char* const luaO_typenames[6];
 extern char lbl_8024F554[];
 extern char lbl_8024F578[];
-extern void fn_80163BB4(void*, const char*, ...);
+extern void luaO_verror(void*, const char*, ...);
 
-void fn_80160480(void* object, Entry* entry)
+void luaG_ordererror(void* object, Entry* entry)
 {
     int current_type = entry[-1].type;
     int previous_type = entry[-2].type;
-    char* previous_descriptor = lbl_8023A878[previous_type];
-    char* current_descriptor = lbl_8023A878[current_type];
+    char* previous_descriptor = luaO_typenames[previous_type];
+    char* current_descriptor = luaO_typenames[current_type];
 
     if ((signed char)previous_descriptor[2] == (signed char)current_descriptor[2])
-        fn_80163BB4(object, lbl_8024F554, previous_descriptor, current_descriptor);
+        luaO_verror(object, lbl_8024F554, previous_descriptor, current_descriptor);
     else
-        fn_80163BB4(object, lbl_8024F578, previous_descriptor, current_descriptor);
+        luaO_verror(object, lbl_8024F578, previous_descriptor, current_descriptor);
 }

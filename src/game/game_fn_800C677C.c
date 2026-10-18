@@ -14,10 +14,10 @@ extern float lbl_8064F1FC;
 extern void *fn_80201BC8();
 extern float fn_8011F6F0(void);
 extern void fn_8011F114();
-extern void fn_80211A6C();
-extern void fn_80211AAC(Vec3 *, const Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211A48(Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECSubtract();
+extern void PSVECNormalize(Vec3 *, const Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECAdd(Vec3 *, const Vec3 *, Vec3 *);
 extern void fn_8012AC74(void *, Vec3 *, int);
 
 void fn_800C677C(void *object, Transform *transform, int mode)
@@ -33,19 +33,19 @@ void fn_800C677C(void *object, Transform *transform, int mode)
     node = fn_80201BC8(object);
     time = fn_8011F6F0() / lbl_8064F1FC;
     fn_8011F114(&origin, node);
-    fn_80211A6C(transform, &origin, &direction);
-    fn_80211AAC(&direction, &direction);
-    fn_80211A90(&direction, &scaled_transform, transform->scale);
-    fn_80211A90(&direction, &scaled_time, time);
+    PSVECSubtract(transform, &origin, &direction);
+    PSVECNormalize(&direction, &direction);
+    PSVECScale(&direction, &scaled_transform, transform->scale);
+    PSVECScale(&direction, &scaled_time, time);
 
     switch (mode) {
     case 0:
-        fn_80211A48(&origin, &scaled_transform, &result);
-        fn_80211A48(&result, &scaled_time, &result);
+        PSVECAdd(&origin, &scaled_transform, &result);
+        PSVECAdd(&result, &scaled_time, &result);
         break;
     case 1:
-        fn_80211A6C(&origin, &scaled_transform, &result);
-        fn_80211A6C(&result, &scaled_time, &result);
+        PSVECSubtract(&origin, &scaled_transform, &result);
+        PSVECSubtract(&result, &scaled_time, &result);
         break;
     }
     fn_8012AC74(node, &result, 3);

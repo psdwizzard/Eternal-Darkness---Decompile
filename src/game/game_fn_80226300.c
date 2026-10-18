@@ -14,7 +14,7 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_80226300(int token, u32 value)
+void GXSetMisc(int token, u32 value)
 {
     switch (token) {
     case 0:

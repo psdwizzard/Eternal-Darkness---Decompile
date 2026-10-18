@@ -1,6 +1,6 @@
-extern void fn_801CD2A8(void);
+extern void hwExitSampleMem(void);
 
-void fn_801BD378(void)
+void dataExit(void)
 {
-    fn_801CD2A8();
+    hwExitSampleMem();
 }

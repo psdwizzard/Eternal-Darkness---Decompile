@@ -13,33 +13,33 @@ typedef struct Voice {
     u8 pad_11E[0x2E6];
 } Voice;
 
-extern Voice* lbl_8064D3D0;
-extern u32 fn_801C1790(u8, u8, unsigned short, u8);
-extern void fn_801C106C(Voice*);
-extern u32 fn_801CC6DC(u32);
-extern void fn_801CC8C4(u32);
-extern void fn_801C0ACC(Voice*, s32);
-extern void fn_801C1600(Voice*, u8);
+extern Voice* synthVoice;
+extern u32 voiceAllocate(u8, u8, unsigned short, u8);
+extern void vidRemoveVoiceReferences(Voice*);
+extern u32 hwIsActive(u32);
+extern void hwBreak(u32);
+extern void macMakeInactive(Voice*, s32);
+extern void voiceSetPriority(Voice*, u8);
 
-u32 fn_801C1FE0(u8 group)
+u32 voiceBlock(u8 group)
 {
     u32 offset;
     u32 result;
 
-    result = fn_801C1790(group, 0xFF, 0xFFFF, 1);
+    result = voiceAllocate(group, 0xFF, 0xFFFF, 1);
 
     if (result != (u32)-1) {
         offset = result * 0x404;
-        lbl_8064D3D0[result].flag_11C = 1;
-        lbl_8064D3D0[result].flag_11D = 1;
-        fn_801C106C(&lbl_8064D3D0[result]);
-        lbl_8064D3D0[result].handle = result | 0xFFFFFF00;
-        if (fn_801CC6DC(result) != 0) {
-            fn_801CC8C4(result);
+        synthVoice[result].flag_11C = 1;
+        synthVoice[result].flag_11D = 1;
+        vidRemoveVoiceReferences(&synthVoice[result]);
+        synthVoice[result].handle = result | 0xFFFFFF00;
+        if (hwIsActive(result) != 0) {
+            hwBreak(result);
         }
-        fn_801C0ACC(&lbl_8064D3D0[result], 2);
-        lbl_8064D3D0[result].value_034 = 0;
-        fn_801C1600(&lbl_8064D3D0[result], group);
+        macMakeInactive(&synthVoice[result], 2);
+        synthVoice[result].value_034 = 0;
+        voiceSetPriority(&synthVoice[result], group);
     }
     return result;
 }

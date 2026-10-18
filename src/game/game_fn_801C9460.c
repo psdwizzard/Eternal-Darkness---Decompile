@@ -16,27 +16,27 @@ typedef struct SoundEntry {
     char pad02[8];
 } SoundEntry;
 
-extern unsigned char lbl_8064D3A0;
-extern Voice* lbl_8064D4BC;
-extern void fn_801C8EE0(Voice*);
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern unsigned char sndActive;
+extern Voice* s3dEmitterRoot;
+extern void EmitterShutdown(Voice*);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-void fn_801C9460(SoundEntry* entries, u32 count)
+void s3dKillEmitterByFXID(SoundEntry* entries, u32 count)
 {
-    Voice* voice = lbl_8064D4BC;
+    Voice* voice = s3dEmitterRoot;
     while (voice != 0) {
         u32 i;
         Voice* previous = voice->previous;
         SoundEntry* entry = entries;
         for (i = 0; i < count; i++, entry++) {
             if (voice->sound_id == entry->sound_id) {
-                if (lbl_8064D3A0 != 0) {
-                    fn_801CE2B8();
+                if (sndActive != 0) {
+                    hwDisableIrq();
                     if ((voice->flags & 0x10000) != 0) {
-                        fn_801C8EE0(voice);
+                        EmitterShutdown(voice);
                     }
-                    fn_801CE280();
+                    hwEnableIrq();
                 }
                 break;
             }

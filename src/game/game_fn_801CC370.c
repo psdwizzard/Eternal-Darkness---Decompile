@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef unsigned int u32;
 typedef signed int s32;
 
-void* fn_801CC370(void* key, void* base, int count, u32 stride, s32 (*cmp)(void*, void*))
+void* sndBSearch(void* key, void* base, int count, u32 stride, s32 (*cmp)(void*, void*))
 {
     long low;
     long high;

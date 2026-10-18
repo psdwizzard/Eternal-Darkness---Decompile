@@ -17,9 +17,9 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F83C[];
-extern void fn_8016203C(Parser*, int, int, char*);
+extern void luaX_checklimit(Parser*, int, int, char*);
 
-int fn_801645F8(Parser* parser, Entry* entry)
+int indexupvalue(Parser* parser, Entry* entry)
 {
     ParserState* state = parser->state;
     int i;
@@ -31,7 +31,7 @@ int fn_801645F8(Parser* parser, Entry* entry)
         }
     }
 
-    fn_8016203C(parser, state->entry_count + 1, 32, lbl_8024F83C);
+    luaX_checklimit(parser, state->entry_count + 1, 32, lbl_8024F83C);
     state->entries[state->entry_count] = *entry;
     return state->entry_count++;
 }

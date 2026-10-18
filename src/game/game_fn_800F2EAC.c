@@ -7,15 +7,15 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EFD6C(int *, TRKBuffer **);
-extern int fn_800EFAE8(TRKBuffer *, u16);
-extern int fn_800EF994(TRKBuffer *, const void *, u32);
-extern int fn_800F3054(TRKBuffer *, int *, int, int, int);
+extern int TRKGetFreeBuffer(int *, TRKBuffer **);
+extern int TRKAppendBuffer1_ui16(TRKBuffer *, u16);
+extern int TRKAppendBuffer_ui8(TRKBuffer *, const void *, u32);
+extern int TRKRequestSend(TRKBuffer *, int *, int, int, int);
 extern TRKBuffer *TRKGetBuffer(int);
-extern int fn_800EFC6C(TRKBuffer *, int);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
-extern int fn_800EF6EC(TRKBuffer *, u32 *);
-extern void fn_800EFCDC(int);
+extern int TRKSetBufferPosition(TRKBuffer *, int);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
+extern int TRKReadBuffer1_ui32(TRKBuffer *, u32 *);
+extern void TRKReleaseBuffer(int);
 extern u32 strlen(const char *);
 
 static int append(TRKBuffer *buffer, u8 value)
@@ -27,7 +27,7 @@ static int append(TRKBuffer *buffer, u8 value)
     return 0;
 }
 
-int fn_800F2EAC(const char *name, u8 kind, u32 *value, u8 *status)
+int HandleOpenFileSupportRequest(const char *name, u8 kind, u32 *value, u8 *status)
 {
     int reply_buffer;
     int first_buffer;
@@ -36,28 +36,28 @@ int fn_800F2EAC(const char *name, u8 kind, u32 *value, u8 *status)
     int result;
 
     *value = 0;
-    result = fn_800EFD6C(&first_buffer, &buffer);
+    result = TRKGetFreeBuffer(&first_buffer, &buffer);
     if (result == 0)
         result = append(buffer, 0xD2);
     if (result == 0)
         result = append(buffer, kind);
     if (result == 0)
-        result = fn_800EFAE8(buffer, (u16)(strlen(name) + 1));
+        result = TRKAppendBuffer1_ui16(buffer, (u16)(strlen(name) + 1));
     if (result == 0)
-        result = fn_800EF994(buffer, name, strlen(name) + 1);
+        result = TRKAppendBuffer_ui8(buffer, name, strlen(name) + 1);
     if (result == 0) {
         *status = 0;
-        result = fn_800F3054(buffer, &reply_buffer, 7, 3, 0);
+        result = TRKRequestSend(buffer, &reply_buffer, 7, 3, 0);
         if (result == 0) {
             reply = TRKGetBuffer(reply_buffer);
-            fn_800EFC6C(reply, 2);
+            TRKSetBufferPosition(reply, 2);
         }
         if (result == 0)
-            result = fn_800EF86C(reply, status);
+            result = TRKReadBuffer1_ui8(reply, status);
         if (result == 0)
-            result = fn_800EF6EC(reply, value);
-        fn_800EFCDC(reply_buffer);
+            result = TRKReadBuffer1_ui32(reply, value);
+        TRKReleaseBuffer(reply_buffer);
     }
-    fn_800EFCDC(first_buffer);
+    TRKReleaseBuffer(first_buffer);
     return result;
 }

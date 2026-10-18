@@ -3,23 +3,23 @@ typedef struct OuterObject {
     void* object;
 } OuterObject;
 
-extern void fn_8015F414(void*, void*, int);
-extern void fn_8015F448(void*, void*, int);
-extern void fn_8015F4D0(OuterObject*, void*, int);
+extern void luaK_goiftrue(void*, void*, int);
+extern void luaK_goiffalse(void*, void*, int);
+extern void luaK_tostack(OuterObject*, void*, int);
 
-void fn_8015F768(OuterObject* outer, int type, void* command)
+void luaK_infix(OuterObject* outer, int type, void* command)
 {
     void* object = outer->object;
 
     switch (type) {
     case 12:
-        fn_8015F414(object, command, 1);
+        luaK_goiftrue(object, command, 1);
         break;
     case 13:
-        fn_8015F448(object, command, 1);
+        luaK_goiffalse(object, command, 1);
         break;
     default:
-        fn_8015F4D0(outer, command, 1);
+        luaK_tostack(outer, command, 1);
         break;
     }
 }

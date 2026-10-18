@@ -13,9 +13,9 @@ typedef struct Codebook {
     DecodeAux *decode_tree;
 } Codebook;
 
-s32 fn_80230718(Codebook *book, OggPackBuffer *b);
+s32 vorbis_book_decode(Codebook *book, OggPackBuffer *b);
 
-s32 fn_802302B0(register Codebook *book, register float *a, register OggPackBuffer *b, register s32 n) {
+s32 vorbis_book_decodev_add(register Codebook *book, register float *a, register OggPackBuffer *b, register s32 n) {
     register s32 i, j;
     s32 entry;
     register s32 valueOffset;
@@ -37,7 +37,7 @@ s32 fn_802302B0(register Codebook *book, register float *a, register OggPackBuff
                 or cb, book, book
                 or bb, b, b
             }
-            entry = fn_80230718(cb, bb);
+            entry = vorbis_book_decode(cb, bb);
             if (entry == -1) {
                 return -1;
             }
@@ -66,7 +66,7 @@ s32 fn_802302B0(register Codebook *book, register float *a, register OggPackBuff
                 or cb, book, book
                 or bb, b, b
             }
-            entry = fn_80230718(cb, bb);
+            entry = vorbis_book_decode(cb, bb);
             if (entry == -1) {
                 return -1;
             }

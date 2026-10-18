@@ -1,5 +1,5 @@
 /* Return the string length, treating a null pointer as an empty string. */
-unsigned long fn_8022C9BC(const char *text)
+unsigned long Strlen(const char *text)
 {
     unsigned long length = 0;
 

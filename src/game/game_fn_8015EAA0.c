@@ -10,7 +10,7 @@ typedef struct Object {
     int limit;
 } Object;
 
-void* fn_8015EAA0(Object* object)
+void* previous_instruction(Object* object)
 {
     if (object->current > object->limit)
         return object->owner->entries[object->current - 1];

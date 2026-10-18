@@ -24,23 +24,23 @@ typedef struct Collection {
     void* source;
 } Collection;
 
-extern int fn_80167D2C(Argument*);
-extern void fn_8016057C(Collection*, int);
-extern void fn_80160B18(Collection*, Entry*, int);
+extern int luaT_tag(Argument*);
+extern void luaD_checkstack(Collection*, int);
+extern void luaD_call(Collection*, Entry*, int);
 
-void fn_80161D58(Collection* collection, Argument* argument)
+void callgcTM(Collection* collection, Argument* argument)
 {
-    void* saved = collection->buckets[fn_80167D2C(argument)].saved;
+    void* saved = collection->buckets[luaT_tag(argument)].saved;
 
     if (saved != 0) {
         void* source = collection->source;
         collection->source = 0;
-        fn_8016057C(collection, 2);
+        luaD_checkstack(collection, 2);
         collection->current->value = saved;
         collection->current->type = 5;
         collection->current->argument = *argument;
         collection->current++;
-        fn_80160B18(collection, collection->current - 1, 0);
+        luaD_call(collection, collection->current - 1, 0);
         collection->source = source;
     }
 }

@@ -20,9 +20,9 @@ typedef struct Decoder {
     u8 mode;
 } Decoder;
 
-extern void fn_80106F98(void*, void*, int);
-extern void fn_801078C0(void*, void*, int, int);
-extern void fn_801078E4(void*, void*, int, int, int);
+extern void HVQM4DecodeIpic(void*, void*, int);
+extern void HVQM4DecodePpic(void*, void*, int, int);
+extern void HVQM4DecodeBpic(void*, void*, int, int, int);
 
 int fn_80108C2C(Decoder* dec, int type, u32 time)
 {
@@ -56,12 +56,12 @@ int fn_80108C2C(Decoder* dec, int type, u32 time)
             return 3;
         }
         if ((u32)type == 0x10) {
-            fn_80106F98(dec->ctx, dec->input, dec->frames[1]->data);
+            HVQM4DecodeIpic(dec->ctx, dec->input, dec->frames[1]->data);
         } else {
             if (dec->frames[0]->state == 0) {
                 return 3;
             }
-            fn_801078C0(dec->ctx, dec->input, dec->frames[1]->data, dec->frames[0]->data);
+            HVQM4DecodePpic(dec->ctx, dec->input, dec->frames[1]->data, dec->frames[0]->data);
         }
         dec->frames[1]->time = time + dec->base;
         if (dec->mode == 4) {
@@ -79,7 +79,7 @@ int fn_80108C2C(Decoder* dec, int type, u32 time)
         for (i = 2; i < 6; i++) {
             if (dec->frames[i]->state != 1 || cur > dec->frames[i]->time) {
                 dec->frames[i]->state = 0;
-                fn_801078E4(dec->ctx, dec->input, dec->frames[i]->data,
+                HVQM4DecodeBpic(dec->ctx, dec->input, dec->frames[i]->data,
                             dec->frames[0]->data, dec->frames[1]->data);
                 dec->frames[i]->time = time + dec->base;
                 if (dec->mode == 4) {

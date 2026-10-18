@@ -19,11 +19,11 @@ typedef struct Group {
     unsigned char pad50[0x6C];
 } Group;
 
-extern Group lbl_80628CB0[];
+extern Group dspStudio[];
 
-void fn_801C7684(Entry* entry, u8 group)
+void salReconnectVoice(Entry* entry, u8 group)
 {
-    Group* groups = lbl_80628CB0;
+    Group* groups = dspStudio;
     Entry* next;
 
     if (entry->active != 0) {

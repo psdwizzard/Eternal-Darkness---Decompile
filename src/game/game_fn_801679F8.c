@@ -22,23 +22,23 @@ typedef struct HashTable {
 
 #pragma use_lmw_stmw on
 
-extern HashNode* fn_80167128(HashTable*, Value*);
-extern int fn_801639E8(Value*, HashNode*);
-extern void fn_80160FAC(LuaState*, const char*);
-extern void fn_801678F4(LuaState*, HashTable*);
+extern HashNode* luaH_mainposition(HashTable*, Value*);
+extern int luaO_equalObj(Value*, HashNode*);
+extern void lua_error(LuaState*, const char*);
+extern void rehash(LuaState*, HashTable*);
 extern const char lbl_8024FA48[];
 
-Value* fn_801679F8(LuaState* state, HashTable* table, Value* key)
+Value* luaH_set(LuaState* state, HashTable* table, Value* key)
 {
-    HashNode* mainnode = fn_80167128(table, key);
+    HashNode* mainnode = luaH_mainposition(table, key);
     HashNode* node = mainnode;
 
     if (mainnode == 0) {
-        fn_80160FAC(state, lbl_8024FA48);
+        lua_error(state, lbl_8024FA48);
     }
 
     do {
-        if (fn_801639E8(key, node)) {
+        if (luaO_equalObj(key, node)) {
             return &node->value;
         }
         node = node->next;
@@ -47,7 +47,7 @@ Value* fn_801679F8(LuaState* state, HashTable* table, Value* key)
     if (mainnode->key.type != 1) {
         node = table->firstfree;
         if (mainnode > node) {
-            HashNode* other = fn_80167128(table, &mainnode->key);
+            HashNode* other = luaH_mainposition(table, &mainnode->key);
             if (other != mainnode) {
                 while (other->next != mainnode) {
                     other = other->next;
@@ -73,8 +73,8 @@ set_key:
         if (table->firstfree != table->nodes) {
             table->firstfree--;
         } else {
-            fn_801678F4(state, table);
-            return fn_801679F8(state, table, key);
+            rehash(state, table);
+            return luaH_set(state, table, key);
         }
     }
 }

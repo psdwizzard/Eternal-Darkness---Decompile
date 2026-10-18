@@ -50,8 +50,8 @@ struct OSThread {
 
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
-extern void fn_8020C120(OSContext *context, u32 pc, u32 sp);
-extern void fn_8020F96C(void *val);
+extern void OSInitContext(OSContext *context, u32 pc, u32 sp);
+extern void OSExitThread(void *val);
 
 #define OS_THREAD_STATE_READY 1
 #define OS_THREAD_ATTR_DETACH 1
@@ -70,7 +70,7 @@ static inline void OSInitMutexQueue(OSMutexQueue *queue)
 }
 
 /* OSCreateThread */
-s32 fn_8020F84C(OSThread *thread, void *(*func)(void *), void *param, void *stack,
+s32 OSCreateThread(OSThread *thread, void *(*func)(void *), void *param, void *stack,
                 u32 stackSize, s32 priority, u16 attr)
 {
     s32 enabled;
@@ -97,10 +97,10 @@ s32 fn_8020F84C(OSThread *thread, void *(*func)(void *), void *param, void *stac
 
     {
         OSContext *context = &thread->context;
-        fn_8020C120(context, (u32)func, (u32)sp);
+        OSInitContext(context, (u32)func, (u32)sp);
     }
 
-    thread->context.lr = (u32)fn_8020F96C;
+    thread->context.lr = (u32)OSExitThread;
     thread->context.gpr[3] = (u32)param;
     thread->stackBase = stack;
     thread->stackEnd = (u32 *)((u32)stack - stackSize);

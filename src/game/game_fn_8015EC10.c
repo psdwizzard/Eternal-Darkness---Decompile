@@ -5,15 +5,15 @@ typedef struct Object {
     int value;
 } Object;
 
-extern void fn_8015F1F8(Object*, int, int);
+extern void luaK_patchlist(Object*, int, int);
 
-int fn_8015EC10(Object* object)
+int luaK_getlabel(Object* object)
 {
     int current = object->current;
     int previous = object->previous;
     if (current != previous) {
         object->previous = current;
-        fn_8015F1F8(object, object->value, previous);
+        luaK_patchlist(object, object->value, previous);
         object->value = -1;
     }
     return object->current;

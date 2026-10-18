@@ -5,7 +5,7 @@ extern float lbl_80650908;
 extern float lbl_8065090C;
 extern int fn_8017BB60(void);
 extern int fn_8017BB98(void);
-extern int fn_8021EB20(int);
+extern int CARDGetXferredBytes(int);
 extern int fn_8017B8AC(void);
 extern int fn_8017B904(void);
 
@@ -17,34 +17,34 @@ float fn_8017B4F4(int index)
 
     switch (fn_8017BB60()) {
     case 1:
-        elapsed = fn_8021EB20(index);
+        elapsed = CARDGetXferredBytes(index);
         base = (&lbl_8064D20C)[index];
         value = ((float)elapsed - (float)base) / lbl_80650900;
         break;
     case 4:
-        elapsed = fn_8021EB20(index);
+        elapsed = CARDGetXferredBytes(index);
         base = (&lbl_8064D20C)[index];
         value = ((float)elapsed - (float)base) / lbl_80650900;
         break;
     case 6:
         value = fn_8017B8AC();
-        elapsed = fn_8021EB20(index);
+        elapsed = CARDGetXferredBytes(index);
         base = (&lbl_8064D20C)[index];
         value = ((float)elapsed - (float)base) / value;
         break;
     case 7:
         value = fn_8017B904();
-        elapsed = fn_8021EB20(index);
+        elapsed = CARDGetXferredBytes(index);
         base = (&lbl_8064D20C)[index];
         value = ((float)elapsed - (float)base) / value;
         break;
     case 5:
-        elapsed = fn_8021EB20(index);
+        elapsed = CARDGetXferredBytes(index);
         base = (&lbl_8064D20C)[index];
         value = ((float)elapsed - (float)base) / lbl_80650904;
         break;
     case 8:
-        elapsed = fn_8021EB20(index);
+        elapsed = CARDGetXferredBytes(index);
         base = (&lbl_8064D20C)[index];
         value = ((float)elapsed - (float)base) / lbl_80650904;
         break;

@@ -39,9 +39,9 @@ extern Plane *fn_80143000(const Ray *, Portal *, Vec3 *, Point6 **, Point6 **);
 extern int fn_80201ADC(void);
 extern Entry80201B3C *fn_80201B3C(void);
 extern void *fn_80201BC8(void *);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern float fn_80211B08(Vec3 *);
-extern float fn_80211D4C(const Vec3 *, const Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern float PSVECMag(Vec3 *);
+extern float PSVECSquareDistance(const Vec3 *, const Vec3 *);
 
 extern Portal lbl_805B1310[12];
 extern s8 lbl_8064D038;
@@ -77,8 +77,8 @@ static inline int portal_mode(const Vec3 *pos, Vec3 *outPos, void *object, int f
         mode = 0;
     } else if (flags & 0x20) {
         float len;
-        fn_80211A6C(pos, outPos, &delta);
-        len = fn_80211B08(&delta);
+        PSVECSubtract(pos, outPos, &delta);
+        len = PSVECMag(&delta);
         if (len < lbl_80650448) {
             mode = -2;
         } else if (len < lbl_8065044C) {
@@ -145,7 +145,7 @@ Plane *fn_8014317C(const Ray *ray, Vec3 *outPos, Object *object, Vec3 *target, i
             if (plane == NULL) {
                 continue;
             }
-            dist = fn_80211D4C(&ray->origin, &hit);
+            dist = PSVECSquareDistance(&ray->origin, &hit);
             if (dist < bestDist) {
                 bestDist = dist;
                 best = portal;

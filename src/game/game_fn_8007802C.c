@@ -18,7 +18,7 @@ extern void *fn_80200C38(void *node);
 extern u32 fn_801A7570(void *data);
 extern u16 fn_801A7580(void *data);
 extern u32 fn_801A7770(void *data);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern Runtime *fn_801294DC(void *object, s32 type, s32 value, s32 flags);
 extern void fn_80128C44(Runtime *runtime, u32 callback, u32 event);
 extern void fn_80128C28(Runtime *runtime, u32 callback, u32 event);
@@ -85,14 +85,14 @@ void fn_8007802C(void *object, void *node, ActionState *state)
             }
             chance = 100 - (s32)(lbl_8064E904 * limit);
         }
-        if ((s32)fn_800FBFB0() % 100 < chance) {
+        if ((s32)rand() % 100 < chance) {
             if (state->count < 3U && state->busy == 0) {
                 kind = fn_801A7770(data);
                 if (kind == 2) {
                     action = 0x4A;
                 } else if (kind == 3) {
                     action = 0x49;
-                } else if (fn_800FBFB0() & 1) {
+                } else if (rand() & 1) {
                     action = 0x4A;
                 }
                 data = fn_801294DC(resource, action, 0x30, 8);

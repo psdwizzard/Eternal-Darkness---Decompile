@@ -14,25 +14,25 @@ typedef struct Value {
     int pad0C;
 } Value;
 
-extern int fn_80168A70(void*, Value*);
-extern int fn_801691AC(void*, Value*, int);
-extern void fn_8016044C(void*, Value*, int, void*);
-extern void fn_80160FAC(void*, const char*);
-extern void* fn_80163A9C(void*, unsigned int);
-extern String* fn_80166E3C(void*, void*, unsigned int);
+extern int luaV_tostring(void*, Value*);
+extern int call_binTM(void*, Value*, int);
+extern void luaG_binerror(void*, Value*, int, void*);
+extern void lua_error(void*, const char*);
+extern void* luaO_openspace(void*, unsigned int);
+extern String* luaS_newlstr(void*, void*, unsigned int);
 extern void* memcpy(void*, const void*, size_t);
 extern int lbl_8064BBF0;
 extern char lbl_8024FCD0[];
 
-void fn_801694A8(void* context, int count, Value* end)
+void luaV_strconc(void* context, int count, Value* end)
 {
     do {
         int grouped = 2;
 
-        if ((end[-2].type != 3 && fn_80168A70(context, end - 2) != 0) ||
-            (end[-1].type != 3 && fn_80168A70(context, end - 1) != 0)) {
-            if (fn_801691AC(context, end, 12) == 0) {
-                fn_8016044C(context, end - 2, 3, &lbl_8064BBF0);
+        if ((end[-2].type != 3 && luaV_tostring(context, end - 2) != 0) ||
+            (end[-1].type != 3 && luaV_tostring(context, end - 1) != 0)) {
+            if (call_binTM(context, end, 12) == 0) {
+                luaG_binerror(context, end - 2, 3, &lbl_8064BBF0);
             }
         } else if (end[-1].string->length != 0) {
             int scanOffset = 32;
@@ -49,15 +49,15 @@ scanTest:
                 scan = (Value*)((char*)end - scanOffset);
                 value = scan - 1;
                 if (value->type == 3 ||
-                    fn_80168A70(context, value) == 0) {
+                    luaV_tostring(context, value) == 0) {
                     goto scanAdd;
                 }
             }
             if (total > 0xFFFFFFFDU) {
-                fn_80160FAC(context, lbl_8024FCD0);
+                lua_error(context, lbl_8024FCD0);
             }
             {
-                char* joined = fn_80163A9C(context, total);
+                char* joined = luaO_openspace(context, total);
                 unsigned int copied = 0;
                 int offset = grouped << 4;
                 int remaining = grouped;
@@ -70,7 +70,7 @@ scanTest:
                     --remaining;
                 }
                 (end - grouped)->string =
-                    fn_80166E3C(context, joined, copied);
+                    luaS_newlstr(context, joined, copied);
             }
         }
         count -= grouped - 1;

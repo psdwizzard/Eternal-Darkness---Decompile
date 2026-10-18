@@ -7,24 +7,24 @@ typedef struct Parser {
 
 typedef struct Entry Entry;
 
-extern int fn_8015F9B0(State*, int, int);
-extern int fn_8015EC10(State*);
-extern void fn_80163E94(Parser*, int);
-extern void fn_8016425C(Parser*, Entry*);
-extern void fn_801658D0(Parser*);
-extern void fn_8015F1F8(State*, int, int);
-extern void fn_8016437C(Parser*, Entry*);
+extern int luaK_code1(State*, int, int);
+extern int luaK_getlabel(State*);
+extern void check(Parser*, int);
+extern void adjustlocalvars(Parser*, Entry*);
+extern void block(Parser*);
+extern void luaK_patchlist(State*, int, int);
+extern void removelocalvars(Parser*, Entry*);
 
-void fn_80165C28(Parser* parser, Entry* output, int left, int right)
+void forbody(Parser* parser, Entry* output, int left, int right)
 {
     State* state = parser->state;
-    int first = fn_8015F9B0(state, left, -1);
-    int start = fn_8015EC10(state);
+    int first = luaK_code1(state, left, -1);
+    int start = luaK_getlabel(state);
 
-    fn_80163E94(parser, 0x103);
-    fn_8016425C(parser, output);
-    fn_801658D0(parser);
-    fn_8015F1F8(state, fn_8015F9B0(state, right, -1), start);
-    fn_8015F1F8(state, first, fn_8015EC10(state));
-    fn_8016437C(parser, output);
+    check(parser, 0x103);
+    adjustlocalvars(parser, output);
+    block(parser);
+    luaK_patchlist(state, luaK_code1(state, right, -1), start);
+    luaK_patchlist(state, first, luaK_getlabel(state));
+    removelocalvars(parser, output);
 }

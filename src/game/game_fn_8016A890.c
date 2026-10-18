@@ -10,15 +10,15 @@ typedef struct Value {
     void* value;
 } Value;
 
-extern void* fn_80166E3C(Context*, const char*, int);
-extern void fn_8016057C(Context*, int);
+extern void* luaS_newlstr(Context*, const char*, int);
+extern void luaD_checkstack(Context*, int);
 
-void fn_8016A890(Context* context, const char* string, int length)
+void lua_pushlstring(Context* context, const char* string, int length)
 {
-    ((Value*)context->current)->value = fn_80166E3C(context, string, length);
+    ((Value*)context->current)->value = luaS_newlstr(context, string, length);
     ((Value*)context->current)->type = 3;
     if (context->current == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     context->current = (char*)context->current + 16;
 }

@@ -24,7 +24,7 @@ extern u32 fn_801ADAF8(u32);
 extern void fn_801AE140(Entry*, u32);
 extern int fn_801AE5DC(Entry*);
 extern u32 fn_801A9B94(u32, u32);
-extern void fn_801BA94C(u32, u32, u32, u32, u32, u32);
+extern void sndStreamMixParameterEx(u32, u32, u32, u32, u32, u32);
 
 void fn_801AED2C(u32 id)
 {
@@ -59,7 +59,7 @@ void fn_801AED2C(u32 id)
                 }
             } else {
                 u32 value = fn_801A9B94(entry->type, 2);
-                fn_801BA94C(entry->handle, value, entry->arg2, entry->arg3, 0, 0);
+                sndStreamMixParameterEx(entry->handle, value, entry->arg2, entry->arg3, 0, 0);
             }
         }
         fn_801ADBC0();

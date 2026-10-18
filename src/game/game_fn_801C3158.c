@@ -2,11 +2,11 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern u8 lbl_80627D60[];
+extern u8 vs[];
 
-void fn_801C3158(void)
+void vsInit(void)
 {
-    u8* state = (u8*)lbl_80627D60;
+    u8* state = (u8*)vs;
     state[0] = 0;
     state[0x908 + 0] = 0xFF;
     state[0x908 + 1] = 0xFF;

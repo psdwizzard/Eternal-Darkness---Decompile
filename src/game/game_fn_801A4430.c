@@ -28,7 +28,7 @@ extern void* memcpy(void*, const void*, unsigned long);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void fn_801805E0(void*, int, u8, u8, float, void*);
 extern void fn_80180518(void*, int, int);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8018E230(void*, void*, int, int, int, int);
 extern void fn_8018CB70(void*, u8, u16);
 extern void fn_8018C540(void*, void*, u8, int, u16);
@@ -37,8 +37,8 @@ extern void fn_8018F014(void*, u16);
 extern void* fn_80201890(u32);
 extern int fn_8011F598(void*, int, int, int, void*, int);
 extern void fn_801A4874(float*, s16*);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern u32 fn_8018EF9C(u32);
 
 void fn_801A4430(u8* object, void* position, u8* descriptor, u8* config)
@@ -109,8 +109,8 @@ void fn_801A4430(u8* object, void* position, u8* descriptor, u8* config)
         for (i = 0; (u8)i < count;) {
             float angle = scale * (float)(u8)i / (float)count;
             s16 coord[3];
-            coord[0] = (s16)((float)*(u16*)(config + 0x22) * fn_80048C2C(angle) + (float)*(s16*)(config + 0x2a));
-            coord[1] = (s16)((float)*(u16*)(config + 0x22) * fn_80048C50(angle) + (float)*(s16*)(config + 0x2c));
+            coord[0] = (s16)((float)*(u16*)(config + 0x22) * sinf(angle) + (float)*(s16*)(config + 0x2a));
+            coord[1] = (s16)((float)*(u16*)(config + 0x22) * cosf(angle) + (float)*(s16*)(config + 0x2c));
             coord[2] = *(s16*)(config + 0x2e);
             fn_80180554(entry, coord, descriptor, &setup, 0, 0);
             entry += 0x38;
@@ -122,7 +122,7 @@ void fn_801A4430(u8* object, void* position, u8* descriptor, u8* config)
 
     entry = *(u8**)(object + 0x4c);
     for (i = 0; (u8)i < count;) {
-        fn_801805E0(entry + 0x20, 4, (u8)(config[1] - (spread & fn_800FBFB0())), (u8)i << 2, lbl_80650D80, &texture);
+        fn_801805E0(entry + 0x20, 4, (u8)(config[1] - (spread & rand())), (u8)i << 2, lbl_80650D80, &texture);
         fn_8018E230(entry, entry + 0x2b, 1, 0, object[4], 0xcc);
         fn_80180518(object + 0x24, i, 1);
         entry += 0x38;

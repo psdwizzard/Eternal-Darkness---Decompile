@@ -7,9 +7,9 @@ typedef struct Entry {
     u8 padA1[0x53];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-void fn_801CCB20(u32 index, u8 value)
+void hwSetStreamLoopPS(u32 index, u8 value)
 {
-    lbl_8064D4AC[index].fieldA0 = value;
+    dspVoice[index].fieldA0 = value;
 }

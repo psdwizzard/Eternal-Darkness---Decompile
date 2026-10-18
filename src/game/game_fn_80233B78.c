@@ -1,6 +1,6 @@
-/* fn_80233B78: libvorbis-style mdct_butterfly_generic. */
+/* mdct_butterfly_generic: libvorbis-style mdct_butterfly_generic. */
 
-void fn_80233B78(float *T, float *x, int points, int trigint) {
+void mdct_butterfly_generic(float *T, float *x, int points, int trigint) {
     float *x1;
     float *x2;
     float r0;

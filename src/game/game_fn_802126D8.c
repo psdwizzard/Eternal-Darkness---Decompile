@@ -13,10 +13,10 @@ typedef struct DVDCommand {
 extern DVDCommand CommandList_80641880[];
 extern volatile u32 WorkAroundSeekLocation_8064D9C0;
 extern volatile s32 NextCommandNumber_8064D9DC;
-extern s32 fn_802129F0(u32 offset, DVDLowCallback callback);
+extern s32 DVDLowSeek(u32 offset, DVDLowCallback callback);
 
 /* Queue a workaround seek before the requested read. */
-void fn_802126D8(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
+void SeekTwiceBeforeRead(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
     DVDCommand *commands = CommandList_80641880;
     u32 blockOffset = offset & ~0x7FFF;
     u32 seekOffset;
@@ -37,5 +37,5 @@ void fn_802126D8(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
     commands[1].callback = callback;
     commands[2].cmd = -1;
     NextCommandNumber_8064D9DC = 0;
-    fn_802129F0(seekOffset, callback);
+    DVDLowSeek(seekOffset, callback);
 }

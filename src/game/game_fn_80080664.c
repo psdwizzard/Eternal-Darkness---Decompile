@@ -66,7 +66,7 @@ extern u32 fn_80178E94(Vec3 *, Vec3 *);
 extern void fn_801F74C8(int, int, int);
 extern void fn_801441C0(int, int, int);
 extern int fn_801B05E8(int, u8, int, int, int, int, int, int);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8019D560(EffectDesc *);
 extern void *fn_80152F90(Vec3 *, void *, u8 *, u8);
 extern int fn_801B0A28(int);
@@ -134,7 +134,7 @@ void fn_80080664(void)
             fn_801441C0(shakeKind, shakeLevel, 90);
             lbl_8031CBA0.fadeTimer = 350;
             lbl_8031CD84.quakeSound = fn_801B05E8(0x248, volume, 4, 1, 0, 5, 0, 0);
-            lbl_8031CBA0.timer = fn_800FBFB0() % 1000 + 700;
+            lbl_8031CBA0.timer = rand() % 1000 + 700;
             fn_8019D560(&effect);
 
             alpha = ((u8 *)&color)[3];

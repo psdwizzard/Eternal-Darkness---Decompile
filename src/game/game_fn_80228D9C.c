@@ -10,7 +10,7 @@ typedef union GXWGPipe {
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 extern void __GXFlushTextureState(void);
 
-void fn_80228D9C(void)
+void GXInvalidateTexAll(void)
 {
     __GXFlushTextureState();
     GXWGFifo.byte = 0x61;

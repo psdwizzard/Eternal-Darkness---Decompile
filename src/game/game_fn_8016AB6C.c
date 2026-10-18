@@ -20,10 +20,10 @@ typedef struct Context {
 } Context;
 
 extern char lbl_8024FE8C[];
-extern void* fn_8016393C(void*, void*, unsigned int, unsigned int,
+extern void* luaM_growaux(void*, void*, unsigned int, unsigned int,
                          unsigned int, char*, unsigned int);
 
-int fn_8016AB6C(Context* context, int special)
+int lua_ref(Context* context, int special)
 {
     int index;
 
@@ -34,7 +34,7 @@ int fn_8016AB6C(Context* context, int special)
             index = context->free;
             context->free = context->entries[index].next;
         } else {
-            context->entries = fn_8016393C(context, context->entries,
+            context->entries = luaM_growaux(context, context->entries,
                                             context->count, 1, sizeof(Entry),
                                             lbl_8024FE8C, 0x7FFFFFFD);
             context->allocated_size += sizeof(Entry);

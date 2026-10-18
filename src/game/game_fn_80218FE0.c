@@ -1,4 +1,4 @@
-/* fn_80218FE0: PADInit (stock Dolphin SDK pad/Pad.c) with PADReset and
+/* PADInit: PADInit (stock Dolphin SDK pad/Pad.c) with PADReset and
  * DoReset inlined. */
 typedef signed int s32;
 typedef unsigned int u32;
@@ -36,25 +36,25 @@ extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL);
 extern void OSRegisterResetFunction(OSResetFunctionInfo*);
 extern void SIRefreshSamplingRate(void);
-extern u32 fn_80209000(u32);
-extern u32 fn_80209858(s32, SITypeCallback);
-extern void fn_80219640(u32);
-extern void fn_8021897C(s32, u32);
+extern u32 SIDisablePolling(u32);
+extern u32 SIGetTypeAsync(s32, SITypeCallback);
+extern void PADSetSpec(u32);
+extern void PADTypeAndStatusCallback(s32, u32);
 extern void* memset(void*, int, unsigned long);
 
 extern PadWork lbl_80641C10;
 extern OSResetFunctionInfo lbl_802FE9D8;
-extern s32 lbl_8064C428;
-extern u32 lbl_8064C434;
-extern u32 lbl_8064D8D8;
-extern BOOL lbl_8064DAB0;
+extern s32 ResettingChan;
+extern u32 Spec;
+extern u32 __PADFixBits;
+extern BOOL Initialized;
 extern u32 __PADSpec;
-extern u32 lbl_8064DAB4;
-extern u32 lbl_8064DAB8;
-extern u32 lbl_8064DABC;
-extern u32 lbl_8064DAC0;
-extern u32 lbl_8064DAC4;
-extern u32 lbl_8064DAC8;
+extern u32 EnabledBits;
+extern u32 ResettingBits;
+extern u32 RecalibrateBits;
+extern u32 WaitingBits;
+extern u32 CheckingBits;
+extern u32 PendingBits;
 
 /* Fixed low-memory SDK configuration word. */
 extern u16 __OSWirelessPadFixMode : 0x800030E0;
@@ -66,51 +66,51 @@ static inline BOOL PADReset(PadStatus* origin, u32 mask)
 
     enabled = OSDisableInterrupts();
 
-    mask |= lbl_8064DAC8;
-    lbl_8064DAC8 = 0;
-    mask &= ~(lbl_8064DAC0 | lbl_8064DAC4);
-    lbl_8064DAB8 |= mask;
-    disableBits = lbl_8064DAB8 & lbl_8064DAB4;
-    lbl_8064DAB4 &= ~mask;
+    mask |= PendingBits;
+    PendingBits = 0;
+    mask &= ~(WaitingBits | CheckingBits);
+    ResettingBits |= mask;
+    disableBits = ResettingBits & EnabledBits;
+    EnabledBits &= ~mask;
 
-    if (lbl_8064C434 == 4) {
-        lbl_8064DABC |= mask;
+    if (Spec == 4) {
+        RecalibrateBits |= mask;
     }
 
-    fn_80209000(disableBits);
-    if (lbl_8064C428 == 32) {
-        disableBits = lbl_8064DAB8;
-        lbl_8064C428 = __cntlzw(disableBits);
-        if (lbl_8064C428 != 32) {
-            lbl_8064DAB8 = disableBits & ~(0x80000000U >> lbl_8064C428);
-            memset(&origin[lbl_8064C428], 0, sizeof(PadStatus));
-            fn_80209858(lbl_8064C428, fn_8021897C);
+    SIDisablePolling(disableBits);
+    if (ResettingChan == 32) {
+        disableBits = ResettingBits;
+        ResettingChan = __cntlzw(disableBits);
+        if (ResettingChan != 32) {
+            ResettingBits = disableBits & ~(0x80000000U >> ResettingChan);
+            memset(&origin[ResettingChan], 0, sizeof(PadStatus));
+            SIGetTypeAsync(ResettingChan, PADTypeAndStatusCallback);
         }
     }
     OSRestoreInterrupts(enabled);
     return 1;
 }
 
-BOOL fn_80218FE0(void)
+BOOL PADInit(void)
 {
     PadWork* work = &lbl_80641C10;
     s32 chan;
 
-    if (lbl_8064DAB0) {
+    if (Initialized) {
         return 1;
     }
 
     if (__PADSpec) {
-        fn_80219640(__PADSpec);
+        PADSetSpec(__PADSpec);
     }
 
-    lbl_8064DAB0 = 1;
+    Initialized = 1;
 
-    if (lbl_8064D8D8 != 0) {
+    if (__PADFixBits != 0) {
         OSTime time = OSGetTime();
         time = ((time & 0xffff) + ((time >> 16) & 0xffff) +
                ((time >> 32) & 0xffff) + ((time >> 48) & 0xffff)) & 0x3fff;
-        lbl_8064DABC = 0xF0000000;
+        RecalibrateBits = 0xF0000000;
         __OSWirelessPadFixMode = (u16)time;
     }
 

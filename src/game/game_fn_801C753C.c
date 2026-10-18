@@ -5,13 +5,13 @@ typedef struct CallbackOwner {
     void* argument;
 } CallbackOwner;
 
-extern Callback lbl_8064D4B0;
+extern Callback salMessageCallback;
 
-int fn_801C753C(CallbackOwner* owner, int value)
+int salSynthSendMessage(CallbackOwner* owner, int value)
 {
-    if (lbl_8064D4B0 == 0) {
+    if (salMessageCallback == 0) {
         return 0;
     }
 
-    return lbl_8064D4B0(value, owner->argument);
+    return salMessageCallback(value, owner->argument);
 }

@@ -16,7 +16,7 @@ typedef struct PadStatus {
     u8 analogB;
 } PadStatus;
 
-void fn_802196A0(s32 chan, PadStatus* status, u32* data) {
+void SPEC0_MakeStatus(s32 chan, PadStatus* status, u32* data) {
     status->button = 0;
     status->button |= (data[0] >> 16) & 0x0008 ? 0x0100 : 0;
     status->button |= (data[0] >> 16) & 0x0020 ? 0x0200 : 0;

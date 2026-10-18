@@ -171,8 +171,8 @@ extern void fn_80201E78(Vec3 *, void *);
 extern s32 fn_80201EB8(void *);
 extern u8 fn_80202160(void *);
 extern u8 fn_80204578(void *, Vec3 *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern f32 fn_80211B08(Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern f32 PSVECMag(Vec3 *);
 
 s32 fn_8002FAE8(void *actor, s32 mode, void *message)
 {
@@ -392,8 +392,8 @@ s32 fn_8002FAE8(void *actor, s32 mode, void *message)
                             level = 1;
                         } else {
                             f32 dist;
-                            fn_80211A6C(&state->from, &state->to, &delta);
-                            dist = fn_80211B08(&delta);
+                            PSVECSubtract(&state->from, &state->to, &delta);
+                            dist = PSVECMag(&delta);
                             if (dist < lbl_8064E144) {
                                 level = 0;
                             } else if (dist < lbl_8064E148) {

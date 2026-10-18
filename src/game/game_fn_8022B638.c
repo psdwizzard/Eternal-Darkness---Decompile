@@ -1,7 +1,7 @@
 typedef float Mtx[3][4];
 
 /* Send the upper 3-by-3 normal matrix to the graphics FIFO, row by row. */
-void fn_8022B638(register const Mtx mtx, register volatile float *fifo)
+void WriteMTXPS3x3from3x4(register const Mtx mtx, register volatile float *fifo)
 {
     register float row0, z0, row1, z1, row2, z2;
 

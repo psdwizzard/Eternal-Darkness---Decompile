@@ -27,17 +27,17 @@ typedef struct StringEntry {
     int token;
 } StringEntry;
 
-extern int fn_800F8D2C(int);
-extern int fn_800F8D44(int);
-extern int fn_800F8D5C(int);
-extern void fn_80162114(Parser*, char*, int);
-extern void fn_801621D8(Parser*, int);
-extern void fn_80162228(Parser*);
-extern char* fn_801623B4(Parser*);
-extern void fn_801624A8(Parser*, int, void**);
-extern void fn_80162874(Parser*, void**);
-extern void fn_80162BEC(Parser*, int, void**);
-extern StringEntry* fn_801670A8(void*, char*);
+extern int isdigit(int);
+extern int iscntrl(int);
+extern int isalpha(int);
+extern void luaX_error(Parser*, char*, int);
+extern void luaX_invalidchar(Parser*, int);
+extern void inclinenumber(Parser*);
+extern char* readname(Parser*);
+extern void read_number(Parser*, int, void**);
+extern void read_long_string(Parser*, void**);
+extern void read_string(Parser*, int, void**);
+extern StringEntry* luaS_new(void*, char*);
 extern char lbl_8024F700[];
 
 #define NEXT_TOKEN() do {                                                     \
@@ -50,7 +50,7 @@ extern char lbl_8024F700[];
     parser->current_token = token;                                            \
 } while (0)
 
-int fn_80163224(Parser* parser, void** result)
+int luaX_lex(Parser* parser, void** result)
 {
     StringEntry* entry;
 
@@ -63,11 +63,11 @@ int fn_80163224(Parser* parser, void** result)
             continue;
 
         case '\n':
-            fn_80162228(parser);
+            inclinenumber(parser);
             continue;
 
         case '$':
-            fn_80162114(parser, lbl_8024F700, '$');
+            luaX_error(parser, lbl_8024F700, '$');
             continue;
 
         case '-':
@@ -85,7 +85,7 @@ int fn_80163224(Parser* parser, void** result)
             if (parser->current_token != '[') {
                 return '[';
             }
-            fn_80162874(parser, result);
+            read_long_string(parser, result);
             return 0x11B;
 
         case '=':
@@ -122,7 +122,7 @@ int fn_80163224(Parser* parser, void** result)
 
         case '"':
         case '\'':
-            fn_80162BEC(parser, parser->current_token, result);
+            read_string(parser, parser->current_token, result);
             return 0x11B;
 
         case '.':
@@ -135,10 +135,10 @@ int fn_80163224(Parser* parser, void** result)
                 }
                 return 0x114;
             }
-            if (!fn_800F8D2C(parser->current_token)) {
+            if (!isdigit(parser->current_token)) {
                 return '.';
             }
-            fn_801624A8(parser, 1, result);
+            read_number(parser, 1, result);
             return 0x11A;
 
         case '0':
@@ -151,7 +151,7 @@ int fn_80163224(Parser* parser, void** result)
         case '7':
         case '8':
         case '9':
-            fn_801624A8(parser, 0, result);
+            read_number(parser, 0, result);
             return 0x11A;
 
         case -1:
@@ -161,12 +161,12 @@ int fn_80163224(Parser* parser, void** result)
             goto identifier;
 
         default:
-            if (fn_800F8D5C(parser->current_token)) {
+            if (isalpha(parser->current_token)) {
                 goto identifier;
             } else {
                 int c = parser->current_token;
-                if (fn_800F8D44(c)) {
-                    fn_801621D8(parser, c);
+                if (iscntrl(c)) {
+                    luaX_invalidchar(parser, c);
                 }
                 NEXT_TOKEN();
                 return c;
@@ -175,7 +175,7 @@ int fn_80163224(Parser* parser, void** result)
     }
 
 identifier:
-    entry = fn_801670A8(parser->buffer, fn_801623B4(parser));
+    entry = luaS_new(parser->buffer, readname(parser));
     if (entry->token >= 3) {
         return entry->token + 0xFE;
     }

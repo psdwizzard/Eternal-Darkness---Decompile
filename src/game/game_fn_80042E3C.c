@@ -29,7 +29,7 @@ typedef struct Block {
 
 extern Block lbl_80304060;
 extern int lbl_8064C7D0;
-extern int fn_8020D250(OSMessageQueue*, void*, int);
+extern int OSSendMessage(OSMessageQueue*, void*, int);
 
 void fn_80042E3C(void) {
     Message* message = &lbl_80304060.message;
@@ -39,5 +39,5 @@ void fn_80042E3C(void) {
     /* The reply queue immediately follows this message in the BSS block. */
     message->responseQueue = message + 1;
     ++lbl_8064C7D0;
-    fn_8020D250(&lbl_80304060.commandQueue, message, 1);
+    OSSendMessage(&lbl_80304060.commandQueue, message, 1);
 }

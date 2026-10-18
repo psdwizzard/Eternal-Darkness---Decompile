@@ -1,15 +1,15 @@
-/* fn_80235B10: libvorbis _book_maptype1_quantvals. Returns the largest
+/* _book_maptype1_quantvals: libvorbis _book_maptype1_quantvals. Returns the largest
  * integer vals with vals^dim <= entries, starting from floor(pow(entries, 1/dim)). */
 
-extern double fn_801023A0(double x, double y); /* pow */
-extern double fn_80101A5C(double x);           /* floor */
+extern double pow(double x, double y); /* pow */
+extern double floor(double x);           /* floor */
 
 typedef struct StaticCodebook {
     long dim;
     long entries;
 } StaticCodebook;
 
-long fn_80235B10(StaticCodebook* b) {
+long _book_maptype1_quantvals(StaticCodebook* b) {
     float exponent;
     long vals;
     long dim;
@@ -19,7 +19,7 @@ long fn_80235B10(StaticCodebook* b) {
     long acc1;
 
     exponent = 1.0f / (float)b->dim;
-    vals = fn_80101A5C(fn_801023A0((float)b->entries, exponent));
+    vals = floor(pow((float)b->entries, exponent));
     dim = b->dim;
     entries = b->entries;
     for (;;) {

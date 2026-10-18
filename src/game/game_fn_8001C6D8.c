@@ -5,7 +5,7 @@ typedef struct Command {
     u32 words[8];
 } Command;
 
-extern double fn_8016A694(void*, int);
+extern double lua_tonumber(void*, int);
 extern s32 fn_802019EC(s32, void*);
 extern void *fn_80201814();
 extern void fn_80201ADC(void);
@@ -25,7 +25,7 @@ void fn_8001C6D8(void* arg)
     void* context;
     s32 state;
 
-    lbl_803023E0.words[7] = fn_802019EC((s32)fn_8016A694(saved_arg, 5), lbl_8064D18C);
+    lbl_803023E0.words[7] = fn_802019EC((s32)lua_tonumber(saved_arg, 5), lbl_8064D18C);
     if ((s32)lbl_803023E0.words[7] > 0) {
         item = fn_80201814(lbl_803023E0.words[7]);
         if (item != 0) {
@@ -38,7 +38,7 @@ void fn_8001C6D8(void* arg)
                     state = 1;
                 }
                 lbl_803023E0.words[0] = state;
-                lbl_803023E0.words[4] = (s32)fn_8016A694(saved_arg, 6);
+                lbl_803023E0.words[4] = (s32)lua_tonumber(saved_arg, 6);
                 lbl_803023E0.words[7] = 0;
             }
         }
@@ -48,6 +48,6 @@ void fn_8001C6D8(void* arg)
             state = 1;
         }
         lbl_803023E0.words[0] = state;
-        lbl_803023E0.words[4] = (s32)fn_8016A694(saved_arg, 6);
+        lbl_803023E0.words[4] = (s32)lua_tonumber(saved_arg, 6);
     }
 }

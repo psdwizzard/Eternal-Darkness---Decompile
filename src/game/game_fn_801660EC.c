@@ -4,27 +4,27 @@ typedef struct Parser {
 } Parser;
 
 extern void fn_80163DA4(Parser*);
-extern int fn_801640C4(Parser*);
-extern void fn_801641D4(Parser*, int, int);
-extern int fn_80163F00(Parser*, int);
-extern int fn_80164C7C(Parser*);
-extern void fn_80164778(Parser*, int, int);
-extern void fn_8016425C(Parser*, int);
+extern int str_checkname(Parser*);
+extern void new_localvar(Parser*, int, int);
+extern int optional(Parser*, int);
+extern int explist1(Parser*);
+extern void adjust_mult_assign(Parser*, int, int);
+extern void adjustlocalvars(Parser*, int);
 
-void fn_801660EC(Parser* parser)
+void localstat(Parser* parser)
 {
     int count = 0;
     int value;
 
     do {
         fn_80163DA4(parser);
-        fn_801641D4(parser, fn_801640C4(parser), count++);
+        new_localvar(parser, str_checkname(parser), count++);
     } while (parser->token == 0x2C);
-    if (fn_80163F00(parser, 0x3D)) {
-        value = fn_80164C7C(parser);
+    if (optional(parser, 0x3D)) {
+        value = explist1(parser);
     } else {
         value = 0;
     }
-    fn_80164778(parser, count, value);
-    fn_8016425C(parser, count);
+    adjust_mult_assign(parser, count, value);
+    adjustlocalvars(parser, count);
 }

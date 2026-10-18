@@ -1,9 +1,9 @@
 typedef unsigned char u8;
 
-extern u8 lbl_8064D534;
-extern u8* lbl_8064D514;
+extern u8 salAIBufferIndex;
+extern u8* salAIBufferBase;
 
-void* fn_801CE070(void)
+void* salAiGetDest(void)
 {
-    return lbl_8064D514 + (u8)((lbl_8064D534 + 2) % 4) * 0x280;
+    return salAIBufferBase + (u8)((salAIBufferIndex + 2) % 4) * 0x280;
 }

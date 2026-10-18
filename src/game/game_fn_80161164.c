@@ -11,11 +11,11 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8064BA80;
-extern void* fn_8016B5CC(Object*, int, unsigned int, char*, int);
+extern void* luaM_realloc(Object*, int, unsigned int, char*, int);
 
-void fn_80161164(Object* object)
+void luaF_newproto(Object* object)
 {
-    Entry* entry = fn_8016B5CC(object, 0, 0x44, &lbl_8064BA80, 33);
+    Entry* entry = luaM_realloc(object, 0, 0x44, &lbl_8064BA80, 33);
     int i;
 
     for (i = 0; i < 8; i++)

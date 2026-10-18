@@ -6,16 +6,16 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EFC9C(TRKBuffer *, int);
-extern int fn_800EF2A0(TRKBuffer *);
-extern void fn_80005088(void);
+extern int TRKResetBuffer(TRKBuffer *, int);
+extern int TRKMessageSend(TRKBuffer *);
+extern void __TRK_reset(void);
 
-int fn_800F2820(TRKBuffer *buffer)
+int TRKDoReset(TRKBuffer *buffer)
 {
     int retry;
     int result;
 
-    fn_800EFC9C(buffer, 1);
+    TRKResetBuffer(buffer, 1);
     if (buffer->position < 0x880) {
         buffer->data[buffer->position++] = 0x80;
         buffer->length++;
@@ -26,11 +26,11 @@ int fn_800F2820(TRKBuffer *buffer)
     }
     retry = 3;
     do {
-        result = fn_800EF2A0(buffer);
+        result = TRKMessageSend(buffer);
         retry--;
         if (result == 0)
             break;
     } while (retry > 0);
-    fn_80005088();
+    __TRK_reset();
     return 0;
 }

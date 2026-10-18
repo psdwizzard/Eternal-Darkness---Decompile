@@ -19,8 +19,8 @@ extern int lbl_8064C8F0;
 extern int lbl_8064D18C;
 extern int lbl_8064D5A8;
 
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8012C478(void*, int, int);
 
 void fn_80086218(void)
@@ -29,7 +29,7 @@ void fn_80086218(void)
 
     if (lbl_8031CD84.disabled == 0) {
         if (lbl_8064D5A8 % 60 == 0) {
-            lbl_8031CD84.selected = fn_800FBFB0() % 4;
+            lbl_8031CD84.selected = rand() % 4;
             lbl_8064C8F0 = lbl_8031CD84.selected;
             if (lbl_8064D18C == 83) {
                 for (i = 0; i < 4; i++) {

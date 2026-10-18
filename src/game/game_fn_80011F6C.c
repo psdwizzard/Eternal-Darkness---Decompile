@@ -1,8 +1,8 @@
 typedef int s32;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern void* fn_80201B3C();
 extern void *fn_80201BC8();
 extern int fn_80201B54();
@@ -15,8 +15,8 @@ s32 fn_80011F6C(void* script)
 
     parser = script;
     entry = fn_80201B3C();
-    if (fn_8016A598(parser) != 0) {
-        fn_80163BB4(parser, lbl_8023BEF8, 0, fn_8016A598(parser));
+    if (lua_gettop(parser) != 0) {
+        luaO_verror(parser, lbl_8023BEF8, 0, lua_gettop(parser));
         return 0;
     }
 

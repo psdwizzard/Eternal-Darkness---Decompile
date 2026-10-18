@@ -9,7 +9,7 @@ typedef struct IndexedValue {
     int second;
 } IndexedValue;
 
-int fn_80167D2C(TaggedValue* value)
+int luaT_tag(TaggedValue* value)
 {
     switch (value->type) {
     case 0:

@@ -4,12 +4,12 @@ typedef struct Context {
     char* stack;
 } Context;
 
-extern void fn_80160628(Context*, char*, int);
+extern void luaD_adjusttop(Context*, char*, int);
 
-void fn_8016A5B0(Context* context, int count)
+void lua_settop(Context* context, int count)
 {
     if (count >= 0) {
-        fn_80160628(context, context->stack, count);
+        luaD_adjusttop(context, context->stack, count);
     } else {
         context->top = context->top + 16 + (count << 4);
     }

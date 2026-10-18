@@ -1,7 +1,7 @@
 typedef struct Entry { int type; char pad4[0xC]; } Entry;
 typedef struct List { char pad0[4]; Entry* entries; } List;
 
-Entry* fn_8015FEB8(List* list, int ordinal, Entry* end)
+Entry* aux_stackedfunction(List* list, int ordinal, Entry* end)
 {
     Entry* base = list->entries;
     int index = (end - 1) - base;

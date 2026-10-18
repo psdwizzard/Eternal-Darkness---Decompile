@@ -34,19 +34,19 @@ typedef struct SequenceStorage {
     Sequence instances[8];
 } SequenceStorage;
 
-extern SequenceStorage lbl_8060C020;
-extern Sequence* lbl_8064D394;
-extern Sequence* lbl_8064D398;
-extern Sequence* lbl_8064D39C;
-extern void fn_801B244C(Sequence*);
-extern int fn_801C21E8(u32);
+extern SequenceStorage seqNote;
+extern Sequence* seqFreeRoot;
+extern Sequence* seqPausedRoot;
+extern Sequence* seqActiveRoot;
+extern void ResetNotes(Sequence*);
+extern int voiceKillSound(u32);
 
 /* Preserve the public handle's high bit when converting to a sequence index. */
 static inline u32 resolve_handle(u32 handle)
 {
     u32 key = handle & 0x7FFFFFFF;
     u32 id;
-    Sequence* search = lbl_8064D39C;
+    Sequence* search = seqActiveRoot;
     while (search != 0) {
         if (search->publicId == key) {
             id = __rlwimi(search->index, handle, 0, 0, 0);
@@ -54,7 +54,7 @@ static inline u32 resolve_handle(u32 handle)
         }
         search = search->next;
     }
-    search = lbl_8064D398;
+    search = seqPausedRoot;
     while (search != 0) {
         if (search->publicId == key) {
             id = __rlwimi(search->index, handle, 0, 0, 0);
@@ -66,9 +66,9 @@ static inline u32 resolve_handle(u32 handle)
     return id;
 }
 
-void fn_801B3770(register u32 handle)
+void seqStop(register u32 handle)
 {
-    register SequenceStorage* entries = &lbl_8060C020;
+    register SequenceStorage* entries = &seqNote;
     u32 i;
     Note* note;
     register u8* cursor;
@@ -96,7 +96,7 @@ void fn_801B3770(register u32 handle)
             if (node->prev != 0) {
                 node->prev->next = node->next;
             } else {
-                lbl_8064D39C = node->next;
+                seqActiveRoot = node->next;
             }
             i = 0;
             /* ASM: addi preserves the zero-displacement address operation; C emits mr for this cursor initialization. */
@@ -104,7 +104,7 @@ void fn_801B3770(register u32 handle)
             do {
                 note = ((Sequence*)cursor)->noteUsed[0];
                 while (note) {
-                    fn_801C21E8(note->voiceId);
+                    voiceKillSound(note->voiceId);
                     note = note->next;
                 }
                 cursor += sizeof(Note*);
@@ -116,17 +116,17 @@ void fn_801B3770(register u32 handle)
                 asm { add links, entries, offset }
                 link = links->instances[0].noteKeyOff;
                 while (link) {
-                    fn_801C21E8(link->voiceId);
+                    voiceKillSound(link->voiceId);
                     link = link->next;
                 }
             }
-            fn_801B244C(node);
+            ResetNotes(node);
             break;
         case 2:
             if (node->prev != 0) {
                 node->prev->next = node->next;
             } else {
-                lbl_8064D398 = node->next;
+                seqPausedRoot = node->next;
             }
             break;
         }
@@ -135,14 +135,14 @@ void fn_801B3770(register u32 handle)
         }
         node->state = 0;
         {
-            Sequence* free = lbl_8064D394;
+            Sequence* free = seqFreeRoot;
             if (free != 0) {
                 free->prev = node;
             }
         }
-        node->next = lbl_8064D394;
+        node->next = seqFreeRoot;
         node->prev = 0;
-        lbl_8064D394 = node;
+        seqFreeRoot = node;
     }
     return;
 deferred_path:

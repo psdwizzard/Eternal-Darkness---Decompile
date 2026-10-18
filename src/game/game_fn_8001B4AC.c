@@ -5,9 +5,9 @@ typedef int s32;
 extern const char lbl_8023BEF8[];
 extern int fn_80201B44();
 extern void* fn_80158598(int, int);
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void* fn_80201C24();
 extern void fn_801579E0(void*, s32, s32);
@@ -35,14 +35,14 @@ s32 fn_8001B4AC(void* script)
 
     manager = (void*)fn_80201B44();
     list = fn_80158598((s32)manager, 0);
-    if (fn_8016A598(script) != 3) {
-        fn_80163BB4(script, lbl_8023BEF8, 3, fn_8016A598(script));
+    if (lua_gettop(script) != 3) {
+        luaO_verror(script, lbl_8023BEF8, 3, lua_gettop(script));
         return 0;
     }
 
-    first = (u16)fn_8016A694(script, 1);
-    second = (u16)fn_8016A694(script, 2);
-    fn_8016A694(script, 3);
+    first = (u16)lua_tonumber(script, 1);
+    second = (u16)lua_tonumber(script, 2);
+    lua_tonumber(script, 3);
 
     fn_80201814(first);
     first_state = fn_80201C24();

@@ -61,34 +61,26 @@ typedef struct SYNTH_VOICE {
     u8 pad_0F8[0x30C];
 } SYNTH_VOICE;
 
-extern u8 lbl_8064D3E8;
-extern u8 lbl_8064D3E9;
+extern u8 streamCallCnt;
+extern u8 streamCallDelay;
 extern SynthJob lbl_8061AE48[];
-extern SynthInfo lbl_80619C20;
-extern SYNTH_VOICE* lbl_8064D3D0;
-extern u32 fn_801CD200(u8);
+extern SynthInfo synthInfo;
+extern SYNTH_VOICE* synthVoice;
+extern u32 hwGetStreamPlayBuffer(u8);
 extern void DCInvalidateRange(void*, u32);
-extern void fn_801CC718(u32, u16, SAMPLE_INFO*, u32, u32, u32, u32, u32);
-extern void fn_801CCB98(u32, s32);
-extern void fn_801CCCC4(u32, u32, f32, u32, u32, f32, f32);
-extern void fn_801CCB34(u32, u8);
+extern void hwInitSamplePlayback(u32, u16, SAMPLE_INFO*, u32, u32, u32, u32, u32);
+extern void hwSetPitch(u32, s32);
+extern void hwSetVolume(u32, u32, f32, u32, u32, f32, f32);
+extern void hwStart(u32, u8);
 extern void fn_801CD138(u8*, u32, u32, u8, u32, u32);
 extern u32 fn_801CD094(u32);
-extern void fn_801CCB20(u32, u32);
+extern void hwSetStreamLoopPS(u32, u32);
 
-#define streamCallCnt lbl_8064D3E8
-#define streamCallDelay lbl_8064D3E9
 #define streamInfo lbl_8061AE48
-#define SYNTH_CONFIGURATION (&lbl_80619C20)
-#define synthVoice lbl_8064D3D0
-#define hwFlushStream fn_801CD200
-#define hwInitSamplePlayback fn_801CC718
-#define hwSetPitch fn_801CCB98
-#define hwSetVolume fn_801CCCC4
-#define hwStart fn_801CCB34
+#define SYNTH_CONFIGURATION (&synthInfo)
+#define hwFlushStream hwGetStreamPlayBuffer
 #define hwGetPos fn_801CD138
 #define hwChangeStudio fn_801CD094
-#define hwSetStreamLoopPS fn_801CCB20
 
 void fn_801B941C(void)
 {

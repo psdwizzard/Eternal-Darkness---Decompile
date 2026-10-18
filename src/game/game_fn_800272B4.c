@@ -23,15 +23,15 @@ extern unsigned char lbl_8063D378[];
 
 extern s16 fn_80144A2C(u32, s32, s32, s32);
 extern u32 fn_80144710(u32, s32, s32);
-extern void fn_80211A6C();
-extern f32 fn_80211B08(const Vec3*);
-extern void fn_80211A90(const Vec3*, Vec3*, f32);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211268(Mtx, s32, f32);
-extern void fn_80211380(Mtx, const Vec3*, f32);
-extern void fn_80211710(Mtx, const Vec3*, Vec3*);
-extern void fn_80211B64(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211AAC(const Vec3*, Vec3*);
+extern void PSVECSubtract();
+extern f32 PSVECMag(const Vec3*);
+extern void PSVECScale(const Vec3*, Vec3*, f32);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
+extern void PSMTXRotRad(Mtx, s32, f32);
+extern void PSMTXRotAxisRad(Mtx, const Vec3*, f32);
+extern void PSMTXMultVec(Mtx, const Vec3*, Vec3*);
+extern void PSVECCrossProduct(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECNormalize(const Vec3*, Vec3*);
 extern f32 fn_80027614(f32);
 
 void fn_800272B4(Vec3* from, Vec3* to)
@@ -57,8 +57,8 @@ void fn_800272B4(Vec3* from, Vec3* to)
         vertical *= 4;
     }
 
-    fn_80211A6C(to, from, &direction);
-    fn_80211A90(&direction, &direction, lbl_8064DFB8 / fn_80211B08(&direction));
+    PSVECSubtract(to, from, &direction);
+    PSVECScale(&direction, &direction, lbl_8064DFB8 / PSVECMag(&direction));
 
     sum = fn_80027614(direction.x) + fn_80027614(direction.y);
     if ((s16)horizontal && lbl_8064DFBC != sum) {
@@ -71,18 +71,18 @@ void fn_800272B4(Vec3* from, Vec3* to)
         offset.y += (s16)forward * direction.y;
         offset.z += (s16)forward * direction.z;
     }
-    fn_80211A48(from, &offset, from);
+    PSVECAdd(from, &offset, from);
 
     if ((s16)roll) {
-        fn_80211268(roll_matrix, 90, lbl_8064DFC0 * (s16)roll);
-        fn_80211710(roll_matrix, &direction, &direction);
+        PSMTXRotRad(roll_matrix, 90, lbl_8064DFC0 * (s16)roll);
+        PSMTXMultVec(roll_matrix, &direction, &direction);
     }
 
     if ((s16)vertical) {
-        fn_80211B64(&direction, (Vec3*)(lbl_8063D378 + 0x48), &axis);
-        fn_80211AAC(&axis, &axis);
-        fn_80211380(vertical_matrix, &axis, lbl_8064DFC4 * (s16)vertical);
-        fn_80211710(vertical_matrix, &direction, &direction);
+        PSVECCrossProduct(&direction, (Vec3*)(lbl_8063D378 + 0x48), &axis);
+        PSVECNormalize(&axis, &axis);
+        PSMTXRotAxisRad(vertical_matrix, &axis, lbl_8064DFC4 * (s16)vertical);
+        PSMTXMultVec(vertical_matrix, &direction, &direction);
         z = direction.z;
         clamped = lbl_8064DFC8;
         if (z > clamped) {

@@ -34,20 +34,20 @@ typedef struct VIState {
 } VIState;
 
 extern VIState lbl_80641AC8;
-extern BOOL lbl_8064DAA8;
+extern BOOL FBSet;
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern void fn_80217378(VIPosition *hv, u32 *tfbb, u32 *bfbb,
+extern void setFbbRegs(VIPosition *hv, u32 *tfbb, u32 *bfbb,
                         u32 *rtfbb, u32 *rbfbb);
 
 /* VISetNextFrameBuffer */
-void fn_802180A4(void *frameBuffer) {
+void VISetNextFrameBuffer(void *frameBuffer) {
     VIState *state = &lbl_80641AC8;
     BOOL enabled = OSDisableInterrupts();
 
     state->position.bufAddr = (u32)frameBuffer;
-    lbl_8064DAA8 = 1;
-    fn_80217378(&state->position, &state->position.tfbb,
+    FBSet = 1;
+    setFbbRegs(&state->position, &state->position.tfbb,
                 &state->position.bfbb, &state->position.rtfbb,
                 &state->position.rbfbb);
     OSRestoreInterrupts(enabled);

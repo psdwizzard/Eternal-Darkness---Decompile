@@ -1,4 +1,4 @@
-/* fn_8022753C: GXCopyTex (Dolphin SDK GXFrameBuf.c).
+/* GXCopyDisp: GXCopyTex (Dolphin SDK GXFrameBuf.c).
  * Copies the EFB to the texture buffer at dest, optionally clearing
  * the EFB, temporarily forcing the PE control/z-mode registers as needed. */
 
@@ -40,7 +40,7 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_8022753C(void *dest, u8 clear) {
+void GXCopyDisp(void *dest, u8 clear) {
     u32 reg;
     u32 tempPeCtrl;
     u32 phyAddr;

@@ -28,11 +28,11 @@ extern int lbl_8064D728;
 extern u8 lbl_8064D5F8;
 extern void fn_801ECEC8(int, int, int);
 extern int fn_801ED59C(int, int);
-extern void fn_8022A044(int, int, int, int, int);
+extern void GXSetAlphaCompare(int, int, int, int, int);
 extern void fn_801ECF50(int);
 extern void fn_801EDA7C(Entry*, void*, int, int);
 extern void fn_801EB8AC(DrawInput*);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_801F0B18(u16);
 extern void fn_801F0B0C(u16);
 extern void fn_801F0B00(u16);
@@ -55,15 +55,15 @@ void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
         entries[input->index].field_1f != 0xFF) {
         fn_801ECEC8(1, 3, 0);
         if (fn_801ED59C(1, 0) != 1)
-            fn_8022A044(7, 0, 0, 3, 0xFF);
+            GXSetAlphaCompare(7, 0, 0, 3, 0xFF);
     } else if (entries[input->index].flags & 0x20000000) {
         fn_801ECEC8(1, 3, 1);
         if (fn_801ED59C(0, 0) != 0)
-            fn_8022A044(4, 0x80, 0, 3, 0xFF);
+            GXSetAlphaCompare(4, 0x80, 0, 3, 0xFF);
     } else {
         fn_801ECEC8(1, 3, 1);
         if (fn_801ED59C(1, 0) != 1)
-            fn_8022A044(7, 0, 0, 3, 0xFF);
+            GXSetAlphaCompare(7, 0, 0, 3, 0xFF);
     }
 
     switch (lbl_8064D5F8) {
@@ -80,7 +80,7 @@ void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
     }
     fn_801EDA7C(&entries[input->index], value, 0x2B3, 0);
     fn_801EB8AC(input);
-    fn_80226AB4(0x98, special, input->count);
+    GXBegin(0x98, special, input->count);
     format <<= 1;
     for (i = 0, offset = 0; i < input->count; offset += 12, i++) {
         u8* fourth;

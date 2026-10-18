@@ -8,11 +8,11 @@ typedef struct OSThreadQueue {
     OSThread *tail;
 } OSThreadQueue;
 
-extern BOOL lbl_8064DA3C;
+extern BOOL CancelAllSyncComplete;
 extern OSThreadQueue __DVDThreadQueue;
-extern void fn_802100F0(OSThreadQueue *queue);
+extern void OSWakeupThread(OSThreadQueue *queue);
 
-void fn_802161B4(s32 result, DVDCommandBlock *block) {
-    lbl_8064DA3C = 1;
-    fn_802100F0(&__DVDThreadQueue);
+void cbForCancelAllSync(s32 result, DVDCommandBlock *block) {
+    CancelAllSyncComplete = 1;
+    OSWakeupThread(&__DVDThreadQueue);
 }

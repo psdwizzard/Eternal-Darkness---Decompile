@@ -6,18 +6,18 @@ typedef void (*EXICallback)(s32, OSContext *);
 
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int enabled);
-extern int fn_8022DF68(int clock);
-extern int fn_8022DAE0(void *buffer, s32 length, u32 type, EXICallback callback);
-extern void fn_8022DD24(void);
-extern int fn_8022DFE8(void);
-extern void fn_8022E0E0(void);
-extern u8 *lbl_8064C4C0;
-extern EXICallback lbl_8064DC00;
+extern int AmcEXISelect(int clock);
+extern int AmcEXIImm(void *buffer, s32 length, u32 type, EXICallback callback);
+extern void AmcEXISync(void);
+extern int AmcEXIDeselect(void);
+extern void AmcEXIInit(void);
+extern u8 *pucEXI2InputPending;
+extern EXICallback TRK_Callback;
 
 static inline void EXI2_WriteImmediate(u32 data, s32 length)
 {
-    fn_8022DAE0(&data, length, 1, 0);
-    fn_8022DD24();
+    AmcEXIImm(&data, length, 1, 0);
+    AmcEXISync();
 }
 
 static inline void EXI2_WriteCmd(u32 command)
@@ -30,7 +30,7 @@ static inline int EXI2_Select(void)
 {
     int selected = 0;
     while (selected == 0) {
-        selected = fn_8022DF68(5);
+        selected = AmcEXISelect(5);
     }
     return selected;
 }
@@ -42,20 +42,20 @@ void EXI2_Init(u8 **inputPending, EXICallback callback)
     u32 command;
     int enabled;
 
-    *inputPending = lbl_8064C4C0;
+    *inputPending = pucEXI2InputPending;
     enabled = OSDisableInterrupts();
-    lbl_8064DC00 = callback;
+    TRK_Callback = callback;
     OSRestoreInterrupts(enabled);
-    fn_8022E0E0();
+    AmcEXIInit();
 
     data = 0;
     configuration = 0x01000003;
     EXI2_Select();
     command = 0x80000000;
     EXI2_WriteCmd(command);
-    fn_8022DAE0(&configuration, 4, 1, 0);
-    fn_8022DD24();
-    fn_8022DAE0(&data, 4, 1, 0);
-    fn_8022DD24();
-    fn_8022DFE8();
+    AmcEXIImm(&configuration, 4, 1, 0);
+    AmcEXISync();
+    AmcEXIImm(&data, 4, 1, 0);
+    AmcEXISync();
+    AmcEXIDeselect();
 }

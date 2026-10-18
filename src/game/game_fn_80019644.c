@@ -11,9 +11,9 @@ typedef struct {
 
 extern const char lbl_8023BEF8[];
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
@@ -29,22 +29,22 @@ s32 fn_80019644(void* script)
     s32 i;
     s32 last;
 
-    if (fn_8016A598(script) != 9) {
-        fn_80163BB4(script, lbl_8023BEF8, 9, fn_8016A598(script));
+    if (lua_gettop(script) != 9) {
+        luaO_verror(script, lbl_8023BEF8, 9, lua_gettop(script));
         return 0;
     }
 
-    first = (s32)fn_8016A694(script, 1);
-    second = (s32)fn_8016A694(script, 2);
-    third = (s32)fn_8016A694(script, 3);
-    fourth = (s32)fn_8016A694(script, 4);
+    first = (s32)lua_tonumber(script, 1);
+    second = (s32)lua_tonumber(script, 2);
+    third = (s32)lua_tonumber(script, 3);
+    fourth = (s32)lua_tonumber(script, 4);
 
     for (i = 0; i < 4; i++) {
         positions[i] = *fn_80158ABC(
-            fn_8015C4A4(fn_800F5C54(fn_8016A694(script, i + 5)), 2), 2, 0);
+            fn_8015C4A4(fn_800F5C54(lua_tonumber(script, i + 5)), 2), 2, 0);
     }
 
-    last = (s32)fn_8016A694(script, 9);
+    last = (s32)lua_tonumber(script, 9);
     fn_801CE980(first, second, third, fourth, positions, 0, last);
     return 0;
 }

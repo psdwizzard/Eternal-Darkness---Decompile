@@ -23,39 +23,39 @@ typedef struct VorbisInfo {
 } VorbisInfo;
 
 extern void *fn_8022F780(s32 size);
-extern s32 fn_8022E868(void *, s32);
+extern s32 oggpack_read(void *, s32);
 
-FloorInfo *fn_80231CB4(VorbisInfo *vi, void *opb)
+FloorInfo *floor1_unpack(VorbisInfo *vi, void *opb)
 {
     CodecSetup *ci = vi->codec_setup;
     int j, k, count = 0, maxclass = -1, rangebits;
     FloorInfo *info = fn_8022F780(sizeof(FloorInfo));
 
-    info->partitions = fn_8022E868(opb, 5);
+    info->partitions = oggpack_read(opb, 5);
     for (j = 0; j < info->partitions; j++) {
-        info->partitionclass[j] = fn_8022E868(opb, 4);
+        info->partitionclass[j] = oggpack_read(opb, 4);
         if (maxclass < info->partitionclass[j]) maxclass = info->partitionclass[j];
     }
 
     for (j = 0; j < maxclass + 1; j++) {
-        info->class_dim[j] = fn_8022E868(opb, 3) + 1;
-        info->class_subs[j] = fn_8022E868(opb, 2);
-        if (info->class_subs[j]) info->class_book[j] = fn_8022E868(opb, 8);
+        info->class_dim[j] = oggpack_read(opb, 3) + 1;
+        info->class_subs[j] = oggpack_read(opb, 2);
+        if (info->class_subs[j]) info->class_book[j] = oggpack_read(opb, 8);
         if (info->class_book[j] >= ci->books) goto err_out;
         for (k = 0; k < (1 << info->class_subs[j]); k++) {
-            info->class_subbook[j][k] = fn_8022E868(opb, 8) - 1;
+            info->class_subbook[j][k] = oggpack_read(opb, 8) - 1;
             if (info->class_subbook[j][k] < -1 || info->class_subbook[j][k] >= ci->books)
                 goto err_out;
         }
     }
 
-    info->mult = fn_8022E868(opb, 2) + 1;
-    rangebits = fn_8022E868(opb, 4);
+    info->mult = oggpack_read(opb, 2) + 1;
+    rangebits = oggpack_read(opb, 4);
 
     for (j = 0, k = 0; j < info->partitions; j++) {
         count += info->class_dim[info->partitionclass[j]];
         for (; k < count; k++) {
-            int t = info->postlist[k + 2] = fn_8022E868(opb, rangebits);
+            int t = info->postlist[k + 2] = oggpack_read(opb, rangebits);
             if (t < 0 || t >= (1 << rangebits)) goto err_out;
         }
     }

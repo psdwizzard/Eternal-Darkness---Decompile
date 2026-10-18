@@ -8,14 +8,14 @@ typedef struct decimal {
 } decimal;
 
 extern const double lbl_8064F930;
-extern double fn_80101BA4(double value, int *exponent);
-extern double fn_80101C30(double value, int n);
-extern double fn_80101DF4(double value, double *integral);
+extern double frexp(double value, int *exponent);
+extern double ldexp(double value, int n);
+extern double modf(double value, double *integral);
 extern unsigned long long fn_800F6318(double value);
-extern unsigned int fn_800F8B3C(unsigned int value);
-extern void fn_800F8374(decimal *out, short exponent);
-extern void fn_800F8A2C(decimal *out, unsigned long long value);
-extern void fn_800F87A0(decimal *out, const decimal *left, const decimal *right);
+extern unsigned int __count_trailing_zerol(unsigned int value);
+extern void __two_exp(decimal *out, short exponent);
+extern void __ull2dec(decimal *out, unsigned long long value);
+extern void __timesdec(decimal *out, const decimal *left, const decimal *right);
 
 static inline int classify(double value)
 {
@@ -38,11 +38,11 @@ static inline int count_trailing_zero(double value)
 {
     unsigned long *words = (unsigned long *)&value;
     if (words[1] != 0)
-        return fn_800F8B3C(words[1]);
-    return 32 + fn_800F8B3C(words[0] | 0x00100000);
+        return __count_trailing_zerol(words[1]);
+    return 32 + __count_trailing_zerol(words[0] | 0x00100000);
 }
 
-void fn_800F7A38(decimal *d, double x)
+void __num2dec_internal(decimal *d, double x)
 {
     signed char sign = (signed char)((*(unsigned long *)&x >> 31) != 0);
 
@@ -67,16 +67,16 @@ void fn_800F7A38(decimal *d, double x)
 
     {
         int exp;
-        double frac = fn_80101BA4(x, &exp);
+        double frac = frexp(x, &exp);
         short num_bits = 53 - count_trailing_zero(frac);
         decimal int_d;
         decimal pow2_d;
         double integral;
 
-        fn_800F8374(&pow2_d, exp - num_bits);
-        fn_80101DF4(fn_80101C30(frac, num_bits), &integral);
-        fn_800F8A2C(&int_d, fn_800F6318(integral));
-        fn_800F87A0(d, &int_d, &pow2_d);
+        __two_exp(&pow2_d, exp - num_bits);
+        modf(ldexp(frac, num_bits), &integral);
+        __ull2dec(&int_d, fn_800F6318(integral));
+        __timesdec(d, &int_d, &pow2_d);
         d->sign = sign;
     }
 }

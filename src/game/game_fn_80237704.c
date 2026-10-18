@@ -22,9 +22,9 @@ typedef struct StreamWork {
     char queue[1];
 } StreamWork;
 
-extern void fn_800F9FE4(const char *fmt, ...);
-extern int fn_8020D318(void *queue, void *msg, int block);
-extern void fn_8020D250(void *queue, void *msg, int block);
+extern void printf(const char *fmt, ...);
+extern int OSReceiveMessage(void *queue, void *msg, int block);
+extern void OSSendMessage(void *queue, void *msg, int block);
 extern void DCFlushRange(void *addr, u32 size);
 
 extern char lbl_8023B8EC[];
@@ -49,7 +49,7 @@ s32 fn_80237704(s16 *src, s32 samples, s32 mode) {
     u32 avail;
 
     if (lbl_8064DC4C == 2) {
-        fn_800F9FE4(lbl_8023B8EC);
+        printf(lbl_8023B8EC);
         return 1;
     }
 
@@ -61,8 +61,8 @@ s32 fn_80237704(s16 *src, s32 samples, s32 mode) {
             left->buffer = 0;
             right->buffer = 0;
             while (left->buffer == 0 || right->buffer == 0) {
-                if (fn_8020D318(work->queue, &msg, 0) == 0) {
-                    fn_8020D318(work->queue, &msg, 1);
+                if (OSReceiveMessage(work->queue, &msg, 0) == 0) {
+                    OSReceiveMessage(work->queue, &msg, 1);
                 }
                 m = msg;
                 switch (m->type) {
@@ -123,10 +123,10 @@ s32 fn_80237704(s16 *src, s32 samples, s32 mode) {
                 left->callback(left->argC, left->arg8);
             }
             if (left->message != 0) {
-                fn_8020D250(left->message, 0, 1);
+                OSSendMessage(left->message, 0, 1);
             }
             if (right->message != 0) {
-                fn_8020D250(right->message, 0, 1);
+                OSSendMessage(right->message, 0, 1);
             }
         }
         if (lbl_8064DC34 == 2) {

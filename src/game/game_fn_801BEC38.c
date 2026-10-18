@@ -36,12 +36,12 @@ typedef struct Voice {
     u8 pad_400[4];
 } Voice;
 
-extern u32 lbl_8061A504[];
-extern u8 lbl_80619C20[];
-extern Voice* lbl_8064D3D0;
-extern void (*lbl_8064D3D4)(u32, u32);
-extern u32 fn_801C14D0(u32);
-extern void fn_801C09C4(Voice*);
+extern u32 synthGlobalVariable[];
+extern u8 synthInfo[];
+extern Voice* synthVoice;
+extern void (*synthMessageCallback)(u32, u32);
+extern u32 vidGetInternalId(u32);
+extern void macMakeActive(Voice*);
 
 static inline u32 handleMessageTrap(Voice* voice)
 {
@@ -49,7 +49,7 @@ static inline u32 handleMessageTrap(Voice* voice)
         voice->prior_038 = voice->pending_prior_064;
         voice->active_034 = voice->pending_058;
         voice->pending_058 = 0;
-        fn_801C09C4(voice);
+        macMakeActive(voice);
         return 1;
     }
     return 0;
@@ -59,9 +59,9 @@ static inline void sendMessage(u32 handle, u32 selected)
 {
     u32 result;
     Voice* voice;
-    result = fn_801C14D0(handle);
+    result = vidGetInternalId(handle);
     if (result != (u32)-1) {
-        voice = &lbl_8064D3D0[(u8)result];
+        voice = &synthVoice[(u8)result];
         if (voice->queue_count_3EC < 4) {
             voice->queue_count_3EC++;
             voice->queue_3F0[voice->queue_pos_3EE] = (void*)selected;
@@ -79,12 +79,12 @@ static inline u32 getVariable(StreamState* state, u32 index)
     if (index < 16) {
         value = state->values_AC[index];
     } else {
-        value = lbl_8061A504[index - 16];
+        value = synthGlobalVariable[index - 16];
     }
     return value;
 }
 
-void fn_801BEC38(StreamState* state, StreamCommand* command)
+void mcmdSendMessage(StreamState* state, StreamCommand* command)
 {
     u32 selected;
     u32 id;
@@ -97,15 +97,15 @@ void fn_801BEC38(StreamState* state, StreamCommand* command)
         id = command->value >> 16;
         if (id != 0xFFFF) {
             i = 0;
-            while (i < lbl_80619C20[0x210]) {
-                voice = &lbl_8064D3D0[i];
+            while (i < synthInfo[0x210]) {
+                voice = &synthVoice[i];
                 if (voice->active_034 != 0 && id == voice->id_102) {
                     sendMessage(*(u32*)((u8*)voice->object_F8 + 8), selected);
                 }
                 i++;
             }
-        } else if (lbl_8064D3D4 != 0) {
-            lbl_8064D3D4(*(u32*)((u8*)state->object_F8 + 8), selected);
+        } else if (synthMessageCallback != 0) {
+            synthMessageCallback(*(u32*)((u8*)state->object_F8 + 8), selected);
         }
     } else {
         sendMessage(getVariable(state, command->flags), selected);

@@ -21,10 +21,10 @@ typedef struct StreamCommand {
     u32 value;
 } StreamCommand;
 
-extern void fn_801CC408(u32*);
-extern void fn_801CC418(u32*, StreamState*);
+extern void sndConvertMs(u32*);
+extern void sndConvertTicks(u32*, StreamState*);
 
-void fn_801BDB6C(StreamState* state, StreamCommand* command)
+void mcmdVibrato(StreamState* state, StreamCommand* command)
 {
     u32 amount;
     s8 first;
@@ -38,9 +38,9 @@ void fn_801BDB6C(StreamState* state, StreamCommand* command)
 
     amount = command->value >> 16;
     if ((command->value >> 8) & 1) {
-        fn_801CC408(&amount);
+        sndConvertMs(&amount);
     } else {
-        fn_801CC418(&amount, state);
+        sndConvertTicks(&amount, state);
     }
 
     if (amount != 0) {

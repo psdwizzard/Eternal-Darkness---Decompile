@@ -13,7 +13,7 @@ extern GXData *gx;
 extern volatile u16 *__cpReg;
 
 /* __GXWriteFifoIntReset: clear the FIFO watermark interrupts. */
-void fn_802244F8(u8 hiWatermarkClr, u8 loWatermarkClr)
+void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr)
 {
     gx->cpClr = (gx->cpClr & ~1UL) | hiWatermarkClr;
     gx->cpClr = (gx->cpClr & ~2UL) | (loWatermarkClr << 1);

@@ -18,7 +18,7 @@ extern GXData *gx;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022551C(int vtxfmt, int attr, int count, int type, u8 frac)
+void GXSetVtxAttrFmt(int vtxfmt, int attr, int count, int type, u8 frac)
 {
     u32 *vatA = &gx->vatA[vtxfmt];
     u32 *vatB = &gx->vatB[vtxfmt];

@@ -17,7 +17,7 @@ extern EXIControl Ecb_80640AA8[3];
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL);
 extern void __OSUnmaskInterrupts(u32);
-extern void fn_80206E8C(s32, s32, s32, s32);
+extern void EXIClearInterrupts(s32, s32, s32, s32);
 
 volatile u32 __EXIRegs[15] : 0xCC006800;
 
@@ -35,7 +35,7 @@ BOOL EXIDma(s32 chan, void *buf, s32 len, u32 type, void *callback)
 
     exi->tcCallback = callback;
     if (exi->tcCallback != 0) {
-        fn_80206E8C(chan, 0, 1, 0);
+        EXIClearInterrupts(chan, 0, 1, 0);
         __OSUnmaskInterrupts(0x200000u >> (chan * 3));
     }
 

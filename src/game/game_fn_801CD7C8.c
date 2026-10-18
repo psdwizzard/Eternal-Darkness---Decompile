@@ -6,10 +6,10 @@ typedef struct Queue {
     volatile u8 count;
 } Queue;
 
-extern Queue lbl_80630A30;
+extern Queue aramQueueLo;
 
-void fn_801CD7C8(void)
+void aramSyncTransferQueue(void)
 {
-    while (lbl_80630A30.count != 0) {
+    while (aramQueueLo.count != 0) {
     }
 }

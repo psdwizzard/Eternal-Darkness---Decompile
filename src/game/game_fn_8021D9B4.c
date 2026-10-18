@@ -48,18 +48,18 @@ typedef struct Channel {
     u8 pad84[0x8c];
 } Channel;
 
-extern Channel lbl_80641C60[];
+extern Channel __CARDBlock[];
 extern u32 lbl_8064C448;
-extern u8 lbl_802FEB80[];
+extern u8 CardData[];
 extern u32 OSGetTick(void);
-extern s32 fn_8021D8F0(void);
-extern s32 fn_8021D7AC(s32, u32, void *, s32, s32);
-extern u32 fn_8021D640(u32);
+extern s32 DummyLen(void);
+extern s32 ReadArrayUnlock(s32, u32, void *, s32, s32);
+extern u32 bitrev(u32);
 extern void DCFlushRange(void *, u32);
 extern void DCInvalidateRange(void *, u32);
-extern DspTask *fn_8021BA30(DspTask *);
-extern void fn_8021E50C(DspTask *);
-extern void fn_8021E57C(DspTask *);
+extern DspTask *DSPAddTask(DspTask *);
+extern void InitCallback(DspTask *);
+extern void DoneCallback(DspTask *);
 
 /* Complemented feedback bits for the two transfer directions. */
 #define RIGHT_BIT(x) (~((x) ^ ((x) >> 7) ^ ((x) >> 15) ^ ((x) >> 23)))
@@ -77,7 +77,7 @@ static inline void AdvanceLeft(Channel *ch, u32 count)
     ch->state = state | (LEFT_BIT(state) >> 31);
 }
 
-s32 fn_8021D9B4(s32 channel, Result *result)
+s32 __CARDUnlock(s32 channel, Result *result)
 {
     Channel *ch;
     DspTask *task;
@@ -93,7 +93,7 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     u32 length, read_length;
     u32 count, i;
 
-    ch = &lbl_80641C60[channel];
+    ch = &__CARDBlock[channel];
     task = &ch->task;
     packet = ch->packet;
     message = (u32 *)((u8 *)packet + 0x10);
@@ -106,11 +106,11 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     lbl_8064C448 = tick * 0x41c64e6d + 0x3039;
     address |= (lbl_8064C448 >> 16) & 0x7fff;
     address &= ~0xfff;
-    length = fn_8021D8F0();
+    length = DummyLen();
     {
         /* EXI takes a signed byte count; keep the bit counts unsigned. */
         s32 transfer_length = length;
-        if (fn_8021D7AC(channel, address,
+        if (ReadArrayUnlock(channel, address,
                        (u32 *)((u8 *)&scratch + sizeof(scratch.reserved_before)),
                        transfer_length, 0) < 0)
             return -3;
@@ -122,12 +122,12 @@ s32 fn_8021D9B4(s32 channel, Result *result)
         RIGHT_STEP(address);
     }
     ch->state = address | (RIGHT_BIT(address) << 31);
-    ch->state = fn_8021D640(ch->state);
+    ch->state = bitrev(ch->state);
 
-    read_length = fn_8021D8F0();
+    read_length = DummyLen();
     {
         s32 transfer_length = read_length + 0x14;
-        if (fn_8021D7AC(channel, 0, (u32 *)&scratch.response[0],
+        if (ReadArrayUnlock(channel, 0, (u32 *)&scratch.response[0],
                        transfer_length, 1) < 0)
             return -3;
     }
@@ -179,15 +179,15 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     DCFlushRange(packet, 0x10);
 
     task->command = 0xff;
-    task->data_address = (u16 *)((u32)lbl_802FEB80 + 0x80000000);
+    task->data_address = (u16 *)((u32)CardData + 0x80000000);
     task->data_size = 0x160;
     task->zero14 = 0;
     task->kind = 0x10;
-    task->callback = fn_8021E50C;
+    task->callback = InitCallback;
     task->resume_callback = 0;
-    task->done_callback = fn_8021E57C;
+    task->done_callback = DoneCallback;
     task->request_callback = 0;
-    fn_8021BA30(task);
+    DSPAddTask(task);
     result->first = first;
     result->second = second;
     result->third = third;

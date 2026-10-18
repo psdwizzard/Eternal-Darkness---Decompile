@@ -1,10 +1,10 @@
 typedef unsigned char u8;
 typedef signed int s32;
 
-extern u8 lbl_8032CC08[];
+extern u8 clipTable[];
 
 /* Expand a DC value and four coefficients into a clamped 4x4 block. */
-void fn_80103510(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d)
+void WeightImBlock(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d)
 {
     s32 bias, twiceDc, ab, cd, sum, difference;
     s32 topLeft, topRight, bottomRight, bottomLeft;
@@ -23,7 +23,7 @@ void fn_80103510(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d)
     difference = ab - cd;
     first = bias + sum;
     bottomRight = (b + d) - twiceDc;
-    clamp = lbl_8032CC08;
+    clamp = clipTable;
     ac = a - c;
     ad = a - d;
     dst[0] = clamp[(topLeft + first) >> 3];

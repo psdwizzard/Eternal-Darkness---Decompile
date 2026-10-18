@@ -1,6 +1,6 @@
-extern void fn_801CD7E0(void*);
+extern void aramInit(void*);
 
-void fn_801CD284(void* unused, void* value)
+void hwInitSampleMem(void* unused, void* value)
 {
-    fn_801CD7E0(value);
+    aramInit(value);
 }

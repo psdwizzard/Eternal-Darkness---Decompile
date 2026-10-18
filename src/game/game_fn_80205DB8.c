@@ -29,7 +29,7 @@ extern int fn_8011F6A4(void *, int, int, int, QueryResult *, int);
 extern void fn_8012B690(void *, const Vec3 *, Vec3 *);
 extern void fn_801795A4(const Vec3 *, const Vec3 *, Vec3 *);
 extern float fn_80179A74(Vec3 *);
-extern float fn_800DAFA8(float);
+extern float tanf(float);
 extern void fn_80179A18(Vec3 *);
 extern void fn_801798DC(Vec3 *, float);
 extern void fn_80179570(const Vec3 *, const Vec3 *, Vec3 *);
@@ -38,7 +38,7 @@ extern void fn_80206100(void *);
 extern void fn_8011F0E8(void *, const Vec3 *);
 extern void fn_8012CEA4(void *, int, Vec4 *);
 extern void fn_8011FABC(void *, int, int);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
 extern void fn_802064F4(void *, Vec4 *);
 extern void fn_8012D0D0(void *);
 extern void fn_80124DBC(void *);
@@ -88,7 +88,7 @@ int fn_80205DB8(void)
     fn_801795A4(&screen_position, &random_position, &difference);
     length = fn_80179A74(&difference);
     random = (lbl_806515E8 * length) /
-             fn_800DAFA8(lbl_806515EC * (random * lbl_806515F0));
+             tanf(lbl_806515EC * (random * lbl_806515F0));
     fn_80179A18(&difference);
     fn_801798DC(&difference, random);
     fn_80179570(&random_position, &difference, &screen_position);
@@ -114,7 +114,7 @@ int fn_80205DB8(void)
                 lbl_8064D8B8 = lbl_806515F8;
                 fn_8011FABC(object, 0, 8);
             }
-            fn_80211A6C(&lbl_80640A88, &hit_position, &offset);
+            PSVECSubtract(&lbl_80640A88, &hit_position, &offset);
             original_position.x += offset.x;
             original_position.y += offset.y;
             original_position.z += offset.z;

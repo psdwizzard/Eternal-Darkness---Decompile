@@ -31,13 +31,13 @@ typedef struct PointTable {
 } PointTable;
 
 extern void *fn_8015C390(s32 table_kind);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern u32 fn_80178F14(s32 ax, s32 ay, s32 az, s32 bx, s32 by, s32 bz);
 extern void fn_8017ACE0(const Matrix44 *matrix, const Vec3 *input, Vec3 *output);
 extern s32 fn_800AD2B4(void);
 extern void *fn_80201890(int);
 extern void *fn_8011F130(void *object);
-extern float fn_80211B44(Vec3 *a, Vec3 *b);
+extern float PSVECDotProduct(Vec3 *a, Vec3 *b);
 extern unsigned char lbl_8063C068[];
 extern Vec3 lbl_8063D378;
 extern void *lbl_8064C4E4;
@@ -89,7 +89,7 @@ s32 fn_8006D548(s32 table_kind, u32 mask, u32 mode, Vec3 *position,
             }
         }
         if (count != 0) {
-            s32 *slot = &candidates[(s32)fn_800FBFB0() % count];
+            s32 *slot = &candidates[(s32)rand() % count];
             s32 pick = *slot;
             match = &entries[pick];
             selected = pick;
@@ -223,7 +223,7 @@ s32 fn_8006D548(s32 table_kind, u32 mask, u32 mode, Vec3 *position,
                 direction.x = origin->x - entry->x;
                 direction.y = origin->y - entry->y;
                 direction.z = origin->z - entry->z;
-                if (fn_80211B44(&direction, &segment) < 0.0f) {
+                if (PSVECDotProduct(&direction, &segment) < 0.0f) {
                     candidates[count] = (unsigned char)k;
                     count++;
                     if (count == 100) {
@@ -232,7 +232,7 @@ s32 fn_8006D548(s32 table_kind, u32 mask, u32 mode, Vec3 *position,
                 }
             }
             if (count != 0) {
-                s32 *slot = &candidates[(s32)fn_800FBFB0() % count];
+                s32 *slot = &candidates[(s32)rand() % count];
                 s32 pick = *slot;
                 match = &entries[pick];
                 selected = pick;

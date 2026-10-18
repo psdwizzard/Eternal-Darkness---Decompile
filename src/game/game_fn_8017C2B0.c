@@ -17,12 +17,12 @@ typedef struct Request {
 } Request;
 
 extern GlobalState lbl_8064A580;
-extern int fn_802200B4(u8, int);
+extern int CARDCheckAsync(u8, int);
 
 void fn_8017C2B0(Request* request)
 {
     if (lbl_8064A580.states[request->value] != 0) {
-        request->result = fn_802200B4(request->value, 0);
+        request->result = CARDCheckAsync(request->value, 0);
         if (request->result >= 0) {
             request->state = 1;
         }

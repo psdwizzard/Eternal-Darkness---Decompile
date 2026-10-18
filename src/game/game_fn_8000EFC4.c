@@ -106,10 +106,10 @@ typedef struct Object {
 extern const char lbl_8023BEF8[];
 extern s32 lbl_8064D18C;
 extern void *fn_80201B9C();
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void* fn_8016A784(void*, int);
-extern double fn_8016A694(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
+extern void* lua_touserdata(void*, int);
+extern double lua_tonumber(void*, int);
 extern unsigned int fn_800F5C54(double);
 extern int fn_80201EB8();
 extern void *fn_80201B8C();
@@ -119,7 +119,7 @@ extern void *fn_80201BC8();
 extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern u32 fn_80178F14(s32, s32, s32, s32, s32, s32);
 extern void* fn_80201BC0(void*);
 extern int fn_80201B54();
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_8000EFC4(void* script)
 {
@@ -139,13 +139,13 @@ s32 fn_8000EFC4(void* script)
     iterator = fn_80201B9C();
     best = 0;
     best_distance = -1;
-    if (fn_8016A598(script) != 2) {
-        fn_80163BB4(script, lbl_8023BEF8, 2, fn_8016A598(script));
+    if (lua_gettop(script) != 2) {
+        luaO_verror(script, lbl_8023BEF8, 2, lua_gettop(script));
         return 0;
     }
 
-    target = fn_8016A784(script, 1);
-    mode = fn_800F5C54(fn_8016A694(script, 2));
+    target = lua_touserdata(script, 1);
+    mode = fn_800F5C54(lua_tonumber(script, 2));
     z = target->z;
     y = target->y;
     x = target->x;
@@ -174,6 +174,6 @@ s32 fn_8000EFC4(void* script)
     } else {
         result = -1;
     }
-    fn_8016A830(script, result);
+    lua_pushnumber(script, result);
     return 1;
 }

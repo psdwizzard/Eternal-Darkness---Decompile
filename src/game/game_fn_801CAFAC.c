@@ -7,15 +7,15 @@ typedef struct InpMidiCtrls {
     u8 ctrl[16][134];
 } InpMidiCtrls;
 
-extern InpMidiCtrls lbl_8062A230;
+extern InpMidiCtrls midi_lastNote;
 
 #define gInpMidiCtrlByKey s->byKey
 #define gInpMidiCtrl s->ctrl
 
-u16 fn_801CAFAC(u8 controller, u8 slot, u8 key)
+u16 inpGetMidiCtrl(u8 controller, u8 slot, u8 key)
 {
     short mask = 0x1f;
-    InpMidiCtrls* s = &lbl_8062A230;
+    InpMidiCtrls* s = &midi_lastNote;
 
     if (slot != 0xff) {
         if (key != 0xff) {

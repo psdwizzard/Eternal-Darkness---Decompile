@@ -14,25 +14,25 @@ typedef struct Voice {
 } Voice;
 #pragma pack()
 
-extern Voice* lbl_8064D3D0;
-extern void fn_801C106C(Voice*);
-extern void fn_801C1BCC(Voice*);
-extern void fn_801B9C98(u32);
-extern void fn_801CC8C4(u32);
+extern Voice* synthVoice;
+extern void vidRemoveVoiceReferences(Voice*);
+extern void voiceFree(Voice*);
+extern void streamKill(u32);
+extern void hwBreak(u32);
 
-void fn_801C2148(u32 index)
+void voiceKill(u32 index)
 {
     Voice* voice;
 
-    voice = &lbl_8064D3D0[index];
+    voice = &synthVoice[index];
     if (voice->active != 0) {
-        fn_801C106C(voice);
+        vidRemoveVoiceReferences(voice);
         voice->field_114 &= 0xFFFFFFFFFFFFFFFCULL;
         voice->field_110 = 0;
-        fn_801C1BCC(voice);
+        voiceFree(voice);
     }
     if (voice->flag_11C != 0) {
-        fn_801B9C98(index);
+        streamKill(index);
     }
-    fn_801CC8C4(index);
+    hwBreak(index);
 }

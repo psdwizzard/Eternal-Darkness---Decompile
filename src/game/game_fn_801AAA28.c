@@ -25,7 +25,7 @@ extern float lbl_80650E68;
 extern float lbl_80650E6C;
 extern float lbl_80650E70;
 
-extern int fn_801C9914(Voice*, Vec3*, Vec3*, Vec3*, float, float, float, Vec3*,
+extern int sndAddListener(Voice*, Vec3*, Vec3*, Vec3*, float, float, float, Vec3*,
                        void*, u8, Target*);
 extern void* memset(void*, int, unsigned long);
 extern void fn_801ACC94(int);
@@ -47,7 +47,7 @@ void fn_801AAA28(void)
     lbl_80608020.fourth.y = lbl_80650E68;
     lbl_80608020.fourth.z = value;
 
-    fn_801C9914((Voice*)&lbl_80608020, &lbl_80608020.first, &lbl_80608020.second,
+    sndAddListener((Voice*)&lbl_80608020, &lbl_80608020.first, &lbl_80608020.second,
                 &lbl_80608020.third, lbl_80650E6C, lbl_80650E6C, lbl_80650E70,
                 &lbl_80608020.fourth, (void*)0, 0, (Target*)0);
     memset(lbl_806080E0, 0, 0x2F80);

@@ -9,10 +9,10 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern TRKBuffer lbl_80328610[3];
-extern void fn_800F34CC(void *);
-extern void fn_800F34C4(void *);
-extern void fn_800F34BC(void *);
+extern TRKBuffer gTRKMsgBufs[3];
+extern void TRKInitializeMutex(void *);
+extern void TRKAcquireMutex(void *);
+extern void TRKReleaseMutex(void *);
 
 static inline void TRKSetBufferUsed(TRKBuffer* buffer, int used)
 {
@@ -23,10 +23,10 @@ int TRKInitializeMessageBuffers(void)
 {
     int i;
     for (i = 0; i < 3; i++) {
-        fn_800F34CC(&lbl_80328610[i]);
-        fn_800F34C4(&lbl_80328610[i]);
-        TRKSetBufferUsed(&lbl_80328610[i], 0);
-        fn_800F34BC(&lbl_80328610[i]);
+        TRKInitializeMutex(&gTRKMsgBufs[i]);
+        TRKAcquireMutex(&gTRKMsgBufs[i]);
+        TRKSetBufferUsed(&gTRKMsgBufs[i], 0);
+        TRKReleaseMutex(&gTRKMsgBufs[i]);
     }
     return 0;
 }

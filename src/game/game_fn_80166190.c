@@ -3,23 +3,23 @@ typedef struct Parser {
     int token;
 } Parser;
 
-extern int fn_801640C4(Parser*);
-extern void fn_8016457C(Parser*, int, int*);
+extern int str_checkname(Parser*);
+extern void singlevar(Parser*, int, int*);
 extern void fn_80163DA4(Parser*);
-extern void fn_8015F4D0(Parser*, int*, int);
-extern int fn_80164120(Parser*);
-extern void fn_8015ECCC(Parser*, int);
+extern void luaK_tostack(Parser*, int*, int);
+extern int checkname(Parser*);
+extern void luaK_kstr(Parser*, int);
 
-int fn_80166190(Parser* parser, int* output)
+int funcname(Parser* parser, int* output)
 {
     int special = 0;
 
-    fn_8016457C(parser, fn_801640C4(parser), output);
+    singlevar(parser, str_checkname(parser), output);
     if (parser->token == 0x3A || parser->token == 0x2E) {
         special = parser->token == 0x3A;
         fn_80163DA4(parser);
-        fn_8015F4D0(parser, output, 1);
-        fn_8015ECCC(parser, fn_80164120(parser));
+        luaK_tostack(parser, output, 1);
+        luaK_kstr(parser, checkname(parser));
         *output = 2;
     }
     return special;

@@ -7,13 +7,13 @@ extern void* lbl_8064D24C;
 extern void* lbl_8064D250;
 
 extern void fn_801ECC4C(void);
-extern void fn_8022B2AC(void*, u16);
-extern void fn_80226AB4(int, int, u16);
+extern void GXBeginDisplayList(void*, u16);
+extern void GXBegin(int, int, u16);
 extern void fn_80188578(u16);
 extern void fn_8018856C(u16);
 extern void fn_80188560(u16);
 extern void fn_8018855C(void);
-extern void* fn_8022B374(void);
+extern void* GXEndDisplayList(void);
 
 void fn_80188384(u8* input)
 {
@@ -24,8 +24,8 @@ void fn_80188384(u8* input)
 
     fn_801ECC4C();
     count = *(u16*)(input + 2);
-    fn_8022B2AC(lbl_80606780, *(u16*)(input + 6));
-    fn_80226AB4(0x80, 5, count);
+    GXBeginDisplayList(lbl_80606780, *(u16*)(input + 6));
+    GXBegin(0x80, 5, count);
     for (i = 0; (u16)i < count; i++) {
         index = i;
         fn_80188578(index);
@@ -33,12 +33,12 @@ void fn_80188384(u8* input)
         fn_80188560(index);
     }
     fn_8018855C();
-    lbl_8064D250 = fn_8022B374();
+    lbl_8064D250 = GXEndDisplayList();
 
     fn_801ECC4C();
     count2 = *(u16*)(input + 2);
-    fn_8022B2AC(lbl_80606AE0, *(u16*)(input + 8));
-    fn_80226AB4(0x80, 5, (u16)(((count2 - 4) * 2) + 4));
+    GXBeginDisplayList(lbl_80606AE0, *(u16*)(input + 8));
+    GXBegin(0x80, 5, (u16)(((count2 - 4) * 2) + 4));
     fn_80188578(1);
     fn_8018856C(1);
     fn_80188560(1);
@@ -75,5 +75,5 @@ void fn_80188384(u8* input)
         fn_80188560(index);
     }
     fn_8018855C();
-    lbl_8064D24C = fn_8022B374();
+    lbl_8064D24C = GXEndDisplayList();
 }

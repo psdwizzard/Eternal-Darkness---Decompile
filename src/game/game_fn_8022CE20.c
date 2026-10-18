@@ -10,41 +10,41 @@ typedef struct Bank {
 
 typedef void (*Callback)(u32);
 
-extern volatile s32 lbl_8064DBE0;
-extern volatile u32 lbl_8064C4B4;
-extern s32 lbl_8064DBE4;
-extern Bank *lbl_8064DBEC;
+extern volatile s32 PERFCurrSample;
+extern volatile u32 CurrToken;
+extern s32 PERFCurrFrame;
+extern Bank *PERFFrames;
 
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
-extern Callback fn_80226814(Callback);
-extern void fn_8022CBA0(u32);
-extern void fn_8022C9F0(void);
-extern void fn_8022C3A8(void);
-extern void fn_80209B08(u32);
-extern void fn_80209B10(u32);
-extern void fn_80209B20(u32);
-extern void fn_80209B30(u32);
-extern void fn_80209AF0(int);
-extern void fn_80209AF8(int);
-extern void fn_8022D2C4(void);
+extern Callback GXSetDrawSyncCallback(Callback);
+extern void PERFTokenCallback(u32);
+extern void PERFResetAllMemMetrics(void);
+extern void GXClearGPMetric(void);
+extern void PPCMtpmc1(u32);
+extern void PPCMtpmc2(u32);
+extern void PPCMtpmc3(u32);
+extern void PPCMtpmc4(u32);
+extern void PPCMtmmcr0(int);
+extern void PPCMtmmcr1(int);
+extern void PERFStartAutoSample(void);
 
-void fn_8022CE20(void)
+void PERFStartFrame(void)
 {
     s32 enabled = OSDisableInterrupts();
 
-    lbl_8064DBE0 = 0;
-    lbl_8064C4B4 = 0xFFFF;
-    fn_80226814(fn_8022CBA0);
-    lbl_8064DBEC[lbl_8064DBE4].active = 0;
-    fn_8022C9F0();
-    fn_8022C3A8();
-    fn_80209B08(0);
-    fn_80209B10(0);
-    fn_80209B20(0);
-    fn_80209B30(0);
-    fn_80209AF0(0x8B);
-    fn_80209AF8(0x78400000);
-    fn_8022D2C4();
+    PERFCurrSample = 0;
+    CurrToken = 0xFFFF;
+    GXSetDrawSyncCallback(PERFTokenCallback);
+    PERFFrames[PERFCurrFrame].active = 0;
+    PERFResetAllMemMetrics();
+    GXClearGPMetric();
+    PPCMtpmc1(0);
+    PPCMtpmc2(0);
+    PPCMtpmc3(0);
+    PPCMtpmc4(0);
+    PPCMtmmcr0(0x8B);
+    PPCMtmmcr1(0x78400000);
+    PERFStartAutoSample();
     OSRestoreInterrupts(enabled);
 }

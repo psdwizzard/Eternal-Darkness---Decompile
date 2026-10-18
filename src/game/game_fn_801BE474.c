@@ -32,12 +32,12 @@ typedef struct StreamCommand {
     CommandWord flags;
 } StreamCommand;
 
-extern void fn_801CC408(u32*);
-extern void fn_801CC418(u32*, StreamState*);
-extern u32 fn_801CC460(u32);
-extern u8* fn_801BD08C(u32);
+extern void sndConvertMs(u32*);
+extern void sndConvertTicks(u32*, StreamState*);
+extern u32 sndConvert2Ms(u32);
+extern u8* dataGetCurve(u32);
 
-void fn_801BE474(StreamState* state, StreamCommand* command, u32 target)
+void DoEnvelopeCalculation(StreamState* state, StreamCommand* command, u32 target)
 {
     u32 duration;
     u32 divisor;
@@ -58,11 +58,11 @@ void fn_801BE474(StreamState* state, StreamCommand* command, u32 target)
 
     duration = command->flags.raw >> 16;
     if ((command->flags.raw >> 8) & 1) {
-        fn_801CC408(&duration);
+        sndConvertMs(&duration);
     } else {
-        fn_801CC418(&duration, state);
+        sndConvertTicks(&duration, state);
     }
-    divisor = fn_801CC460(duration);
+    divisor = sndConvert2Ms(duration);
     if (divisor == 0) {
         divisor = 1;
     }
@@ -76,7 +76,7 @@ void fn_801BE474(StreamState* state, StreamCommand* command, u32 target)
     resource = (u8)(command->value.raw >> 24);
     resource |= ((u8)command->flags.raw << 8);
     if ((u16)resource != 0xFFFF) {
-        table = fn_801BD08C(resource);
+        table = dataGetCurve(resource);
         if (table != 0) {
             index = value >> 16;
             fraction = (u16)value;

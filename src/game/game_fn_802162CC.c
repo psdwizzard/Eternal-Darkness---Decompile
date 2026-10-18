@@ -1,4 +1,4 @@
-/* fn_802162CC: __DVDPrepareResetAsync (Dolphin SDK dvd.c), with DVDPause,
+/* __DVDPrepareResetAsync: __DVDPrepareResetAsync (Dolphin SDK dvd.c), with DVDPause,
  * DVDCancelAllAsync and DVDResume inlined. */
 typedef unsigned int u32;
 typedef int s32;
@@ -20,14 +20,14 @@ extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 extern void __DVDClearWaitingQueue(void);
 extern DVDCommandBlock *__DVDPopWaitingQueue(void);
-extern BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback);
+extern BOOL DVDCancelAsync(DVDCommandBlock *block, DVDCBCallback callback);
 extern void stateReady_80214A10(void);
 
 extern DVDCommandBlock *executing_8064DA00;
 extern volatile s32 PauseFlag_8064DA0C;
 extern volatile s32 PausingFlag_8064DA10;
-extern u32 lbl_8064DA20;
-extern DVDCBCallback lbl_8064DA24;
+extern u32 Canceling;
+extern DVDCBCallback CancelCallback;
 
 static inline void DVDPause(void) {
     BOOL level = OSDisableInterrupts();
@@ -56,11 +56,11 @@ static inline BOOL DVDCancelAllAsync(DVDCBCallback callback) {
     DVDPause();
 
     while ((p = __DVDPopWaitingQueue()) != 0) {
-        fn_80215D3C(p, 0);
+        DVDCancelAsync(p, 0);
     }
 
     if (executing_8064DA00) {
-        retVal = fn_80215D3C(executing_8064DA00, callback);
+        retVal = DVDCancelAsync(executing_8064DA00, callback);
     } else {
         retVal = 1;
         if (callback) {
@@ -73,13 +73,13 @@ static inline BOOL DVDCancelAllAsync(DVDCBCallback callback) {
     return retVal;
 }
 
-void fn_802162CC(DVDCBCallback callback) {
+void __DVDPrepareResetAsync(DVDCBCallback callback) {
     BOOL enabled;
 
     enabled = OSDisableInterrupts();
     __DVDClearWaitingQueue();
-    if (lbl_8064DA20) {
-        lbl_8064DA24 = callback;
+    if (Canceling) {
+        CancelCallback = callback;
     } else {
         if (executing_8064DA00) {
             executing_8064DA00->callback = 0;

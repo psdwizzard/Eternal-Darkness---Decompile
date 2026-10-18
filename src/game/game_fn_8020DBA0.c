@@ -4,7 +4,7 @@ extern int OSDisableInterrupts(void);
 extern void ICFlashInvalidate(void);
 
 /* Start execution at entry with interrupts disabled and the cache invalidated. */
-void fn_8020DBA0(register EntryPoint entry)
+void Run(register EntryPoint entry)
 {
     OSDisableInterrupts();
     ICFlashInvalidate();

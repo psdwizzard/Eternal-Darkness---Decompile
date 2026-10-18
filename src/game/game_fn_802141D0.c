@@ -3,9 +3,9 @@ typedef signed int s32;
 typedef void (*DVDLowCallback)(u32 intType);
 
 extern s32 DVDLowStopMotor(DVDLowCallback callback);
-extern void fn_802141F8(u32 intType);
+extern void cbForStateGoToRetry(u32 intType);
 
-void fn_802141D0(void)
+void stateGoToRetry(void)
 {
-    DVDLowStopMotor(fn_802141F8);
+    DVDLowStopMotor(cbForStateGoToRetry);
 }

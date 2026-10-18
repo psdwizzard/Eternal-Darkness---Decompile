@@ -24,7 +24,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 #define GX_WRITE_RAS_REG(v) \
     do { GXWGFifo.u8 = 0x61; GXWGFifo.u32 = (v); } while (0)
 
-void fn_80227290(GXColor color, u32 depth)
+void GXSetCopyClear(GXColor color, u32 depth)
 {
     u32 reg;
 

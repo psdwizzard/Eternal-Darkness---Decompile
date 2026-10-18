@@ -36,7 +36,7 @@ extern u32 __SIRegs[64] : 0xCC006400;
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32 enabled);
 
-s32 fn_80208C4C(s32 chan, void *output, u32 outputBytes, void *input,
+s32 __SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
                 u32 inputBytes, SICallback callback)
 {
     register SIControl *si = &Si_802FCA20;

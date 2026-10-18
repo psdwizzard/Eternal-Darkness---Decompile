@@ -15,9 +15,9 @@ extern int lbl_8064D738;
 extern void* memcpy(void*, const void*, size_t);
 extern void DCFlushRange(void*, unsigned long);
 extern void fn_801EFE84(void*);
-extern void fn_80217324(void);
-extern void fn_80217F88(void);
-extern void fn_802180A4(void*);
+extern void VIWaitForRetrace(void);
+extern void VIFlush(void);
+extern void VISetNextFrameBuffer(void*);
 
 void fn_801EFEC4(int swap_buffers)
 {
@@ -31,15 +31,15 @@ void fn_801EFEC4(int swap_buffers)
         }
     }
 
-    fn_802180A4(lbl_8064D718);
+    VISetNextFrameBuffer(lbl_8064D718);
     if (lbl_8064B2BC >= 0) {
         lbl_8064B2BC--;
     }
     if (lbl_8064B2BC == 0) {
         fn_801EFE84(0);
     }
-    fn_80217F88();
-    fn_80217324();
+    VIFlush();
+    VIWaitForRetrace();
     lbl_8064D734 = lbl_8064D6E4;
     lbl_8064D6E4++;
     lbl_8064D6E4 &= 1;

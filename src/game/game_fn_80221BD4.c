@@ -1,4 +1,4 @@
-/* fn_80221BD4: __CARDSeek (SDK CARDRead.c). */
+/* __CARDSeek: __CARDSeek (SDK CARDRead.c). */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
@@ -37,12 +37,12 @@ typedef struct CARDControl {
     (CARD_NUM_SYSTEM_BLOCK <= (iBlock) && (iBlock) < (card)->cBlock)
 #define TRUNC(n, a) (((u32)(n)) & ~((a) - 1))
 
-extern s32 fn_8021D2BC(s32 chan, CARDControl **card);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern u16 *fn_8021EB38(CARDControl *card);
+extern s32 __CARDGetControlBlock(s32 chan, CARDControl **card);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern u16 *__CARDGetFatBlock(CARDControl *card);
 
-s32 fn_80221BD4(CARDFileInfo *fileInfo, s32 length, s32 offset, CARDControl **pcard)
+s32 __CARDSeek(CARDFileInfo *fileInfo, s32 length, s32 offset, CARDControl **pcard)
 {
     CARDControl *card;
     CARDDir *dir;
@@ -50,21 +50,21 @@ s32 fn_80221BD4(CARDFileInfo *fileInfo, s32 length, s32 offset, CARDControl **pc
     s32 result;
     u16 *fat;
 
-    result = fn_8021D2BC(fileInfo->chan, &card);
+    result = __CARDGetControlBlock(fileInfo->chan, &card);
     if (result < 0) {
         return result;
     }
 
     if (!CARDIsValidBlockNo(card, fileInfo->iBlock) ||
         card->cBlock * card->sectorSize <= fileInfo->offset) {
-        return fn_8021D374(card, -128);
+        return __CARDPutControlBlock(card, -128);
     }
 
-    dir = fn_8021EF3C(card);
+    dir = __CARDGetDirBlock(card);
     ent = &dir[fileInfo->fileNo];
     if (ent->length * card->sectorSize <= offset ||
         ent->length * card->sectorSize < offset + length) {
-        return fn_8021D374(card, -11);
+        return __CARDPutControlBlock(card, -11);
     }
 
     card->fileInfo = fileInfo;
@@ -73,16 +73,16 @@ s32 fn_80221BD4(CARDFileInfo *fileInfo, s32 length, s32 offset, CARDControl **pc
         fileInfo->offset = 0;
         fileInfo->iBlock = ent->startBlock;
         if (!CARDIsValidBlockNo(card, fileInfo->iBlock)) {
-            return fn_8021D374(card, -6);
+            return __CARDPutControlBlock(card, -6);
         }
     }
 
-    fat = fn_8021EB38(card);
+    fat = __CARDGetFatBlock(card);
     while (fileInfo->offset < TRUNC(offset, card->sectorSize)) {
         fileInfo->offset += card->sectorSize;
         fileInfo->iBlock = fat[fileInfo->iBlock];
         if (!CARDIsValidBlockNo(card, fileInfo->iBlock)) {
-            return fn_8021D374(card, -6);
+            return __CARDPutControlBlock(card, -6);
         }
     }
 

@@ -11,7 +11,7 @@ typedef struct oggpack_buffer {
 
 extern void *memset(void *dest, int value, unsigned long size);
 
-void fn_8022EA4C(register oggpack_buffer *b, register u8 *buffer, register s32 bytes) {
+void oggpack_readinit(register oggpack_buffer *b, register u8 *buffer, register s32 bytes) {
     register s32 saved_bytes;
     register u8 *saved_buffer;
     register unsigned long length;

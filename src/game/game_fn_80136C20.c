@@ -19,14 +19,14 @@ typedef struct Quaternion { float x, y, z, w; } Quaternion;
 extern int fn_8011F6A4(void*, int, int, int, void*, int);
 extern void fn_8011F114(Vec3*, Vec3*);
 extern void* fn_8011FE34(void*);
-extern void fn_802114E0(Matrix34, const Quaternion*);
-extern unsigned int fn_802110A8(const Matrix34, Matrix34);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211710(const Matrix34, const Vec3*, Vec3*);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
+extern void PSMTXQuat(Matrix34, const Quaternion*);
+extern unsigned int PSMTXInverse(const Matrix34, Matrix34);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
+extern void PSMTXMultVec(const Matrix34, const Vec3*, Vec3*);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
 extern int fn_80136944(const Vec3*, void*, Result*);
 extern void fn_8013F3C0(Shape*, const Vec3*, const Vec3*, float);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float lbl_806502A0;
 
 int fn_80136C20(const Shape* shape, void* object, Result* out)
@@ -55,18 +55,18 @@ int fn_80136C20(const Shape* shape, void* object, Result* out)
     } else {
         position = query.position;
     }
-    fn_802114E0(matrix, (const Quaternion*)fn_8011FE34(object));
-    fn_802110A8(matrix, inverse);
-    fn_80211A6C(&shape->first, &position, &localShape.first);
-    fn_80211710(inverse, &localShape.first, &localShape.first);
-    fn_80211A6C(&shape->second, &position, &localShape.second);
-    fn_80211710(inverse, &localShape.second, &localShape.second);
+    PSMTXQuat(matrix, (const Quaternion*)fn_8011FE34(object));
+    PSMTXInverse(matrix, inverse);
+    PSVECSubtract(&shape->first, &position, &localShape.first);
+    PSMTXMultVec(inverse, &localShape.first, &localShape.first);
+    PSVECSubtract(&shape->second, &position, &localShape.second);
+    PSMTXMultVec(inverse, &localShape.second, &localShape.second);
     fn_8013F3C0(&localShape, &localShape.first, &localShape.second,
                 shape->radius);
 
     for (i = 0; i < count; i++, entry = (char*)entry + 0xD8) {
         if (fn_80136944(&localShape.first, entry, &candidate)) {
-            float distance = fn_80211D4C(&localShape.first, &candidate.point);
+            float distance = PSVECSquareDistance(&localShape.first, &candidate.point);
             if (distance < best) {
                 best = distance;
                 *out = candidate;
@@ -75,10 +75,10 @@ int fn_80136C20(const Shape* shape, void* object, Result* out)
         }
     }
     if (found) {
-        fn_80211710(matrix, &out->point, &out->point);
-        fn_80211A48(&out->point, &position, &out->point);
-        fn_80211710(matrix, &out->normal, &out->normal);
-        fn_80211A48(&out->normal, &position, &out->normal);
+        PSMTXMultVec(matrix, &out->point, &out->point);
+        PSVECAdd(&out->point, &position, &out->point);
+        PSMTXMultVec(matrix, &out->normal, &out->normal);
+        PSVECAdd(&out->normal, &position, &out->normal);
     }
     return found;
 }

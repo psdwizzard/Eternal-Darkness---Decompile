@@ -32,8 +32,8 @@ extern s32 lbl_8064CD78;
 extern s32 lbl_8064CD74;
 
 extern void fn_800433CC(void);
-extern s32 fn_8020D318(void*, void*, s32);
-extern s32 fn_8020D250(void*, void*, s32);
+extern s32 OSReceiveMessage(void*, void*, s32);
+extern s32 OSSendMessage(void*, void*, s32);
 extern void fn_80043838(u16, u8);
 extern void fn_80042CAC(u16, s32);
 extern void fn_800B177C(s32, void (*)(void));
@@ -49,7 +49,7 @@ extern void fn_80138164(void);
 extern s32 fn_8012070C(void);
 extern s32 fn_8015E918(void*, s32, s32, s32, s32);
 extern void fn_80042B54(void);
-extern int fn_800F9D4C(char*, const char*, ...);
+extern int sprintf(char*, const char*, ...);
 
 void fn_800433FC(void)
 {
@@ -64,7 +64,7 @@ void fn_800433FC(void)
     u32 slot;
 
     for (;;) {
-        fn_8020D318(block->queue, &received, 1);
+        OSReceiveMessage(block->queue, &received, 1);
         switch ((msg = received)->type) {
         case 1:
             msg->type = 2;
@@ -82,7 +82,7 @@ void fn_800433FC(void)
             fn_800B177C(1, fn_800433CC);
             fn_800B689C(1, 1);
             fn_800B5D10(0);
-            fn_8020D318(block->syncQueue, 0, 1);
+            OSReceiveMessage(block->syncQueue, 0, 1);
             fn_800B18F8();
             msg->type = 6;
             reply = msg->responseQueue;
@@ -108,14 +108,14 @@ void fn_800433FC(void)
         case 9:
             file = msg->arg & 0xFFF;
             slot = (msg->arg >> 15) & 1;
-            fn_800F9D4C(block->path, strings + 0xF4, file);
+            sprintf(block->path, strings + 0xF4, file);
             fn_8015D458(block->path, (void*)lbl_8064C6AC[slot], 0x27100);
             fn_8015DAB0((void*)lbl_8064C6AC[slot]);
             lbl_8064C6A4[slot] = file;
             break;
         }
         if (reply != 0) {
-            fn_8020D250(reply, msg, 1);
+            OSSendMessage(reply, msg, 1);
         }
         reply = 0;
     }

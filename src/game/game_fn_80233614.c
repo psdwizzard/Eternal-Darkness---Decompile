@@ -2,7 +2,7 @@ extern void *fn_8022F780(int size);
 extern void *memcpy(void *destination, const void *source, unsigned long size);
 
 /* Allocate and copy the fixed-size configuration. */
-void *fn_80233614(register const void *source) {
+void *mapping0_copy_info(register const void *source) {
     register void *savedPointer;
     register void *copy;
 

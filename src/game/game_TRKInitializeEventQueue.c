@@ -7,18 +7,18 @@ typedef struct TRKEventQueue {
     u32 next_id;
 } TRKEventQueue;
 
-extern TRKEventQueue lbl_803285E0;
-extern void fn_800F34CC(void *);
-extern void fn_800F34C4(void *);
-extern void fn_800F34BC(void *);
+extern TRKEventQueue gTRKEventQueue;
+extern void TRKInitializeMutex(void *);
+extern void TRKAcquireMutex(void *);
+extern void TRKReleaseMutex(void *);
 
 int TRKInitializeEventQueue(void)
 {
-    fn_800F34CC(&lbl_803285E0);
-    fn_800F34C4(&lbl_803285E0);
-    lbl_803285E0.count = 0;
-    lbl_803285E0.next = 0;
-    lbl_803285E0.next_id = 0x100;
-    fn_800F34BC(&lbl_803285E0);
+    TRKInitializeMutex(&gTRKEventQueue);
+    TRKAcquireMutex(&gTRKEventQueue);
+    gTRKEventQueue.count = 0;
+    gTRKEventQueue.next = 0;
+    gTRKEventQueue.next_id = 0x100;
+    TRKReleaseMutex(&gTRKEventQueue);
     return 0;
 }

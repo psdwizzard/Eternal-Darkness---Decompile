@@ -1,4 +1,4 @@
-int fn_800F34BC(void)
+int TRKReleaseMutex(void)
 {
     return 0;
 }

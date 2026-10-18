@@ -10,10 +10,10 @@ typedef struct FloatVector {
     float z;
 } FloatVector;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_8016A970(void*, void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void lua_pushusertag(void*, void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern ShortVector* fn_8016BA38(int);
 extern void *fn_80201814();
 extern void fn_80201E78(FloatVector*, void*);
@@ -27,13 +27,13 @@ int fn_80172FF0(void* state)
     void* object;
     FloatVector position;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    index = fn_8016A694(state, 1);
-    handle = fn_8016A694(state, 2);
+    index = lua_tonumber(state, 1);
+    handle = lua_tonumber(state, 2);
     vector = fn_8016BA38(index);
     object = fn_80201814(handle);
     if (object != 0) {
@@ -42,6 +42,6 @@ int fn_80172FF0(void* state)
         vector->y = position.y;
         vector->z = position.z;
     }
-    fn_8016A970(state, vector, 0);
+    lua_pushusertag(state, vector, 0);
     return 1;
 }

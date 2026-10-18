@@ -1,4 +1,4 @@
-/* fn_80226598: GXSetDrawDone (Dolphin SDK GXMisc.c).
+/* GXSetDrawDone: GXSetDrawDone (Dolphin SDK GXMisc.c).
  * Writes the draw-done token (0x45000002) to the BP/RAS registers, flushes
  * the FIFO via an inlined GXFlush, then clears the DrawDone flag. */
 
@@ -21,12 +21,12 @@ typedef struct {
 } GXData;
 
 extern GXData *gx;
-extern u8 lbl_8064DBB8; /* DrawDone */
+extern u8 DrawDone; /* DrawDone */
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
-void fn_80209AD4(void); /* PPCSync */
-void fn_80226A28(void); /* __GXSetDirtyState */
+void PPCSync(void); /* PPCSync */
+void __GXSetDirtyState(void); /* __GXSetDirtyState */
 
 #define GX_WRITE_RAS_REG(reg) \
     do { \
@@ -37,7 +37,7 @@ void fn_80226A28(void); /* __GXSetDirtyState */
 /* GXFlush */
 static inline void GXFlush(void) {
     if (gx->dirtyState) {
-        fn_80226A28();
+        __GXSetDirtyState();
     }
     GXWGFifo.u32 = 0;
     GXWGFifo.u32 = 0;
@@ -47,10 +47,10 @@ static inline void GXFlush(void) {
     GXWGFifo.u32 = 0;
     GXWGFifo.u32 = 0;
     GXWGFifo.u32 = 0;
-    fn_80209AD4();
+    PPCSync();
 }
 
-void fn_80226598(void) {
+void GXSetDrawDone(void) {
     BOOL enabled;
     u32 reg;
 
@@ -58,6 +58,6 @@ void fn_80226598(void) {
     reg = 0x45000002;
     GX_WRITE_RAS_REG(reg);
     GXFlush();
-    lbl_8064DBB8 = 0;
+    DrawDone = 0;
     OSRestoreInterrupts(enabled);
 }

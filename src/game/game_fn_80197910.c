@@ -26,12 +26,12 @@ extern float lbl_80650B94;
 
 extern void fn_8018D788(int, void*, Buffers*, u16);
 extern void fn_8011F114(Vec3*, void*);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B08(Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern float PSVECMag(Vec3*);
 extern void DCFlushRange(void*, u32);
 extern int fn_801ED57C(int);
 extern void fn_801ED5F4(int, int, int, int, void*, float);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_8018D0D0(void*, void*, int);
 extern void fn_80189B70(void*, void*, void*);
 extern void* memcpy(void*, const void*, unsigned long);
@@ -88,8 +88,8 @@ void fn_80197910(u8* object)
             fn_8011F114(&position, lbl_8064C4E4);
             direction = position;
             direction.z += lbl_80650B8C;
-            fn_80211A6C(&average, &direction, &direction);
-            distance = fn_80211B08(&direction);
+            PSVECSubtract(&average, &direction, &direction);
+            distance = PSVECMag(&direction);
             if (distance > *(u16*)(object + 8)) {
                 return;
             }
@@ -117,7 +117,7 @@ colors:
     if (*(u16*)(object + 0x96) != 0) {
         fn_801ED5F4(1, *(u16*)(object + 0x96) | 0x2000,
                     *(s16*)(object + 0x98), 0, scratch, lbl_80650B90);
-        fn_80226D28(0);
+        GXSetCullMode(0);
     }
     fn_8018D0D0(object, object + 0x5c, *(s16*)(object + 0xe));
     fn_80189B70(buffers.vertices, buffers.indices, buffers.colors);

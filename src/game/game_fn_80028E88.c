@@ -33,7 +33,7 @@ extern char lbl_8023E280;
 extern char* lbl_8023E28C[];
 
 extern s32 fn_80045240(s32);
-extern void fn_800FD39C(char*, const char*);
+extern void strcat(char*, const char*);
 extern char* fn_800FD40C(char*, const char*);
 extern s32 fn_80036E50(void);
 extern void* fn_80201B3C();
@@ -71,19 +71,19 @@ const char* fn_80028E88(const signed char* command, s32* result)
 
         fn_800FD40C(buffer, &lbl_8064B37C);
         if (fn_80045240(1) != 0) {
-            fn_800FD39C(buffer, &lbl_8064B380);
-            fn_800FD39C(buffer, lbl_8023E28C[1]);
-            fn_800FD39C(buffer, &lbl_8064B384);
+            strcat(buffer, &lbl_8064B380);
+            strcat(buffer, lbl_8023E28C[1]);
+            strcat(buffer, &lbl_8064B384);
         }
         if (fn_80045240(2) != 0) {
-            fn_800FD39C(buffer, &lbl_8064B38C);
-            fn_800FD39C(buffer, lbl_8023E28C[2]);
-            fn_800FD39C(buffer, &lbl_8064B390);
+            strcat(buffer, &lbl_8064B38C);
+            strcat(buffer, lbl_8023E28C[2]);
+            strcat(buffer, &lbl_8064B390);
         }
         if (fn_80045240(3) != 0) {
-            fn_800FD39C(buffer, &lbl_8064B398);
-            fn_800FD39C(buffer, lbl_8023E28C[3]);
-            fn_800FD39C(buffer, &lbl_8064B39C);
+            strcat(buffer, &lbl_8064B398);
+            strcat(buffer, lbl_8023E28C[3]);
+            strcat(buffer, &lbl_8064B39C);
         }
         {
             char** strings = lbl_8023E28C;

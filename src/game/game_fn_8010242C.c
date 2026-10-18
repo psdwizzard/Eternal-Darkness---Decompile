@@ -15,7 +15,7 @@ static inline int saturate(int x)
     }
 }
 
-void fn_8010242C(void)
+void init_global_constants(void)
 {
     int i;
     int n;

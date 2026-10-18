@@ -1,8 +1,8 @@
 typedef unsigned char u8;
 
-extern u8 lbl_8064D4D8;
+extern u8 salTimeOffset;
 
-void fn_801CC6CC(u8 value)
+void hwSetTimeOffset(u8 value)
 {
-    lbl_8064D4D8 = value;
+    salTimeOffset = value;
 }

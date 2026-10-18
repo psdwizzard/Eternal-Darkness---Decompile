@@ -6,11 +6,11 @@ typedef struct ResidueLook ResidueLook;
 typedef struct Codebook Codebook;
 typedef s32 (*ResidueDecode)(Codebook *, s32 *, void *, s32);
 
-s32 fn_802302B0(Codebook *book, float *samples, void *bits, s32 count);
-s32 fn_80234A04(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 channels,
+s32 vorbis_book_decodev_add(Codebook *book, float *samples, void *bits, s32 count);
+s32 _01inverse(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 channels,
                ResidueDecode decodepart);
 
-s32 fn_80234814(VorbisBlock *vb, ResidueLook *look, register s32 **in,
+s32 res1_inverse(VorbisBlock *vb, ResidueLook *look, register s32 **in,
                register s32 *nonzero, register s32 channels) {
     register s32 **source;
     register s32 used = 0;
@@ -48,11 +48,11 @@ s32 fn_80234814(VorbisBlock *vb, ResidueLook *look, register s32 **in,
         /* ASM: lis/addi/mr set the decoder and active-channel count.
          * C selects addi for the count copy instead of the retail mr. */
         asm {
-            lis r6, fn_802302B0@ha
-            addi decodepart, r6, fn_802302B0@l
+            lis r6, vorbis_book_decodev_add@ha
+            addi decodepart, r6, vorbis_book_decodev_add@l
             mr count, used
         }
-        return fn_80234A04(vb, look, in, count, decodepart);
+        return _01inverse(vb, look, in, count, decodepart);
     }
     return 0;
 }

@@ -15,7 +15,7 @@ typedef struct Entry {
 } Entry;
 
 extern void fn_801AE368(Entry*);
-extern void fn_801BA94C(void*, u32, u8, u8, u32, u32);
+extern void sndStreamMixParameterEx(void*, u32, u8, u8, u32, u32);
 
 void fn_801AE140(Entry* entry, int stop)
 {
@@ -24,7 +24,7 @@ void fn_801AE140(Entry* entry, int stop)
             fn_801AE368(entry);
         } else if (entry->mode == 1 || entry->mode == 4) {
             if (entry->active == 0) {
-                fn_801BA94C(entry->source, 0, entry->value2, entry->value3, 0, 0);
+                sndStreamMixParameterEx(entry->source, 0, entry->value2, entry->value3, 0, 0);
                 entry->active = 1;
             }
         } else {

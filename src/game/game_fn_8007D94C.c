@@ -136,7 +136,7 @@ extern void fn_801FA748(int, Vec3 *);
 extern void *fn_80201814(int);
 extern int fn_802019EC(int, int);
 extern void *fn_80201BC8(void *);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
 extern void *memset(void *, int, unsigned long);
 extern void fn_80080FEC(int, int);
 extern void fn_80081254(int, int);
@@ -399,7 +399,7 @@ void fn_8007D94C(int screen)
             lbl_8031CBA0.target = found;
             lbl_8031CBA0.target.y -= lbl_8064EA10;
             lbl_8031CBA0.direction = vectors[2];
-            fn_80211AAC(&lbl_8031CBA0.direction, &lbl_8031CBA0.direction);
+            PSVECNormalize(&lbl_8031CBA0.direction, &lbl_8031CBA0.direction);
             lbl_8031CBA0.positionInitialized = 1;
         }
         cameras = lbl_8031CD84.cameras;

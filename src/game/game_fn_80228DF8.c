@@ -12,7 +12,7 @@ typedef struct GXData {
 extern GXData *gx;
 
 /* Install the TLUT region callback and return the previous callback. */
-GXTlutRegionCallback fn_80228DF8(GXTlutRegionCallback callback)
+GXTlutRegionCallback GXSetTlutRegionCallback(GXTlutRegionCallback callback)
 {
     GXTlutRegionCallback previous = gx->tlutRegionCallback;
     gx->tlutRegionCallback = callback;

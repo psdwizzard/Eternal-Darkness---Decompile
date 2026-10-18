@@ -37,7 +37,7 @@ typedef struct GXTexObj {
     u32 dummy[8];
 } GXTexObj;
 
-void fn_80228474(GXTexObj *obj, void *image_ptr, u16 width, u16 height, u32 format,
+void GXInitTexObj(GXTexObj *obj, void *image_ptr, u16 width, u16 height, u32 format,
                  u32 wrap_s, u32 wrap_t, u8 mipmap)
 {
     u32 imageBase;

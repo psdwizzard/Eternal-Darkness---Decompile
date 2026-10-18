@@ -33,9 +33,9 @@ extern int fn_8015E548(int);
 extern void fn_80159DD0(unsigned int, unsigned int);
 extern void fn_8015DEC4(void);
 extern void fn_8015DF24(void);
-extern void fn_8020D250(void*, int, int);
-extern int fn_8020D318(void*, int*, int);
-extern void fn_802101F4(void*, int);
+extern void OSSendMessage(void*, int, int);
+extern int OSReceiveMessage(void*, int*, int);
+extern void OSSetThreadPriority(void*, int);
 
 #define slot_id(slot) (*(s16*)((u8*)lbl_805B6FE0.slots[slot] + 0x8140))
 #define slot_busy(slot) (*(s8*)((u8*)lbl_805B6FE0.slots[slot] + 0x8142))
@@ -51,11 +51,11 @@ void fn_8015B800(void)
 
     fn_80158E7C(5);
     for (;;) {
-        fn_8020D318(lbl_805E27DC, &message, 1);
+        OSReceiveMessage(lbl_805E27DC, &message, 1);
         if (message == 0xFFFFFFFF) {
-            fn_8020D250(lbl_805DB240, 43, 1);
+            OSSendMessage(lbl_805DB240, 43, 1);
             do {
-                fn_8020D318(lbl_805E27DC, &message, 1);
+                OSReceiveMessage(lbl_805E27DC, &message, 1);
             } while (message != 0xFFFFFFFE);
             message = 0;
             state = 0;
@@ -115,53 +115,53 @@ void fn_8015B800(void)
             state = action;
             switch (action) {
             case 2:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 fn_80159DD0(lbl_805B6F80[selection].id, selection);
                 break;
             case 4:
-                fn_802101F4(lbl_805E7560, 21);
+                OSSetThreadPriority(lbl_805E7560, 21);
                 if (current != -1) {
                     fn_80158F6C(slot_id(current), current);
                 }
                 break;
             case 5:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 if (current != -1) {
                     fn_80158ECC(slot_id(current));
                 }
                 break;
             case 6:
-                fn_802101F4(lbl_805E7560, 21);
+                OSSetThreadPriority(lbl_805E7560, 21);
                 if (current != -1) {
                     fn_80158F6C(lbl_805B6FE0.requested, current);
                 }
                 break;
             case 7:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 fn_80158ECC(lbl_805B6FE0.requested);
                 break;
             case 1:
-                fn_802101F4(lbl_805E7560, 21);
+                OSSetThreadPriority(lbl_805E7560, 21);
                 fn_8015DF24();
                 break;
             case 3:
-                fn_802101F4(lbl_805E7560, 21);
+                OSSetThreadPriority(lbl_805E7560, 21);
                 fn_8015DF24();
                 break;
             case 8:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 fn_8015DF24();
                 break;
             case 9:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 fn_8015DEC4();
                 break;
             case 10:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 fn_80158F6C(slot_id(lbl_805B6FE0.primary), lbl_805B6FE0.primary);
                 break;
             case 11:
-                fn_802101F4(lbl_805E7560, 11);
+                OSSetThreadPriority(lbl_805E7560, 11);
                 fn_80158ECC(slot_id(lbl_805B6FE0.primary));
                 break;
             }

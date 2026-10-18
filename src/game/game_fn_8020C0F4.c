@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* OSGetStackPointer: return the current stack frame for stack traversal. */
-u32 *fn_8020C0F4(void)
+u32 *OSGetStackPointer(void)
 {
     register u32 *stackPointer;
 

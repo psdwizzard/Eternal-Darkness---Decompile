@@ -28,7 +28,7 @@ typedef struct SearchResult {
     int depth;
 } SearchResult;
 
-int fn_801644FC(Parser* parser, void* value, SearchResult* result)
+int search_local(Parser* parser, void* value, SearchResult* result)
 {
     ParserState* state = parser->state;
     int level = 0;

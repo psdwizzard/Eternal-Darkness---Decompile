@@ -6,9 +6,9 @@ typedef struct ArenaEntry {
     u8 pad51[0x6B];
 } ArenaEntry;
 
-extern ArenaEntry lbl_80628CB0[];
+extern ArenaEntry dspStudio[];
 
-void fn_801C4694(u8 index)
+void salDeactivateStudio(u8 index)
 {
-    lbl_80628CB0[index].flag = 0;
+    dspStudio[index].flag = 0;
 }

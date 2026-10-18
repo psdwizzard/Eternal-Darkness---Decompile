@@ -9,11 +9,11 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8064BA58;
-extern void* fn_8016B5CC(void*, int, unsigned int, const char*, int);
+extern void* luaM_realloc(void*, int, unsigned int, const char*, int);
 
-void fn_801604F8(Object* object, int count)
+void luaD_init(Object* object, int count)
 {
-    object->allocation = fn_8016B5CC(object, 0, (count + 40) << 4,
+    object->allocation = luaM_realloc(object, 0, (count + 40) << 4,
                                     &lbl_8064BA58, 35);
     object->limit += count << 4;
     object->end = object->allocation + ((count - 1) << 4);

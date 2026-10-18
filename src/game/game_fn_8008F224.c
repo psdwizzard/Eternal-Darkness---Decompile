@@ -36,7 +36,7 @@ extern int fn_80201B54();
 extern unsigned long long fn_8020123C();
 extern void* fn_80201BC0(void*);
 extern void fn_80043F44(SpawnConfig*);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void* fn_80034708(SpawnConfig*);
 extern void *fn_80201BC8();
 extern void fn_80201D54(void*, void*);
@@ -116,7 +116,7 @@ void* fn_8008F224(int object_id, int create, int transfer)
                 break;
             case 4: {
                 int alternate;
-                config.value0 = (fn_800FBFB0() & 1) + 105;
+                config.value0 = (rand() & 1) + 105;
                 alternate = config.value0 == 106;
                 alternate = alternate != 0;
                 config.value1 = alternate + 0x7FB;

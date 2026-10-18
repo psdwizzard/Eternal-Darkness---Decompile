@@ -35,7 +35,7 @@ typedef struct StaticCodebook {
 extern void *memset(void *dest, int value, unsigned long size);
 
 /* vorbis_staticbook_clear */
-void fn_8023582C(register StaticCodebook *book)
+void vorbis_staticbook_clear(register StaticCodebook *book)
 {
     if (book->allocedp) {
         if (book->nearest_tree) {

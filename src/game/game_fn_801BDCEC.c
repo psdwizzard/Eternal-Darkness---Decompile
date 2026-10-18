@@ -13,7 +13,7 @@ typedef struct StreamState {
 
 extern u16 lbl_80252160[];
 
-void fn_801BDCEC(StreamState* state)
+void DoSetPitch(StreamState* state)
 {
     u32 currentValue = state->current & 0xFFFFFF;
     u16* table = lbl_80252160;

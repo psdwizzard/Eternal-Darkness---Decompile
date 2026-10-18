@@ -2,9 +2,9 @@ typedef int s32;
 
 extern const char lbl_8023BEF8[];
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern int fn_8011EB04(void *);
@@ -20,12 +20,12 @@ s32 fn_8001B6CC(void* script)
     void* transform;
     s32 value;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    object = fn_80201814((s32)fn_8016A694(script, 1));
+    object = fn_80201814((s32)lua_tonumber(script, 1));
     if (object != 0 && (transform = fn_80201BC8(object)) != 0) {
         state = fn_8011EB04(transform);
         object_state = fn_80201C24(object);

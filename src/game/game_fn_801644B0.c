@@ -3,10 +3,10 @@ typedef struct Parser {
     void* allocator;
 } Parser;
 
-extern void* fn_801670F4(void*);
-extern void fn_801641D4(Parser*, void*, int);
+extern void* luaS_newfixed(void*);
+extern void new_localvar(Parser*, void*, int);
 
-void fn_801644B0(Parser* parser, int unused, int count)
+void new_localvarstr(Parser* parser, int unused, int count)
 {
-    fn_801641D4(parser, fn_801670F4(parser->allocator), count);
+    new_localvar(parser, luaS_newfixed(parser->allocator), count);
 }

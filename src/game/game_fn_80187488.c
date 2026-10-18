@@ -11,7 +11,7 @@ typedef struct Entry {
 
 #pragma use_lmw_stmw on
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 void fn_80187488(Entry* entry, u16* flags, s16* bounds, int axis, int start,
                  int end, s16* first, s16* second, int add,
@@ -48,7 +48,7 @@ void fn_80187488(Entry* entry, u16* flags, s16* bounds, int axis, int start,
         if (hit) {
             int value;
             entry->coordinate[axis] = bounds[index];
-            value = fn_800FBFB0() % step;
+            value = rand() % step;
             if (step < 0) value = -value;
             bounds[index] = (s16)(current + value);
             if (entry->coordinate[axis] < bounds[index]) *flags |= mask;

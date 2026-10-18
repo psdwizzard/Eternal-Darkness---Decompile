@@ -1,4 +1,4 @@
-/* fn_80227C08: GXLoadLightObjImm (Dolphin SDK GXLight.c).
+/* GXLoadLightObjImm: GXLoadLightObjImm (Dolphin SDK GXLight.c).
  * Writes a light object's color, attenuation, position and direction
  * into the XF light registers for the given light id. */
 
@@ -31,7 +31,7 @@ typedef struct GXLightObjInt {
     f32 ldir[3];
 } GXLightObjInt;
 
-void fn_80227C08(GXLightObjInt *obj, int light)
+void GXLoadLightObjImm(GXLightObjInt *obj, int light)
 {
     u32 idx;
     u32 addr;

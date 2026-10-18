@@ -15,13 +15,13 @@ typedef struct TRKCPUState {
 
 extern TRKCPUState gTRKCPUState;
 
-extern void fn_800EEF1C(TRKEvent *event, u8 type);
-extern int fn_800EEF34(const TRKEvent *event);
-extern int fn_800F2EAC(const char *name, u8 kind, u32 *value, u8 *status);
-extern int fn_800F2D8C(u32 handle, u8 *status);
-extern int fn_800F2BFC(u32 handle, u32 *position, u8 mode, u8 *status);
-extern int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_reply, int read);
-extern void fn_800F35AC(void *address, unsigned int length);
+extern void TRKConstructEvent(TRKEvent *event, u8 type);
+extern int TRKPostEvent(const TRKEvent *event);
+extern int HandleOpenFileSupportRequest(const char *name, u8 kind, u32 *value, u8 *status);
+extern int HandleCloseFileSupportRequest(u32 handle, u8 *status);
+extern int HandlePositionFileSupportRequest(u32 handle, u32 *position, u8 mode, u8 *status);
+extern int TRKSuppAccessFile(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_reply, int read);
+extern void TRK_flush_cache(void *address, unsigned int length);
 
 #define DSMSG_ReadFile     0xD1
 #define DSMSG_WriteFile    0xD0
@@ -42,27 +42,27 @@ int TRKTargetSupportRequest(void)
     if (command != DSMSG_ReadFile && command != DSMSG_WriteFile
         && command != DSMSG_OpenFile && command != DSMSG_CloseFile
         && command != DSMSG_PositionFile) {
-        fn_800EEF1C(&event, 4);
-        fn_800EEF34(&event);
+        TRKConstructEvent(&event, 4);
+        TRKPostEvent(&event);
         return 0;
     }
 
     if (command == DSMSG_OpenFile) {
-        error = fn_800F2EAC((const char *)gTRKCPUState.GPR[4], gTRKCPUState.GPR[5],
+        error = HandleOpenFileSupportRequest((const char *)gTRKCPUState.GPR[4], gTRKCPUState.GPR[5],
                             (u32 *)gTRKCPUState.GPR[6], &io_result);
         if (io_result == 0 && error != 0) {
             io_result = 1;
         }
         gTRKCPUState.GPR[3] = io_result;
     } else if (command == DSMSG_CloseFile) {
-        error = fn_800F2D8C(gTRKCPUState.GPR[4], &io_result);
+        error = HandleCloseFileSupportRequest(gTRKCPUState.GPR[4], &io_result);
         if (io_result == 0 && error != 0) {
             io_result = 1;
         }
         gTRKCPUState.GPR[3] = io_result;
     } else if (command == DSMSG_PositionFile) {
         u32 position = *(u32 *)gTRKCPUState.GPR[5];
-        error = fn_800F2BFC(gTRKCPUState.GPR[4], &position, gTRKCPUState.GPR[6], &io_result);
+        error = HandlePositionFileSupportRequest(gTRKCPUState.GPR[4], &position, gTRKCPUState.GPR[6], &io_result);
         if (io_result == 0 && error != 0) {
             io_result = 1;
         }
@@ -70,14 +70,14 @@ int TRKTargetSupportRequest(void)
         *(u32 *)gTRKCPUState.GPR[5] = position;
     } else {
         length = (u32 *)gTRKCPUState.GPR[5];
-        error = fn_800F31F8((u8)gTRKCPUState.GPR[4], (u8 *)gTRKCPUState.GPR[6], length,
+        error = TRKSuppAccessFile((u8)gTRKCPUState.GPR[4], (u8 *)gTRKCPUState.GPR[6], length,
                             &io_result, 1, command == DSMSG_ReadFile);
         if (io_result == 0 && error != 0) {
             io_result = 1;
         }
         gTRKCPUState.GPR[3] = io_result;
         if (command == DSMSG_ReadFile) {
-            fn_800F35AC((void *)gTRKCPUState.GPR[6], *length);
+            TRK_flush_cache((void *)gTRKCPUState.GPR[6], *length);
         }
     }
     gTRKCPUState.PC += 4;

@@ -7,11 +7,11 @@ typedef struct Link {
     u32 value;
 } Link;
 
-extern Link* lbl_8064D45C;
+extern Link* vidRoot;
 
-Link* fn_801C1038(u32 key)
+Link* get_vidlist(u32 key)
 {
-    Link* link = lbl_8064D45C;
+    Link* link = vidRoot;
 
     while (link != 0) {
         if (link->key == key) {

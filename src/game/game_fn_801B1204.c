@@ -9,71 +9,71 @@ typedef struct Entry {
     u8 callback[1];
 } Entry;
 
-extern u8 lbl_8060BF60[];
-extern unsigned int lbl_8064D324;
-extern int lbl_8064D334;
-extern int lbl_8064D338;
-extern int lbl_8064D33C;
-extern Entry* lbl_8064D344;
-extern Entry* lbl_8064D348;
+extern u8 __block_for_stream_status[];
+extern unsigned int __DTKTrackEnded;
+extern int __DTKPosition;
+extern int __DTKRepeatMode;
+extern int __DTKState;
+extern Entry* __DTKPlayListHead;
+extern Entry* __DTKCurrentTrack;
 
-extern void fn_801B1070(void);
-extern void fn_801B10A4(Entry*, unsigned int);
-extern void fn_801B1194(void);
-extern void fn_801B10EC(void);
-extern void fn_802159A8(void*, void (*)(void));
+extern void __DTKStopAi(void);
+extern void __DTKCheckUserCallback(Entry*, unsigned int);
+extern void __DTKPrepareCurrentTrack(void);
+extern void __DTKCallbackForStreamStatus(void);
+extern void DVDGetStreamErrorStatusAsync(void*, void (*)(void));
 
-void fn_801B1204(int value)
+void __DTKCallbackForPlaylist(int value)
 {
-    lbl_8064D334 = value;
-    if (lbl_8064D324 != 0) {
-        lbl_8064D324 = 0;
-        fn_801B10A4(lbl_8064D348, 0x10);
-        lbl_8064D33C = 3;
-        switch (lbl_8064D338) {
+    __DTKPosition = value;
+    if (__DTKTrackEnded != 0) {
+        __DTKTrackEnded = 0;
+        __DTKCheckUserCallback(__DTKCurrentTrack, 0x10);
+        __DTKState = 3;
+        switch (__DTKRepeatMode) {
         case 0:
-            if (lbl_8064D348 != 0) {
-                Entry* entry = lbl_8064D348->next;
+            if (__DTKCurrentTrack != 0) {
+                Entry* entry = __DTKCurrentTrack->next;
                 if (entry != 0) {
-                    lbl_8064D348 = entry;
+                    __DTKCurrentTrack = entry;
                     entry->value = 0;
-                    fn_801B1070();
-                    fn_801B1194();
+                    __DTKStopAi();
+                    __DTKPrepareCurrentTrack();
                 } else {
-                    entry = lbl_8064D344;
-                    lbl_8064D348 = entry;
+                    entry = __DTKPlayListHead;
+                    __DTKCurrentTrack = entry;
                     entry->value = 0;
-                    fn_801B1070();
-                    lbl_8064D33C = 0;
+                    __DTKStopAi();
+                    __DTKState = 0;
                 }
             }
             break;
         case 1:
-            if (lbl_8064D348 != 0) {
-                Entry* entry = lbl_8064D348->next;
+            if (__DTKCurrentTrack != 0) {
+                Entry* entry = __DTKCurrentTrack->next;
                 if (entry != 0) {
-                    lbl_8064D348 = entry;
+                    __DTKCurrentTrack = entry;
                     entry->value = 0;
-                    fn_801B1070();
-                    fn_801B1194();
+                    __DTKStopAi();
+                    __DTKPrepareCurrentTrack();
                 } else {
-                    entry = lbl_8064D344;
-                    lbl_8064D348 = entry;
+                    entry = __DTKPlayListHead;
+                    __DTKCurrentTrack = entry;
                     entry->value = 0;
-                    fn_801B1070();
-                    fn_801B1194();
+                    __DTKStopAi();
+                    __DTKPrepareCurrentTrack();
                 }
             }
             break;
         case 2:
-            if (lbl_8064D348 != 0) {
-                lbl_8064D348->value = 0;
-                fn_801B1070();
-                fn_801B1194();
+            if (__DTKCurrentTrack != 0) {
+                __DTKCurrentTrack->value = 0;
+                __DTKStopAi();
+                __DTKPrepareCurrentTrack();
             }
             break;
         }
     } else {
-        fn_802159A8(lbl_8060BF60, fn_801B10EC);
+        DVDGetStreamErrorStatusAsync(__block_for_stream_status, __DTKCallbackForStreamStatus);
     }
 }

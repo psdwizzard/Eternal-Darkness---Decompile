@@ -17,9 +17,9 @@ typedef struct Packet {
     Entry entries[1];
 } Packet;
 
-extern void fn_8016057C(Object*, int);
+extern void luaD_checkstack(Object*, int);
 
-Entry* fn_801608D0(Object* object, Packet* packet, void* replacement)
+Entry* callCclosure(Object* object, Packet* packet, void* replacement)
 {
     int count;
     void* saved;
@@ -28,7 +28,7 @@ Entry* fn_801608D0(Object* object, Packet* packet, void* replacement)
     count = packet->count;
     saved = object->saved;
     object->saved = replacement;
-    fn_8016057C(object, count + 20);
+    luaD_checkstack(object, count + 20);
 
     for (i = 0; i < count; i++) {
         *object->current++ = packet->entries[i];

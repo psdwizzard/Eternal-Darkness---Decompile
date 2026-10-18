@@ -10,8 +10,8 @@ typedef struct Resource800ADC2C {
 extern Resource800ADC2C* lbl_8064C9C8;
 extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
-extern void fn_8020FC0C(Resource800ADC2C*);
-extern void fn_8020FE94(Resource800ADC2C*);
+extern void OSResumeThread(Resource800ADC2C*);
+extern void OSSuspendThread(Resource800ADC2C*);
 
 void fn_800ADC2C(int alternate)
 {
@@ -23,9 +23,9 @@ void fn_800ADC2C(int alternate)
     while (resource != 0) {
         if (resource->subtype != 0) {
             if (alternate != 0) {
-                fn_8020FE94(resource);
+                OSSuspendThread(resource);
             } else {
-                fn_8020FC0C(resource);
+                OSResumeThread(resource);
             }
         }
         resource = resource->next;

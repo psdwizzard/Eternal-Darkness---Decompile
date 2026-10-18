@@ -22,9 +22,9 @@ typedef struct Collection {
     int total_size;
 } Collection;
 
-extern void fn_80161B0C(Collection*, int*);
+extern void checktab(Collection*, int*);
 
-void fn_80161C30(Collection* collection, int preserve)
+void collectudata(Collection* collection, int preserve)
 {
     int bucket_offset;
     int offset;
@@ -47,5 +47,5 @@ void fn_80161C30(Collection* collection, int preserve)
             }
         }
     }
-    fn_80161B0C(collection, &collection->count);
+    checktab(collection, &collection->count);
 }

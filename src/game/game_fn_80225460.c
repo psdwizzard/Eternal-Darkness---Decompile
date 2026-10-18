@@ -18,15 +18,15 @@ typedef struct GXVtxDescList {
     GXAttrType type;
 } GXVtxDescList;
 
-extern void fn_802252AC(GXAttr attr, GXAttrType *type);
+extern void GXGetVtxDesc(GXAttr attr, GXAttrType *type);
 
-void fn_80225460(GXVtxDescList *list)
+void GXGetVtxDescv(GXVtxDescList *list)
 {
     GXAttr attr;
 
     for (attr = GX_VA_PNMTXIDX; attr < GX_VA_NBT + 1; attr++) {
         list[attr].attr = attr;
-        fn_802252AC(attr, &list[attr].type);
+        GXGetVtxDesc(attr, &list[attr].type);
     }
     list[attr].attr = GX_VA_NULL;
 }

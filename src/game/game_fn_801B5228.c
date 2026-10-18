@@ -74,35 +74,21 @@ struct SEQ_INSTANCE {
     SEQ_SECTION section[16];
 };
 
-extern SEQ_INSTANCE* lbl_8064D380;
-extern NOTE* lbl_8064D384;
-extern u32 lbl_8064D388;
-extern u8 lbl_8064D38C;
-extern SEQ_INSTANCE* lbl_8064D394;
-extern SEQ_INSTANCE* lbl_8064D39C;
-extern u32 fn_801B8574(u8);
-extern void fn_801B5B20(u32, u8, u8);
-extern u32 fn_801B4FB4(u8, u32);
-extern u32 fn_801B261C(void);
-extern u32 fn_801B8F0C(u32);
-extern void fn_801B2818(NOTE*);
-extern void fn_801B244C(SEQ_INSTANCE*);
-extern float fn_801023C0(float);
+extern SEQ_INSTANCE* cseq;
+extern NOTE* noteFree;
+extern u32 curSeqId;
+extern u8 curFadeOutState;
+extern SEQ_INSTANCE* seqFreeRoot;
+extern SEQ_INSTANCE* seqActiveRoot;
+extern u32 synthIsFadeOutActive(u8);
+extern void synthSetBpm(u32, u8, u8);
+extern u32 HandleTrackEvents(u8, u32);
+extern u32 HandleNotes(void);
+extern u32 sndFXCheck(u32);
+extern void seqFreeKeyOffNote(NOTE*);
+extern void ResetNotes(SEQ_INSTANCE*);
+extern float floorf(float);
 
-#define cseq lbl_8064D380
-#define noteFree lbl_8064D384
-#define curSeqId lbl_8064D388
-#define curFadeOutState lbl_8064D38C
-#define seqFreeRoot lbl_8064D394
-#define seqActiveRoot lbl_8064D39C
-#define synthIsFadeOutActive fn_801B8574
-#define synthSetBpm fn_801B5B20
-#define HandleTrackEvents fn_801B4FB4
-#define HandleNotes fn_801B261C
-#define sndFXCheck fn_801B8F0C
-#define seqFreeKeyOffNote fn_801B2818
-#define ResetNotes fn_801B244C
-#define floorf fn_801023C0
 
 static inline float fmodf(float x, float y)
 {
@@ -170,7 +156,7 @@ static inline void HandleKeyOffNotes(void)
     cseq->keyOffCheck = (cseq->keyOffCheck + 1) % 5;
 }
 
-void fn_801B5228(u32 deltaTime)
+void seqHandle(u32 deltaTime)
 {
     u32 x;
     u32 i;

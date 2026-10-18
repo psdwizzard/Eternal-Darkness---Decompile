@@ -1,3 +1,3 @@
-int fn_80236310(void) {
+int time0_forward(void) {
     return 0;
 }

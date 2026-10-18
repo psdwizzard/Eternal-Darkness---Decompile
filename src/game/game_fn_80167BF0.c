@@ -6,10 +6,10 @@ typedef struct LuaState {
     HashTable* table;
 } LuaState;
 
-extern Value* fn_801670A8(LuaState*, const char*);
-extern Value* fn_801672C8(HashTable*, Value*);
+extern Value* luaS_new(LuaState*, const char*);
+extern Value* luaH_getstr(HashTable*, Value*);
 
-Value* fn_80167BF0(LuaState* state, const char* name)
+Value* luaH_getglobal(LuaState* state, const char* name)
 {
-    return fn_801672C8(state->table, fn_801670A8(state, name));
+    return luaH_getstr(state->table, luaS_new(state, name));
 }

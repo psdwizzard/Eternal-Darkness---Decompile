@@ -18,7 +18,7 @@ typedef union {
 volatile GXFifo GXWGFifo : 0xCC008000;
 
 /* Upload the cached general-mode register to the graphics processor. */
-void fn_80226DBC(void)
+void __GXSetGenMode(void)
 {
     GXWGFifo.byte = 0x61;
     GXWGFifo.word = gx->genMode;

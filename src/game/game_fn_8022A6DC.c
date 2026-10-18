@@ -14,7 +14,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022A6DC(u8 updateEnable)
+void GXSetColorUpdate(u8 updateEnable)
 {
     gx->blendMode = (gx->blendMode & ~(1UL << 3)) | ((u32)updateEnable << 3);
     GXWGFifo.byte = 0x61;

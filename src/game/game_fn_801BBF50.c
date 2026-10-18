@@ -7,19 +7,19 @@ typedef struct StreamResource8 {
 } StreamResource8;
 
 extern unsigned char lbl_8061C748[];
-extern u16 lbl_8064D3F2;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataCurveNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-int fn_801BBF50(u16 id)
+int dataRemoveCurve(u16 id)
 {
     unsigned char* base = lbl_8061C748;
     int count;
     int index;
     int cursor;
 
-    fn_801CE2B8();
-    count = lbl_8064D3F2;
+    hwDisableIrq();
+    count = dataCurveNum;
     index = 0;
     while (index < count && ((StreamResource8*)(base + 0x600))[index].id != id) {
         index++;
@@ -38,11 +38,11 @@ int fn_801BBF50(u16 id)
         ((StreamResource8*)(base + 0x600))[cursor - 1] =
             ((StreamResource8*)(base + 0x600))[cursor];
     }
-    lbl_8064D3F2--;
-    fn_801CE280();
+    dataCurveNum--;
+    hwEnableIrq();
     return 1;
 
 not_removed:
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 }

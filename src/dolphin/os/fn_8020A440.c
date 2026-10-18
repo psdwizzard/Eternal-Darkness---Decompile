@@ -1,6 +1,6 @@
 typedef int (*DebuggerVector)(void);
 
-int fn_8020A440(void)
+int __OSDBJump(void)
 {
     return ((DebuggerVector)0x60)();
 }

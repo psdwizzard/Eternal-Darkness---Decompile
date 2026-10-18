@@ -34,7 +34,7 @@ extern int lbl_8064D704;
 extern void fn_8015DA70(void*, void*, s8*);
 extern void fn_801EA7B4(void*, RequestState*);
 extern void fn_8015DAB0(void*);
-extern u32 fn_8022658C(void);
+extern u32 GXReadDrawSync(void);
 
 void fn_80159088(int slot)
 {
@@ -50,7 +50,7 @@ void fn_80159088(int slot)
         if (state->queue != 0 && *(u32*)((char*)state->queue + 8) < (u32)state->queue) {
             fn_8015DAB0(state->queue);
         }
-        while ((u16)fn_8022658C() == 0xCACE) {
+        while ((u16)GXReadDrawSync() == 0xCACE) {
         }
     }
     lbl_8064D704 = 0;

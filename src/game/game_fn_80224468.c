@@ -13,7 +13,7 @@ extern GXData *gx;
 extern volatile u16 *__cpReg;
 
 /* __GXFifoLink: link the CP FIFO to the CPU FIFO. */
-void fn_80224468(u8 enable)
+void __GXFifoLink(u8 enable)
 {
     BOOL link;
 

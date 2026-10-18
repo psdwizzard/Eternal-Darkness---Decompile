@@ -28,9 +28,9 @@ u32 __OSBusClock : 0x800000F8;
 #define SECS_IN_DAY 86400
 #define BIAS (2000 * 365 + (2000 + 3) / 4 - (2000 - 1) / 100 + (2000 - 1) / 400)
 
-void fn_80210B7C(int days, OSCalendarTime *td);
+void GetDates(int days, OSCalendarTime *td);
 
-void fn_80210D18(OSTime ticks, OSCalendarTime *td) {
+void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime *td) {
     int days;
     int secs;
     OSTime d;
@@ -50,7 +50,7 @@ void fn_80210D18(OSTime ticks, OSCalendarTime *td) {
         secs += SECS_IN_DAY;
     }
 
-    fn_80210B7C(days, td);
+    GetDates(days, td);
     td->hour = secs / 60 / 60;
     td->min = secs / 60 % 60;
     td->sec = secs % 60;

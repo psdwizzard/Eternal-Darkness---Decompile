@@ -1,8 +1,8 @@
-/* fn_800F9800: MSL is_utf8_complete (UTF-8 sequence length check for mbtowc) */
+/* is_utf8_complete: MSL is_utf8_complete (UTF-8 sequence length check for mbtowc) */
 
 typedef unsigned long size_t;
 
-int fn_800F9800(const char *s, size_t n) {
+int is_utf8_complete(const char *s, size_t n) {
     /* MSL compiles this with signed chars; view the bytes that way */
     const signed char *b = (const signed char *)s;
 

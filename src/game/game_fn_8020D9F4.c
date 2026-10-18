@@ -36,7 +36,7 @@ struct OSMutex {
 };
 
 /* Validate the mutex wait queue and ownership count. */
-s32 fn_8020D9F4(OSMutex *mutex)
+s32 __OSCheckMutex(OSMutex *mutex)
 {
     OSThread *thread;
     s32 priority = 0;

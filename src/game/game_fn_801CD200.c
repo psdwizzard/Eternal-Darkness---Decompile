@@ -1,8 +1,8 @@
 typedef unsigned char u8;
 
-extern void* fn_801CDD00(u8 index, void** info);
+extern void* aramGetStreamBufferAddress(u8 index, void** info);
 
-void* fn_801CD200(u8 index)
+void* hwGetStreamPlayBuffer(u8 index)
 {
-    return fn_801CDD00(index, 0);
+    return aramGetStreamBufferAddress(index, 0);
 }

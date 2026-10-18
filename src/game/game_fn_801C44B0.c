@@ -14,35 +14,35 @@ typedef struct ArenaEntry {
     u8 pad2C[0x90];
 } ArenaEntry;
 
-extern u8 lbl_8064D4E5;
-extern u8 lbl_8064D4E4;
-extern void* lbl_8064D498;
-extern void* lbl_8064D4A0;
-extern void* lbl_8064D4A4;
-extern void* lbl_8064D4A8;
-extern PoolEntry* lbl_8064D4AC;
-extern ArenaEntry lbl_80628CB0[];
+extern u8 salNumVoices;
+extern u8 salMaxStudioNum;
+extern void* dspCmdList;
+extern void* dspHrtfHistoryBuffer;
+extern void* dspSurround;
+extern void* dspITDBuffer;
+extern PoolEntry* dspVoice;
+extern ArenaEntry dspStudio[];
 
-extern void fn_801CE358(void*);
+extern void salFree(void*);
 
-int fn_801C44B0(void)
+int salExitDspCtrl(void)
 {
     u8 i;
 
-    fn_801CE358(lbl_8064D4A0);
-    for (i = 0; i < lbl_8064D4E5; i++) {
-        fn_801CE358(lbl_8064D4AC[i].object);
-        fn_801CE358(lbl_8064D4AC[i].aux);
+    salFree(dspHrtfHistoryBuffer);
+    for (i = 0; i < salNumVoices; i++) {
+        salFree(dspVoice[i].object);
+        salFree(dspVoice[i].aux);
     }
 
-    for (i = 0; i < lbl_8064D4E4; i++) {
-        fn_801CE358(lbl_80628CB0[i].small);
-        fn_801CE358(lbl_80628CB0[i].arena);
+    for (i = 0; i < salMaxStudioNum; i++) {
+        salFree(dspStudio[i].small);
+        salFree(dspStudio[i].arena);
     }
 
-    fn_801CE358(lbl_8064D4A8);
-    fn_801CE358(lbl_8064D4AC);
-    fn_801CE358(lbl_8064D4A4);
-    fn_801CE358(lbl_8064D498);
+    salFree(dspITDBuffer);
+    salFree(dspVoice);
+    salFree(dspSurround);
+    salFree(dspCmdList);
     return 1;
 }

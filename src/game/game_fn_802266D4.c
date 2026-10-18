@@ -3,7 +3,7 @@ typedef unsigned short u16;
 
 extern volatile u16 *__peReg;
 
-void fn_802266D4(int compare, u8 threshold)
+void GXPokeAlphaMode(int compare, u8 threshold)
 {
     __peReg[3] = (compare << 8) | threshold;
 }

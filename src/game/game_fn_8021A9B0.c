@@ -8,7 +8,7 @@ extern BOOL OSRestoreInterrupts(BOOL level);
 volatile u16 __DSPRegs[] : 0xCC005000;
 
 /* ARStartDMA */
-void fn_8021A9B0(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)
+void ARStartDMA(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)
 {
     BOOL enabled = OSDisableInterrupts();
 

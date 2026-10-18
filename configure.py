@@ -203,8 +203,8 @@ config.custom_build_rules = [
         "name": "externalize_game_801B7A7C_data",
         "command": (
             "build/binutils/powerpc-eabi-objcopy "
-            "--redefine-sym=...bss.0=lbl_80619860 --globalize-symbol=lbl_80619860 $in && "
-            f"python3 tools/undefine_elf_static_pool.py $in lbl_80619860 config/{VERSION}/symbols.txt && "
+            "--redefine-sym=...bss.0=synthTicksPerSecond --globalize-symbol=synthTicksPerSecond $in && "
+            f"python3 tools/undefine_elf_static_pool.py $in synthTicksPerSecond config/{VERSION}/symbols.txt && "
             "python3 tools/externalize_elf_symbol.py $in @76 lbl_80650F00 "
             f"orig/{VERSION}/sys/main.dol --require-whole-section "
             "--require-section=.sdata2 --reject-section-relocations && "
@@ -3069,8 +3069,8 @@ config.custom_build_rules = [
             "orig/GEDE01/sys/main.dol --require-whole-section && "
             "build/binutils/powerpc-eabi-objcopy "
             "--redefine-sym=@160=jumptable_80252110 --remove-section=.data "
-            "--redefine-sym=...bss.0=lbl_8060C020 --globalize-symbol=lbl_8060C020 $in && "
-            f"python3 tools/undefine_elf_static_pool.py $in lbl_8060C020 config/{VERSION}/symbols.txt && "
+            "--redefine-sym=...bss.0=seqNote --globalize-symbol=seqNote $in && "
+            f"python3 tools/undefine_elf_static_pool.py $in seqNote config/{VERSION}/symbols.txt && "
             "build/binutils/powerpc-eabi-objcopy --rename-section=.comment=.ignored $in && touch $out"
         ),
         "description": "EXTERNALIZE $in",
@@ -4317,7 +4317,7 @@ config.custom_build_rules.append(
             "build/binutils/powerpc-eabi-objcopy "
             "--add-symbol=lbl_8064D4E0=.text:0,global,object $in) && "
             "python3 tools/retarget_undefined_elf_relocation.py $in "
-            "lbl_8064D4DC 4 lbl_8064D4E0 0x8064D4E0 0 R_PPC_EMB_SDA21 "
+            "salHooks 4 lbl_8064D4E0 0x8064D4E0 0 R_PPC_EMB_SDA21 "
             f"config/{VERSION}/symbols.txt && touch -r $out $in && touch $out"
         ),
         "description": "SPLIT SBSS SYMBOL $in",
@@ -4527,7 +4527,7 @@ config.custom_build_steps = {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801C3278.externalized"],
             "rule": "externalize_game_static_pool",
             "inputs": [f"build/{VERSION}/src/game/game_fn_801C3278.o"],
-            "variables": {"symbol": "lbl_80627D60"},
+            "variables": {"symbol": "vs"},
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801A7958.externalized"],
@@ -4854,7 +4854,7 @@ config.custom_build_steps = {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801B58F0.externalized"],
             "rule": "externalize_game_static_pool",
             "inputs": [f"build/{VERSION}/src/game/game_fn_801B58F0.o"],
-            "variables": {"symbol": "lbl_8060C020"},
+            "variables": {"symbol": "seqNote"},
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801B9E7C.externalized"],
@@ -4919,7 +4919,7 @@ config.custom_build_steps = {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801CE09C.externalized"],
             "rule": "externalize_game_static_pool",
             "inputs": [f"build/{VERSION}/src/game/game_fn_801CE09C.o"],
-            "variables": {"symbol": "lbl_80631340"},
+            "variables": {"symbol": "dsp_task"},
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_InitMetroTRKCommTable.renamed"],
@@ -4930,7 +4930,7 @@ config.custom_build_steps = {
             "outputs": [f"build/{VERSION}/src/game/game_fn_8010242C.externalized"],
             "rule": "externalize_game_static_pool",
             "inputs": [f"build/{VERSION}/src/game/game_fn_8010242C.o"],
-            "variables": {"symbol": "lbl_8032CC08"},
+            "variables": {"symbol": "clipTable"},
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801CB4F8.externalized"],
@@ -6626,7 +6626,7 @@ config.custom_build_steps = {
                     "outputs": [f"build/{VERSION}/src/game/game_fn_801C4B5C.externalized"],
                     "rule": "externalize_game_static_pool",
                     "inputs": [f"build/{VERSION}/src/game/game_fn_801C4B5C.o"],
-                    "variables": {"symbol": "lbl_80628CB0"},
+                    "variables": {"symbol": "dspStudio"},
                 },
         {
                     "outputs": [f"build/{VERSION}/src/game/game_fn_801C8600.externalized"],
@@ -15985,7 +15985,7 @@ config.libs = [
             Object(NonMatching, "dolphin/os/fn_80209E04.c"),
             Object(NonMatching, "dolphin/os/fn_8020A19C.c"),
             Object(NonMatching, "dolphin/os/fn_8020A41C.c"),
-            Object(NonMatching, "dolphin/os/fn_8020A440.c"),
+            Object(NonMatching, "dolphin/os/__OSDBJump.c"),
             Object(NonMatching, "dolphin/os/fn_8020A444.c"),
             Object(NonMatching, "dolphin/os/fn_8020A460.c"),
             Object(Matching, "dolphin/os/OSArena.c"),
@@ -16031,7 +16031,7 @@ config.libs = [
         "progress_category": "sdk",
         "objects": [
             Object(Matching, "dolphin/db/fn_80209B8C.c"),
-            Object(Matching, "dolphin/db/fn_80209BB4.c"),
+            Object(Matching, "dolphin/db/__DBExceptionDestinationAux.c"),
             Object(NonMatching, "dolphin/db/fn_80209BFC.c"),
             Object(Matching, "dolphin/db/fn_80209C0C.c"),
             Object(Matching, "dolphin/db/fn_80209C28.c"),

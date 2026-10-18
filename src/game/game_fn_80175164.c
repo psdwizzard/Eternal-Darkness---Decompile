@@ -1,13 +1,13 @@
 extern void fn_801FD240(void);
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern const char lbl_8024FF00[];
 
 int fn_80175164(void* state)
 {
     fn_801FD240();
-    if (fn_8016A598(state) != 0) {
-        fn_80163BB4(state, lbl_8024FF00, 0, fn_8016A598(state));
+    if (lua_gettop(state) != 0) {
+        luaO_verror(state, lbl_8024FF00, 0, lua_gettop(state));
         return 0;
     }
 

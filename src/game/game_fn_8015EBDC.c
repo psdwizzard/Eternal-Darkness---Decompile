@@ -7,7 +7,7 @@ typedef struct Object {
     Owner* owner;
 } Object;
 
-int fn_8015EBDC(Object* object, int index)
+int luaK_getjump(Object* object, int index)
 {
     int result = -1;
     int offset = (object->owner->entries[index] >> 6) - 0x2000000 + 1;

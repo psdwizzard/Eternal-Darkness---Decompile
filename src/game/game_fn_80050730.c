@@ -5,8 +5,8 @@ typedef unsigned int u32;
 #pragma use_lmw_stmw on
 
 extern int fn_801A9EF4(int low, int high);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern u32 lbl_8064E4B4;
 extern u16 lbl_8064E4B8;
 
@@ -34,13 +34,13 @@ u16 fn_80050730(int type, int mode, u8* out_level, u8* out_flags,
         break;
     case 47:
         result = (u16)fn_801A9EF4(176, 180);
-        level = (u8)((fn_800FBFB0() & 31) + 50);
+        level = (u8)((rand() & 31) + 50);
         flags = 2;
         time = 300;
         break;
     case 50:
         result = (u16)fn_801A9EF4(196, 199);
-        level = (u8)((fn_800FBFB0() & 31) + 40);
+        level = (u8)((rand() & 31) + 40);
         flags = 2;
         time = 600;
         break;
@@ -50,20 +50,20 @@ u16 fn_80050730(int type, int mode, u8* out_level, u8* out_flags,
         *(u32*)values = lbl_8064E4B4;
         values[2] = lbl_8064E4B8;
         result = values[fn_801A9EF4(0, 2)];
-        level = (u8)((fn_800FBFB0() & 31) + 40);
+        level = (u8)((rand() & 31) + 40);
         flags = 2;
         time = 600;
         break;
     }
     case 58:
         result = 274;
-        level = (u8)((fn_800FBFB0() & 31) + 40);
+        level = (u8)((rand() & 31) + 40);
         flags = 2;
         time = 600;
         break;
     case 83:
         result = (u16)fn_801A9EF4(570, 572);
-        level = (u8)((fn_800FBFB0() & 15) + 30);
+        level = (u8)((rand() & 15) + 30);
         flags = 2;
         time = 600;
         break;

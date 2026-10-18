@@ -17,7 +17,7 @@ typedef struct Object800A1DA0 {
     u16 timer;
 } Object800A1DA0;
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void* fn_80201B3C();
 extern void fn_80201E78(Vec3*, void*);
 extern int fn_801AC9F4(u16, int, Vec3*, int);
@@ -35,7 +35,7 @@ int fn_800A1DA0(Object800A1DA0* object, u8 chance)
 
     if (threshold == 0xFF || current->timer == 0) {
         if (current->index >= 0) {
-            u8 random = (u8)fn_800FBFB0();
+            u8 random = (u8)rand();
             if (threshold != 0 && random <= threshold) {
                 u8* entry = current->data;
                 u32 value;

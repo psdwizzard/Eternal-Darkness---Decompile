@@ -1,14 +1,14 @@
 extern int lbl_805FAAD8[1537];
-extern void* lbl_8064C3C8;
+extern void* __OSCurrHeap;
 extern int lbl_8064D1B8;
 extern char* lbl_8064D1C8;
 extern char lbl_8024FEDC[];
 
-extern void fn_8020AFE4(void*);
+extern void OSCheckHeap(void*);
 extern void* memset(void*, int, unsigned int);
 extern void* memcpy(void*, const void*, unsigned int);
 
-void* fn_8016B5CC(void* context, void* allocation, int size,
+void* luaM_realloc(void* context, void* allocation, int size,
                   const char* file, int line)
 {
     int words;
@@ -17,7 +17,7 @@ void* fn_8016B5CC(void* context, void* allocation, int size,
     void* replacement;
     int value;
 
-    fn_8020AFE4(lbl_8064C3C8);
+    OSCheckHeap(__OSCurrHeap);
 
     if (size < 0) {
         lbl_8064D1B8 = 0;
@@ -74,14 +74,14 @@ void* fn_8016B5CC(void* context, void* allocation, int size,
             allocation = 0;
         } else {
             words *= 4;
-            replacement = fn_8016B5CC(context, 0, words, lbl_8024FEDC, 0x36F);
+            replacement = luaM_realloc(context, 0, words, lbl_8024FEDC, 0x36F);
             memcpy(replacement, allocation, words);
-            fn_8016B5CC(context, allocation, 0, lbl_8024FEDC, 0x371);
+            luaM_realloc(context, allocation, 0, lbl_8024FEDC, 0x371);
             allocation = replacement;
         }
     }
 
 done:
-    fn_8020AFE4(lbl_8064C3C8);
+    OSCheckHeap(__OSCurrHeap);
     return allocation;
 }

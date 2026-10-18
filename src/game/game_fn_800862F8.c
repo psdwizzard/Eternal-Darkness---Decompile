@@ -82,8 +82,8 @@ struct Entry80201814;
 extern struct Entry80201814 *fn_80201814(int);
 extern int fn_802019EC(int, int);
 extern void *fn_80201BC8(void *);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
 
 /* Load the two named points using the caller's point cursor. */
 static inline void load_endpoints(Vec3 *output, ShortVec3 **source,
@@ -176,7 +176,7 @@ void fn_800862F8(void)
         }
         clip_segment(&lbl_8031CBA0.clipped, &lbl_8031CBA0.start,
                      &lbl_8031CBA0.end);
-        fn_80211A6C(&lbl_8031CBA0.clipped, &lbl_8031CBA0.start, &direction);
+        PSVECSubtract(&lbl_8031CBA0.clipped, &lbl_8031CBA0.start, &direction);
         /* Preserve the order of the two radius reads. */
         initial_radius = *(volatile const float *)&lbl_8064EB48;
         final_radius = *(volatile const float *)&lbl_8064EA08;
@@ -198,7 +198,7 @@ void fn_800862F8(void)
         }
         chain[0] = lbl_8031CBA0.clipped;
         clip_segment_to(&clipped[0], &chain[0], &chain[1]);
-        fn_80211A6C(&clipped[0], &chain[0], &direction);
+        PSVECSubtract(&clipped[0], &chain[0], &direction);
         draw_segment(&chain[0], &direction, &clipped[0], chain_color, 100,
                      lbl_8064EB4C, lbl_8064EB4C);
         if (lbl_8031CBA0.first_blocked != 0 ||
@@ -207,7 +207,7 @@ void fn_800862F8(void)
             break;
         }
         clip_segment(&clipped[1], &chain[1], &chain[2]);
-        fn_80211A6C(&clipped[1], first_point[0], &direction);
+        PSVECSubtract(&clipped[1], first_point[0], &direction);
         draw_segment(first_point[0], &direction, &clipped[1], chain_color, 100,
                      lbl_8064EB4C, lbl_8064EB4C);
         if (lbl_8031CBA0.second_blocked != 0 ||
@@ -219,7 +219,7 @@ void fn_800862F8(void)
         if (fn_80178E94(&clipped[2].x, &chain[3].x) >= 30) {
             lbl_8031CBA0.chain_active = 0;
         }
-        fn_80211A6C(&clipped[2], &chain[2], &direction);
+        PSVECSubtract(&clipped[2], &chain[2], &direction);
         draw_segment(&chain[2], &direction, &clipped[2], chain_color, 100,
                      lbl_8064EB4C, lbl_8064EB4C);
         break;
@@ -236,7 +236,7 @@ void fn_800862F8(void)
         endpoint_direction.x = endpoints[1].x - endpoints[0].x;
         endpoint_direction.y = endpoints[1].y - endpoints[0].y;
         endpoint_direction.z = endpoints[1].z - endpoints[0].z;
-        fn_80211AAC(&endpoint_direction, &endpoint_direction);
+        PSVECNormalize(&endpoint_direction, &endpoint_direction);
         if (entry != 0) {
             object = fn_80201BC8(entry);
             if (object != 0 && (mask = fn_8013638C(&endpoints[0], &endpoints[1],
@@ -285,7 +285,7 @@ void fn_800862F8(void)
                     beam_end.z = (*source_controller)->direction.z * beam_fraction +
                                  (*source_controller)->position.z;
                 }
-                fn_80211A6C(&beam_end, &(*source_controller)->position, &beam_direction);
+                PSVECSubtract(&beam_end, &(*source_controller)->position, &beam_direction);
                 draw_segment(&(*source_controller)->position, &beam_direction, &beam_end,
                              beam_color, beam_color.rgba.a,
                              lbl_8064EB4C, lbl_8064EB4C);

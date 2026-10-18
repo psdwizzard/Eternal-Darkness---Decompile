@@ -1,9 +1,9 @@
 typedef float Matrix34[3][4];
 
-extern void fn_80211484(Matrix34, float, float, float);
-extern void fn_80211268(Matrix34, int, float);
-extern void fn_80210FDC(Matrix34, Matrix34, Matrix34);
-extern void fn_8022B748(Matrix34, int, int);
+extern void PSMTXTrans(Matrix34, float, float, float);
+extern void PSMTXRotRad(Matrix34, int, float);
+extern void PSMTXConcat(Matrix34, Matrix34, Matrix34);
+extern void GXLoadTexMtxImm(Matrix34, int, int);
 extern int* fn_801EF2B0(void);
 extern void fn_801EDEC4(int, int, int, int);
 
@@ -20,13 +20,13 @@ void fn_8018D2E0(float value)
     angle = value;
     value = -0.5f;
     scale = value;
-    fn_80211484(first, scale, scale, 0.0f);
-    fn_80211268(second, 0x5A, angle);
-    fn_80210FDC(second, first, result);
+    PSMTXTrans(first, scale, scale, 0.0f);
+    PSMTXRotRad(second, 0x5A, angle);
+    PSMTXConcat(second, first, result);
     scale = 0.5f;
-    fn_80211484(first, scale, scale, 0.0f);
-    fn_80210FDC(first, result, second);
-    fn_8022B748(second, 0x1E, 1);
+    PSMTXTrans(first, scale, scale, 0.0f);
+    PSMTXConcat(first, result, second);
+    GXLoadTexMtxImm(second, 0x1E, 1);
 
     states = fn_801EF2B0();
     for (index = 0; index < 8; index++) {

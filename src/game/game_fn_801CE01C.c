@@ -1,6 +1,6 @@
-extern void fn_8021A110(void);
+extern void AIStartDMA(void);
 
-void fn_801CE01C(void)
+void salStartAi(void)
 {
-    fn_8021A110();
+    AIStartDMA();
 }

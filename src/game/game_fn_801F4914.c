@@ -18,8 +18,8 @@ extern void* lbl_8064C4E4;
 extern Vec3 lbl_802FC678;
 
 extern void fn_8011F114(Vec3*, void*);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B08(Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern float PSVECMag(Vec3*);
 
 float fn_801F4914(void)
 {
@@ -35,8 +35,8 @@ float fn_801F4914(void)
 
         fn_8011F114(&source, lbl_8064C4E4);
         transformed = source;
-        fn_80211A6C(&lbl_802FC678, &transformed, &transformed);
-        length = fn_80211B08(&transformed);
+        PSVECSubtract(&lbl_802FC678, &transformed, &transformed);
+        length = PSVECMag(&transformed);
         if (distance > length) {
             float value;
 

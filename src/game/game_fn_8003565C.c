@@ -25,8 +25,8 @@ extern int fn_80201B54();
 extern void fn_8011F114();
 extern u32 fn_80178E94(const Vec3*, const Vec3*);
 extern unsigned long long fn_8020123C();
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 s32 fn_8003565C(register void* target, register s32* selected)
 {
@@ -91,7 +91,7 @@ s32 fn_8003565C(register void* target, register s32* selected)
                     count++;
                     if (selected != 0 && *selected == 0) {
                         *selected = candidate_id;
-                    } else if (selected != 0 && (fn_800FBFB0() & 3) != 0) {
+                    } else if (selected != 0 && (rand() & 3) != 0) {
                         *selected = candidate_id;
                     }
                 }

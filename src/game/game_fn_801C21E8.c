@@ -24,15 +24,15 @@ typedef struct HandleInfo {
     u32 first;
 } HandleInfo;
 
-extern u8 lbl_8064D3A0;
-extern Voice* lbl_8064D3D0;
-extern HandleInfo* fn_801C1038(u32);
-extern void fn_801C106C(Voice*);
-extern void fn_801C1BCC(Voice*);
-extern void fn_801B9C98(u32);
-extern void fn_801CC8C4(u32);
+extern u8 sndActive;
+extern Voice* synthVoice;
+extern HandleInfo* get_vidlist(u32);
+extern void vidRemoveVoiceReferences(Voice*);
+extern void voiceFree(Voice*);
+extern void streamKill(u32);
+extern void hwBreak(u32);
 
-s32 fn_801C21E8(u32 handle)
+s32 voiceKillSound(u32 handle)
 {
     Voice* voice;
     s32 result = -1;
@@ -40,27 +40,27 @@ s32 fn_801C21E8(u32 handle)
     u32 slot;
     HandleInfo* info;
 
-    if (lbl_8064D3A0 != 0) {
-        if (handle != (u32)-1 && (info = fn_801C1038(handle)) != 0) {
+    if (sndActive != 0) {
+        if (handle != (u32)-1 && (info = get_vidlist(handle)) != 0) {
             handle = info->first;
         } else {
             handle = -1;
         }
         while (handle != (u32)-1) {
             slot = (u8)handle;
-            voice = &lbl_8064D3D0[slot];
+            voice = &synthVoice[slot];
             next = voice->next;
             if (handle == voice->index) {
                 if (voice->active != 0) {
-                    fn_801C106C(voice);
+                    vidRemoveVoiceReferences(voice);
                     voice->field_114 &= 0xFFFFFFFFFFFFFFFCULL;
                     voice->field_110 = 0;
-                    fn_801C1BCC(voice);
+                    voiceFree(voice);
                 }
                 if (voice->flag_11C != 0) {
-                    fn_801B9C98(slot);
+                    streamKill(slot);
                 }
-                fn_801CC8C4(slot);
+                hwBreak(slot);
                 result = 0;
             }
             handle = next;

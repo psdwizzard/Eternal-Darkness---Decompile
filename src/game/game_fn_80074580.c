@@ -12,14 +12,14 @@ typedef struct State {
 } State;
 
 extern void fn_8011F114();
-extern void fn_80211A6C();
-extern float fn_80211AF0(const Vec3 *);
+extern void PSVECSubtract();
+extern float PSVECSquareMag(const Vec3 *);
 extern void *fn_80137FB8(void *);
 extern void fn_8012B7D0(void *, Vec3 *);
 extern void fn_8017AB08(const Vec3 *, Vec3 *);
-extern void fn_80211A48(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
-extern void fn_80211A90(const Vec3 *, Vec3 *, float);
+extern void PSVECAdd(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, float);
 extern Vec3 lbl_80239194;
 extern const float lbl_8064E894;
 extern const float lbl_8064E898;
@@ -45,18 +45,18 @@ int fn_80074580(void *object, void *other, Vec3 *position, State *state,
     fn_8011F114(&object_position, object);
     *position_r = object_position;
     fn_8011F114(&other_position, other_r);
-    fn_80211A6C(&other_position, position_r, &direction);
-    if (fn_80211AF0(&direction) > lbl_8064E894) {
+    PSVECSubtract(&other_position, position_r, &direction);
+    if (PSVECSquareMag(&direction) > lbl_8064E894) {
         handle = fn_80137FB8(state_r->handle);
         if (handle != 0) {
             handle_position = *(Vec3 *)handle;
             fn_8012B7D0(other_r, &handle_position);
             fn_8017AB08(&constant, &transformed);
-            fn_80211A48(&other_position, &transformed, result_r);
+            PSVECAdd(&other_position, &transformed, result_r);
         } else {
-            fn_80211AAC(&direction, &scaled);
-            fn_80211A90(&scaled, &scaled, lbl_8064E898);
-            fn_80211A48(&other_position, &scaled, result_r);
+            PSVECNormalize(&direction, &scaled);
+            PSVECScale(&scaled, &scaled, lbl_8064E898);
+            PSVECAdd(&other_position, &scaled, result_r);
         }
         found = 1;
     } else {

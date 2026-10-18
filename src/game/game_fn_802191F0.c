@@ -24,51 +24,51 @@ extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
 extern u32 SIGetType(s32);
 extern s32 SITransfer(s32, void*, u32, void*, u32, SICallback, s64);
-extern s32 fn_802082D4(s32);
-extern u32 fn_80208E58(s32);
-extern u32 fn_80209000(u32);
-extern s32 fn_80209140(s32, void*);
-extern u32 fn_80209858(s32, SITypeCallback);
-extern void fn_8020EEA8(s32, u16);
-extern void fn_802187E4(s32, u32, void*);
-extern void fn_8021897C(s32, u32);
-extern void fn_80218CA8(s32, u32);
+extern s32 SIIsChanBusy(s32);
+extern u32 SIGetStatus(s32);
+extern u32 SIDisablePolling(u32);
+extern s32 SIGetResponse(s32, void*);
+extern u32 SIGetTypeAsync(s32, SITypeCallback);
+extern void OSSetWirelessID(s32, u16);
+extern void PADOriginUpdateCallback(s32, u32, void*);
+extern void PADTypeAndStatusCallback(s32, u32);
+extern void PADReceiveCheckCallback(s32, u32);
 extern void* memset(void*, int, unsigned int);
 
-extern s32 lbl_8064C428;
-extern u32 lbl_8064C434;
-extern void (*lbl_8064C438)(s32, PadStatus*, u32*);
-extern u32 lbl_8064C43C;
-extern u32 lbl_8064DAB4;
-extern u32 lbl_8064DAB8;
-extern u32 lbl_8064DABC;
-extern u32 lbl_8064DAC0;
-extern u32 lbl_8064DAC4;
-extern u32 lbl_8064DAC8;
-extern PadStatus lbl_80641C20[4];
+extern s32 ResettingChan;
+extern u32 Spec;
+extern void (*MakeStatus)(s32, PadStatus*, u32*);
+extern u32 CmdReadOrigin;
+extern u32 EnabledBits;
+extern u32 ResettingBits;
+extern u32 RecalibrateBits;
+extern u32 WaitingBits;
+extern u32 CheckingBits;
+extern u32 PendingBits;
+extern PadStatus Origin[4];
 
 static inline int ResetPending(PadStatus *origin, u32 pending)
 {
     u32 result;
     int enabled2;
     enabled2 = OSDisableInterrupts();
-    pending |= lbl_8064DAC8;
-    pending &= ~(lbl_8064DAC0 | lbl_8064DAC4);
+    pending |= PendingBits;
+    pending &= ~(WaitingBits | CheckingBits);
 
-    lbl_8064DAB8 |= pending;
-    lbl_8064DAC8 = 0;
-    result = lbl_8064DAB8 & lbl_8064DAB4;
-    lbl_8064DAB4 &= ~pending;
-    if (lbl_8064C434 == 4) {
-        lbl_8064DABC |= pending;
+    ResettingBits |= pending;
+    PendingBits = 0;
+    result = ResettingBits & EnabledBits;
+    EnabledBits &= ~pending;
+    if (Spec == 4) {
+        RecalibrateBits |= pending;
     }
-    fn_80209000(result);
-    if (lbl_8064C428 == 0x20) {
-        lbl_8064C428 = __cntlzw(lbl_8064DAB8);
-        if (lbl_8064C428 != 32) {
-            lbl_8064DAB8 &= ~(0x80000000U >> lbl_8064C428);
-            memset(&origin[lbl_8064C428], 0, 0xC);
-            fn_80209858(lbl_8064C428, fn_8021897C);
+    SIDisablePolling(result);
+    if (ResettingChan == 0x20) {
+        ResettingChan = __cntlzw(ResettingBits);
+        if (ResettingChan != 32) {
+            ResettingBits &= ~(0x80000000U >> ResettingChan);
+            memset(&origin[ResettingChan], 0, 0xC);
+            SIGetTypeAsync(ResettingChan, PADTypeAndStatusCallback);
         }
     }
     OSRestoreInterrupts(enabled2);
@@ -79,16 +79,16 @@ static inline void DisableChannel(s32 chan)
 {
     int enabled2 = OSDisableInterrupts();
     u32 flags = 0x80000000U >> chan;
-    fn_80209000(flags);
-    lbl_8064DAB4 &= ~flags;
-    lbl_8064DAC0 &= ~flags;
-    lbl_8064DAC4 &= ~flags;
-    lbl_8064DAC8 &= ~flags;
-    fn_8020EEA8(chan, 0);
+    SIDisablePolling(flags);
+    EnabledBits &= ~flags;
+    WaitingBits &= ~flags;
+    CheckingBits &= ~flags;
+    PendingBits &= ~flags;
+    OSSetWirelessID(chan, 0);
     OSRestoreInterrupts(enabled2);
 }
 
-s32 fn_802191F0(PadStatus* status)
+s32 PADRead(PadStatus* status)
 {
     int enabled;
     s32 chan;
@@ -106,27 +106,27 @@ s32 fn_802191F0(PadStatus* status)
     for (chan = 0; chan < 4; chan++, status++) {
         flags = channelMask >> chan;
 
-        if (lbl_8064DAC8 & flags) {
-            ResetPending(lbl_80641C20, 0);
+        if (PendingBits & flags) {
+            ResetPending(Origin, 0);
             status->err = -2;
             memset(status, 0, 0xA);
-        } else if ((lbl_8064DAB8 & flags) || lbl_8064C428 == chan) {
+        } else if ((ResettingBits & flags) || ResettingChan == chan) {
             status->err = -2;
             memset(status, 0, 0xA);
-        } else if (!(lbl_8064DAB4 & flags)) {
+        } else if (!(EnabledBits & flags)) {
             status->err = -1;
             memset(status, 0, 0xA);
-        } else if (fn_802082D4(chan)) {
+        } else if (SIIsChanBusy(chan)) {
             status->err = -3;
             memset(status, 0, 0xA);
-        } else if (fn_80208E58(chan) & 8) {
-            fn_80209140(chan, response);
-            if (lbl_8064DAC0 & flags) {
+        } else if (SIGetStatus(chan) & 8) {
+            SIGetResponse(chan, response);
+            if (WaitingBits & flags) {
                 status->err = 0;
                 memset(status, 0, 0xA);
-                if (!(lbl_8064DAC4 & flags)) {
-                    lbl_8064DAC4 |= flags;
-                    fn_80209858(chan, fn_80218CA8);
+                if (!(CheckingBits & flags)) {
+                    CheckingBits |= flags;
+                    SIGetTypeAsync(chan, PADReceiveCheckCallback);
                 }
             } else {
                 DisableChannel(chan);
@@ -138,19 +138,19 @@ s32 fn_802191F0(PadStatus* status)
             if (!(type & 0x20000000)) {
                 invalidChannels |= flags;
             }
-            if (!fn_80209140(chan, response)) {
+            if (!SIGetResponse(chan, response)) {
                 status->err = -3;
                 memset(status, 0, 0xA);
             } else if (response[0] & 0x80000000) {
                 status->err = -3;
                 memset(status, 0, 0xA);
             } else {
-                lbl_8064C438(chan, status, response);
+                MakeStatus(chan, status, response);
                 if (status->button & 0x2000) {
                     status->err = -3;
                     memset(status, 0, 0xA);
-                    SITransfer(chan, &lbl_8064C43C, 1, &lbl_80641C20[chan], 0xA,
-                               fn_802187E4, 0);
+                    SITransfer(chan, &CmdReadOrigin, 1, &Origin[chan], 0xA,
+                               PADOriginUpdateCallback, 0);
                 } else {
                     status->err = 0;
                     status->button &= ~0x80;

@@ -7,10 +7,10 @@ typedef struct Entry {
     u8 pad34[0xC0];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
-extern u8 lbl_8064D4D8;
+extern Entry* dspVoice;
+extern u8 salTimeOffset;
 
-void fn_801CCB70(u32 index)
+void hwKeyOff(u32 index)
 {
-    lbl_8064D4AC[index].flags[lbl_8064D4D8] |= 0x40;
+    dspVoice[index].flags[salTimeOffset] |= 0x40;
 }

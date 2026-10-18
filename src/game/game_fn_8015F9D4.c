@@ -64,17 +64,17 @@ enum OpCode {
 
 #define MULT_RET 255
 
-extern OpProperties lbl_8024F3AC[];
+extern OpProperties luaK_opproperties[];
 extern char lbl_8024F2D4[];
-extern Instruction fn_8015EAA0(FuncState*);
-extern void fn_8015EC60(FuncState*, int);
-extern void fn_8015F8B4(FuncState*);
-extern Instruction* fn_8016393C(void*, Instruction*, int, int, int, const char*, int);
+extern Instruction previous_instruction(FuncState*);
+extern void luaK_deltastack(FuncState*, int);
+extern void codelineinfo(FuncState*);
+extern Instruction* luaM_growaux(void*, Instruction*, int, int, int, const char*, int);
 
-int fn_8015F9D4(FuncState* fs, int o, int arg1, int arg2)
+int luaK_code2(FuncState* fs, int o, int arg1, int arg2)
 {
-    Instruction i = fn_8015EAA0(fs);
-    int delta = lbl_8024F3AC[o].push - lbl_8024F3AC[o].pop;
+    Instruction i = previous_instruction(fs);
+    int delta = luaK_opproperties[o].push - luaK_opproperties[o].pop;
     int optm = 0;
 
     switch (o) {
@@ -215,7 +215,7 @@ int fn_8015F9D4(FuncState* fs, int o, int arg1, int arg2)
         case OP_PUSHNIL:
             if (GETARG_U(i) == 1) {
                 fs->pc--;
-                fn_8015EC60(fs, -1);
+                luaK_deltastack(fs, -1);
                 return NO_JUMP;
             }
             break;
@@ -232,7 +232,7 @@ int fn_8015F9D4(FuncState* fs, int o, int arg1, int arg2)
             break;
         case OP_PUSHINT:
             fs->pc--;
-            fn_8015EC60(fs, -1);
+            luaK_deltastack(fs, -1);
             return NO_JUMP;
         case OP_PUSHNIL:
             if (GETARG_U(i) == 1) {
@@ -252,19 +252,19 @@ int fn_8015F9D4(FuncState* fs, int o, int arg1, int arg2)
     default:
         break;
     }
-    fn_8015EC60(fs, delta);
+    luaK_deltastack(fs, delta);
     if (optm) {
         fs->f->code[fs->pc - 1] = i;
         return fs->pc - 1;
     }
-    switch ((enum Mode)lbl_8024F3AC[o].mode) {
+    switch ((enum Mode)luaK_opproperties[o].mode) {
     case iO: i = CREATE_0(o); break;
     case iU: i = CREATE_U(o, arg1); break;
     case iS: i = CREATE_S(o, arg1); break;
     case iAB: i = CREATE_AB(o, arg1, arg2); break;
     }
-    fn_8015F8B4(fs);
-    fs->f->code = fn_8016393C(fs->L, fs->f->code, fs->pc, 1, sizeof(Instruction),
+    codelineinfo(fs);
+    fs->f->code = luaM_growaux(fs->L, fs->f->code, fs->pc, 1, sizeof(Instruction),
                               lbl_8024F2D4, MAX_INT);
     fs->f->code[fs->pc] = i;
     return fs->pc++;

@@ -49,15 +49,15 @@ typedef struct CARDControl {
     u32 sectorSize;
 } CARDControl;
 
-extern s32 fn_8021D2BC(s32 chan, CARDControl **outCard);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern s32 fn_80221498();
-extern s32 fn_80221530(CARDDir *entry);
-extern void fn_802224EC(Desc *desc, Layout *out);
+extern s32 __CARDGetControlBlock(s32 chan, CARDControl **outCard);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern s32 __CARDAccess();
+extern s32 __CARDIsPublic(CARDDir *entry);
+extern void UpdateIconOffsets(Desc *desc, Layout *out);
 extern void *memcpy(void *dst, const void *src, unsigned long size);
 
-s32 fn_802226E4(s32 chan, s32 fileNo, Layout *stat)
+s32 CARDGetStatus(s32 chan, s32 fileNo, Layout *stat)
 {
     CARDControl *card;
     CARDDir *entry;
@@ -66,14 +66,14 @@ s32 fn_802226E4(s32 chan, s32 fileNo, Layout *stat)
     if (fileNo < 0 || fileNo >= 0x7F) {
         return -128;
     }
-    result = fn_8021D2BC(chan, &card);
+    result = __CARDGetControlBlock(chan, &card);
     if (result < 0) {
         return result;
     }
-    entry = &fn_8021EF3C(card)[fileNo];
-    result = fn_80221498(card, entry);
+    entry = &__CARDGetDirBlock(card)[fileNo];
+    result = __CARDAccess(card, entry);
     if (result == -10) {
-        result = fn_80221530(entry);
+        result = __CARDIsPublic(entry);
     }
     if (result >= 0) {
         memcpy(stat->pad0 + 0x28, entry, 4);
@@ -86,7 +86,7 @@ s32 fn_802226E4(s32 chan, s32 fileNo, Layout *stat)
         stat->unk34 = entry->iconFormat;
         stat->unk36 = entry->iconSpeed;
         *(u32 *)stat->pad38 = entry->commentAddr;
-        fn_802224EC((Desc *)entry, stat);
+        UpdateIconOffsets((Desc *)entry, stat);
     }
-    return fn_8021D374(card, result);
+    return __CARDPutControlBlock(card, result);
 }

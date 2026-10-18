@@ -1,7 +1,7 @@
 typedef signed int s32;
 typedef unsigned int u32;
 
-extern const volatile double lbl_8023A0F8[13];
+extern const volatile double xxx[13];
 extern const double lbl_8064FD90;
 extern const double lbl_8064FD98;
 extern const double lbl_8064FDA0;
@@ -9,7 +9,7 @@ extern const double lbl_8064FDA8;
 extern const double lbl_8064FDB0;
 extern const double lbl_8064FDB8;
 
-double fn_80101408(s32 arg0, double farg0, double farg1) {
+double __kernel_tan(s32 arg0, double farg0, double farg1) {
     double sp18;
     double sp10;
     double sp8;
@@ -52,21 +52,21 @@ double fn_80101408(s32 arg0, double farg0, double farg1) {
     temp_f31 = temp_f13 * temp_f13;
     temp_f1 = temp_f13 * sp8;
     sp18 = temp_f13;
-    temp_f7 = temp_f31 * lbl_8023A0F8[12] + lbl_8023A0F8[10];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[8];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[6];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[4];
-    temp_f4 = temp_f31 * temp_f7 + lbl_8023A0F8[2];
+    temp_f7 = temp_f31 * xxx[12] + xxx[10];
+    temp_f7 = temp_f31 * temp_f7 + xxx[8];
+    temp_f7 = temp_f31 * temp_f7 + xxx[6];
+    temp_f7 = temp_f31 * temp_f7 + xxx[4];
+    temp_f4 = temp_f31 * temp_f7 + xxx[2];
     temp_f4 = temp_f13 * temp_f4;
-    temp_f7 = temp_f31 * lbl_8023A0F8[11] + lbl_8023A0F8[9];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[7];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[5];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[3];
-    temp_f7 = temp_f31 * temp_f7 + lbl_8023A0F8[1];
+    temp_f7 = temp_f31 * xxx[11] + xxx[9];
+    temp_f7 = temp_f31 * temp_f7 + xxx[7];
+    temp_f7 = temp_f31 * temp_f7 + xxx[5];
+    temp_f7 = temp_f31 * temp_f7 + xxx[3];
+    temp_f7 = temp_f31 * temp_f7 + xxx[1];
     temp_f4 = temp_f7 + temp_f4;
     temp_f4 = temp_f1 * temp_f4 + var_f2;
     temp_f6 = temp_f13 * temp_f4 + var_f2;
-    temp_f6 = lbl_8023A0F8[0] * temp_f1 + temp_f6;
+    temp_f6 = xxx[0] * temp_f1 + temp_f6;
     temp_f1 = sp8 + temp_f6;
     if (temp_r6 >= 0x3fe59428) {
         double temp;

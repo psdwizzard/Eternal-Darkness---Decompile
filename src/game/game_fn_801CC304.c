@@ -1,12 +1,12 @@
 typedef signed short s16;
 typedef unsigned int u32;
 
-extern s16 lbl_802533B8[];
+extern s16 sndSintab[];
 
-int fn_801CC304(u32 angle)
+int sndSin(u32 angle)
 {
     u32 index = angle & 0xFFF;
-    s16* table = lbl_802533B8;
+    s16* table = sndSintab;
 
     if (index < 0x400) {
         return table[index];

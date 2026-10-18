@@ -22,8 +22,8 @@ extern u32 lbl_8064D20C;
 extern u32 fn_8017B904(void);
 extern u32 fn_8017B9B4(void);
 extern void DCInvalidateRange(void*, u32);
-extern int fn_80221EBC(u8*, void*, u32, u32, int);
-extern u32 fn_8021EB20(u8);
+extern int CARDReadAsync(u8*, void*, u32, u32, int);
+extern u32 CARDGetXferredBytes(u8);
 
 void fn_8017C584(Request* request)
 {
@@ -34,12 +34,12 @@ void fn_8017C584(Request* request)
             DCInvalidateRange(lbl_8064A580.buffer, fn_8017B904());
             transfer_size = fn_8017B9B4();
             request->result =
-                fn_80221EBC(&lbl_8064A6C8[request->value * 20],
+                CARDReadAsync(&lbl_8064A6C8[request->value * 20],
                             lbl_8064A580.buffer, fn_8017B904(),
                             transfer_size, 0);
             if (request->result >= 0) {
                 (&lbl_8064D20C)[request->value] =
-                    fn_8021EB20(request->value);
+                    CARDGetXferredBytes(request->value);
                 request->state = 1;
             }
         }

@@ -12,7 +12,7 @@ extern GXData *gx;
 extern volatile u16 *__cpReg;
 
 /* __GXWriteFifoIntEnable: enable the FIFO watermark interrupts. */
-void fn_802244AC(u8 hiWatermarkEn, u8 loWatermarkEn)
+void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn)
 {
     gx->cpEnable = (gx->cpEnable & ~4UL) | (hiWatermarkEn << 2);
     gx->cpEnable = (gx->cpEnable & ~8UL) | (loWatermarkEn << 3);

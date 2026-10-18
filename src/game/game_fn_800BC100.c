@@ -33,7 +33,7 @@ typedef struct Candidate {
 } Candidate;
 
 extern void fn_800BCCC4(const short *source, Vec3 *result);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8013F3C0(Shape *out, const Vec3 *first, const Vec3 *second, float radius);
 extern void *fn_8015C2FC(int selector);
 extern void *fn_8013FBE4(Owner *owner, const void *value, Result *out,
@@ -79,7 +79,7 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
         for (count = 0; marker->position != 0 && count < 500; count++) {
             marker++;
         }
-        count = (int)fn_800FBFB0() % count;
+        count = (int)rand() % count;
         if (outIndex != 0) {
             *outIndex = count;
         }
@@ -106,7 +106,7 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
             }
         }
         if (total != 0) {
-            n = (int)fn_800FBFB0() % total;
+            n = (int)rand() % total;
             if (outIndex != 0) {
                 *outIndex = lbl_80320B98[n]->id;
             }

@@ -19,18 +19,18 @@ typedef struct PadStatus {
 
 extern u32 SIGetType(s32 chan);
 
-extern u32 lbl_8064C42C; /* XPatchBits */
-extern u32 lbl_8064C430; /* AnalogMode */
-extern PadStatus lbl_80641C20[4]; /* Origin */
+extern u32 XPatchBits; /* XPatchBits */
+extern u32 AnalogMode; /* AnalogMode */
+extern PadStatus Origin[4]; /* Origin */
 
 /* PAD UpdateOrigin */
-void fn_8021857C(s32 chan)
+void UpdateOrigin(s32 chan)
 {
     PadStatus* origin;
     u32 chanBit = 0x80000000 >> chan;
 
-    origin = &lbl_80641C20[chan];
-    switch (lbl_8064C430 & 0x700) {
+    origin = &Origin[chan];
+    switch (AnalogMode & 0x700) {
     case 0x000:
     case 0x500:
     case 0x600:
@@ -63,7 +63,7 @@ void fn_8021857C(s32 chan)
     origin->substickX -= 128;
     origin->substickY -= 128;
 
-    if (lbl_8064C42C & chanBit) {
+    if (XPatchBits & chanBit) {
         if (64 < origin->stickX && (SIGetType(chan) & 0xFFFF0000) == 0x09000000) {
             origin->stickX = 0;
         }

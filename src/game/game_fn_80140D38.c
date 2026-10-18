@@ -29,11 +29,11 @@ extern const float lbl_806503F0;
 extern const float lbl_806503F4;
 
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern int fn_801EDA7C(s16*, int, int, void*);
 extern void fn_801ECF50(u32);
-extern void fn_80226C18(int, int);
+extern void GXSetLineWidth(int, int);
 extern void fn_80140E70(const s16*, DebugMesh*, u8, int, u8);
 extern void fn_801ECD74(Color*);
 
@@ -46,11 +46,11 @@ void fn_80140D38(void)
 
     if ((signed char)lbl_8064D018 != 0) {
         fn_801ED468(0x1B);
-        fn_80226D28(0);
+        GXSetCullMode(0);
         fn_801ED118();
         fn_801EDA7C(lbl_802FC53C, 0, 0x2BF, 0);
         fn_801ECF50(4);
-        fn_80226C18(0x12, 0);
+        GXSetLineWidth(0x12, 0);
         for (i = 0; i < 6; i++) {
             DebugEntry* entry = &lbl_805B1268[i];
             if ((int)entry->active == 1) {
@@ -58,7 +58,7 @@ void fn_80140D38(void)
                     (u8)(lbl_806503F0 * ((float)entry->timer / lbl_806503F4)));
             }
         }
-        fn_80226D28(1);
+        GXSetCullMode(1);
         color = lbl_802FC5BC[3];
         fn_801ECD74(&color);
     }

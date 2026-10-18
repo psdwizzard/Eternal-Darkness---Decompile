@@ -1,4 +1,4 @@
-int fn_800F34C4(void)
+int TRKAcquireMutex(void)
 {
     return 0;
 }

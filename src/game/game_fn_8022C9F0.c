@@ -2,7 +2,7 @@ typedef unsigned short u16;
 
 extern volatile u16 *__memReg;
 
-void fn_8022C9F0(void)
+void PERFResetAllMemMetrics(void)
 {
     /* Clear the memory performance counter register pairs in hardware order. */
     __memReg[25] = 0;

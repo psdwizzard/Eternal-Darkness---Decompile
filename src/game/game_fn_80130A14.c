@@ -26,8 +26,8 @@ typedef struct DisplayListEntry {
     u32 unkC;
 } DisplayListEntry;
 
-extern volatile u32* fn_80224650(volatile u32*);
-extern void fn_80224754(void);
+extern volatile u32* GXRedirectWriteGatherPipe(volatile u32*);
+extern void GXRestoreWriteGatherPipe(void);
 extern u16 lbl_805AAE40[];
 
 u32 fn_80130A14(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled,
@@ -62,7 +62,7 @@ u32 fn_80130A14(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
     size = 0;
     prevKey = -1;
     count = *entryCount;
-    fifo = fn_80224650(buffer);
+    fifo = GXRedirectWriteGatherPipe(buffer);
 
     for (; groups != end; groups++, enabled++) {
         if (*enabled == 0) {
@@ -198,6 +198,6 @@ u32 fn_80130A14(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
         *entryCount = count;
         entries[count - 1].size = size - entries[count - 1].offset;
     }
-    fn_80224754();
+    GXRestoreWriteGatherPipe();
     return size;
 }

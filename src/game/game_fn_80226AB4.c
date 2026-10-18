@@ -61,41 +61,41 @@ static inline void GXWriteU16(u16 v)
     GXWGFifo.u16 = v;
 }
 
-void fn_80228ED8(void); /* __GXSetSUTexRegs */
-void fn_80229874(void); /* __GXUpdateBPMask */
-void fn_80226DBC(void); /* __GXSetGenMode */
-void fn_80225144(void); /* __GXSetVCD */
-void fn_80225BF4(void); /* __GXSetVAT */
-void fn_80226B90(void); /* __GXSendFlushPrim */
+void __GXSetSUTexRegs(void); /* __GXSetSUTexRegs */
+void __GXUpdateBPMask(void); /* __GXUpdateBPMask */
+void __GXSetGenMode(void); /* __GXSetGenMode */
+void __GXSetVCD(void); /* __GXSetVCD */
+void __GXSetVAT(void); /* __GXSetVAT */
+void __GXSendFlushPrim(void); /* __GXSendFlushPrim */
 
 static inline void __GXSetDirtyState(void)
 {
     if (gx->dirtyState & 1) {
-        fn_80228ED8();
+        __GXSetSUTexRegs();
     }
     if (gx->dirtyState & 2) {
-        fn_80229874();
+        __GXUpdateBPMask();
     }
     if (gx->dirtyState & 4) {
-        fn_80226DBC();
+        __GXSetGenMode();
     }
     if (gx->dirtyState & 8) {
-        fn_80225144();
+        __GXSetVCD();
     }
     if (gx->dirtyState & 0x10) {
-        fn_80225BF4();
+        __GXSetVAT();
     }
     gx->dirtyState = 0;
 }
 
-void fn_80226AB4(GXPrimitive type, GXVtxFmt vtxfmt, u16 nverts)
+void GXBegin(GXPrimitive type, GXVtxFmt vtxfmt, u16 nverts)
 {
     if (gx->dirtyState != 0) {
         __GXSetDirtyState();
     }
 
     if (gx->sent.notSent == 0) {
-        fn_80226B90();
+        __GXSendFlushPrim();
     }
 
     GXWriteU8(vtxfmt | type);

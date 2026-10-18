@@ -18,7 +18,7 @@ extern f32 lbl_8064E918;
 extern s32 fn_8003BD48(void *, void *);
 extern s32 fn_80078608(void *, s32 *, void **, void **, void **, s32 *, s32 *, s32 *);
 extern void *fn_800CA3A0(void *, s32, void *, s32);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void *fn_8011F130(void *);
 extern void fn_80120AD0(void *, int, int, int, float, float);
 extern int fn_80128B10(void *, u32);
@@ -204,7 +204,7 @@ int fn_80078794(void *obj, void *arg) {
     } else if ((objFlags & 0x20) && ((flags & 0x10) || (flags & 0x40))) {
         pos = fn_8011F130(obj);
         glyphs = *(GlyphTable *)lbl_802391D0;
-        fn_801AC9F4(glyphs.ids[fn_800FBFB0() % 11], 100, pos, 2);
+        fn_801AC9F4(glyphs.ids[rand() % 11], 100, pos, 2);
         fn_80128B10(obj, 0xF);
         bits = fn_801290D0(obj);
         fn_80128F74(obj, bits | 0x200);

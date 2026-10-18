@@ -11,24 +11,24 @@ typedef struct Entry {
     unsigned char rest[0x1858];
 } Entry;
 
-extern Node* lbl_8064D398;
-extern Node* lbl_8064D39C;
-extern volatile unsigned int lbl_8064D390;
+extern Node* seqPausedRoot;
+extern Node* seqActiveRoot;
+extern volatile unsigned int seq_next_id;
 extern Entry lbl_8060D420[];
 
-unsigned int fn_801B2878(int index)
+unsigned int GetPublicId(int index)
 {
     Node* first;
     Node* second;
     unsigned int value;
     Node* node;
 
-    first = lbl_8064D39C;
-    second = lbl_8064D398;
+    first = seqActiveRoot;
+    second = seqPausedRoot;
 
     do {
-        value = lbl_8064D390++;
-        lbl_8064D390 = __rlwinm(lbl_8064D390, 0, 1, 31);
+        value = seq_next_id++;
+        seq_next_id = __rlwinm(seq_next_id, 0, 1, 31);
 
         node = first;
         while (node != 0) {

@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 extern volatile u16 *__peReg;
 
-void fn_802267BC(u8 enable, u8 alpha)
+void GXPokeDstAlpha(u8 enable, u8 alpha)
 {
     u32 value = alpha;
 

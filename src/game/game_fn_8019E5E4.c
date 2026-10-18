@@ -12,7 +12,7 @@ extern float fn_801790F0(float, float);
 extern void fn_8017A12C(float*, float, float);
 extern int fn_8017A010(float*, int, float, float, float);
 extern void fn_80179904(void*, s16);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8018E230(void*, void*, int, int, int, int);
 extern int fn_80180454(void*);
 
@@ -62,8 +62,8 @@ int fn_8019E5E4(u8* obj)
             *(s16*)(item + 0x12) = *(s16*)(pos + 0x20) - *(s16*)(item + 0x0C);
             *(s16*)(item + 0x14) = 0;
             fn_80179904(item + 0x10, 2);
-            *(s16*)(item + 0x0A) += *(s16*)(item + 0x10) + (1 - (fn_800FBFB0() & 1));
-            *(s16*)(item + 0x0C) += *(s16*)(item + 0x12) + (1 - (fn_800FBFB0() & 1));
+            *(s16*)(item + 0x0A) += *(s16*)(item + 0x10) + (1 - (rand() & 1));
+            *(s16*)(item + 0x0C) += *(s16*)(item + 0x12) + (1 - (rand() & 1));
             *(s16*)(item + 0x0E) += *(s16*)(item + 0x14);
         }
         if (*(u16*)(obj + 0x0A) == *(u16*)(item + 8))

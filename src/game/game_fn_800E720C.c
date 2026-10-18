@@ -18,7 +18,7 @@ extern int fn_80036E50(void*);
 extern int fn_80201B54(int*);
 extern void fn_8011F114(Vec3f*, Vec3f*);
 extern void fn_80179B64(Vec3f*, ShortCoord3*);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_80179570(Vec3f*, Vec3f*, Vec3f*);
 extern void fn_8013CCEC(Vec3f*, const Vec3f*, const ShortCoord3*, int, int);
 extern int fn_801AAE68(u16, u8, u8, f32, Vec3f*, s8, u8, u8, u16, u32);
@@ -68,8 +68,8 @@ Vec3f fn_800E720C(void* object, PathSource* source)
         }
         /* MWCC emits a private signed-conversion bias here; retail shares
          * the equivalent double constant at lbl_8064F7E0. */
-        offset.x = (f32)(0x100 - (int)(fn_800FBFB0() & 0x1FF));
-        offset.y = (f32)(0x100 - (int)(fn_800FBFB0() & 0x1FF));
+        offset.x = (f32)(0x100 - (int)(rand() & 0x1FF));
+        offset.y = (f32)(0x100 - (int)(rand() & 0x1FF));
         offset.z = lbl_8064F7D0;
         fn_80179570(&position, &offset, &target);
         fn_8013CCEC(&result, &target, points, 4, 1);

@@ -10,9 +10,9 @@ typedef struct Object {
     int count;
 } Object;
 
-extern void fn_8016057C(Object*, int);
+extern void luaD_checkstack(Object*, int);
 
-void fn_80160748(Object* object, Entry* allocation)
+void luaD_openstack(Object* object, Entry* allocation)
 {
     Entry* entry;
     int count;
@@ -27,6 +27,6 @@ check:
     if (count-- != 0)
         goto copy;
     if (object->current == object->end)
-        fn_8016057C(object, 1);
+        luaD_checkstack(object, 1);
     object->current++;
 }

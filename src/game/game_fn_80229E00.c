@@ -19,7 +19,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1U << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_80229E00(int id, GXColor color)
+void GXSetTevKColor(int id, GXColor color)
 {
     u32 regRA, regBG;
 

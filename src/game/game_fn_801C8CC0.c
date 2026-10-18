@@ -29,8 +29,8 @@ typedef struct Emitter {
     float fade;
 } Emitter;
 
-extern void fn_801B7E84(u32, u8, u8);
-extern void fn_801B7F6C(u32, u8, u16);
+extern void synthFXSetCtrl(u32, u8, u8);
+extern void synthFXSetCtrl14(u32, u8, u16);
 
 static inline u8 clip127(u8 value)
 {
@@ -40,7 +40,7 @@ static inline u8 clip127(u8 value)
     return value;
 }
 
-void fn_801C8CC0(Emitter* emitter, float vol, float xPan, float yPan, float zPan, float pitch)
+void SetFXParameters(Emitter* emitter, float vol, float xPan, float yPan, float zPan, float pitch)
 {
     u32 handle;
     u16 value14;
@@ -48,14 +48,14 @@ void fn_801C8CC0(Emitter* emitter, float vol, float xPan, float yPan, float zPan
     Parameter* ctrl;
     handle = emitter->vid;
     if ((emitter->flags & 0x00100000) != 0) {
-        fn_801B7E84(handle, 7, clip127(127.0f * (emitter->fade * vol)));
+        synthFXSetCtrl(handle, 7, clip127(127.0f * (emitter->fade * vol)));
     } else {
-        fn_801B7E84(handle, 7, clip127(127.0f * vol));
+        synthFXSetCtrl(handle, 7, clip127(127.0f * vol));
     }
 
-    fn_801B7E84(handle, 10, clip127(64.0f * (1.0f + xPan)));
+    synthFXSetCtrl(handle, 10, clip127(64.0f * (1.0f + xPan)));
 
-    fn_801B7E84(handle, 0x83, clip127(64.0f * (1.0f - zPan)));
+    synthFXSetCtrl(handle, 0x83, clip127(64.0f * (1.0f - zPan)));
 
     pitch = 8192.0f * pitch;
     if ((u32)pitch > 0x3fff) {
@@ -63,15 +63,15 @@ void fn_801C8CC0(Emitter* emitter, float vol, float xPan, float yPan, float zPan
     } else {
         value14 = (u16)(u32)pitch;
     }
-    fn_801B7F6C(handle, 0x84, value14);
+    synthFXSetCtrl14(handle, 0x84, value14);
 
     if (emitter->paraInfo != 0) {
         ctrl = emitter->paraInfo->paraArray;
         for (i = 0; i < emitter->paraInfo->numPara; i++) {
             if (ctrl->ctrl < 0x40 || ctrl->ctrl == 0x80 || ctrl->ctrl == 0x84) {
-                fn_801B7F6C(handle, ctrl->ctrl, ctrl->paraData.value14);
+                synthFXSetCtrl14(handle, ctrl->ctrl, ctrl->paraData.value14);
             } else {
-                fn_801B7E84(handle, ctrl->ctrl, ctrl->paraData.value7);
+                synthFXSetCtrl(handle, ctrl->ctrl, ctrl->paraData.value7);
             }
             ctrl++;
         }

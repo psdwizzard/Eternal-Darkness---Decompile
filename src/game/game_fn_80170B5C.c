@@ -1,8 +1,8 @@
 typedef signed short s16;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_8016B0B4(s16, int);
 extern int lbl_8064D1BC;
 extern const char lbl_80250164[];
@@ -12,14 +12,14 @@ int fn_80170B5C(void* state)
     s16 first = lbl_8064D1BC;
     int second;
 
-    switch (fn_8016A598(state)) {
+    switch (lua_gettop(state)) {
     case 2:
-        first = fn_8016A694(state, 2);
+        first = lua_tonumber(state, 2);
     case 1:
-        second = fn_8016A694(state, 1);
+        second = lua_tonumber(state, 1);
         break;
     default:
-        fn_80163BB4(state, lbl_80250164, fn_8016A598(state));
+        luaO_verror(state, lbl_80250164, lua_gettop(state));
         return 0;
     }
 

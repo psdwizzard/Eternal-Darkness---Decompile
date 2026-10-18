@@ -22,31 +22,31 @@ struct DSPTask {
     DSPTask *prev;
 };
 
-extern DSPTask *lbl_8064DB74; /* Last task. */
-extern DSPTask *lbl_8064DB78; /* First task. */
-extern DSPTask *lbl_8064DB7C; /* Current task. */
+extern DSPTask *__DSP_last_task; /* Last task. */
+extern DSPTask *__DSP_first_task; /* First task. */
+extern DSPTask *__DSP_curr_task; /* Current task. */
 
 /* Insert a DSP task in ascending priority order. */
-void fn_8021C240(DSPTask *task)
+void __DSP_insert_task(DSPTask *task)
 {
     DSPTask *current;
 
-    if (lbl_8064DB78 == 0) {
-        lbl_8064DB7C = task;
-        lbl_8064DB74 = task;
-        lbl_8064DB78 = task;
+    if (__DSP_first_task == 0) {
+        __DSP_curr_task = task;
+        __DSP_last_task = task;
+        __DSP_first_task = task;
         task->prev = 0;
         task->next = 0;
         return;
     }
 
-    for (current = lbl_8064DB78; current != 0; current = current->next) {
+    for (current = __DSP_first_task; current != 0; current = current->next) {
         if (task->priority < current->priority) {
             task->prev = current->prev;
             current->prev = task;
             task->next = current;
             if (task->prev == 0) {
-                lbl_8064DB78 = task;
+                __DSP_first_task = task;
             } else {
                 task->prev->next = task;
             }
@@ -55,9 +55,9 @@ void fn_8021C240(DSPTask *task)
     }
 
     if (current == 0) {
-        lbl_8064DB74->next = task;
+        __DSP_last_task->next = task;
         task->next = 0;
-        task->prev = lbl_8064DB74;
-        lbl_8064DB74 = task;
+        task->prev = __DSP_last_task;
+        __DSP_last_task = task;
     }
 }

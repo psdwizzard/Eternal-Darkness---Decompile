@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern unsigned int fn_8011FA8C(void*, int, int);
@@ -16,16 +16,16 @@ int fn_8016F678(void* state)
     int set_flags = 0;
     int enabled;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    object_id = (int)fn_8016A694(state, 1);
+    object_id = (int)lua_tonumber(state, 1);
     object = fn_80201814(object_id);
     if (object != 0) {
         runtime = fn_80201BC8(object);
-        enabled = (int)fn_8016A694(state, 2);
+        enabled = (int)lua_tonumber(state, 2);
         if (enabled != 0) {
             set_flags = 4;
         }
@@ -34,7 +34,7 @@ int fn_8016F678(void* state)
         }
         fn_8011FA8C(runtime, clear_flags, set_flags);
     } else {
-        fn_80163BB4(state, lbl_8025005C, object_id);
+        luaO_verror(state, lbl_8025005C, object_id);
     }
     return 0;
 }

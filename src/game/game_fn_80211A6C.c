@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Subtract two vectors; the destination may alias either input. */
-void fn_80211A6C(register const Vec3 *left, register const Vec3 *right,
+void PSVECSubtract(register const Vec3 *left, register const Vec3 *right,
                  register Vec3 *destination)
 {
     register float leftZ, rightZ, differenceZ;

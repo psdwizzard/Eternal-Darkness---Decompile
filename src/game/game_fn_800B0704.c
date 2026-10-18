@@ -42,7 +42,7 @@ extern s32 fn_800BB270(void *data);
 extern void fn_801597BC(s32 room, u32 entry, u32 camera, s32 a, s32 b);
 extern u8 *fn_8017BA24(void);
 extern u32 fn_801E741C(const char *name);
-extern s32 fn_80228250(s32 a, s32 b, s32 c, s32 d, s32 e);
+extern s32 GXGetTexBufferSize(s32 a, s32 b, s32 c, s32 d, s32 e);
 
 extern const EntryName lbl_802397B0;
 extern const CameraName lbl_802397BC;
@@ -93,7 +93,7 @@ s32 fn_800B0704(u8 *data, s32 isNew) {
     fn_800B0414(3, 0, 0, header.cameraMode, header.cameraParam);
     fn_80024B74(lbl_803003C8.room);
     memcpy(fn_8017BA24(), data, size);
-    fn_80042678(lbl_803003C8.room, lbl_8064B6B8, lbl_8064D68C, fn_80228250(0x100, 0x100, 1, 0, 0));
+    fn_80042678(lbl_803003C8.room, lbl_8064B6B8, lbl_8064D68C, GXGetTexBufferSize(0x100, 0x100, 1, 0, 0));
     total += fn_800BB270(fn_8017BA24() + (u16)total);
     memcpy(data, fn_8017BA24(), size);
     fn_800477F8(1, 0);

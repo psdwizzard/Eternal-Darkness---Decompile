@@ -1,4 +1,4 @@
 typedef unsigned int u32;
 
 /* Polynomial-order selection table. */
-const volatile u32 lbl_8023A0A8[4] = {2, 3, 4, 6};
+const volatile u32 init_jk[4] = {2, 3, 4, 6};

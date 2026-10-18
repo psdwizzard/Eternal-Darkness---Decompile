@@ -17,28 +17,28 @@ typedef struct OSThreadQueue {
 typedef void (*GXDrawDoneCallback)(void);
 
 extern volatile u16 *__peReg;
-extern GXDrawDoneCallback lbl_8064DBB4;
-extern u8 lbl_8064DBB8;
-extern OSThreadQueue lbl_8064DBBC;
+extern GXDrawDoneCallback DrawDoneCB;
+extern u8 DrawDone;
+extern OSThreadQueue FinishQueue;
 
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
-extern void fn_802100F0(OSThreadQueue *queue);
+extern void OSWakeupThread(OSThreadQueue *queue);
 
 /* GXFinishInterruptHandler: acknowledge PE finish, run the draw-done
  * callback in a fresh context, and wake threads waiting on GXDrawDone. */
-void fn_80226924(s16 interrupt, OSContext *context)
+void GXFinishInterruptHandler(s16 interrupt, OSContext *context)
 {
     OSContext exceptionContext;
 
     __peReg[5] = (u16)((__peReg[5] & ~0x8) | 0x8);
-    lbl_8064DBB8 = 1;
-    if (lbl_8064DBB4 != 0) {
+    DrawDone = 1;
+    if (DrawDoneCB != 0) {
         OSClearContext(&exceptionContext);
         OSSetCurrentContext(&exceptionContext);
-        lbl_8064DBB4();
+        DrawDoneCB();
         OSClearContext(&exceptionContext);
         OSSetCurrentContext(context);
     }
-    fn_802100F0(&lbl_8064DBBC);
+    OSWakeupThread(&FinishQueue);
 }

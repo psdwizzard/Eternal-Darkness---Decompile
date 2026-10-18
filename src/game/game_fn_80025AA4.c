@@ -14,10 +14,10 @@ extern int lbl_8064D738;
 extern u8* fn_801EB080(void);
 extern void DCFlushRange(void*, u32);
 extern void fn_801A99B4(void);
-extern void fn_802180A4(void*);
+extern void VISetNextFrameBuffer(void*);
 extern void fn_801EFE84(int);
-extern void fn_80217F88(void);
-extern void fn_80217324(void);
+extern void VIFlush(void);
+extern void VIWaitForRetrace(void);
 
 void fn_80025AA4(void)
 {
@@ -43,10 +43,10 @@ void fn_80025AA4(void)
 
         DCFlushRange(source, 0x96000);
         fn_801A99B4();
-        fn_802180A4(lbl_8064D718);
+        VISetNextFrameBuffer(lbl_8064D718);
         fn_801EFE84(0);
-        fn_80217F88();
-        fn_80217324();
+        VIFlush();
+        VIWaitForRetrace();
 
         lbl_8064D734 = lbl_8064D6E4;
         lbl_8064D6E4++;

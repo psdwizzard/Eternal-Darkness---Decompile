@@ -4,14 +4,14 @@ typedef struct Value {
     double number;
 } Value;
 
-extern Value* fn_8016A55C(void*, int);
-extern int fn_80168A08(Value*);
+extern Value* luaA_indexAcceptable(void*, int);
+extern int luaV_tonumber(Value*);
 extern double lbl_80650688;
 
-double fn_8016A694(void* context, int index)
+double lua_tonumber(void* context, int index)
 {
     int invalid;
-    Value* value = fn_8016A55C(context, index);
-    invalid = value == 0 || (value->type != 2 && fn_80168A08(value) != 0);
+    Value* value = luaA_indexAcceptable(context, index);
+    invalid = value == 0 || (value->type != 2 && luaV_tonumber(value) != 0);
     return invalid ? lbl_80650688 : value->number;
 }

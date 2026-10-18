@@ -9,11 +9,11 @@ typedef struct Args {
     int flag;
 } Args;
 
-extern void fn_80161FA0(void);
-extern void fn_80160D74(Object*, Args*);
-extern int fn_80161044(Object*, void (*)(Object*, Args*), Args*);
+extern void luaC_checkGC(void);
+extern void f_parser(Object*, Args*);
+extern int luaD_runprotected(Object*, void (*)(Object*, Args*), Args*);
 
-int fn_80160DD0(Object* object, void* value, int flag)
+int protectedparser(Object* object, void* value, int flag)
 {
     Args args;
     char* saved;
@@ -21,9 +21,9 @@ int fn_80160DD0(Object* object, void* value, int flag)
 
     args.value = value;
     args.flag = flag;
-    fn_80161FA0();
+    luaC_checkGC();
     saved = object->mark;
-    result = fn_80161044(object, fn_80160D74, &args);
+    result = luaD_runprotected(object, f_parser, &args);
     if (result == 0) {
         object->current += object->mark - saved;
     } else if (result == 1) {

@@ -7,17 +7,17 @@ typedef int BOOL;
 #define FALSE 0
 
 /* __CARDVendorID */
-extern u16 lbl_8064C450;
+extern u16 __CARDVendorID;
 /* SectorSizeTable */
-extern s32 lbl_802FECE0[];
+extern s32 SectorSizeTable[];
 
 /* IsCard */
-BOOL fn_80220130(u32 id)
+BOOL IsCard(u32 id)
 {
     u32 size;
     s32 sectorSize;
 
-    if ((id & 0xFFFF0000) && (id != 0x80000004 || lbl_8064C450 == 0xFFFF)) {
+    if ((id & 0xFFFF0000) && (id != 0x80000004 || __CARDVendorID == 0xFFFF)) {
         return FALSE;
     }
 
@@ -38,7 +38,7 @@ BOOL fn_80220130(u32 id)
         return FALSE;
     }
 
-    sectorSize = lbl_802FECE0[(id & 0x00003800) >> 11];
+    sectorSize = SectorSizeTable[(id & 0x00003800) >> 11];
     if (sectorSize == 0) {
         return FALSE;
     }

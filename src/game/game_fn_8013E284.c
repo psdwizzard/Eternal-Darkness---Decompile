@@ -19,8 +19,8 @@ typedef struct Obstacle {
 
 extern float lbl_80650350, lbl_80650380, lbl_80650384, lbl_80650388;
 extern float lbl_8065038C, lbl_80650390, lbl_80650394, lbl_80650398;
-extern float fn_80211B44(const Vec3*, const Vec3*);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float fn_8013C068(const Vec3*, const Obstacle*, const void*, Vec3*);
 extern int fn_8013D560(const Vec3*, const Obstacle*, const void*);
 extern int fn_8013DE44(const Vec3*, const Vec3*, const Vec3*, float,
@@ -34,18 +34,18 @@ int fn_8013E284(const Shape* shape, const Obstacle* obstacle,
     Vec3 work;
     Vec3 reverse;
     Vec3 contact;
-    float plane = -fn_80211B44(&shape->point, &obstacle->axis);
+    float plane = -PSVECDotProduct(&shape->point, &obstacle->axis);
     float along;
 
     plane = obstacle->distance - plane;
     if (!(plane >= lbl_80650380))
         goto no_hit;
-    along = fn_80211B44(&shape->axis, &obstacle->axis);
+    along = PSVECDotProduct(&shape->axis, &obstacle->axis);
     if (along >= lbl_80650384 && along <= lbl_80650388) {
         if (!(plane <= shape->radius - lbl_8065038C))
             goto no_hit;
     }
-    if (fn_80211D4C(&shape->bound, &obstacle->bound) >
+    if (PSVECSquareDistance(&shape->bound, &obstacle->bound) >
         (shape->bound_radius + obstacle->tolerance) *
         (shape->bound_radius + obstacle->tolerance))
         return 0;

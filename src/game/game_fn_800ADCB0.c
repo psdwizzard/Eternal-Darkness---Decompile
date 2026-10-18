@@ -39,32 +39,32 @@ extern int lbl_8064C9B8, lbl_8064C9BC, lbl_8064C9C0;
 extern int lbl_8064CA64;
 
 extern int DVDGetDriveStatus(void);
-extern int fn_8020E290(void);
-extern int fn_802161E8(void);
+extern int OSGetResetButtonState(void);
+extern int DVDCheckDisk(void);
 extern void fn_800ADC2C(int);
 extern void fn_80025AA4(void);
 extern void OSResetSystem(int, u32, int);
 extern void fn_80237D84(void);
-extern void fn_80217324(void);
-extern void fn_8021959C(int, u32);
+extern void VIWaitForRetrace(void);
+extern void PADControlMotor(int, u32);
 extern void fn_80025AA0(void);
 extern void fn_80025D28(void);
 extern int fn_80144F48(void);
 extern int fn_80144F5C(void);
-extern int fn_802191F0(PadStatus*);
-extern int fn_80218DDC(u32);
-extern int fn_80218EDC(u32);
-extern u32 fn_801B191C(void);
+extern int PADRead(PadStatus*);
+extern int PADReset(u32);
+extern int PADRecalibrate(u32);
+extern u32 DTKGetState(void);
 extern int fn_801AD72C(void);
-extern void fn_801B17B0(int);
+extern void DTKSetState(int);
 extern void fn_801ACFB0(void);
-extern void fn_801B8FE4(u8, u16, u8, u8);
+extern void sndMasterVolume(u8, u16, u8, u8);
 extern void* fn_801EFE84(void*);
 extern void fn_80236914(void);
 extern void fn_801AD95C(int);
 extern void fn_80006954(u32);
 extern void fn_800AD540(void*, int, int, int);
-extern void fn_80217F88(void);
+extern void VIFlush(void);
 extern int fn_801ACDD4(void);
 extern void fn_801ACD8C(void);
 extern EffectNode* fn_801AD4B4(int, int, int, u16);
@@ -73,13 +73,13 @@ extern u8 fn_801A9B30(void);
 extern u8 fn_801A9B28(void);
 extern void fn_802368A8(void);
 extern void OSReport(const char*, ...);
-extern void fn_8020EFBC(void*);
-extern void fn_8020F0F8(void*);
-extern void fn_8020EF80(void*);
+extern void OSStopStopwatch(void*);
+extern void OSResetStopwatch(void*);
+extern void OSStartStopwatch(void*);
 extern int fn_800ADB44(int*, int*, int*);
 extern int fn_8023657C(void);
 extern int fn_80156F10(void);
-extern int fn_80210350(void);
+extern int OSCheckActiveThreads(void);
 
 /* Drive-error monitor: suspend resources while displaying an error,
  * process reset requests, and restore resources when the drive recovers. */
@@ -107,7 +107,7 @@ void fn_800ADCB0(void)
     lbl_8064C9BC = 0;
     for (;;) {
         drive_status = DVDGetDriveStatus();
-        reset = fn_8020E290();
+        reset = OSGetResetButtonState();
         if (lbl_8064C9A0 != 0) {
             lbl_8064C9B0 = 1;
             reset = 0;
@@ -116,15 +116,15 @@ void fn_800ADCB0(void)
             lbl_8064C9B0 = 1;
             lbl_8064C99C = 0;
         } else if (lbl_8064C9B0 != 0 && lbl_8064CA64 == 0 && lbl_8064C998 > 120) {
-            if (lbl_8064C9B8 != 0 || fn_802161E8() == 0) {
+            if (lbl_8064C9B8 != 0 || DVDCheckDisk() == 0) {
                 fn_800ADC2C(1);
                 fn_80025AA4();
                 OSResetSystem(1, 0, 0);
             }
             fn_80237D84();
-            fn_80217324();
-            fn_80217324();
-            fn_8021959C(0, 2);
+            VIWaitForRetrace();
+            VIWaitForRetrace();
+            PADControlMotor(0, 2);
             lbl_8064C6D8 = 13;
             fn_800ADC2C(1);
             fn_80025AA0();
@@ -139,19 +139,19 @@ void fn_800ADCB0(void)
         }
         fn_80144F5C();
         if (pad_reset != 0) {
-            fn_80217324();
-            fn_802191F0(lbl_8031E3D8);
+            VIWaitForRetrace();
+            PADRead(lbl_8031E3D8);
             if (lbl_8031E3D8[0].err != 0) {
-                fn_80217324();
-                fn_80218DDC(0x80000000);
-                fn_80217324();
+                VIWaitForRetrace();
+                PADReset(0x80000000);
+                VIWaitForRetrace();
             } else {
-                fn_80217324();
-                fn_80218EDC(0x80000000);
+                VIWaitForRetrace();
+                PADRecalibrate(0x80000000);
                 do {
-                    fn_80217324();
-                } while (fn_80218DDC(0x80000000) != 1);
-                fn_80217324();
+                    VIWaitForRetrace();
+                } while (PADReset(0x80000000) != 1);
+                VIWaitForRetrace();
                 pad_reset = 0;
             }
         }
@@ -204,21 +204,21 @@ void fn_800ADCB0(void)
         if (message_frames != 0) {
             if (lbl_8064C9B8 == 0) {
                 fn_800ADC2C(1);
-                saved_state = fn_801B191C();
+                saved_state = DTKGetState();
                 if (saved_state != 0 && saved_state != 3) {
                     saved_object = fn_801AD72C();
-                    fn_801B17B0(0);
+                    DTKSetState(0);
                     fn_801ACFB0();
                 }
-                fn_801B8FE4(0, 5, 1, 1);
+                sndMasterVolume(0, 5, 1, 1);
                 lbl_8064C9B4 = fn_801EFE84(0);
-                fn_8021959C(0, 2);
+                PADControlMotor(0, 2);
                 fn_80236914();
                 fn_801AD95C(1);
                 lbl_8064C9B8 = 1;
                 fn_80006954(1);
             } else {
-                fn_802191F0(lbl_8031E3D8);
+                PADRead(lbl_8031E3D8);
                 if (lbl_8031E3D8[0].err == 0) {
                     if ((lbl_8031E3D8[0].button & 0x1600) == 0x1600) {
                         if (++lbl_8064C9A4 >= 30 && lbl_8064CA64 == 0) {
@@ -233,9 +233,9 @@ void fn_800ADCB0(void)
                 fn_800AD540(message, width, height, stride);
                 last_message = message;
             }
-            fn_80217F88();
+            VIFlush();
         } else if (lbl_8064C9B8 != 0) {
-            if (fn_802161E8() == 1) {
+            if (DVDCheckDisk() == 1) {
                 if (fn_801ACDD4() == 1) {
                     fn_801ACD8C();
                     saved_state = 0;
@@ -245,17 +245,17 @@ void fn_800ADCB0(void)
                     fn_801AD4B4(saved_object, 0, 0, 0);
                     fn_80008B6C();
                 }
-                fn_801B8FE4(fn_801A9B30(), 5, 0, 1);
-                fn_801B8FE4(fn_801A9B28(), 5, 1, 0);
-                fn_801B17B0(saved_state);
+                sndMasterVolume(fn_801A9B30(), 5, 0, 1);
+                sndMasterVolume(fn_801A9B28(), 5, 1, 0);
+                DTKSetState(saved_state);
                 fn_800ADC2C(0);
                 fn_801EFE84(lbl_8064C9B4);
                 fn_802368A8();
                 lbl_8064C9B8 = 0;
                 OSReport(data->resumed);
-                fn_8020EFBC(lbl_80302460);
-                fn_8020F0F8(lbl_80302460);
-                fn_8020EF80(lbl_80302460);
+                OSStopStopwatch(lbl_80302460);
+                OSResetStopwatch(lbl_80302460);
+                OSStartStopwatch(lbl_80302460);
                 saved_state = 0;
                 fn_80006954(60);
             }
@@ -282,7 +282,7 @@ void fn_800ADCB0(void)
             if (kind2_count + kind1_count < 2 || special != 0) {
                 lbl_8064C99C++;
                 if (special != 0) {
-                    fn_802191F0(lbl_8031E3D8);
+                    PADRead(lbl_8031E3D8);
                     if (lbl_8031E3D8[0].err == 0) {
                         if ((lbl_8031E3D8[0].button & 0x1600) == 0x1600) {
                             if (++lbl_8064C9A8 >= 30 && lbl_8064CA64 == 0) {
@@ -307,7 +307,7 @@ void fn_800ADCB0(void)
             }
         }
         lbl_8064C998++;
-        fn_80210350();
-        fn_80217324();
+        OSCheckActiveThreads();
+        VIWaitForRetrace();
     }
 }

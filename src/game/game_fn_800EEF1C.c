@@ -6,7 +6,7 @@ typedef struct TRKEvent {
     int buffer;
 } TRKEvent;
 
-void fn_800EEF1C(TRKEvent *event, u8 type)
+void TRKConstructEvent(TRKEvent *event, u8 type)
 {
     event->type = type;
     event->id = 0;

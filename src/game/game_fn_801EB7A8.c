@@ -17,7 +17,7 @@ extern Entry lbl_80639260[];
 extern void fn_8015DB84(void*, void*, short);
 extern void fn_801EB340(void*, void*);
 extern void fn_801EB5C8(void*, void*, int);
-extern void fn_80228D9C(void);
+extern void GXInvalidateTexAll(void);
 
 void fn_801EB7A8(Scene* scene, int mode)
 {
@@ -55,5 +55,5 @@ void fn_801EB7A8(Scene* scene, int mode)
             fn_801EB5C8(object, object->stream, mode);
     }
     lbl_8064D618 = mode;
-    fn_80228D9C();
+    GXInvalidateTexAll();
 }

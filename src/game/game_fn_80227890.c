@@ -1,10 +1,10 @@
-/* fn_80227890: GXInitLightSpot - computes the spotlight angle attenuation
+/* GXInitLightSpot: GXInitLightSpot - computes the spotlight angle attenuation
  * coefficients a0..a2 of a light object from a cutoff angle in degrees. */
 
 typedef unsigned char u8;
 typedef float f32;
 
-extern f32 fn_80048C50(f32 angle); /* cosf */
+extern f32 cosf(f32 angle); /* cosf */
 
 typedef enum {
     GX_SP_OFF,
@@ -21,7 +21,7 @@ typedef struct {
     f32 a[3];
 } GXLightObjInt;
 
-void fn_80227890(GXLightObjInt *lt_obj, f32 cutoff, GXSpotFn spot_func) {
+void GXInitLightSpot(GXLightObjInt *lt_obj, f32 cutoff, GXSpotFn spot_func) {
     f32 a0, a1, a2, r, d, cr;
 
     if (cutoff <= 0.0f || cutoff > 90.0f) {
@@ -29,7 +29,7 @@ void fn_80227890(GXLightObjInt *lt_obj, f32 cutoff, GXSpotFn spot_func) {
     }
 
     r = 3.1415927f * cutoff / 180.0f;
-    cr = fn_80048C50(r);
+    cr = cosf(r);
 
     switch (spot_func) {
     case GX_SP_FLAT:

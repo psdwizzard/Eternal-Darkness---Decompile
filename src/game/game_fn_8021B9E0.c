@@ -7,7 +7,7 @@ extern s32 OSRestoreInterrupts(s32 enable);
 volatile u16 DSPRegisters[] : 0xCC005000;
 
 /* Assert the DSP interrupt request while preserving the interrupt state. */
-void fn_8021B9E0(void)
+void DSPHalt(void)
 {
     s32 enabled;
     u16 status;

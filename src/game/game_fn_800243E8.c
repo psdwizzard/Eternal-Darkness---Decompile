@@ -6,15 +6,15 @@ extern u32 lbl_8064D5E8;
 extern float lbl_8064DF38;
 extern char lbl_806391F0[];
 
-extern void fn_8022CE20(void);
-extern void fn_8022DA54(float);
-extern void fn_8020EF80(void*);
+extern void PERFStartFrame(void);
+extern void PERFStartAutoSampling(float);
+extern void OSStartStopwatch(void*);
 
 void fn_800243E8(void)
 {
     if (lbl_8064C368 == 0 && (lbl_8064D5E8 & 1) == 0) {
-        fn_8022CE20();
-        fn_8022DA54(lbl_8064DF38);
+        PERFStartFrame();
+        PERFStartAutoSampling(lbl_8064DF38);
     }
-    fn_8020EF80(lbl_806391F0);
+    OSStartStopwatch(lbl_806391F0);
 }

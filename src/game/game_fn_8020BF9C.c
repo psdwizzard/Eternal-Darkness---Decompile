@@ -12,7 +12,7 @@ typedef struct OSContext {
 } OSContext;
 
 /* Save the calling context, with a nonzero result for a later restore. */
-int fn_8020BF9C(register OSContext *context) {
+int OSSaveContext(register OSContext *context) {
     register u32 value;
 
     /* ASM: stmw saves the live nonvolatile GPRs, inaccessible from C. */

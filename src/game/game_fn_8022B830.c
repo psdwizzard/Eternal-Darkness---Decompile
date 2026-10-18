@@ -37,7 +37,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
 extern void __GXSetRange(f32 nearz, f32 fgSideX);
 
-void fn_8022B830(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz, u32 field)
+void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz, u32 field)
 {
     f32 sx, sy, sz, ox, oy, oz;
     f32 zmin, zmax;

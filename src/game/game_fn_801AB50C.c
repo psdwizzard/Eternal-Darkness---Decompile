@@ -56,7 +56,7 @@ extern int fn_801B05E8(unsigned short, int, int, int, Vec3*, unsigned char,
                       int, int);
 extern void fn_801B097C(int, int, int);
 extern void fn_801B09F0(int, unsigned char);
-extern int fn_801C9078(void*);
+extern int sndCheckEmitter(void*);
 
 void fn_801AB50C(Record* record)
 {
@@ -235,7 +235,7 @@ void fn_801AB50C(Record* record)
         case 1:
             break;
         case 2:
-            if ((unsigned int)fn_801C9078(record) == 0)
+            if ((unsigned int)sndCheckEmitter(record) == 0)
                 fn_801AB048(record);
             break;
         case 3:

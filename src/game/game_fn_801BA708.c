@@ -40,11 +40,9 @@ typedef struct STREAM_INFO {
 
 static STREAM_INFO streamInfo[64];
 
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-#define hwDisableIrq fn_801CE2B8
-#define hwEnableIrq fn_801CE280
 
 
 
@@ -59,7 +57,7 @@ static inline u32 GetPrivateIndex(u32 publicID)
     return -1;
 }
 
-void fn_801BA708(u32 stid, SND_ADPCMSTREAM_INFO* adpcmInfo)
+void sndStreamADPCMParameter(u32 stid, SND_ADPCMSTREAM_INFO* adpcmInfo)
 {
     u32 j;
     u32 i;
@@ -73,7 +71,7 @@ void fn_801BA708(u32 stid, SND_ADPCMSTREAM_INFO* adpcmInfo)
         }
         streamInfo[i].numCoef = 8;
         if (streamInfo[i].nextStreamHandle != 0xffffffff) {
-            fn_801BA708(streamInfo[i].nextStreamHandle, adpcmInfo);
+            sndStreamADPCMParameter(streamInfo[i].nextStreamHandle, adpcmInfo);
         }
     }
     hwEnableIrq();

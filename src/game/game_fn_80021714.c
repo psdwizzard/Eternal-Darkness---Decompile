@@ -9,9 +9,9 @@ extern const f32 lbl_8064DEE0;
 extern const f32 lbl_8064DEE4;
 extern const f32 lbl_8064DEE8;
 
-extern void fn_80211484(Mtx, f32, f32, f32);
-extern void fn_80210FDC(Mtx, Mtx, Mtx);
-extern void fn_8022B748(Mtx, int, int);
+extern void PSMTXTrans(Mtx, f32, f32, f32);
+extern void PSMTXConcat(Mtx, Mtx, Mtx);
+extern void GXLoadTexMtxImm(Mtx, int, int);
 
 void fn_80021714(void)
 {
@@ -21,7 +21,7 @@ void fn_80021714(void)
     f32 phase0;
     f32 half;
 
-    fn_80211484(translation, lbl_8064DEA8, lbl_8064DEA8, lbl_8064DEA8);
+    PSMTXTrans(translation, lbl_8064DEA8, lbl_8064DEA8, lbl_8064DEA8);
 
     half = lbl_8064DEE4;
     scale[0][0] = half;
@@ -55,8 +55,8 @@ void fn_80021714(void)
         }
     }
 
-    fn_80211484(translation, -lbl_8064C65C, -lbl_8064C660,
+    PSMTXTrans(translation, -lbl_8064C65C, -lbl_8064C660,
                 *(volatile f32 *)&lbl_8064DEA8);
-    fn_80210FDC(scale, translation, scale);
-    fn_8022B748(scale, 0x21, 1);
+    PSMTXConcat(scale, translation, scale);
+    GXLoadTexMtxImm(scale, 0x21, 1);
 }

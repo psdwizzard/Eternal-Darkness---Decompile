@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Read the 32-byte disc ID into the DMA destination. */
-s32 fn_80212AB0(void *addr, DVDLowCallback callback) {
+s32 DVDLowReadDiskID(void *addr, DVDLowCallback callback) {
     Callback_8064D9A0 = callback;
     StopAtNextInt_8064D998 = 0;
     __DIRegs[2] = 0xA8000040;

@@ -4,7 +4,7 @@ extern const float lbl_80651608;
 extern const float lbl_8065160C;
 
 /* Build an affine rotation about the selected axis from its sine and cosine. */
-void fn_802112D8(register Mtx m, unsigned int axis, register float sine,
+void PSMTXRotTrig(register Mtx m, unsigned int axis, register float sine,
                  register float cosine)
 {
     register float zero = lbl_8065160C;

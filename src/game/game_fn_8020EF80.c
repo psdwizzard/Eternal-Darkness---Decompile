@@ -1,4 +1,4 @@
-/* fn_8020EF80 (0x8020EF80, 60 bytes): OSStartStopwatch. */
+/* OSStartStopwatch (0x8020EF80, 60 bytes): OSStartStopwatch. */
 
 typedef unsigned long long u64;
 typedef long long s64;
@@ -16,7 +16,7 @@ typedef struct OSStopwatch {
     int running;
 } OSStopwatch;
 
-void fn_8020EF80(OSStopwatch* sw) {
+void OSStartStopwatch(OSStopwatch* sw) {
     sw->running = 1;
     sw->last = (s64)OSGetTime();
 }

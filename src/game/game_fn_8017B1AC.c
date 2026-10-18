@@ -23,8 +23,8 @@ extern LargeConfig lbl_8064A6F0[];
 extern char lbl_80250EEC[];
 extern char lbl_80250F0C[];
 
-extern int fn_802216B0(int, void*, SmallConfig*);
-extern int fn_802226E4(int, int, LargeConfig*);
+extern int CARDOpen(int, void*, SmallConfig*);
+extern int CARDGetStatus(int, int, LargeConfig*);
 extern void fn_8017BA60(char*, int);
 
 int fn_8017B1AC(int value, void* data)
@@ -32,9 +32,9 @@ int fn_8017B1AC(int value, void* data)
     int result;
 
     if (lbl_8064A580.states[value] == 1) {
-        result = fn_802216B0(value, data, &lbl_8064A6C8[value]);
+        result = CARDOpen(value, data, &lbl_8064A6C8[value]);
         if (result == 0) {
-            result = fn_802226E4(value, lbl_8064A6C8[value].unk_04,
+            result = CARDGetStatus(value, lbl_8064A6C8[value].unk_04,
                                  &lbl_8064A6F0[value]);
             if (result == 0) {
                 lbl_8064A580.active[value] = 1;

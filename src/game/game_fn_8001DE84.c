@@ -35,9 +35,9 @@ typedef struct Work {
 
 extern DataState lbl_8023D660;
 
-extern void fn_8020EFBC(void*);
-extern void fn_8020F0F8(void*);
-extern void fn_80228B50(void*, void*, s32, u32);
+extern void OSStopStopwatch(void*);
+extern void OSResetStopwatch(void*);
+extern void GXInitTlutObj(void*, void*, s32, u32);
 
 static u8 head[0x1C] = {0};
 static Info info = {0};
@@ -51,8 +51,8 @@ void fn_8001DE84(u8 mode, u32 value)
     s32 i;
 
     info.flags &= ~2U;
-    fn_8020EFBC(object);
-    fn_8020F0F8(object);
+    OSStopStopwatch(object);
+    OSResetStopwatch(object);
 
     info.previous_mode = info.mode;
     info.mode = mode;
@@ -66,7 +66,7 @@ void fn_8001DE84(u8 mode, u32 value)
     work.field0C = 0;
     work.field10 = 0;
     work.values = values;
-    fn_80228B50(clear, values, 0, sizeof(clear));
+    GXInitTlutObj(clear, values, 0, sizeof(clear));
 
     for (i = 0; i < 0x100; i++) {
         values[i] = 0xFF;

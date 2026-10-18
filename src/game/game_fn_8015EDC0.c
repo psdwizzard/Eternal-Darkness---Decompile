@@ -1,13 +1,13 @@
 extern const double lbl_80650650;
-extern int fn_8015ECF8(void*, double);
-extern int fn_8015F9B0(void*, int, int);
+extern int number_constant(void*, double);
+extern int luaK_code1(void*, int, int);
 
-int fn_8015EDC0(void* object, double value)
+int luaK_number(void* object, double value)
 {
     if (value <= lbl_80650650) {
         if ((double)(int)value == value)
-            return fn_8015F9B0(object, 6, (int)value);
+            return luaK_code1(object, 6, (int)value);
     }
 
-    return fn_8015F9B0(object, 8, fn_8015ECF8(object, value));
+    return luaK_code1(object, 8, number_constant(object, value));
 }

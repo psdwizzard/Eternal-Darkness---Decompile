@@ -60,7 +60,7 @@ extern void fn_801435DC(Vec3 *, Vec3 *, Segment *);
 extern int fn_80201ADC(void);
 extern Entry80201B3C *fn_80201B3C(void);
 extern void *fn_80201BC8(void *);
-extern float fn_80211B44(const Vec3 *, const Vec3 *);
+extern float PSVECDotProduct(const Vec3 *, const Vec3 *);
 
 extern PortalTable lbl_805B1310;
 extern s8 lbl_8064D038;
@@ -167,7 +167,7 @@ PlanePair *fn_801436E0(void *self, void *other, int notify) {
                 hits = fn_8013D998(&otherBuf, &plane->front, edges, &scratch);
                 hits += fn_8013D998(&otherBuf, back, edges, &scratch);
                 otherHits += hits;
-                dist = -(plane->front.offset + fn_80211B44(&plane->front.normal, &selfBuf.start));
+                dist = -(plane->front.offset + PSVECDotProduct(&plane->front.normal, &selfBuf.start));
                 if (dist < bestDist) {
                     bestDist = dist;
                     best = plane;

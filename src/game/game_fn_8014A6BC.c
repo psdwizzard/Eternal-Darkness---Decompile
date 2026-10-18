@@ -24,7 +24,7 @@ extern u8 fn_80193878(void*);
 extern u8 fn_80193868(void*);
 extern void fn_801938B8(void*, u8);
 extern void fn_801938B0(void*, u8);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8017FE1C(void*, void*);
 extern void fn_801939DC(void);
 extern u8 fn_80193890(void*);
@@ -83,13 +83,13 @@ void fn_8014A6BC(void* left, void* right)
                         fn_801938B0(object, 2);
                         changed = 1;
                     } else if (flags & 2) {
-                        int random = fn_800FBFB0();
+                        int random = rand();
                         int span = (u8)high - 4;
                         u8 first = random % span;
 
                         if (low >= first) {
                             fn_801938B8(object, first);
-                            fn_801938B0(object, first + fn_800FBFB0() % (span - first) + 2);
+                            fn_801938B0(object, first + rand() % (span - first) + 2);
                             changed = 1;
                         }
                     } else if (flags & 4) {

@@ -5,7 +5,7 @@ typedef struct Vec3 { float x, y, z; } Vec3;
  * f0-f3 hold the paired x/y output coefficients; f4-f5 hold the
  * third row. Preserve the fused products and sum order of that row.
  * As in the original routine, the caller supplies a positive count. */
-void fn_80211764(register const Mtx matrix, const Vec3* source,
+void PSMTXMultVecArray(register const Mtx matrix, const Vec3* source,
                  Vec3* destination, register unsigned int count)
 {
     register float row0, row1;

@@ -1,5 +1,5 @@
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 int fn_800E05BC(int first, int second)
 {
@@ -8,9 +8,9 @@ int fn_800E05BC(int first, int second)
     int result;
 
     if (active != 0) {
-        choice = fn_800FBFB0() % 6;
+        choice = rand() % 6;
     } else {
-        choice = fn_800FBFB0() % 20;
+        choice = rand() % 20;
     }
 
     switch (choice) {

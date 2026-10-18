@@ -32,10 +32,10 @@ extern float lbl_80651340;
 extern int fn_8011FF38(int);
 extern void fn_801ECAAC(Color*);
 extern void fn_801EDA68(s16*, float*);
-extern void fn_80210FDC(Matrix34, Matrix34, Matrix34);
-extern void fn_80211484(Matrix34, float, float, float);
-extern void fn_80226D28(int);
-extern void fn_8022B748(Matrix34, int, int);
+extern void PSMTXConcat(Matrix34, Matrix34, Matrix34);
+extern void PSMTXTrans(Matrix34, float, float, float);
+extern void GXSetCullMode(int);
+extern void GXLoadTexMtxImm(Matrix34, int, int);
 extern void* memset(void*, int, unsigned int);
 
 void fn_801ED5F4(int object, int flags, s16 value, float* direction,
@@ -56,13 +56,13 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
         case 1:
             flags |= 4;
             flags &= ~0x1800;
-            fn_80211484(temporary, alpha, lbl_80651318, lbl_80651318);
+            PSMTXTrans(temporary, alpha, lbl_80651318, lbl_80651318);
             transform[0][0] = lbl_80651328;
             transform[1][3] = transform[1][2] = transform[1][1] =
                 transform[1][0] = transform[0][3] = transform[0][2] =
                     transform[0][1] = lbl_80651318;
-            fn_80210FDC(transform, temporary, transform);
-            fn_80226D28(0);
+            PSMTXConcat(transform, temporary, transform);
+            GXSetCullMode(0);
             alpha = lbl_8065131C;
             changed = 1;
             break;
@@ -75,8 +75,8 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
             transform[0][3] = alpha / lbl_8065132C;
             transform[1][3] = transform[1][2] = transform[1][1] =
                 transform[1][0] = lbl_80651318;
-            fn_80210FDC(transform, input, transform);
-            fn_80226D28(0);
+            PSMTXConcat(transform, input, transform);
+            GXSetCullMode(0);
             alpha = lbl_8065131C;
             changed = 1;
             break;
@@ -157,13 +157,13 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
 
         if (lbl_8064D624 != flags || changed != 0) {
             lbl_8064D624 = flags;
-            fn_8022B748(transform, 0x33, 1);
+            GXLoadTexMtxImm(transform, 0x33, 1);
         }
     } else if (object == 0) {
         lbl_8064D628 = object;
         lbl_8064D624 = -1;
         lbl_8064D620 = lbl_80651318;
-        fn_80226D28(1);
+        GXSetCullMode(1);
     }
 
     lbl_8064D668 = 0;

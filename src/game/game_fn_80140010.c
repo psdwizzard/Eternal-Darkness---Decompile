@@ -33,7 +33,7 @@ extern void fn_801E8E68(Iterator*, int);
 extern int fn_801E8E94(Iterator*);
 extern int fn_8013C7BC(const Vec3*, const Vec3*, const Vec3*, float, float);
 extern int fn_8013D998(const Vec3*, const void*, void*, Vec3*);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern void fn_80140AEC(void*, Owner*);
 
 void* fn_80140010(Owner* owner, const Vec3* value, Vec3* out)
@@ -66,7 +66,7 @@ void* fn_80140010(Owner* owner, const Vec3* value, Vec3* out)
                     Vec3 candidate;
                     entry = entries + link->indices[i] * 0x38;
                     if (fn_8013D998(value, entry, owner->context, &candidate)) {
-                        float distance = fn_80211D4C(&candidate, value);
+                        float distance = PSVECSquareDistance(&candidate, value);
                         if (distance < best) {
                             best = distance;
                             result = entry;

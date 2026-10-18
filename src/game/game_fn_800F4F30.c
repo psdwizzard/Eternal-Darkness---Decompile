@@ -1,5 +1,5 @@
 #pragma force_active on
-void fn_800F4F30(void)
+void TRKAccessFile(void)
 {
     __asm { twi 31, r0, 0 }
 }

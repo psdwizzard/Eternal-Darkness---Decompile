@@ -43,17 +43,17 @@ extern float lbl_80651348;
 extern float lbl_8065134C;
 
 extern float fn_800ED720(float);
-extern void fn_80211710(void*, void*, Vec3*);
-extern void fn_802117F0(void*, Vec3*, Vec3*);
-extern void fn_80211BA0(Vec3*, Vec3*, Vec3*);
-extern void fn_80227874(void*, float, float, float, float, float, float);
-extern void fn_80227890(void*, float, s32);
-extern void fn_80227A10(void*, float, float, s32);
-extern void fn_80227AE0(void*, float, float, float);
-extern void fn_80227AF0(void*, float, float, float);
-extern void fn_80227B0C(void*, float, float, float);
-extern void fn_80227BE0(void*, s32*);
-extern void fn_80227C08(void*, s32);
+extern void PSMTXMultVec(void*, void*, Vec3*);
+extern void PSMTXMultVecSR(void*, Vec3*, Vec3*);
+extern void C_VECHalfAngle(Vec3*, Vec3*, Vec3*);
+extern void GXInitLightAttn(void*, float, float, float, float, float, float);
+extern void GXInitLightSpot(void*, float, s32);
+extern void GXInitLightDistAttn(void*, float, float, s32);
+extern void GXInitLightPos(void*, float, float, float);
+extern void GXInitLightDir(void*, float, float, float);
+extern void GXInitSpecularDir(void*, float, float, float);
+extern void GXInitLightColor(void*, s32*);
+extern void GXLoadLightObjImm(void*, s32);
 
 typedef struct EmitterSlot {
     u8 data[0x40];
@@ -103,17 +103,17 @@ void fn_801F0CB0(EffectRec* source, Vec3* target, void* owner, s32 index, u8 mod
     if (mode == 0) {
         if (attributes == 0) {
             s32 value = source->value;
-            fn_80227BE0(emitter, &value);
-            fn_80227874(emitter, lbl_806513A4 * (float)scale,
+            GXInitLightColor(emitter, &value);
+            GXInitLightAttn(emitter, lbl_806513A4 * (float)scale,
                         lbl_80651348, lbl_80651348,
                         red, green, blue);
-            fn_80211710(effect_matrix, source, &transformed);
-            fn_80227AE0(emitter, transformed.x, transformed.y, transformed.z);
+            PSMTXMultVec(effect_matrix, source, &transformed);
+            GXInitLightPos(emitter, transformed.x, transformed.y, transformed.z);
         } else {
             s32 value = source->value;
-            fn_80227BE0(emitter, &value);
-            fn_80211710(effect_matrix, source, &transformed);
-            fn_80227AE0(emitter, transformed.x, transformed.y, transformed.z);
+            GXInitLightColor(emitter, &value);
+            PSMTXMultVec(effect_matrix, source, &transformed);
+            GXInitLightPos(emitter, transformed.x, transformed.y, transformed.z);
 
             red = fn_800ED720(attributes->direction.x * attributes->direction.x +
                               attributes->direction.y * attributes->direction.y +
@@ -121,10 +121,10 @@ void fn_801F0CB0(EffectRec* source, Vec3* target, void* owner, s32 index, u8 mod
             attributes->direction.x /= red;
             attributes->direction.y /= red;
             attributes->direction.z /= red;
-            fn_802117F0(effect_matrix, &attributes->direction, &transformed);
-            fn_80227AF0(emitter, transformed.x, transformed.y, transformed.z);
-            fn_80227890(emitter, (float)attributes->field_0E, attributes->field_10);
-            fn_80227A10(emitter, (float)attributes->field_0C,
+            PSMTXMultVecSR(effect_matrix, &attributes->direction, &transformed);
+            GXInitLightDir(emitter, transformed.x, transformed.y, transformed.z);
+            GXInitLightSpot(emitter, (float)attributes->field_0E, attributes->field_10);
+            GXInitLightDistAttn(emitter, (float)attributes->field_0C,
                         lbl_806513A8, attributes->field_0F);
         }
     } else {
@@ -140,19 +140,19 @@ void fn_801F0CB0(EffectRec* source, Vec3* target, void* owner, s32 index, u8 mod
         direction.x /= red;
         direction.y /= red;
         direction.z /= red;
-        fn_802117F0(effect_matrix, &direction, &transformed);
+        PSMTXMultVecSR(effect_matrix, &direction, &transformed);
         {
             s32 value = source->value;
-            fn_80227BE0(emitter, &value);
+            GXInitLightColor(emitter, &value);
         }
-        fn_80211BA0(&transformed, &basis, &cross);
+        C_VECHalfAngle(&transformed, &basis, &cross);
         effect_records[index].direction = cross;
         effect_records[index].distance = red;
         effect_records[index].owner = owner;
-        fn_80227B0C(emitter, transformed.x, transformed.y, transformed.z);
-        fn_80227874(emitter, lbl_80651348, lbl_80651348,
+        GXInitSpecularDir(emitter, transformed.x, transformed.y, transformed.z);
+        GXInitLightAttn(emitter, lbl_80651348, lbl_80651348,
                     lbl_8065134C, lbl_806513AC,
                     lbl_80651348, lbl_806513B0);
     }
-    fn_80227C08(emitter, 1 << index);
+    GXLoadLightObjImm(emitter, 1 << index);
 }

@@ -140,17 +140,17 @@ extern void *fn_80201C24(void *);
 extern void fn_80201DD0(void *, void *);
 extern void *fn_80204844(void *, int);
 extern void *fn_8020499C(void *);
-extern void fn_802110A8(Matrix34 *, Matrix34 *);
-extern void fn_802114E0(Matrix34 *, void *);
-extern void fn_80211710(Matrix34 *, Vec3 *, Vec3 *);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern float fn_80211B08(Vec3 *);
-extern float fn_80211B44(Vec3 *, Vec3 *);
-extern void fn_80211B64(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211EFC(Vec4 *, Matrix34 *);
+extern void PSMTXInverse(Matrix34 *, Matrix34 *);
+extern void PSMTXQuat(Matrix34 *, void *);
+extern void PSMTXMultVec(Matrix34 *, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern float PSVECMag(Vec3 *);
+extern float PSVECDotProduct(Vec3 *, Vec3 *);
+extern void PSVECCrossProduct(Vec3 *, Vec3 *, Vec3 *);
+extern void C_QUATMtx(Vec4 *, Matrix34 *);
 
 void *fn_800E87E0(void *owner, int flagged, int fromHand, int arg3, int arg4, int arg5, float scale)
 {
@@ -276,23 +276,23 @@ void *fn_800E87E0(void *owner, int flagged, int fromHand, int arg3, int arg4, in
         handPos.x = handMatrix.m[0][3];
         handPos.y = handMatrix.m[1][3];
         handPos.z = handMatrix.m[2][3];
-        fn_80211EFC(&quat, &handMatrix);
+        C_QUATMtx(&quat, &handMatrix);
         fn_8012B690(handModel, &handPos, &local);
-        fn_80211A6C(&local, handPosition, &offset);
+        PSVECSubtract(&local, handPosition, &offset);
         position = fn_8011F130(model);
-        fn_80211A48(position, &offset, position);
+        PSVECAdd(position, &offset, position);
         fn_8012CDF0(model, 0xF, quat, 0);
         fn_8011F598(handModel, 1, 0xF, -1, &tip, 2);
-        fn_80211A6C(&tip.pos, &handPos, &delta);
-        fn_802110A8(&handMatrix, &inverse);
+        PSVECSubtract(&tip.pos, &handPos, &delta);
+        PSMTXInverse(&handMatrix, &inverse);
         fn_8017AD00(&inverse, &delta, &flip);
         flip.x = -flip.x;
         flip.y = -flip.y;
         flip.z = -flip.z;
         fn_8012CCF0(model, 0xF, flip, zero, zero, 0);
         fn_8012B690(handModel, &tip.pos, &tipPos);
-        fn_80211A6C(&tipPos, &local, &offset);
-        fn_80211A48(position, &offset, position);
+        PSVECSubtract(&tipPos, &local, &offset);
+        PSVECAdd(position, &offset, position);
     } else {
         up = defaults[1];
         forward = defaults[2];
@@ -304,13 +304,13 @@ void *fn_800E87E0(void *owner, int flagged, int fromHand, int arg3, int arg4, in
         position = fn_8011F130(model);
         *position = grip.pos;
         fn_8011F598(model, 1, 0xF, -1, &tip, 2);
-        fn_80211B64(&up, &grip.dir, &normal);
+        PSVECCrossProduct(&up, &grip.dir, &normal);
         {
             float len;
             float dot;
-            len = fn_80211B08(&normal);
-            fn_80211AAC(&normal, &normal);
-            dot = fn_80211B44(&up, &grip.dir);
+            len = PSVECMag(&normal);
+            PSVECNormalize(&normal, &normal);
+            dot = PSVECDotProduct(&up, &grip.dir);
             fn_8017A244(&normal, &orient, fn_800490E8(len, dot));
         }
         fn_8012CDF0(model, 0xF, orient, 0);
@@ -326,35 +326,35 @@ void *fn_800E87E0(void *owner, int flagged, int fromHand, int arg3, int arg4, in
     state->rotation = quat;
     fn_8011F6A4(handModel, 2, 0xF, -1, &jointB, 1);
     fn_8011F6A4(handModel, 3, 0xF, -1, &jointC, 1);
-    fn_80211A6C(&jointB.pos, &jointC.pos, &diff);
+    PSVECSubtract(&jointB.pos, &jointC.pos, &diff);
     {
         float length;
-        length = fn_80211B08(&diff);
+        length = PSVECMag(&diff);
         length *= lbl_8064F818;
         state->spinRate = length;
     }
     targetObject = fn_80201814(fn_801A7498(owner));
     targetModel = fn_80201BC8(targetObject);
     fn_800C44C0(targetObject, target, owner, &aim, &hitObject);
-    fn_80211A6C(&aim, position, &state->velocity);
-    if (fn_80211B08(&state->velocity) <= lbl_8064F81C) {
+    PSVECSubtract(&aim, position, &state->velocity);
+    if (PSVECMag(&state->velocity) <= lbl_8064F81C) {
         fn_800C44C0(targetObject, 0, owner, &aim, &hitObject);
     }
-    fn_80211AAC(&state->velocity, &state->velocity);
-    fn_80211A90(&state->velocity, &state->velocity, state->scale);
+    PSVECNormalize(&state->velocity, &state->velocity);
+    PSVECScale(&state->velocity, &state->velocity, state->scale);
     fn_8011F6A4(handModel, 3, 0xF, -1, &jointD, 2);
-    fn_80211B64(&state->axis, &tip.dir, &cross);
-    if (fn_80211B44(&cross, &jointD.dir) < lbl_8064F814) {
+    PSVECCrossProduct(&state->axis, &tip.dir, &cross);
+    if (PSVECDotProduct(&cross, &jointD.dir) < lbl_8064F814) {
         state->axis.x = -state->axis.x;
         state->axis.y = -state->axis.y;
         state->axis.z = -state->axis.z;
     }
     source = fn_8011FE34(handModel);
-    fn_802114E0(&rotation, source);
-    fn_80211710(&rotation, &state->axis, &dir);
-    fn_80211B64(&dir, &state->velocity, &spin);
-    fn_80211AAC(&spin, &spin);
-    fn_80211A90(&spin, &spin, state->spinRate);
+    PSMTXQuat(&rotation, source);
+    PSMTXMultVec(&rotation, &state->axis, &dir);
+    PSVECCrossProduct(&dir, &state->velocity, &spin);
+    PSVECNormalize(&spin, &spin);
+    PSVECScale(&spin, &spin, state->spinRate);
     state->spin = spin;
     handle = fn_8006D444(fn_80204844(fn_80201B9C(), 0x20));
     if (fn_8006D344(handle, 0x80, 0) != 0 && fn_80088528(handle, &step) != 0) {
@@ -368,14 +368,14 @@ void *fn_800E87E0(void *owner, int flagged, int fromHand, int arg3, int arg4, in
     } else {
         hits = fn_80179004(fn_8011F130(targetModel), position);
         travel = state->velocity;
-        fn_80211AAC(&travel, &travel);
-        fn_80211A90(&travel, &travel, lbl_8064F820 * hits);
-        fn_80211A48(position, &travel, &end);
+        PSVECNormalize(&travel, &travel);
+        PSVECScale(&travel, &travel, lbl_8064F820 * hits);
+        PSVECAdd(position, &travel, &end);
         fn_8003B630(object, &state->velocity, &end, &hit, &surface);
         state->target = hit.pos;
         state->distance = hit.count;
         state->surface = surface != 0 ? *surface : 0;
-        state->speed = fn_80211B08(&travel);
+        state->speed = PSVECMag(&travel);
     }
     if (surface != 0) {
         fn_8012A24C(model, *surface);

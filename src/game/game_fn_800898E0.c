@@ -26,7 +26,7 @@ extern void fn_8006BEE4(Context*, void (*)(void));
 extern void fn_8006DEF8(Work*, int, void*, Work*, u16);
 extern void fn_8006EB60(void);
 extern void fn_80089A34(void);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern char* fn_800FD40C(void*, const void*);
 extern const u8 lbl_8024514C[];
 
@@ -43,11 +43,11 @@ void fn_800898E0(Work* work)
     work->bytes[index * 0x2C + 0x6B] = 4;
     work->bytes[index * 0x2C + 0x68] = 4;
     fn_8006DEF8(work, 0xB, fn_80089A34, work,
-                (u16)((fn_800FBFB0() & 0xF) + 100));
+                (u16)((rand() & 0xF) + 100));
     for (i = 0; i < 3; i++) {
         work->bytes[index * 0x2C + 0x68] = (u8)i;
         fn_8006DEF8(work, 0xB, fn_80089A34, work,
-                    (u16)((fn_800FBFB0() & 0x1F) + 300));
+                    (u16)((rand() & 0x1F) + 300));
     }
     *(int*)(memory + 0x1740) = 0;
     *(int*)(memory + 0x1744) = 2;

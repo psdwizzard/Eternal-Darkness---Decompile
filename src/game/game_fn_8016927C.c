@@ -7,12 +7,12 @@ typedef struct Value {
 typedef struct State State;
 
 extern char lbl_8024FCB8[];
-extern int fn_801691AC(State*, Value*, int);
-extern void fn_8016044C(State*, Value*, int, char*);
+extern int call_binTM(State*, Value*, int);
+extern void luaG_binerror(State*, Value*, int, char*);
 
-void fn_8016927C(State* state, Value* value, int index)
+void call_arith(State* state, Value* value, int index)
 {
-    if (!fn_801691AC(state, value, index)) {
-        fn_8016044C(state, value - 2, 2, lbl_8024FCB8);
+    if (!call_binTM(state, value, index)) {
+        luaG_binerror(state, value - 2, 2, lbl_8024FCB8);
     }
 }

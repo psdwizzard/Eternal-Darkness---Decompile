@@ -16,10 +16,10 @@ typedef struct {
     u8 wrap;
 } GXFifoObj;
 
-void fn_80224048(GXFifoObj *fifo);
+void __GXSaveCPUFifoAux(GXFifoObj *fifo);
 
 /* GXSaveCPUFifo */
-void fn_80224028(GXFifoObj *fifo)
+void GXSaveCPUFifo(GXFifoObj *fifo)
 {
-    fn_80224048(fifo);
+    __GXSaveCPUFifoAux(fifo);
 }

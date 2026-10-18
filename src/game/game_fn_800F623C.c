@@ -2,7 +2,7 @@
  * NonMatching: GC/1.3 separates the over-count subtraction and comparison.
  * See assignment 0c5c7f7d-6177-4b7c-9c11-19ee9d2d3538 for codegen evidence.
  */
-long long fn_800F623C(int hi, unsigned int lo, unsigned int shift)
+long long __shr2i(int hi, unsigned int lo, unsigned int shift)
 {
     unsigned int out_lo;
     int shifted_hi;

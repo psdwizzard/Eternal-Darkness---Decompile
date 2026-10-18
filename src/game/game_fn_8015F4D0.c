@@ -20,19 +20,19 @@ typedef struct Command {
     int second;
 } Command;
 
-extern int fn_8015EF4C(Object*);
-extern void fn_8015EED8(Object*, int);
-extern int fn_8015F23C(Object*, int, int);
-extern void fn_8015F2B0(Object*, int*, int);
-extern int fn_8015F47C(Object*, int, int);
-extern void fn_8015EE54(Object*, int);
-extern int fn_8015EC10(Object*);
-extern void fn_8015F1F8(Object*, int, int);
-extern void fn_8015F12C(Object*, int, int, int, int);
+extern int discharge(Object*);
+extern void luaK_setcallreturns(Object*, int);
+extern int need_value(Object*, int, int);
+extern void luaK_concat(Object*, int*, int);
+extern int code_label(Object*, int, int);
+extern void luaK_adjuststack(Object*, int);
+extern int luaK_getlabel(Object*);
+extern void luaK_patchlist(Object*, int, int);
+extern void luaK_patchlistaux(Object*, int, int, int, int);
 
 #pragma use_lmw_stmw on
 
-void fn_8015F4D0(OuterObject* outer, Command* command, int finish)
+void luaK_tostack(OuterObject* outer, Command* command, int finish)
 {
     Object* object = outer->object;
     int type;
@@ -41,7 +41,7 @@ void fn_8015F4D0(OuterObject* outer, Command* command, int finish)
     int second_index;
     int first_index;
 
-    if (fn_8015EF4C(object) != 0) {
+    if (discharge(object) != 0) {
         return;
     }
 
@@ -49,7 +49,7 @@ void fn_8015F4D0(OuterObject* outer, Command* command, int finish)
     if ((type < 32 || type > 42) && command->second == -1 &&
         command->first == -1) {
         if (finish != 0) {
-            fn_8015EED8(object, 1);
+            luaK_setcallreturns(object, 1);
         }
         return;
     }
@@ -58,27 +58,27 @@ void fn_8015F4D0(OuterObject* outer, Command* command, int finish)
     second_index = -1;
     first_index = -1;
     if (type < 32 || type > 42) {
-        if (fn_8015F23C(object, command->second, 41) == 0 &&
-            fn_8015F23C(object, command->first, 40) == 0) {
+        if (need_value(object, command->second, 41) == 0 &&
+            need_value(object, command->first, 40) == 0) {
             goto emit;
         }
     }
 
     if (type >= 32 && type <= 42) {
-        fn_8015F2B0(object, &command->first, object->count - 1);
+        luaK_concat(object, &command->first, object->count - 1);
     } else {
-        extra_index = fn_8015F47C(object, 42, -1);
-        fn_8015EE54(object, 1);
+        extra_index = code_label(object, 42, -1);
+        luaK_adjuststack(object, 1);
     }
 
-    second_index = fn_8015F47C(object, 43, 0);
-    first_index = fn_8015F47C(object, 6, 1);
-    fn_8015F1F8(object, extra_index, fn_8015EC10(object));
+    second_index = code_label(object, 43, 0);
+    first_index = code_label(object, 6, 1);
+    luaK_patchlist(object, extra_index, luaK_getlabel(object));
 
 emit:
-    position = fn_8015EC10(object);
-    fn_8015F12C(object, command->second, second_index, 41, position);
-    fn_8015F12C(object, command->first, first_index, 40, position);
+    position = luaK_getlabel(object);
+    luaK_patchlistaux(object, command->second, second_index, 41, position);
+    luaK_patchlistaux(object, command->first, first_index, 40, position);
     command->first = -1;
     command->second = -1;
 }

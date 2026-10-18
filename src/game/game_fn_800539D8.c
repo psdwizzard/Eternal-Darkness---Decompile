@@ -104,12 +104,12 @@ extern void fn_801EB194(s32);
 extern s32 fn_800473A4(void);
 extern s32 fn_80047364(void);
 extern void fn_8004736C(void);
-extern u32 fn_8022658C(void);
+extern u32 GXReadDrawSync(void);
 extern void fn_8005391C(s16, s32);
-extern void fn_8020F088(void*);
-extern void fn_8020EFBC(void*);
-extern void fn_8020F0F8(void*);
-extern void fn_8020EF80(void*);
+extern void OSCheckStopwatch(void*);
+extern void OSStopStopwatch(void*);
+extern void OSResetStopwatch(void*);
+extern void OSStartStopwatch(void*);
 
 void fn_800539D8(void)
 {
@@ -251,17 +251,17 @@ void fn_800539D8(void)
     if (lbl_8030F540.countdown != -1) {
         if (lbl_8030F540.countdown == 0) {
             lbl_8030F540.countdown = -1;
-            while ((fn_8022658C() & 0xFFFF) != 0xBEEF) {
+            while ((GXReadDrawSync() & 0xFFFF) != 0xBEEF) {
             }
             fn_8005391C(lbl_8030F540.next, 0);
         } else {
             lbl_8030F540.countdown--;
         }
     }
-    fn_8020F088(lbl_806391F0);
-    fn_8020EFBC(lbl_806391F0);
-    fn_8020F0F8(lbl_806391F0);
-    fn_8020EFBC(lbl_80639228);
-    fn_8020F0F8(lbl_80639228);
-    fn_8020EF80(lbl_80639228);
+    OSCheckStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_806391F0);
+    OSResetStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_80639228);
+    OSResetStopwatch(lbl_80639228);
+    OSStartStopwatch(lbl_80639228);
 }

@@ -47,10 +47,10 @@ typedef struct ResidueLook {
 
 extern void *fn_8022F780(s32 size);
 /* The retail wrapper forwards both floating-point arguments to pow. */
-extern double fn_801023A0();
-extern double fn_80102074(double value);
+extern double pow();
+extern double rint(double value);
 
-ResidueLook *fn_80235108(ResidueState *state, ResidueMode *mode, ResidueInfo *info) {
+ResidueLook *res0_look(ResidueState *state, ResidueMode *mode, ResidueInfo *info) {
     s32 i;
     s32 samples;
     s32 acc;
@@ -93,7 +93,7 @@ ResidueLook *fn_80235108(ResidueState *state, ResidueMode *mode, ResidueInfo *in
             }
         }
     }
-    look->partvals = fn_80102074(fn_801023A0((float)look->parts, (float)dim));
+    look->partvals = rint(pow((float)look->parts, (float)dim));
     look->stages = maxstage;
     look->decodemap = fn_8022F780(look->partvals * sizeof(*look->decodemap));
     /* Expand each partition value into base-parts digits. */

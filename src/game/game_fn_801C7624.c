@@ -17,9 +17,9 @@ typedef struct Group {
     unsigned char pad4C[0x70];
 } Group;
 
-extern Group lbl_80628CB0[];
+extern Group dspStudio[];
 
-void fn_801C7624(Entry* entry)
+void salDeactivateVoice(Entry* entry)
 {
     if (entry->active == 0) {
         return;
@@ -28,7 +28,7 @@ void fn_801C7624(Entry* entry)
     if (entry->previous != 0) {
         entry->previous->next = entry->next;
     } else {
-        lbl_80628CB0[entry->group].head = entry->next;
+        dspStudio[entry->group].head = entry->next;
     }
 
     if (entry->next != 0) {

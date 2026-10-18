@@ -35,19 +35,19 @@ typedef struct Context {
     void* linehook;
 } Context;
 
-extern void fn_8016057C(Context*, int);
-extern void fn_80160628(Context*, Value*, int);
-extern void fn_80169740(Context*, Value*, int);
-extern Value* fn_80168F84(Context*, void*);
-extern void fn_80168AE8(Context*, Value*, Value*, void*);
-extern void fn_80160B18(Context*, Value*, int);
+extern void luaD_checkstack(Context*, int);
+extern void luaD_adjusttop(Context*, Value*, int);
+extern void adjust_varargs(Context*, Value*, int);
+extern Value* luaV_getglobal(Context*, void*);
+extern void traceexec(Context*, Value*, Value*, void*);
+extern void luaD_call(Context*, Value*, int);
 
 /*
  * Lua 4.0.1 luaV_execute reconstruction.  The entry/return and primitive
  * stack opcodes below establish the original VM state model; the remaining
  * opcode bodies still need to be recovered against the retail switch.
  */
-Value* fn_801697AC(Context* context, Closure* closure, Value* base)
+Value* luaV_execute(Context* context, Closure* closure, Value* base)
 {
     Proto* proto = closure->proto;
     Value* top;
@@ -57,18 +57,18 @@ Value* fn_801697AC(Context* context, Closure* closure, Value* base)
     Instruction instruction;
 
     ((Instruction***)(base[-1].value.pointer))[1] = &pc;
-    fn_8016057C(context, proto->maxstacksize + 8);
+    luaD_checkstack(context, proto->maxstacksize + 8);
     if (proto->is_vararg) {
-        fn_80169740(context, base, proto->numparams);
+        adjust_varargs(context, base, proto->numparams);
     } else {
-        fn_80160628(context, base, proto->numparams);
+        luaD_adjusttop(context, base, proto->numparams);
     }
     top = context->top;
 
     for (;;) {
         instruction = *pc++;
         if (linehook) {
-            fn_80168AE8(context, base, top, linehook);
+            traceexec(context, base, top, linehook);
         }
         switch (instruction & 0x3f) {
         case 0:
@@ -82,13 +82,13 @@ Value* fn_801697AC(Context* context, Closure* closure, Value* base)
             if (results == 0xff)
                 results = -1;
             context->top = top;
-            fn_80160B18(context, base + (instruction >> 15), results);
+            luaD_call(context, base + (instruction >> 15), results);
             top = context->top;
             break;
         }
         case 3:
             context->top = top;
-            fn_80160B18(context, base + (instruction >> 15), -1);
+            luaD_call(context, base + (instruction >> 15), -1);
             return base + ((instruction >> 6) & 0x1ff);
         case 4: {
             int count = instruction >> 6;
@@ -130,7 +130,7 @@ Value* fn_801697AC(Context* context, Closure* closure, Value* base)
         case 12: {
             Value* value;
             context->top = top;
-            value = fn_80168F84(context, strings[instruction >> 6]);
+            value = luaV_getglobal(context, strings[instruction >> 6]);
             *top++ = *value;
             break;
         }

@@ -95,7 +95,7 @@ extern void *fn_80201BC8(void *);
 extern void *fn_80204844(void *, s32);
 extern void *fn_80204A8C(void);
 extern s32 fn_80204D98(void *);
-extern s32 fn_80228250(u16, u16, u32, u8, u8);
+extern s32 GXGetTexBufferSize(u16, u16, u32, u8, u8);
 extern void DCInvalidateRange(void *, u32);
 
 u16 fn_800BA284(u8 *destination)
@@ -133,7 +133,7 @@ u16 fn_800BA284(u8 *destination)
     header.specialCount = 0;
     header.selectedCount = 0;
     fn_80042678((u16)lbl_803003C8.room, &lbl_8064B6B8, lbl_8064D68C,
-                 fn_80228250(0x100, 0x100, 1, 0, 0));
+                 GXGetTexBufferSize(0x100, 0x100, 1, 0, 0));
     size = fn_800BA068(destination + 0x14, -1, selected, &count) + 0x14;
     selectedKey = (u32)fn_80204844(fn_80201B9C(), 0x22);
     if (selectedKey != 0) {
@@ -220,7 +220,7 @@ u16 fn_800BA284(u8 *destination)
         color = *(s32 *)(lbl_80332158 + 0x14c);
         fn_801ECBBC(&color);
         DCInvalidateRange((void *)lbl_8064D68C,
-                          fn_80228250(0x100, 0x100, 1, 0, 0));
+                          GXGetTexBufferSize(0x100, 0x100, 1, 0, 0));
         fn_801EBDDC(lbl_80332158 + 0x28);
     }
     fn_801EBA58((void *)lbl_8064D68C);

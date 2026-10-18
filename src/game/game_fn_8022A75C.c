@@ -17,7 +17,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022A75C(u8 compareEnable, int compareFunction, u8 updateEnable)
+void GXSetZMode(u8 compareEnable, int compareFunction, u8 updateEnable)
 {
     SET_FIELD(gx->zMode, 1, 0, compareEnable);
     SET_FIELD(gx->zMode, 3, 1, compareFunction);

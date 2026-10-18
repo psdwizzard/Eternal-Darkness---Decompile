@@ -40,16 +40,16 @@ typedef struct Object {
 extern char lbl_8064BA68;
 extern char lbl_8064BA70;
 
-extern int fn_80167D2C(Entry*);
-extern void fn_801603AC(Object*, Entry*, void*);
-extern void fn_80160748(Object*, Entry*);
-extern void fn_8016088C(Object*, void*, Callback, void*);
-extern Entry* fn_801608D0(Object*, Closure*, void*);
-extern Entry* fn_801697AC(Object*, Closure*, void*);
-extern void fn_8016057C(Object*, int);
-extern void fn_80161FA0(Object*);
+extern int luaT_tag(Entry*);
+extern void luaG_typeerror(Object*, Entry*, void*);
+extern void luaD_openstack(Object*, Entry*);
+extern void luaD_callHook(Object*, void*, Callback, void*);
+extern Entry* callCclosure(Object*, Closure*, void*);
+extern Entry* luaV_execute(Object*, Closure*, void*);
+extern void luaD_checkstack(Object*, int);
+extern void luaC_checkGC(Object*);
 
-void fn_80160B18(Object* object, Entry* entry, int amount)
+void luaD_call(Object* object, Entry* entry, int amount)
 {
     Callback callback_source;
     Entry* first_result;
@@ -57,11 +57,11 @@ void fn_80160B18(Object* object, Entry* entry, int amount)
     Closure* closure;
 
     if (entry->fields.type != 5) {
-        Closure* tag_method = object->table[fn_80167D2C(entry)].saved;
+        Closure* tag_method = object->table[luaT_tag(entry)].saved;
         if (tag_method == 0) {
-            fn_801603AC(object, entry, &lbl_8064BA68);
+            luaG_typeerror(object, entry, &lbl_8064BA68);
         }
-        fn_80160748(object, entry);
+        luaD_openstack(object, entry);
         entry->fields.value = tag_method;
         entry->fields.type = 5;
     }
@@ -72,14 +72,14 @@ void fn_80160B18(Object* object, Entry* entry, int amount)
     entry->fields.type = 6;
     callback_source = object->source;
     if (callback_source != 0) {
-        fn_8016088C(object, entry, callback_source, &lbl_8064BA68);
+        luaD_callHook(object, entry, callback_source, &lbl_8064BA68);
     }
 
-    first_result = closure->count != 0 ? fn_801608D0(object, closure, entry + 1)
-                                       : fn_801697AC(object, closure, entry + 1);
+    first_result = closure->count != 0 ? callCclosure(object, closure, entry + 1)
+                                       : luaV_execute(object, closure, entry + 1);
 
     if (callback_source != 0) {
-        fn_8016088C(object, entry, callback_source, &lbl_8064BA70);
+        luaD_callHook(object, entry, callback_source, &lbl_8064BA70);
     }
 
     if (amount == -1) {
@@ -96,11 +96,11 @@ void fn_80160B18(Object* object, Entry* entry, int amount)
         while (amount > 0) {
             object->current->fields.type = 1;
             if (object->current == object->end) {
-                fn_8016057C(object, 1);
+                luaD_checkstack(object, 1);
             }
             object->current++;
             amount--;
         }
     }
-    fn_80161FA0(object);
+    luaC_checkGC(object);
 }

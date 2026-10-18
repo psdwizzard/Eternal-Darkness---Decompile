@@ -20,7 +20,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | (((u32)(value) << (shift)) & (((1UL << (width)) - 1) << (shift))))
 
-void fn_80229330(int matrixId, const float matrix[2][3], s8 scale)
+void GXSetIndTexMtx(int matrixId, const float matrix[2][3], s8 scale)
 {
     u32 index;
     u32 reg;

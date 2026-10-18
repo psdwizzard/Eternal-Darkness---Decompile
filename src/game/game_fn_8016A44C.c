@@ -8,9 +8,9 @@ typedef struct Input {
     void* user;
 } Input;
 
-extern int fn_8016A444(void);
+extern int zmfilbuf(void);
 
-Input* fn_8016A44C(Input* input, const unsigned char* data,
+Input* luaZ_mopen(Input* input, const unsigned char* data,
                   unsigned int size, void* user)
 {
     if (data == 0) {
@@ -18,7 +18,7 @@ Input* fn_8016A44C(Input* input, const unsigned char* data,
     }
     input->remaining = size;
     input->cursor = data;
-    input->reader = fn_8016A444;
+    input->reader = zmfilbuf;
     input->state = 0;
     input->user = user;
     return input;

@@ -30,7 +30,7 @@ extern void fn_801EB194(int);
 extern void fn_80108C24(void*);
 extern void fn_800EEB44(void);
 extern void fn_80109B24(void*, u32, u32);
-extern int fn_8021302C(char*);
+extern int DVDConvertPathToEntrynum(char*);
 extern int fn_801098C0(void*, void*);
 extern u32 fn_80135748(u32*);
 extern u32 fn_80109574(void*);
@@ -87,7 +87,7 @@ void fn_800EE5A0(void)
     lbl_8064CC18[1] = lbl_8064D71C[1];
     lbl_8064CC14 = &lbl_805DB280;
     fn_80109B24(&lbl_805DB280, (u32)lbl_8064CC18, 2);
-    if (fn_8021302C(lbl_803282E0) == -1) {
+    if (DVDConvertPathToEntrynum(lbl_803282E0) == -1) {
         lbl_8064CC20 = 0;
         return;
     }
@@ -115,7 +115,7 @@ void fn_800EE5A0(void)
         fn_80109790(lbl_8064CC14, 1);
         lbl_8064CC14->start_time = 0;
         if (fn_80236D30() == 0) {
-            if (fn_8021302C(lbl_80328360) != -1) {
+            if (DVDConvertPathToEntrynum(lbl_80328360) != -1) {
                 fn_802367B0(lbl_80328360, fn_801B09DC(&timer_size));
                 fn_80236A1C();
             }

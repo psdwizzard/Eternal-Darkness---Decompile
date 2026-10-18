@@ -18,9 +18,9 @@ typedef struct EffectNode {
 extern EffectNode* lbl_8064D304;
 extern int lbl_8064D300, lbl_8064C2D0;
 extern u8 lbl_8060B060[];
-extern unsigned int fn_801B191C(void);
+extern unsigned int DTKGetState(void);
 extern int fn_800E4594(void), fn_801AD7C0(int, int);
-extern void fn_801B151C(int, void*, int, int, void*), fn_801B17B0(int), fn_801B17A8(int);
+extern void DTKQueueTrack(int, void*, int, int, void*), DTKSetState(int), DTKSetRepeatMode(int);
 extern void fn_801ACF80(EffectNode*), fn_801ACFB0(void), fn_801AD46C(u8*, u8*), fn_801ACCA0(int, int);
 extern void fn_801E8328(int, int), fn_801A98F4(u16, u8), DCFlushRange(void*, unsigned long), fn_801ACFE8(u32);
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -43,7 +43,7 @@ void fn_801AD08C(void)
     }
     switch (node->state) {
     case 1:
-        if (fn_801B191C() == 3) {
+        if (DTKGetState() == 3) {
             break;
         }
         active = 1;
@@ -55,15 +55,15 @@ void fn_801AD08C(void)
                 DCFlushRange(node, 0x20);
             }
             node->resource = fn_801AD7C0(node->resource, 1);
-            fn_801B151C(result, lbl_8060B060, 0x3f, node->resource, fn_801ACFE8);
+            DTKQueueTrack(result, lbl_8060B060, 0x3f, node->resource, fn_801ACFE8);
             if (node->kind != 0 || node->queued == 1) {
                 lbl_8064D300 = 4;
-                fn_801B17B0(4);
+                DTKSetState(4);
             } else {
                 lbl_8064D300 = 3;
-                fn_801B17B0(1);
+                DTKSetState(1);
             }
-            fn_801B17A8(node->handle);
+            DTKSetRepeatMode(node->handle);
             lbl_8064C2D0 = node->object_id;
         }
         if (active) {
@@ -72,7 +72,7 @@ void fn_801AD08C(void)
         break;
     case 7:
         if (node->flushed == 1) {
-            fn_801B17B0(1);
+            DTKSetState(1);
             lbl_8064D300 = 3;
             if (node->kind != 0) {
                 fn_801E8328(0x18, node->kind);
@@ -94,29 +94,29 @@ void fn_801AD08C(void)
         }
         break;
     case 2:
-        if (fn_801B191C() != 3) {
+        if (DTKGetState() != 3) {
             if (lbl_8064D300 == 3 || lbl_8064D300 == 2) {
-                fn_801B17B0(0);
+                DTKSetState(0);
                 fn_801ACFB0();
             } else {
-                fn_801B17B0(0);
+                DTKSetState(0);
             }
             fn_801ACF80(node);
         }
         break;
     case 3:
-        if (fn_801B191C() != 3) {
+        if (DTKGetState() != 3) {
             if (lbl_8064D300 == 3) {
-                fn_801B17B0(2);
+                DTKSetState(2);
                 lbl_8064D300 = 2;
             }
             fn_801ACF80(node);
         }
         break;
     case 4:
-        if (fn_801B191C() != 3) {
+        if (DTKGetState() != 3) {
             if (lbl_8064D300 == 2) {
-                fn_801B17B0(1);
+                DTKSetState(1);
                 lbl_8064D300 = 3;
             }
             fn_801ACF80(node);

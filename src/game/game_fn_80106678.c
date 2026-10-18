@@ -56,12 +56,12 @@ typedef struct FrameContext {
     PlaneCursor planes[3];
 } FrameContext;
 
-s16 fn_80102C6C(BitReader* reader);
-void fn_80104B30(Decoder* decoder, FrameContext* ctx, int dest, int arg2, int arg3);
-void fn_801061E0(Movie* movie, FrameContext* ctx);
-void fn_80106088(Decoder* decoder, FrameContext* ctx);
-void fn_80105DE0(Decoder* decoder, FrameContext* ctx, int x, int y);
-void fn_8010528C(Decoder* decoder, FrameContext* ctx, int x, int y);
+s16 decodeHuff(BitReader* reader);
+void initMCHandler(Decoder* decoder, FrameContext* ctx, int dest, int arg2, int arg3);
+void spread_PB_descMap(Movie* movie, FrameContext* ctx);
+void MCBlockDecDCNest(Decoder* decoder, FrameContext* ctx);
+void MCBlockDecMCNest(Decoder* decoder, FrameContext* ctx, int x, int y);
+void MotionComp(Decoder* decoder, FrameContext* ctx, int x, int y);
 
 static inline void DecodeIntra(Decoder* decoder, FrameContext* ctx)
 {
@@ -69,7 +69,7 @@ static inline void DecodeIntra(Decoder* decoder, FrameContext* ctx)
     register Decoder* call_decoder;
     /* ASM: addi preserves the retail argument copy, where C emits mr. */
     asm { addi call_decoder, input, 0 }
-    fn_80106088(call_decoder, ctx);
+    MCBlockDecDCNest(call_decoder, ctx);
 }
 
 static inline void SetupFrame(Decoder* source, FrameContext* ctx, int dest, int arg2, int arg3)
@@ -78,7 +78,7 @@ static inline void SetupFrame(Decoder* source, FrameContext* ctx, int dest, int 
     register Decoder* call_source;
     /* ASM: addi preserves the retail argument copy, where C emits mr. */
     asm { addi call_source, input, 0 }
-    fn_80104B30(call_source, ctx, dest, arg2, arg3);
+    initMCHandler(call_source, ctx, dest, arg2, arg3);
 }
 
 static inline void DecodeModes(Movie* source, FrameContext* ctx)
@@ -87,7 +87,7 @@ static inline void DecodeModes(Movie* source, FrameContext* ctx)
     register Movie* call_source;
     /* ASM: addi preserves the retail argument copy, where C emits mr. */
     asm { addi call_source, input, 0 }
-    fn_801061E0(call_source, ctx);
+    spread_PB_descMap(call_source, ctx);
 }
 
 static inline void CopyMotion(Decoder* source, FrameContext* ctx, int x, int y)
@@ -96,7 +96,7 @@ static inline void CopyMotion(Decoder* source, FrameContext* ctx, int x, int y)
     register Decoder* call_source;
     /* ASM: addi preserves the retail argument copy, where C emits mr. */
     asm { addi call_source, input, 0 }
-    fn_80105DE0(call_source, ctx, x, y);
+    MCBlockDecMCNest(call_source, ctx, x, y);
 }
 
 static inline void BlendMotion(Decoder* source, FrameContext* ctx, int x, int y)
@@ -105,10 +105,10 @@ static inline void BlendMotion(Decoder* source, FrameContext* ctx, int x, int y)
     register Decoder* call_source;
     /* ASM: addi preserves the retail argument copy, where C emits mr. */
     asm { addi call_source, input, 0 }
-    fn_8010528C(call_source, ctx, x, y);
+    MotionComp(call_source, ctx, x, y);
 }
 
-void fn_80106678(register Movie* movie, int dest, int arg2, int arg3)
+void BpicPlaneDec(register Movie* movie, int dest, int arg2, int arg3)
 {
     FrameContext ctx;
     int plane_offset;
@@ -180,7 +180,7 @@ void fn_80106678(register Movie* movie, int dest, int arg2, int arg3)
                     const u8* input;
                     int i;
                     int delta;
-                    s16 symbol = fn_80102C6C(&decoder->mv_x);
+                    s16 symbol = decodeHuff(&decoder->mv_x);
                     i = bits_x - 1;
                     delta = symbol << bits_x;
                     for (; i >= 0; i--) {
@@ -227,7 +227,7 @@ void fn_80106678(register Movie* movie, int dest, int arg2, int arg3)
                     const u8* input;
                     int i;
                     int delta;
-                    s16 symbol = fn_80102C6C(&decoder->mv_y);
+                    s16 symbol = decodeHuff(&decoder->mv_y);
                     i = bits_y - 1;
                     delta = symbol << bits_y;
                     for (; i >= 0; i--) {

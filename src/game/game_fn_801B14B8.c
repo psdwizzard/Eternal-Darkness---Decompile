@@ -1,23 +1,23 @@
-extern volatile unsigned int lbl_8064D328;
-extern int lbl_8064D33C;
+extern volatile unsigned int __DTKShutdownFlag;
+extern int __DTKState;
 
-extern void fn_801B1740(void*);
-extern void fn_8021A140(void*);
-extern void fn_8021A184(void);
-extern void fn_8021A1A8(int);
-extern void fn_8021A468(int);
-extern void fn_8021A494(int);
+extern void DTKFlushTracks(void*);
+extern void AIRegisterStreamCallback(void*);
+extern void AIResetStreamSampleCount(void);
+extern void AISetStreamPlayState(int);
+extern void AISetStreamVolLeft(int);
+extern void AISetStreamVolRight(int);
 
-void fn_801B14B8(void)
+void DTKShutdown(void)
 {
-    fn_8021A468(0);
-    fn_8021A494(0);
-    fn_8021A140(0);
-    fn_8021A184();
-    fn_8021A1A8(0);
-    lbl_8064D328 = 1;
-    fn_801B1740(0);
-    lbl_8064D33C = 0;
-    while (lbl_8064D328 != 0) {
+    AISetStreamVolLeft(0);
+    AISetStreamVolRight(0);
+    AIRegisterStreamCallback(0);
+    AIResetStreamSampleCount();
+    AISetStreamPlayState(0);
+    __DTKShutdownFlag = 1;
+    DTKFlushTracks(0);
+    __DTKState = 0;
+    while (__DTKShutdownFlag != 0) {
     }
 }

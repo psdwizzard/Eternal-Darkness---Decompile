@@ -6,11 +6,11 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EFD6C(int *, TRKBuffer **);
-extern int fn_800F4080(TRKBuffer *);
-extern int fn_800F3FD4(TRKBuffer *);
-extern int fn_800F3054(TRKBuffer *, int *, int, int, int);
-extern void fn_800EFCDC(int);
+extern int TRKGetFreeBuffer(int *, TRKBuffer **);
+extern int TRKTargetAddStopInfo(TRKBuffer *);
+extern int TRKTargetAddExceptionInfo(TRKBuffer *);
+extern int TRKRequestSend(TRKBuffer *, int *, int, int, int);
+extern void TRKReleaseBuffer(int);
 
 static int append(TRKBuffer *buffer, u8 value)
 {
@@ -21,7 +21,7 @@ static int append(TRKBuffer *buffer, u8 value)
     return 0;
 }
 
-int fn_800F34D4(u8 command)
+int TRKDoNotifyStopped(u8 command)
 {
     int reply_buffer;
     int first_buffer;
@@ -29,19 +29,19 @@ int fn_800F34D4(u8 command)
     int append_result;
     int result;
 
-    result = fn_800EFD6C(&first_buffer, &buffer);
+    result = TRKGetFreeBuffer(&first_buffer, &buffer);
     if (result == 0) {
         append_result = append(buffer, command);
         if (append_result == 0) {
             if (command == 0x90)
-                fn_800F4080(buffer);
+                TRKTargetAddStopInfo(buffer);
             else
-                fn_800F3FD4(buffer);
+                TRKTargetAddExceptionInfo(buffer);
         }
-        result = fn_800F3054(buffer, &reply_buffer, 2, 3, 1);
+        result = TRKRequestSend(buffer, &reply_buffer, 2, 3, 1);
         if (result == 0)
-            fn_800EFCDC(reply_buffer);
-        fn_800EFCDC(first_buffer);
+            TRKReleaseBuffer(reply_buffer);
+        TRKReleaseBuffer(first_buffer);
     }
     return result;
 }

@@ -1,6 +1,6 @@
-extern void fn_801CD034(void);
+extern void hwRemoveInput(void);
 
-void fn_801B9330(void)
+void synthRemoveStudioInput(void)
 {
-    fn_801CD034();
+    hwRemoveInput();
 }

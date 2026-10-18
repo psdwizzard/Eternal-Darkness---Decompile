@@ -48,22 +48,22 @@ typedef void (*VIRetraceCallback)(u32 retraceCount);
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
 extern void SIRefreshSamplingRate(void);
-extern void fn_802100F0(OSThreadQueue *queue);
-extern u32 fn_8021818C(void);
+extern void OSWakeupThread(OSThreadQueue *queue);
+extern u32 getCurrentFieldEvenOdd(void);
 /* Runtime shift helpers. __shr2u receives the 64-bit value in r3/r4
  * and the shift in r5; __shl2i receives the same pair as explicit words. */
 extern u64 fn_800F6218(u64 value, u32 shift);
-extern u64 fn_800F61F4(u32 hi, u32 lo, u32 shift);
+extern u64 __shl2i(u32 hi, u32 lo, u32 shift);
 
 extern VIState lbl_80641AC8;
 extern u32 lbl_8064DA60;
-extern u32 lbl_8064DA64;
-extern OSThreadQueue lbl_8064DA68;
-extern VIRetraceCallback lbl_8064DA70;
-extern VIRetraceCallback lbl_8064DA74;
-extern u32 lbl_8064DA90;
-extern volatile u64 lbl_8064DA98;
-extern void *lbl_8064DAA0;
+extern u32 flushFlag;
+extern OSThreadQueue retraceQueue;
+extern VIRetraceCallback PreCB;
+extern VIRetraceCallback PostCB;
+extern u32 shdwChangeMode;
+extern volatile u64 shdwChanged;
+extern void *CurrTiming;
 extern u32 CurrTvMode_8064DAA4;
 
 volatile u16 __VIRegs[59] : 0xCC002000;
@@ -91,22 +91,22 @@ static inline BOOL VISetRegs(VIState *vi) {
     int regIndex;
     register u16 *indexedRegs;
 
-    if (!(lbl_8064DA90 == 1 && fn_8021818C() == 0)) {
-        while (lbl_8064DA98) {
-            regIndex = cntlzd(lbl_8064DA98);
+    if (!(shdwChangeMode == 1 && getCurrentFieldEvenOdd() == 0)) {
+        while (shdwChanged) {
+            regIndex = cntlzd(shdwChanged);
             indexedRegs = (u16 *)vi + regIndex;
             __VIRegs[regIndex] = readShadowRegister(indexedRegs);
-            lbl_8064DA98 &= ~fn_800F61F4(0, 1, 63 - regIndex);
+            shdwChanged &= ~__shl2i(0, 1, 63 - regIndex);
         }
-        lbl_8064DA90 = 0;
-        lbl_8064DAA0 = vi->timing;
+        shdwChangeMode = 0;
+        CurrTiming = vi->timing;
         CurrTvMode_8064DAA4 = vi->tv;
         return 1;
     }
     return 0;
 }
 
-void fn_802169B8(short interrupt, OSContext *context) {
+void __VIRetraceHandler(short interrupt, OSContext *context) {
     OSContext exceptionContext;
     VIState *vi = &lbl_80641AC8;
     u16 reg;
@@ -141,23 +141,23 @@ void fn_802169B8(short interrupt, OSContext *context) {
     lbl_8064DA60++;
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(&exceptionContext);
-    if (lbl_8064DA70) {
-        lbl_8064DA70(lbl_8064DA60);
+    if (PreCB) {
+        PreCB(lbl_8064DA60);
     }
 
-    if (lbl_8064DA64) {
+    if (flushFlag) {
         if (VISetRegs(vi)) {
-            lbl_8064DA64 = 0;
+            flushFlag = 0;
             SIRefreshSamplingRate();
         }
     }
 
-    if (lbl_8064DA74) {
+    if (PostCB) {
         OSClearContext(&exceptionContext);
-        lbl_8064DA74(lbl_8064DA60);
+        PostCB(lbl_8064DA60);
     }
 
-    fn_802100F0(&lbl_8064DA68);
+    OSWakeupThread(&retraceQueue);
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(context);
 }

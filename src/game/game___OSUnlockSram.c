@@ -1,9 +1,9 @@
 typedef int BOOL;
 typedef unsigned int u32;
 
-extern BOOL fn_8020E88C(BOOL commit, u32 offset);
+extern BOOL UnlockSram(BOOL commit, u32 offset);
 
 BOOL __OSUnlockSram(BOOL commit)
 {
-    return fn_8020E88C(commit, 0);
+    return UnlockSram(commit, 0);
 }

@@ -32,7 +32,7 @@ extern int fn_8003DED0(int *object, void *, EffectState *);
 extern float fn_800C9C60(void *object);
 extern void fn_800C9D68(void *object, float value);
 extern int fn_8003D69C(int);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern int fn_801AAE68(u16, u8, u8, float, Vec3 *, s8, u8, u8, u16, u32);
 extern u32 fn_8011FAEC(void *);
 extern s32 fn_80067858(s32);
@@ -82,7 +82,7 @@ void fn_8003E668(void *object, Object *actor, int id, u8 *info,
         fn_800C9D68(object, ratio);
     }
     if (!(lbl_8064D5A8 & 0x7F) && fn_8003D69C(id) != 0) {
-        fn_801AAE68((fn_800FBFB0() & 1) ? 0x19E : 0x1D2, 0x50, 0, lbl_8064E2C0, pos, 2, 2, 0, (u16)lbl_8064D18C, 0);
+        fn_801AAE68((rand() & 1) ? 0x19E : 0x1D2, 0x50, 0, lbl_8064E2C0, pos, 2, 2, 0, (u16)lbl_8064D18C, 0);
     }
     if (fn_8011FAEC(actor) & 0x10) {
         (*(u8 **)(state + 0x8C))[0x167]++;

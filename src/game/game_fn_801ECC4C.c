@@ -26,8 +26,8 @@ extern u8 lbl_8064D695;
 extern s32 lbl_8064D698;
 extern s32 lbl_8064D69C;
 extern Color lbl_8064D6AC;
-extern void fn_80229D8C(int channel, Color* color);
-extern void fn_80229E00(int channel, Color* color);
+extern void GXSetTevColor(int channel, Color* color);
+extern void GXSetTevKColor(int channel, Color* color);
 extern void fn_801ED118(void);
 
 void fn_801ECC4C(void)
@@ -55,16 +55,16 @@ void fn_801ECC4C(void)
     source.b = lbl_8064C370.r;
     source.a = lbl_8064C370.r;
     color1 = source;
-    fn_80229E00(1, &color1);
+    GXSetTevKColor(1, &color1);
 
     color2 = lbl_8064C370;
-    fn_80229E00(0, &color2);
+    GXSetTevKColor(0, &color2);
     color3 = lbl_8064D674;
-    fn_80229D8C(1, &color3);
+    GXSetTevColor(1, &color3);
     color4 = lbl_8064D648;
-    fn_80229D8C(3, &color4);
+    GXSetTevColor(3, &color4);
     color5 = lbl_8064D6AC;
-    fn_80229E00(2, &color5);
+    GXSetTevKColor(2, &color5);
     fn_801ED118();
 
     lbl_8063B42C.first = -1;

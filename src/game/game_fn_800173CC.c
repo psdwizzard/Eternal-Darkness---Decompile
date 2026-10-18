@@ -8,10 +8,10 @@ typedef unsigned int u32;
 extern const char lbl_8023BEF8[];
 extern double lbl_8064DE60;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
 extern int fn_80201B44();
 extern void *fn_80201814();
 extern void* fn_80201B3C();
@@ -45,12 +45,12 @@ s32 fn_800173CC(void* script)
     fn_80205288((s32)fn_80201B3C());
     result = 0;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    target = fn_80201814((s32)fn_8016A694(script, 1));
+    target = fn_80201814((s32)lua_tonumber(script, 1));
     if (target != 0) {
         target_data = fn_80201C24(target);
         temp = fn_801A7778(fn_8004918C());
@@ -89,6 +89,6 @@ s32 fn_800173CC(void* script)
         }
     }
 
-    fn_8016A830(script, result);
+    lua_pushnumber(script, result);
     return 1;
 }

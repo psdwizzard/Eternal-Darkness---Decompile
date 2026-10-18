@@ -3,15 +3,15 @@ typedef void (*ARCallback)(void);
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern ARCallback lbl_8064DB18;
+extern ARCallback __AR_Callback;
 
 /* ARRegisterDMACallback */
-ARCallback fn_8021A96C(ARCallback callback)
+ARCallback ARRegisterDMACallback(ARCallback callback)
 {
-    ARCallback previous = lbl_8064DB18;
+    ARCallback previous = __AR_Callback;
     BOOL enabled = OSDisableInterrupts();
 
-    lbl_8064DB18 = callback;
+    __AR_Callback = callback;
     OSRestoreInterrupts(enabled);
     return previous;
 }

@@ -6,9 +6,9 @@ typedef struct TRKEvent {
     int buffer;
 } TRKEvent;
 
-extern void fn_800EFCDC(int);
+extern void TRKReleaseBuffer(int);
 
 void TRKDestructEvent(TRKEvent *event)
 {
-    fn_800EFCDC(event->buffer);
+    TRKReleaseBuffer(event->buffer);
 }

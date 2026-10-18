@@ -31,11 +31,11 @@ struct SoundPoint {
     float gain;
 };
 
-extern SoundPoint* lbl_8064D4C0;
+extern SoundPoint* s3dListenerRoot;
 extern double __frsqrte(double);
 
-extern void fn_801CA3D8(float*, float*, float*);
-extern void fn_801CA484(float*);
+extern void salApplyMatrix(float*, float*, float*);
+extern void salNormalizeVector(float*);
 
 static inline float magnitude(float value)
 {
@@ -58,7 +58,7 @@ static inline float magnitude(float value)
     return value;
 }
 
-void fn_801C87DC(Listener* listener, float* gain, float* distance_mix,
+void CalcEmitter(Listener* listener, float* gain, float* distance_mix,
                  float* direction_x, float* direction_y, float* vertical_mix)
 {
     SoundPoint* point;
@@ -78,7 +78,7 @@ void fn_801C87DC(Listener* listener, float* gain, float* distance_mix,
     *distance_mix = 1.0f;
     pan.x = pan.y = pan.z = 0.0f;
     count = 0;
-    point = lbl_8064D4C0;
+    point = s3dListenerRoot;
 
     while (point != 0) {
         delta[0] = listener->position[0] -
@@ -136,7 +136,7 @@ void fn_801C87DC(Listener* listener, float* gain, float* distance_mix,
                 }
 
                 if (distance != 0.0f) {
-                    fn_801CA3D8(point->matrix, listener->position, direction);
+                    salApplyMatrix(point->matrix, listener->position, direction);
                     if (direction[2] <= 0.0f) {
                         pan.z += -point->negative_limit < direction[2] ? -direction[2] / point->negative_limit : 1.0f;
                     } else {
@@ -145,7 +145,7 @@ void fn_801C87DC(Listener* listener, float* gain, float* distance_mix,
                     if (0.0f != direction[0] ||
                         0.0f != direction[1] ||
                         0.0f != direction[2]) {
-                        fn_801CA484(direction);
+                        salNormalizeVector(direction);
                     }
                     pan.x += direction[0];
                     pan.y -= direction[1];

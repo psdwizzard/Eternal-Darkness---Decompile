@@ -34,7 +34,7 @@ typedef struct Hit {
     u8 data[0x18];
 } Hit;
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8011F114(Vec3 *, void *);
 extern u32 fn_8011FAEC(void *);
 extern void fn_8013F3C0(Shape *, Vec3 *, Vec3 *, float);
@@ -84,7 +84,7 @@ int fn_80072A2C(Vec3 *origin, Vec3 *out, u32 radius, u32 flags)
         /* Sample a bounded number of random spots. */
         if (flags & 4) {
             for (i = 0; i < table->count * 2 && found == NULL; i++) {
-                sampled = &spot[(fn_800FBFB0() % table->count)];
+                sampled = &spot[(rand() % table->count)];
                 randomPos.x = (float)sampled->pos.x;
                 randomPos.y = (float)sampled->pos.y;
                 randomPos.z = (float)sampled->pos.z;

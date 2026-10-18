@@ -20,19 +20,19 @@ struct DVDCommandBlock {
     DVDCBCallback callback;
 };
 
-extern BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback);
-extern void fn_80216058(s32 result, DVDCommandBlock *block);
+extern BOOL DVDCancelAsync(DVDCommandBlock *block, DVDCBCallback callback);
+extern void cbForCancelSync(s32 result, DVDCommandBlock *block);
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL enabled);
-extern void fn_80210004(OSThreadQueue *queue);
+extern void OSSleepThread(OSThreadQueue *queue);
 extern OSThreadQueue __DVDThreadQueue;
 
-s32 fn_80215FAC(DVDCommandBlock *block)
+s32 DVDCancel(DVDCommandBlock *block)
 {
     BOOL enabled;
     s32 state;
 
-    if (!fn_80215D3C(block, fn_80216058)) {
+    if (!DVDCancelAsync(block, cbForCancelSync)) {
         return -1;
     }
 
@@ -48,7 +48,7 @@ s32 fn_80215FAC(DVDCommandBlock *block)
                 break;
             }
         }
-        fn_80210004(&__DVDThreadQueue);
+        OSSleepThread(&__DVDThreadQueue);
     }
     OSRestoreInterrupts(enabled);
     return 0;

@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern u32 lbl_8064D49C;
+extern u32 dspHRTFOn;
 
-void fn_801CD418(void)
+void hwDisableHRTF(void)
 {
-    lbl_8064D49C = 0;
+    dspHRTFOn = 0;
 }

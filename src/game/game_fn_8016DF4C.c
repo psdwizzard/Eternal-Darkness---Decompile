@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_8016A830(void*, double);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void lua_pushnumber(void*, double);
 extern unsigned int fn_800F5C54(double);
 extern int fn_80047180(void);
 extern void* fn_80201B3C(void);
@@ -25,16 +25,16 @@ int fn_8016DF4C(void* state)
     int extra;
     volatile unsigned int timer_template = lbl_806506BC;
 
-    switch (fn_8016A598(state)) {
+    switch (lua_gettop(state)) {
     case 7:
-        optional = (int)fn_8016A694(state, 7);
+        optional = (int)lua_tonumber(state, 7);
     case 6:
-        arg1 = (int)fn_8016A694(state, 1);
-        arg2 = (void *)fn_800F5C54(fn_8016A694(state, 2));
-        arg3 = (void *)fn_800F5C54(fn_8016A694(state, 3));
-        selector = (int)fn_8016A694(state, 4);
-        arg5 = (int)fn_8016A694(state, 5);
-        arg6 = (int)fn_8016A694(state, 6);
+        arg1 = (int)lua_tonumber(state, 1);
+        arg2 = (void *)fn_800F5C54(lua_tonumber(state, 2));
+        arg3 = (void *)fn_800F5C54(lua_tonumber(state, 3));
+        selector = (int)lua_tonumber(state, 4);
+        arg5 = (int)lua_tonumber(state, 5);
+        arg6 = (int)lua_tonumber(state, 6);
         break;
     }
 
@@ -78,6 +78,6 @@ int fn_8016DF4C(void* state)
             fn_801AC350((signed char)clamped, 1, 0);
         }
     }
-    fn_8016A830(state, (double)current);
+    lua_pushnumber(state, (double)current);
     return 1;
 }
