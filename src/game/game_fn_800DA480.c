@@ -1,36 +1,48 @@
 /* fn_800DA480 (0x800DA480, 1108 bytes): event handler dispatching on the
  * current state and the incoming event id. */
 
-extern int fn_80200C10(void *event);
-extern void *fn_80200C38(void *event);
-extern void *fn_80155DB4(void *object);
+typedef struct Node Node;
+typedef struct Object Object;
+typedef struct Position Position;
+typedef struct Owner Owner;
+typedef struct Object80201D14 Object80201D14;
+typedef struct Object80201D1C Object80201D1C;
+typedef struct Object80201D2C Object80201D2C;
+typedef struct Object80201D34 Object80201D34;
+typedef struct ListNode80204E0C ListNode80204E0C;
+
+extern int fn_80200C10(int *event);
+extern void *fn_80200C38(void **event);
+extern Node *fn_80155DB4(unsigned int id);
 extern void *fn_80201BC8(void *object);
-extern void fn_80201B54(void *object);
-extern void fn_80201D14(void *object, int value);
-extern void fn_80201D1C(void *object, int value);
-extern void fn_80201D2C(void *object, int state);
-extern void fn_80201D34(void *object, int value);
+extern int fn_80201B54(int *object);
+extern void fn_80201D14(Object80201D14 *object, unsigned char value);
+extern void fn_80201D1C(Object80201D1C *object, unsigned char value);
+extern void fn_80201D2C(Object80201D2C *object, int state);
+extern void fn_80201D34(Object80201D34 *object, int value);
 extern void fn_800DBEC4(void *object);
 extern void fn_800DBE34(void *object);
-extern int fn_8011EB04(void *actor);
-extern void fn_801261F4(void *actor);
-extern void fn_80120AD0(void *actor, int a, int b, int c, float x, float y);
-extern void fn_801E8328(int type, void *object);
+extern int fn_8011EB04(Object *actor);
+extern int fn_801261F4(Owner *actor);
+extern void fn_80120AD0(Object *actor, const Position *position,
+                        unsigned short value, unsigned int state, float x, float y);
+extern int fn_801E8328(unsigned int type, unsigned int object);
 extern void fn_800DBC0C(void *object);
 extern void fn_800DBB24(void *object, void *event);
 extern void fn_800DB2BC(void *object);
 extern void fn_800DBA84(void *object, void *event);
 extern void *fn_80204A8C(void);
-extern void fn_80204E0C(void *object, void *value);
-extern void fn_8011FA8C(void *actor, int flags, int value);
-extern void fn_801568E4(void *data);
-extern void fn_801568D8(void *data);
-extern void fn_801568F0(void *data);
-extern void fn_8011FB54(void *actor, int value);
+extern int fn_80204E0C(void *object, ListNode80204E0C *value);
+extern unsigned int fn_8011FA8C(void *actor, unsigned int flags, unsigned int value);
+extern void fn_801568E4(Object *data);
+extern void fn_801568D8(Object *data);
+extern void fn_801568F0(Object *data);
+extern void fn_8011FB54(void *actor, void *value);
 extern void fn_800DBA0C(void *object, void *event);
 extern void fn_800DB838(void *data);
-extern void fn_801E82B4(void *object, void *value, void (*callback)(), int arg);
-extern void fn_800DCFE0();
+extern int fn_801E82B4(unsigned int object, unsigned int value,
+                       unsigned int callback, unsigned short arg);
+extern int fn_800DCFE0(void *object, void *mode);
 extern void fn_800DB9B0(void *object);
 extern void fn_800DB62C(void *object);
 extern void fn_800DB430(void *object);
@@ -49,7 +61,7 @@ int fn_800DA480(void *object, int state, void *event, int *handled) {
     void *data;
 
     id = fn_80200C10(event);
-    data = fn_80155DB4(object);
+    data = fn_80155DB4((unsigned int)object);
     actor = fn_80201BC8(object);
     fn_80201B54(object);
 
@@ -65,7 +77,7 @@ int fn_800DA480(void *object, int state, void *event, int *handled) {
             }
             return 1;
         } else if (id == 0x39) {
-            fn_801E8328(2, object);
+            fn_801E8328(2, (unsigned int)object);
             fn_80201D34(object, 0);
             fn_80201D1C(object, 1);
             return 1;
@@ -134,14 +146,15 @@ int fn_800DA480(void *object, int state, void *event, int *handled) {
         }
     } else if (state == 0x23) {
         if (id == 0x3D) {
-            fn_8011FB54(actor, lbl_8064D18C);
+            fn_8011FB54(actor, (void *)lbl_8064D18C);
             return 1;
         } else if (id == 0x4A) {
             fn_800DBA0C(object, event);
             return 1;
         } else if (id == 0x2F) {
             fn_800DB838(data);
-            fn_801E82B4(object, fn_80200C38(event), fn_800DCFE0, 0);
+            fn_801E82B4((unsigned int)object, (unsigned int)fn_80200C38(event),
+                        (unsigned int)fn_800DCFE0, 0);
             return 1;
         } else if (id == 0xBE) {
             fn_800DB9B0(object);

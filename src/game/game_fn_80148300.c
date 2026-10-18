@@ -37,14 +37,16 @@ struct InstanceType {
     u8 value;
 };
 
-extern ShortVector lbl_80651BB8;
-extern ShortVector lbl_80651BC0;
+extern unsigned int lbl_80651BB8;
+extern u16 lbl_80651BBC;
+extern unsigned int lbl_80651BC0;
+extern u16 lbl_80651BC4;
 extern void *fn_80156938(void *);
 extern void fn_8017FF1C(void *, u8);
 extern void fn_80180AC8(u8 *, u8);
 extern void *fn_8014856C(void *, InstanceList *, s16, int);
 extern void fn_801482B8(void *, void *, int);
-extern void fn_801568B8(void *, void (*)(void));
+extern void fn_801568B8(void *, void *);
 extern void fn_80148940(InstanceList *);
 
 void *fn_80148300(void *arg0, void *arg1, void *arg2)
@@ -65,7 +67,8 @@ void *fn_80148300(void *arg0, void *arg1, void *arg2)
     type = arg1;
     result = 0;
     failed = 0;
-    position = lbl_80651BB8;
+    *(unsigned int *)&position = lbl_80651BB8;
+    *(u16 *)&position.z = lbl_80651BBC;
     if (object == 0)
         return 0;
 
@@ -81,7 +84,8 @@ void *fn_80148300(void *arg0, void *arg1, void *arg2)
     for (i = 0; i < count; mask <<= 1, current += 4, i++) {
         ShortVector rotation;
         InstanceList *entry = (InstanceList *)current;
-        rotation = lbl_80651BC0;
+        *(unsigned int *)&rotation = lbl_80651BC0;
+        *(u16 *)&rotation.z = lbl_80651BC4;
         if (type->getPosition != 0)
             type->getPosition(source, &position, entry->data[0], entry->parameters[0], type);
         if (type->getRotation != 0)
