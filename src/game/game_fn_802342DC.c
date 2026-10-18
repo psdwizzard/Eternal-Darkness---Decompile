@@ -26,9 +26,8 @@ void fn_802342DC(MdctLookup *lookup, s32 n)
     float *trig = fn_8022F780((n + n4) * sizeof(*trig));
     float pi;
     s32 i;
-    s32 n2 = n >> 1;
-    float log2 = (float)fn_80102380(lbl_80651848);
-    log2n = (s32)fn_80102074((float)fn_80102380((float)n) / log2);
+    pi = (float)fn_80102380(lbl_80651848);
+    log2n = (s32)fn_80102074((float)fn_80102380((float)n) / pi);
     pi = lbl_80651850;
     lookup->log2n = log2n;
     lookup->n = n;
@@ -40,8 +39,8 @@ void fn_802342DC(MdctLookup *lookup, s32 n)
         trig[i * 2] = (float)fn_80101988(angle);
         trig[i * 2 + 1] = -(float)fn_801021D0(angle);
         angle = (pi / (float)(2 * n)) * (float)(2 * i + 1);
-        trig[n2 + i * 2] = (float)fn_80101988(angle);
-        trig[n2 + i * 2 + 1] = (float)fn_801021D0(angle);
+        trig[(n >> 1) + i * 2] = (float)fn_80101988(angle);
+        trig[(n >> 1) + i * 2 + 1] = (float)fn_801021D0(angle);
     }
     pi = lbl_80651850;
     for (i = 0; i < n / 8; i++) {
@@ -50,17 +49,18 @@ void fn_802342DC(MdctLookup *lookup, s32 n)
         trig[n + i * 2 + 1] = 0.5f * -(float)fn_801021D0(angle);
     }
     {
+        u32 bitIndex;
         s32 mask = (1 << (log2n - 1)) - 1;
         s32 msb = 1 << (log2n - 2);
-        for (i = 0; i < n / 8; i++) {
+        for (bitIndex = 0; bitIndex < (u32)(n / 8); bitIndex++) {
             s32 acc = 0;
             s32 j;
             for (j = 0; msb >> j; j++) {
-                if ((msb >> j) & i)
+                if ((msb >> j) & bitIndex)
                     acc |= 1 << j;
             }
-            bitrev[i * 2] = ((~acc) & mask) - 1;
-            bitrev[i * 2 + 1] = acc;
+            bitrev[bitIndex * 2] = ((~acc) & mask) - 1;
+            bitrev[bitIndex * 2 + 1] = acc;
         }
     }
     lookup->scale = lbl_80651854 / (float)n;
