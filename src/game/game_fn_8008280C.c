@@ -1,5 +1,3 @@
-/* The function body matches retail. The current compiler emits register-save
- * helpers instead of the retail stmw/lmw prologue and epilogue. */
 typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short u16;
