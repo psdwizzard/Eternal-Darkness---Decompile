@@ -3,8 +3,9 @@ typedef signed long s32;
 typedef unsigned long u32;
 typedef unsigned char u8;
 
-typedef struct Color {
-    u8 r, g, b, a;
+typedef union Color {
+    struct { u8 r, g, b, a; } channels;
+    u32 value;
 } Color;
 
 typedef struct TextDescriptor {
@@ -41,29 +42,45 @@ void fn_800B7EF4(u8 selected, u8 alpha)
     Color unavailable;
     int special;
     register int x;
+    register s16 returnedX;
     s16 y, width;
-    int height;
-    int i;
+    register int height;
+    register s16 returnedHeight;
+    register int i;
     int result;
+    u32 normalValue, unavailableValue;
+    register Color *colors;
 
     special = lbl_8064CDC8 == 3;
-    fn_801E6350(lbl_8064CA10[fn_800B7EC0()]);
+    returnedX = fn_801E6350(lbl_8064CA10[fn_800B7EC0()]);
     /* ASM: mr preserves the already sign-extended coordinate returned in r3;
      * MWCC otherwise adds a redundant extsh when promoting the s16 result. */
-    asm { mr x, r3 }
+    asm { mr x, returnedX }
     y = fn_801E6380(lbl_8064CA10[fn_800B7EC0()]) + 3;
     width = fn_801E63F0(lbl_8064CA10[fn_800B7EC0()]) + 5;
-    height = fn_801E6420(lbl_8064CA10[fn_800B7EC0()]);
-    normal = lbl_802FC5BC[2];
-    unavailable = lbl_802FC5BC[3];
-    normal.a = alpha;
-    unavailable.a = alpha;
-    for (i = 0; i < 2; i++) {
+    returnedHeight = fn_801E6420(lbl_8064CA10[fn_800B7EC0()]);
+    /* ASM: lis begins the color table address before the height move;
+     * MWCC cannot schedule its generated address setup across inline asm. */
+    asm { lis r4, lbl_802FC5BC@ha }
+    i = 0;
+    /* ASM: addi, mr finish the table address and preserve the height return;
+     * MWCC otherwise inserts a redundant extsh when promoting the s16. */
+    asm {
+        addi colors, r4, lbl_802FC5BC@l
+        mr height, returnedHeight
+    }
+    normal.value = colors[2].value;
+    unavailable.value = colors[3].value;
+    normal.channels.a = alpha;
+    unavailable.channels.a = alpha;
+    normalValue = normal.value;
+    unavailableValue = unavailable.value;
+    for (; i < 2; i++) {
         result = fn_800AF7E4(i, &status);
         if (result == 1 || (result != 1 && status != -3 && status != -2)) {
-            *(Color *)fn_801E5D08(lbl_8064CA10[i]) = unavailable;
+            *(u32 *)fn_801E5D08(lbl_8064CA10[i]) = unavailableValue;
         } else {
-            *(Color *)fn_801E5D08(lbl_8064CA10[i]) = normal;
+            *(u32 *)fn_801E5D08(lbl_8064CA10[i]) = normalValue;
         }
     }
     if (alpha == 255) {

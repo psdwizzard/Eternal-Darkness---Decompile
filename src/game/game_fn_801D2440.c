@@ -92,7 +92,8 @@ void fn_801D2440(GameObject* object)
                 if (count > 0) fn_80204E0C(fn_80201814((void*)count), other);
                 fn_801568F0(data); fn_801568E4(data); fn_801568D8(data);
                 result = fn_80201BC8(info);
-                fn_8011FE3C(result, fn_80201BC8(target));
+                value = (int)fn_80201BC8(target);
+                fn_8011FE3C(result, value);
                 fn_80156904(data, fn_8002A754);
                 fn_80156F80(data, fn_80155DB4(target));
                 value = fn_80158598(owner, 0);
@@ -201,7 +202,7 @@ void fn_801D2440(GameObject* object)
         item = fn_80034708(query); target = fn_80201BC8(item);
         if (target != 0) {
             fn_801261F4(target); fn_8012B7A0(target, *(float*)(query + 0xC));
-            if (fn_8011FCB0(target)) fn_8011ECF8(target, fn_80128E30(target));
+            if (fn_8011FCB0(target)) { int value = fn_80128E30(target); fn_8011ECF8(target, value); }
         }
         fn_80201D54(item, *(void**)(query + 0x2C)); fn_80201D24(item, 1);
         fn_802015A4(item); fn_800CCA44(item); data = fn_80156DA0(3, &point);
@@ -273,7 +274,7 @@ void fn_801D2440(GameObject* object)
             fn_80157B3C(current, color); fn_800DBF60(other, info, color, effect, lbl_806510A0);
             fn_801568F0(data); fn_801568E4(data); fn_801568D8(data);
             result = fn_80201BC8(info); other_info = fn_80201814(other);
-            fn_8011FE3C(result, fn_80201BC8(other_info));
+            value = (int)fn_80201BC8(other_info); fn_8011FE3C(result, value);
             fn_80156904(data, fn_8002A754); fn_80156F80(data, fn_80155DB4(other_info));
             value = fn_80158598(other, 0); value = fn_80158264(value, current, 1);
             fn_800CC140(other, actor, 0,
