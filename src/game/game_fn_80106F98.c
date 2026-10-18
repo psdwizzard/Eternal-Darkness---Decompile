@@ -81,20 +81,58 @@ static inline u32 read_u32(const u8 *p)
     INIT_STREAM_DATA(reader, offset); \
     (reader).mask = 0
 
-static inline void load_tree(register BitReader *bits, DecodeTree *tree, int sign, int shift)
+static inline void load_root(register BitReader *bits, DecodeTree *tree, int empty)
 {
     register u32 count;
-    lbl_8064CC68 = sign;
-    lbl_8064CC6C = shift;
-    tree->count = 0x100;
     /* ASM: lwz retains the reader address for the count test; C folds
      * that address into the conditional call setup. */
     asm { lwz count, 8(bits) }
     if (count != 0) {
         tree->root = fn_801028A8(tree, bits);
     } else {
-        tree->root = 0;
+        tree->root = empty;
     }
+}
+
+static inline void load_tree(register BitReader *bits, DecodeTree *tree, int sign, int shift, int empty)
+{
+    lbl_8064CC68 = sign;
+    lbl_8064CC6C = shift;
+    tree->count = 0x100;
+    load_root(bits, tree, empty);
+}
+
+static inline void load_unsigned_tree(Decoder *decoder, int twoBitValues)
+{
+    DecodeTree *tree = twoBitValues ? decoder->extra[0].tree :
+                                     decoder->valueRuns[0].tree;
+    register BitReader *bits;
+    register int zero = 0;
+    register int treeSize;
+    register int shiftValue;
+    if (!twoBitValues) {
+        /* ASM: li keeps the size constant before the sign-mode store;
+         * MWCC delays the constant across the store barrier. */
+        asm { li treeSize, 0x100 }
+    }
+    if (twoBitValues) {
+        /* ASM: li keeps the shift constant before the sign-mode store;
+         * MWCC delays the constant across that store. */
+        asm { li shiftValue, 2 }
+    } else {
+        shiftValue = 0;
+    }
+    /* ASM: stw keeps the sign store before reader address setup;
+     * MWCC schedules the equivalent C store later. */
+    asm { stw zero, lbl_8064CC68(r13) }
+    if (twoBitValues) {
+        treeSize = 0x100;
+    }
+    bits = twoBitValues ? &decoder->extra[0].bits :
+                          &decoder->valueRuns[0].bits;
+    lbl_8064CC6C = shiftValue;
+    tree->count = treeSize;
+    load_root(bits, tree, zero);
 }
 
 void fn_80106F98(Decoder **handle, const u8 *header, register u8 *output)
@@ -134,25 +172,11 @@ void fn_80106F98(Decoder **handle, const u8 *header, register u8 *output)
         stb emptyMask, 0x3149(decoder)
     }
 
-    {
-        register BitReader *reader = &decoder->values[0].bits;
-        DecodeTree *tree = decoder->values[0].tree;
-        register u32 count;
-        lbl_8064CC68 = emptyMask;
-        lbl_8064CC6C = emptyMask;
-        tree->count = 0x100;
-        /* ASM: lwz retains the reader address for the count test; C folds
-         * that address into the conditional call setup. */
-        asm { lwz count, 8(reader) }
-        if (count != 0) {
-            tree->root = fn_801028A8(tree, reader);
-        } else {
-            tree->root = emptyMask;
-        }
-    }
-    load_tree(&decoder->valueRuns[0].bits, decoder->valueRuns[0].tree, 0, 0);
-    load_tree(&decoder->differences[0].bits, decoder->differences[0].tree, 1, header[0]);
-    load_tree(&decoder->extra[0].bits, decoder->extra[0].tree, 0, 2);
+    load_tree(&decoder->values[0].bits, decoder->values[0].tree,
+              emptyMask, emptyMask, emptyMask);
+    load_unsigned_tree(decoder, 0);
+    load_tree(&decoder->differences[0].bits, decoder->differences[0].tree, 1, header[0], 0);
+    load_unsigned_tree(decoder, 1);
 
     limit = header[0];
     /* ASM: li keeps both bounds initialized before the signed truncations;

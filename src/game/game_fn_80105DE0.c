@@ -44,36 +44,24 @@ typedef struct FrameContext {
     PlaneCursor planes[3];
 } FrameContext;
 
-extern void fn_80104BBC(u8 *destination, u16 width, u8 *reference,
-                        u16 reference_width, int x_half, int y_half);
+extern void fn_80104BBC(u8 *destination, int width, u8 *reference,
+                        int reference_width, int x_half, int y_half);
 extern void fn_80105804(Decoder *decoder, u8 *destination, u8 *reference,
                         u16 width, u32 mode, u8 *base, u16 base_width,
                         int plane, int x_half, int y_half);
 
+/* A literal block contains four rows of four pixels. */
 static inline void copy_raw_block(u8 **stream, u8 *dst, u16 width)
 {
-    u8 *row;
+    int row;
 
-    row = dst + width;
-
-    dst[0] = *(*stream)++;
-    dst[1] = *(*stream)++;
-    dst[2] = *(*stream)++;
-    dst[3] = *(*stream)++;
-    row[0] = *(*stream)++;
-    row[1] = *(*stream)++;
-    row[2] = *(*stream)++;
-    row[3] = *(*stream)++;
-    row += width;
-    row[0] = *(*stream)++;
-    row[1] = *(*stream)++;
-    row[2] = *(*stream)++;
-    row[3] = *(*stream)++;
-    row += width;
-    row[0] = *(*stream)++;
-    row[1] = *(*stream)++;
-    row[2] = *(*stream)++;
-    row[3] = *(*stream)++;
+    for (row = 0; row < 4; row++) {
+        dst[0] = *(*stream)++;
+        dst[1] = *(*stream)++;
+        dst[2] = *(*stream)++;
+        dst[3] = *(*stream)++;
+        dst += width;
+    }
 }
 
 void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context,
@@ -118,13 +106,14 @@ void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context
     x_offset = x >> 1;
     y_half = y & 1;
     x_half = x & 1;
-    /* ASM: addi retains zero-offset copies, which C lowers to mr. */
+    /* ASM: addi retains zero-offset copies, which C lowers to mr;
+     * li prevents MWCC moving the initialization after the address loads. */
     asm {
         addi cursor, context, 0
         addi source, decoder, 0
         addi stream_base, decoder, 0
+        li plane, 0
     }
-    plane = 0;
     y_offset = ((y >> 1) - 16) * input_decoder->planes[0].width;
     base_reference = context->planes[0].reference;
     /* ASM: add/add/addi preserve the retail address-addition order, which
@@ -135,18 +124,17 @@ void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context
         addi base, base, -32
     }
     do {
+        count = source->count;
+        reference_origin = cursor->reference;
+        reference_y = y >> (source->y_shift + 1);
+        reference_x = x >> (source->x_shift + 1);
         block_id = source->blocks;
         offset = source->offsets;
-        count = source->count;
-        reference_x = x >> (source->x_shift + 1);
-        reference_y = (y >> (source->y_shift + 1)) * source->width;
-        reference_origin = cursor->reference;
-        /* ASM: add/add retain the retail grouping of the motion offset
+        reference_y *= source->width;
+        reference = reference_y + reference_origin;
+        /* ASM: add retains the retail grouping of the motion offset
          * and reference address; MWCC reassociates the equivalent C sum. */
-        asm {
-            add reference, reference_y, reference_origin
-            add reference, reference_x, reference
-        }
+        asm { add reference, reference_x, reference }
         /* ASM: addi keeps the stream address in a register; MWCC folds the
          * equivalent C addition into every load and store instead. */
         asm { addi stream, stream_base, 0x31DC }
@@ -165,7 +153,7 @@ void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context
                     register u8 *copy_destination;
                     register int copy_x;
                     register int copy_y;
-                    register u16 copy_stride;
+                    register int copy_stride;
 
                     width = source->width;
                     /* ASM: addi preserves the retail argument-copy encoding;
@@ -188,8 +176,8 @@ void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context
             block++;
         }
         plane++;
-        cursor++;
         source++;
         stream_base += sizeof(Stream);
+        cursor++;
     } while (plane < 3);
 }

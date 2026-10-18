@@ -75,11 +75,11 @@ extern void fn_801235E4(Item* items, int count, int* total_offsets, int* total_s
 extern float fn_80123708(Runtime* runtime, int alternate);
 extern int fn_801261E8(Runtime* runtime);
 extern void* fn_80155DB4(void* handle);
-extern void* fn_80156930(void);
+extern void* fn_80156930(void* object);
 extern int fn_8015E4E8(void);
 extern void fn_801EF374(int level);
 extern int fn_801EF37C(void);
-extern void fn_8020123C(int id, int a, int b, int c);
+extern unsigned long long fn_8020123C(int id, int a, int b, int c);
 extern int fn_80201B4C(void* handle);
 extern int fn_80201B54(void* handle);
 extern void* fn_80201B9C(void);
@@ -99,29 +99,29 @@ void fn_801237F0(int force)
     Vec3 pos;
     Vec3 tmp;
     float fade_a;
-    float fade_b;
-    float scale;
-    float len;
-    float dist;
-    float near_scale;
-    float target;
-    float falloff;
-    float max_scale;
-    float min_scale;
     float fade;
-    int count;
-    int enabled;
+    float scale;
+    float dist;
+    void* handle;
+    float min_scale;
+    void* object;
+    float fade_b;
+    unsigned int status;
+    int best;
+    float len;
     int far_count;
     int key;
-    void* handle;
+    float near_scale;
     Runtime* runtime;
-    unsigned int status;
-    int i;
-    int seen;
-    int best;
-    int best_index;
-    int done;
     int tries;
+    int seen;
+    float target;
+    float max_scale;
+    int count;
+    int enabled;
+    int i;
+    float falloff;
+    int best_index;
 
     handle = fn_80201B9C();
     total_sizes = 0;
@@ -151,8 +151,9 @@ void fn_801237F0(int force)
         runtime = fn_80201BC8(handle);
         if (runtime != 0 && fn_80201B4C(handle) != 4) {
             status = fn_8011FAEC(runtime);
-            if (fn_80155DB4(handle) != 0 &&
-                (fn_80156930() != 0 || ((status & 0x8000) && (status & 0x08000000)))) {
+            object = fn_80155DB4(handle);
+            if (object != 0 &&
+                (fn_80156930(object) != 0 || ((status & 0x8000) && (status & 0x08000000)))) {
                 key = fn_8011EB04(runtime);
                 fn_8011F114(&tmp, runtime);
                 pos = tmp;
@@ -201,9 +202,9 @@ void fn_801237F0(int force)
         fade = (fade_a > fade_b) ? fade_a : fade_b;
         if (fade < 20.0f) {
             lbl_8064CEF8 = 1;
-            lbl_8064CEF4 += fade / 15.0f - lbl_80650114;
-            if (lbl_8064CEF4 > lbl_80650114) {
-                lbl_8064CEF4 = lbl_80650114;
+            lbl_8064CEF4 += fade / 15.0f - 1.0f;
+            if (lbl_8064CEF4 > 1.0f) {
+                lbl_8064CEF4 = 1.0f;
             }
         }
     }
@@ -239,7 +240,7 @@ void fn_801237F0(int force)
             fn_801EF374(level >= 7 ? 7 : level);
         }
 
-        target = lbl_80650114;
+        target = 1.0f;
         for (i = 0; i < count; i++) {
             scale = fn_80123708(lbl_804EF960[i].runtime, 0);
             if (fn_80201B4C(lbl_804EF960[i].handle) == 3) {
@@ -252,14 +253,15 @@ void fn_801237F0(int force)
                     }
                     seen++;
                 } else {
-                    lbl_804EF960[i].scale = MAX(scale, lbl_804EF960[i].scale * (lbl_80650114 - (fade_b * (float)seen) / (float)far_count));
+                    falloff = lbl_804EF960[i].scale * (1.0f - (fade_b * (float)seen) / (float)far_count);
+                    lbl_804EF960[i].scale = MAX(scale, falloff);
                     if (lbl_8064D18C != 0x27 && dist > lbl_80650158) {
                         lbl_804EF960[i].scale = scale;
                     }
                     seen++;
                 }
             } else {
-                lbl_804EF960[i].scale = lbl_80650114;
+                lbl_804EF960[i].scale = 1.0f;
             }
             if (lbl_804EF960[i].scale > target) {
                 lbl_804EF960[i].scale = target;
@@ -271,6 +273,7 @@ void fn_801237F0(int force)
 
     fn_801235E4(lbl_804EF960, count, &total_offsets, &total_sizes);
     while (total_sizes >= 40000 || total_offsets >= 650016) {
+        int done;
         done = 0;
         if (force != 0) {
             scale = lbl_80650110;
@@ -319,7 +322,7 @@ void fn_801237F0(int force)
     }
 
     min_scale = lbl_80650110;
-    max_scale = lbl_80650114;
+    max_scale = 1.0f;
     for (i = 0; i < count; i++) {
         if (lbl_8064CF0C != 0) {
             lbl_804EF960[i].runtime->draw_flags |= 0x100;
