@@ -1,5 +1,3 @@
-/* The function body matches retail. The current compiler emits GPR
- * save/restore helpers in place of the retail stmw/lmw pair. */
 typedef unsigned char u8;
 typedef unsigned int u32;
 
@@ -9,9 +7,11 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
+typedef struct RuntimeState RuntimeState;
+
 typedef struct ObjectInfo {
     u8 padding[0x8C];
-    void *state;
+    RuntimeState *state;
 } ObjectInfo;
 
 typedef struct Object80201C48 Object80201C48;
@@ -23,13 +23,13 @@ extern void *fn_80201B8C(u8 *object);
 extern void *fn_80201B94(u8 *object);
 extern int fn_800CAF7C(void *object);
 extern int fn_8011EB04(Object *object);
-extern int fn_8003CD0C(void *object, Vec3 *target, void *context);
+extern int fn_8003CD0C(void *object, void *target, void *context);
 extern int fn_801296F8(void *owner, int value);
 extern void fn_8011F114(Vec3 *destination, Vec3 *source);
-extern int fn_80201B54(void *object);
+extern int fn_80201B54(int *object);
 extern int fn_800359A0(void *source, void *requested);
 extern void *fn_80201C48(Object80201C48 *object);
-extern void fn_800BDEE4(void *object, void *state);
+extern int fn_800BDEE4(int object, RuntimeState *state);
 extern void fn_80201D2C(Object80201D2C *object, int value);
 extern void fn_80201D14(Object80201D14 *object, u8 value);
 
@@ -55,10 +55,10 @@ int fn_8003DC04(u8 *object, Vec3 *target, void *context,
         }
     } else if ((flags & mask) == 0) {
         fn_8011F114(&position, target);
-        fn_80201B54(object);
+        fn_80201B54((int *)object);
         if (fn_800359A0(object, 0) != 0) {
             if ((int)fn_80201C48(relation) != 0) {
-                fn_800BDEE4(object, info->state);
+                fn_800BDEE4((int)object, info->state);
             }
             fn_80201D2C((Object80201D2C *)object, 3);
             fn_80201D14((Object80201D14 *)object, 1);
