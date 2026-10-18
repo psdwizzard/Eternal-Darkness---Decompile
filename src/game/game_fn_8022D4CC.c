@@ -8,18 +8,33 @@ typedef struct Entry {
     u32 resource2;
     u32 resource0;
     u32 status;
-    u8 pad18[0x0C];
+    u8 pad18[0x04];
+    u32 resource2b;
+    u32 resource3b;
     u32 resource3;
-    u8 pad28[0x0C];
+    u8 pad28[0x08];
+    u32 flagsb;
     u32 flags;
-    u8 pad38[0x78];
+    u8 pad38[0x08];
+    u32 memoryCounters[10][2];
+    u32 graphicsCounters[4][2];
 } Entry;
-typedef struct Bank { Entry *base; u32 unk[3]; } Bank;
 
-extern s32 lbl_8064C4B0;
-extern u32 lbl_8064C4B4;
-extern u8 lbl_8064DBD8;
-extern s32 lbl_8064DBE0;
+typedef struct Bank {
+    Entry *base;
+    u32 unk[3];
+} Bank;
+
+/* Interrupt-visible profiler state: fn_8022DA54 installs this function as
+ * an OS alarm callback. fn_8022CE20 also installs fn_8022CBA0 via fn_80226814
+ * as the PE token callback, dispatched by fn_80226858. That callback checks
+ * the bank discriminator (DBD8), changes the token (C4B4), and calls the
+ * entry start/finish routines, which update C4B0 and DBE0. The allocation
+ * parameters below are not changed by the token callback. */
+extern volatile s32 lbl_8064C4B0;
+extern volatile u32 lbl_8064C4B4;
+extern volatile u8 lbl_8064DBD8;
+extern volatile s32 lbl_8064DBE0;
 extern s32 lbl_8064DBE4;
 extern Bank *lbl_8064DBEC;
 extern s32 lbl_8064DBF0;
@@ -28,63 +43,76 @@ extern u32 fn_80209B00(void);
 extern u32 fn_80209B18(void);
 extern u32 fn_80209B28(void);
 extern void fn_8022CA98(Entry *, s32);
-extern void OSReport(const char *);
+extern void OSReport(const char *, ...);
 extern void *memcpy(void *, const void *, u32);
 
-#define ENTRY_AT(n) ((Entry *)((u8 *)lbl_8064DBEC[lbl_8064DBE4].base + (n) * 0xB0))
+#define ENTRY_AT(n) (lbl_8064DBEC[lbl_8064DBE4].base[(n)])
+
+static inline s32 AllocateEntry(void)
+{
+    if ((u32)lbl_8064DBE0 >= (u32)(lbl_8064DBF0 - 1)) {
+        lbl_8064DBE0 = lbl_8064DBF0 - 1;
+        return lbl_8064DBE0;
+    }
+    return lbl_8064DBE0++;
+}
+
+static inline void FinishEntry(void)
+{
+    if (lbl_8064C4B0 >= 0) {
+        ENTRY_AT(lbl_8064C4B0).resource0 = fn_80209B28();
+        fn_8022CA98(&ENTRY_AT(lbl_8064C4B0), 1);
+        ENTRY_AT(lbl_8064C4B0).resource3 = fn_80209B18();
+        ENTRY_AT(lbl_8064C4B0).flags = fn_80209B00();
+    }
+    lbl_8064C4B0 = -1;
+}
+
+static inline void StartEntry(void)
+{
+    lbl_8064C4B0 = AllocateEntry();
+    ENTRY_AT(lbl_8064C4B0).state = 0xFF;
+    ENTRY_AT(lbl_8064C4B0).status = 0;
+    fn_8022CA98(&ENTRY_AT(lbl_8064C4B0), 0);
+    ENTRY_AT(lbl_8064C4B0).resource2 = fn_80209B28();
+    ENTRY_AT(lbl_8064C4B0).resource0 = 0;
+    ENTRY_AT(lbl_8064C4B0).resource3b = fn_80209B18();
+    ENTRY_AT(lbl_8064C4B0).flagsb = fn_80209B00();
+}
+
+/* Decode the entry index and return the bank encoded in the token. */
+static inline s32 DecodeToken(s32 *source)
+{
+    *source = lbl_8064C4B4 & 0xFF;
+    return (lbl_8064C4B4 >> 8) & 0xF;
+}
 
 void fn_8022D4CC(void)
 {
-    Entry *e;
+    s32 source;
     s32 slot;
-    s32 old;
+    s32 bank;
     if (lbl_8064DBE0 == 0)
         return;
     if (lbl_8064C4B4 < 0xFFFF) {
-        if (((lbl_8064C4B4 >> 8) & 0xF) != lbl_8064DBD8) {
-            if (lbl_8064C4B0 >= 0) {
-                e = ENTRY_AT(lbl_8064C4B0);
-                e->resource0 = fn_80209B28();
-                fn_8022CA98(e, 1);
-                e->resource3 = fn_80209B18();
-                e->flags = fn_80209B00();
-            }
-            lbl_8064C4B0 = -1;
-            slot = lbl_8064DBE0;
-            if ((u32)slot >= (u32)(lbl_8064DBF0 - 1))
-                slot = lbl_8064DBE0 = lbl_8064DBF0 - 1;
-            else
-                lbl_8064DBE0 = slot + 1;
-            lbl_8064C4B0 = slot;
-            e = ENTRY_AT(slot);
-            e->state = 0xFF;
-            e->flags = 0;
-            fn_8022CA98(e, 0);
-            e->resource2 = fn_80209B28();
-            e->resource0 = 0;
-            e->resource3 = fn_80209B18();
-            e->flags = fn_80209B00();
+        bank = DecodeToken(&source);
+        if (bank != lbl_8064DBD8) {
+            FinishEntry();
+            StartEntry();
             return;
         }
-        old = lbl_8064C4B4 & 0xFF;
-        slot = lbl_8064DBE0;
-        if ((u32)slot >= (u32)(lbl_8064DBF0 - 1))
-            slot = lbl_8064DBE0 = lbl_8064DBF0 - 1;
-        else
-            lbl_8064DBE0 = slot + 1;
-        e = ENTRY_AT(slot);
-        memcpy(e, ENTRY_AT(old), 0xB0);
-        e->resource0 = fn_80209B28();
-        e->resource3 = fn_80209B18();
-        e->flags = fn_80209B00();
-        fn_8022CA98(e, 1);
-        e->state = 0xFF;
-        e = ENTRY_AT(old);
-        e->resource2 = fn_80209B28();
-        e->resource3 = fn_80209B18();
-        e->flags = fn_80209B00();
-        fn_8022CA98(e, 0);
-        e->status = 1;
+        slot = AllocateEntry();
+        memcpy(&ENTRY_AT(slot), &ENTRY_AT(source), sizeof(Entry));
+        ENTRY_AT(slot).resource0 = fn_80209B28();
+        ENTRY_AT(slot).resource3 = fn_80209B18();
+        ENTRY_AT(slot).flags = fn_80209B00();
+        fn_8022CA98(&ENTRY_AT(slot), 1);
+        ENTRY_AT(slot).state = 0xFF;
+        ENTRY_AT(source).resource2 = fn_80209B28();
+        ENTRY_AT(source).resource3b = fn_80209B18();
+        ENTRY_AT(source).flagsb = fn_80209B00();
+        fn_8022CA98(&ENTRY_AT(source), 0);
+        ENTRY_AT(source).status = 1;
         lbl_8064C4B0 = -1;
         return;
     }
@@ -92,26 +120,6 @@ void fn_8022D4CC(void)
         OSReport(lbl_802FF7EC);
         return;
     }
-    if (lbl_8064C4B0 >= 0) {
-        e = ENTRY_AT(lbl_8064C4B0);
-        e->resource0 = fn_80209B28();
-        fn_8022CA98(e, 1);
-        e->resource3 = fn_80209B18();
-        e->flags = fn_80209B00();
-    }
-    lbl_8064C4B0 = -1;
-    slot = lbl_8064DBE0;
-    if ((u32)slot >= (u32)(lbl_8064DBF0 - 1))
-        slot = lbl_8064DBE0 = lbl_8064DBF0 - 1;
-    else
-        lbl_8064DBE0 = slot + 1;
-    lbl_8064C4B0 = slot;
-    e = ENTRY_AT(slot);
-    e->state = 0xFF;
-    e->flags = 0;
-    fn_8022CA98(e, 0);
-    e->resource2 = fn_80209B28();
-    e->resource0 = 0;
-    e->resource3 = fn_80209B18();
-    e->flags = fn_80209B00();
+    FinishEntry();
+    StartEntry();
 }

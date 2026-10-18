@@ -12,10 +12,10 @@ typedef struct ModeState {
     s32 mode; /* 0x8 */
 } ModeState;
 
+typedef struct ShortCoord3 { s16 x, y, z; } ShortCoord3;
+
 typedef struct SpawnPoint {
-    s16 x;
-    s16 y;
-    s16 z;
+    ShortCoord3 position;
     u8 pad06[0x0A];
     int id; /* 0x10 */
     u8 pad14[4];
@@ -44,9 +44,9 @@ extern int fn_800FBFB0(void);
 extern Room *fn_8015C28C(int);
 extern u16 fn_80050730(int type, int mode, u8 *out_level, u8 *out_flags,
                        u16 *out_time, u32 *out_value);
-extern void fn_80179B08(SpawnPoint *, Vec3 *);
+extern void fn_80179B08(ShortCoord3 *, Vec3 *);
 extern void fn_80152838(Vec3 *, Vec3 *, u8);
-extern int fn_801AC9F4(int, int, Vec3 *, int);
+extern int fn_801AC9F4(u16, u8, Vec3 *, u8);
 extern s32 fn_8012FF34(void *, Vec3 *, s32, s32);
 extern void fn_801302BC(void *, s32);
 extern void fn_8013037C(void *, float);
@@ -58,11 +58,10 @@ void fn_8007FD7C(void)
     Vec3 pos;
     Vec3 target;
     Room *room;
-    u16 type;
+    u16 spawnType;
+    s32 type;
     void *runtime;
     SpawnPoint *spawns;
-    u16 chosen;
-    u16 seen;
     void *object;
     u16 matches;
     u16 i;
@@ -87,10 +86,11 @@ void fn_8007FD7C(void)
         lbl_8064C900 = (fn_800FBFB0() & 0x1FFF) + 0x2A30;
         room = fn_8015C28C(2);
         if (room->active != 0 && room->loaded != 0) {
-            type = fn_80050730(0x50, 0, 0, 0, 0, 0);
+            spawnType = fn_80050730(0x50, 0, 0, 0, 0, 0);
             count = room->spawnCount;
             if (count != 0) {
                 spawns = room->spawns;
+                type = spawnType;
                 matches = 0;
                 for (i = 0; i < count; i++) {
                     if (spawns[i].id == type) {
@@ -98,6 +98,8 @@ void fn_8007FD7C(void)
                     }
                 }
                 if (matches != 0) {
+                    u16 chosen;
+                    u16 seen;
                     chosen = 0;
                     seen = 0;
                     pick = fn_800FBFB0() % matches;
@@ -108,7 +110,7 @@ void fn_8007FD7C(void)
                             }
                         }
                     }
-                    fn_80179B08(&spawns[chosen], &pos);
+                    fn_80179B08(&spawns[chosen].position, &pos);
                     target = pos;
                     target.z += lbl_8064EA60;
                     fn_80152838(&pos, &target, 4);

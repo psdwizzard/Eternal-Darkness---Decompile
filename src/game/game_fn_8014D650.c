@@ -62,17 +62,26 @@ typedef struct Actor {
     u16 state;              /* 0x132C */
 } Actor;
 
-extern void *fn_80201814(s32);
-extern Owner *fn_80201B8C(void *);
+typedef struct Entry80201814 Entry80201814;
+typedef struct ListNode ListNode;
+
+typedef struct ShortCoord3 {
+    short x;
+    short y;
+    short z;
+} ShortCoord3;
+
+extern Entry80201814 *fn_80201814(s32);
+extern void *fn_80201B8C(unsigned char *);
 extern int fn_800676C8(u8);
 extern int fn_80052310(int, const s16 *);
-extern void fn_80149E28(Actor *);
-extern void fn_80179904(void *, int);
-extern void fn_8017EA58(void *);
-extern void fn_8017EAA8();
-extern void fn_80183DD4(void *);
-extern void fn_80183EE0();
-extern int fn_801E8328();
+extern void fn_80149E28(ListNode *);
+extern void fn_80179904(ShortCoord3 *, short);
+extern void fn_8017EA58(u8 *);
+extern void *fn_8017EAA8(void *, void *, void *);
+extern void fn_80183DD4(u8 *);
+extern u8 *fn_80183EE0(void *, void *, void *);
+extern int fn_801E8328(u32, u32);
 extern void *memcpy(void *, const void *, unsigned int);
 
 void fn_8014D650(Actor *actor) {
@@ -82,17 +91,17 @@ void fn_8014D650(Actor *actor) {
     s32 count;
     s16 *rot;
     u32 flags;
-    void *entry;
+    Entry80201814 *entry;
     s16 pos[3];
     s32 sound;
 
-    set = &actor->effects;
     owner = NULL;
     count = 0;
+    set = &actor->effects;
     if (set->entryId != -1) {
         entry = fn_80201814(set->entryId);
         if (entry != NULL) {
-            owner = fn_80201B8C(entry);
+            owner = (Owner *)fn_80201B8C((u8 *)entry);
         }
     }
 
@@ -102,13 +111,13 @@ void fn_8014D650(Actor *actor) {
         slot = (EffectSlot *)set;
         rot = set->slots[0].rot;
         if ((flags & 2) && set->mainType != 0) {
-            fn_8017EA58(set);
+            fn_8017EA58((u8 *)set);
             set->slots[0].type = set->mainType;
             *(s32 *)((u8 *)set + 0x1D) = set->unk39C;
             *(s16 *)&set->slots[0].unk14 = 8;
             set->slots[0].callback = fn_8017EAA8;
             set->slots[0].unkAA = 4;
-            fn_801E8328(0x10, set);
+            fn_801E8328(0x10, (u32)set);
         }
         if ((flags & 1) && set->subType != 0) {
             count++;
@@ -116,7 +125,7 @@ void fn_8014D650(Actor *actor) {
             slot++;
             memcpy(slot->rot, rot, 6);
             slot->rot[2] = -2;
-            fn_80183DD4(slot);
+            fn_80183DD4((u8 *)slot);
             slot->unk8 = 1;
             slot->type = set->subType;
             slot->unk3 = -4;
@@ -124,14 +133,14 @@ void fn_8014D650(Actor *actor) {
             slot->unk1C = set->unk39C;
             slot->callback = fn_80183EE0;
             slot->unkAA = 4;
-            fn_801E8328(0x10, slot);
+            fn_801E8328(0x10, (u32)slot);
         }
         if ((flags & 0x10) && set->subType != 0 && count < 4) {
             count++;
             slot[1].pos = set->slots[0].pos;
             slot++;
             memcpy(slot->rot, rot, 6);
-            fn_80183DD4(slot);
+            fn_80183DD4((u8 *)slot);
             slot->type = set->subType;
             slot->unk16 = 0xFF;
             slot->unk17 = 0;
@@ -139,13 +148,13 @@ void fn_8014D650(Actor *actor) {
             slot->unk14 = 4;
             slot->callback = fn_80183EE0;
             slot->unkAA = 4;
-            fn_801E8328(0x10, slot);
+            fn_801E8328(0x10, (u32)slot);
         }
         if ((flags & 8) && set->subType != 0 && count < 4) {
             slot[1].pos = set->slots[0].pos;
             memcpy(slot[1].rot, rot, 6);
-            fn_80179904(slot[1].rot, 3);
-            fn_80183DD4(&slot[1]);
+            fn_80179904((ShortCoord3 *)slot[1].rot, 3);
+            fn_80183DD4((u8 *)&slot[1]);
             slot[1].type = set->subType;
             slot[1].unk8 = 0xF;
             slot[1].unk2 = 0xFF;
@@ -156,7 +165,7 @@ void fn_8014D650(Actor *actor) {
             *(u8 *)&slot[1].unk18 = 1;
             slot[1].callback = fn_80183EE0;
             slot[1].unkAA = 4;
-            fn_801E8328(0x10, &slot[1]);
+            fn_801E8328(0x10, (u32)&slot[1]);
         }
         sound = 0x32;
         pos[0] = set->slots[0].pos.x;
@@ -168,7 +177,7 @@ void fn_8014D650(Actor *actor) {
         fn_80052310(sound, pos);
         break;
     case 2:
-        fn_80149E28(actor);
+        fn_80149E28((ListNode *)actor);
         break;
     }
 }
