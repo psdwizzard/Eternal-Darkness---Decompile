@@ -1,3 +1,9 @@
+#define NULL ((void *)0)
+
+typedef struct Vec3 {
+    float x, y, z;
+} Vec3;
+
 typedef struct ActionEntry {
     int type;
     int arg;
@@ -10,17 +16,18 @@ typedef struct ActionState {
     char pad_d8[8];
     int index;
     char pad_e4[0x18];
+    /* Stores either an action handle or a spawned object pointer as a word. */
     int result;
     unsigned short flags;
 } ActionState;
 
 extern int fn_8009C28C(void *);
-extern int fn_800CA3A0(void *, int, int, int);
+extern void *fn_800CA3A0(void *, int, Vec3 *, int);
 extern int fn_800CA6DC(void *, int, unsigned int, void *, int);
 extern int fn_800CD84C(void *);
-extern int fn_8011F130(void *);
-extern int fn_801D6F34(int, int);
-extern int fn_80201B54(void *);
+extern void *fn_8011F130(void *);
+extern int fn_801D6F34(int, void *);
+extern int fn_80201B54(int *);
 extern void *fn_80201BC8(void *);
 
 int fn_8009C048(void *object, ActionState *state) {
@@ -28,7 +35,7 @@ int fn_8009C048(void *object, ActionState *state) {
     unsigned int param;
     int type;
     int a;
-    int b;
+    void *b;
 
     entries = state->primary;
     if (state->flags & 2) {
@@ -40,7 +47,7 @@ int fn_8009C048(void *object, ActionState *state) {
     switch (type) {
     case 0x820:
         if (fn_8009C28C(object) != 0) {
-            state->result = fn_800CA3A0(object, entries[state->index].arg, 0, 0);
+            state->result = (int)fn_800CA3A0(object, entries[state->index].arg, NULL, 0);
             return state->result != 0;
         }
         return 0;
