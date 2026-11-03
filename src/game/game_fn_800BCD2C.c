@@ -20,19 +20,20 @@ typedef struct SlotState {
     unsigned char pad04[0x14];
 } SlotState;
 
-extern void *fn_80201B8C();
+extern ObjectState *fn_80201B8C(int);
 extern SlotState lbl_80320DF0[];
 extern SelectionTable lbl_80320FD0[];
 
-void fn_800BCD2C(void)
+void fn_800BCD2C(int object_id)
 {
-    ObjectState *object = fn_80201B8C();
+    ObjectState *object = fn_80201B8C(object_id);
     SelectionState *state = object->selection;
+    void *wanted;
     int side = lbl_80320DF0[state->slot].side;
-    int other_side = side ^ 1;
     SelectionTable *table = &lbl_80320FD0[state->group];
-    int *selected = table->selected;
-    void *wanted = table->entries[other_side][selected[other_side]];
+    int other_side = side ^ 1;
+    wanted = lbl_80320FD0[state->group].entries[other_side]
+        [lbl_80320FD0[state->group].selected[other_side]];
 
     if (wanted != 0) {
         int i = 1;
@@ -40,12 +41,12 @@ void fn_800BCD2C(void)
 
         while (*entry != 0 && i < 100) {
             if (wanted == *entry) {
-                selected[side] = i;
+                lbl_80320FD0[state->group].selected[side] = i;
                 return;
             }
             entry++;
             i++;
         }
     }
-    selected[side] = 0;
+    lbl_80320FD0[state->group].selected[side] = 0;
 }
