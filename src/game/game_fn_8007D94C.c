@@ -383,7 +383,7 @@ void fn_8007D94C(int screen)
         break;
     case 0: {
         int i;
-        CameraPair *cameras;
+        MenuState *menu;
         lbl_8064C8E8 = fn_80144628(4, (int)(data + 0x27c), 0);
         fn_80144608(lbl_8064C8E8);
         fn_801446AC(lbl_8064C8E8, 1);
@@ -402,7 +402,7 @@ void fn_8007D94C(int screen)
             PSVECNormalize(&lbl_8031CBA0.direction, &lbl_8031CBA0.direction);
             lbl_8031CBA0.positionInitialized = 1;
         }
-        cameras = lbl_8031CD84.cameras;
+        menu = &lbl_8031CD84;
         for (i = 0; i < 3; i++) {
             int first = -1, second = -1;
             short *position;
@@ -420,14 +420,15 @@ void fn_8007D94C(int screen)
                 second = fn_8015C4A4((void *)fn_801E741C(data + 0x56c), 2);
                 break;
             }
-            position = fn_80158CC8(first, 2, cameras[i].tail);
-            cameras[i].first.x = position[0];
-            cameras[i].first.y = position[1];
-            cameras[i].first.z = position[2];
-            position = fn_80158CC8(second, 2, cameras[i].tail);
-            cameras[i].second.x = position[0];
-            cameras[i].second.y = position[1];
-            cameras[i].second.z = position[2];
+            position = fn_80158CC8(first, 2, menu->cameras[0].tail);
+            menu->cameras[0].first.x = position[0];
+            menu->cameras[0].first.y = position[1];
+            menu->cameras[0].first.z = position[2];
+            position = fn_80158CC8(second, 2, menu->cameras[0].tail);
+            menu->cameras[0].second.x = position[0];
+            menu->cameras[0].second.y = position[1];
+            menu->cameras[0].second.z = position[2];
+            menu = (MenuState *)((u8 *)menu + sizeof(CameraPair));
         }
         break;
     }
