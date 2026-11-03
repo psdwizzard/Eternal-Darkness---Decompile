@@ -400,13 +400,13 @@ void fn_80029358(void)
             }
 
             if ((object = fn_80201BD0(lbl_8064C4E4)) != 0 && fn_80201B5C(object) == 0x32) {
-                object = fn_80201890(*(void**)(*(u8**)((u8*)fn_80201B8C(
+                void* child = fn_80201890(*(void**)(*(u8**)((u8*)fn_80201B8C(
                     fn_80201BD0(lbl_8064C4E4)) + 0x8C) + 0xBC));
-                if (object != 0) {
-                    fn_8011F7E0(object, 0);
-                    fn_8011FC38(object, 0, 1);
-                    fn_8012B344(object);
-                    fn_8011FE6C(object);
+                if (child != 0) {
+                    fn_8011F7E0(child, 0);
+                    fn_8011FC38(child, 0, 1);
+                    fn_8012B344(child);
+                    fn_8011FE6C(child);
                 }
             }
 
@@ -459,9 +459,10 @@ void fn_80029358(void)
             break;
 
         case 4: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[0];
-            void* event = fn_80156DA0(7, &desc);
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_80156904(event, 0);
                 fn_801568FC(event, fn_8002AA18);
@@ -473,9 +474,10 @@ void fn_80029358(void)
         }
 
         case 21: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[1];
-            void* event = fn_80156DA0(7, &desc);
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_80156904(event, 0);
                 fn_801568FC(event, fn_8002AB08);
@@ -487,10 +489,11 @@ void fn_80029358(void)
         }
 
         case 31: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[2];
-            void* event = fn_80156DA0(7, &desc);
             void* list;
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_801568FC(event, fn_8002AB08);
                 fn_801568B8(event, 0);
@@ -504,9 +507,10 @@ void fn_80029358(void)
         }
 
         case 11: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[3];
-            void* event = fn_80156DA0(7, &desc);
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_80156904(event, 0);
                 fn_801568FC(event, fn_8002AB08);
@@ -518,9 +522,10 @@ void fn_80029358(void)
         }
 
         case 13: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[4];
-            void* event = fn_80156DA0(7, &desc);
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_80156904(event, 0);
                 fn_801568FC(event, fn_8002AB08);
@@ -532,9 +537,10 @@ void fn_80029358(void)
         }
 
         case 7: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[5];
-            void* event = fn_80156DA0(7, &desc);
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_80156904(event, 0);
                 fn_801568FC(event, fn_8002AB08);
@@ -545,9 +551,10 @@ void fn_80029358(void)
         }
 
         case 9: {
+            void* event;
             Actor* owner = (Actor*)data;
             EventDesc desc = descs[6];
-            void* event = fn_80156DA0(7, &desc);
+            event = fn_80156DA0(7, &desc);
             if (event != 0) {
                 fn_80156904(event, 0);
                 fn_801568FC(event, fn_8002AB08);
@@ -560,9 +567,9 @@ void fn_80029358(void)
 
         case 6: {
             ResourcePair* pair = (ResourcePair*)data;
+            void* owner;
             u8 release = 0;
             void* handle;
-            void* owner;
 
             handle = fn_80201814(pair->first.handle);
             if (handle != 0) {
@@ -623,9 +630,11 @@ void fn_80029358(void)
             break;
 
         case 18: {
+            void* owner;
             Resource* res = (Resource*)data;
-            void* owner = 0;
             void* handle;
+
+            owner = 0;
 
             handle = fn_8018095C(res->handle);
             if (handle != 0) {
@@ -677,9 +686,11 @@ void fn_80029358(void)
         }
 
         case 26: {
+            void* owner;
             Resource* res = (Resource*)data;
-            void* owner = 0;
             void* handle;
+
+            owner = 0;
 
             handle = fn_8018095C(res->handle);
             if (handle != 0) {
@@ -748,13 +759,13 @@ void fn_80029358(void)
 
         case 20: {
             Trigger* trigger = (Trigger*)data;
+            void* target;
             void* handle = trigger->handle;
             void* owner;
 
             if ((owner = fn_80201814(handle)) != 0) {
                 owner = fn_80155DB4(owner);
                 if (owner != 0) {
-                    void* target;
                     fn_8014C37C(owner, trigger);
                     target = trigger->target;
                     if (target != 0) {
