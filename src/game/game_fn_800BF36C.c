@@ -37,7 +37,7 @@ typedef struct Effect {
 
 extern Effect lbl_803250A8;
 extern const float lbl_8064F110, lbl_8064F128;
-extern const Color lbl_8064F12C;
+extern Color lbl_8064F12C;
 extern void fn_8014CBC0(void *);
 extern u32 fn_801A7498(void *);
 extern u32 fn_801A7490(void *);
@@ -51,12 +51,13 @@ extern int fn_801E8328(u32, u32);
 
 int fn_800BF36C(void *unused, void *event)
 {
-    Color color = lbl_8064F12C;
+    Color color;
     QueryResult query;
     void *event_object = (void *)(u32)event;
     u32 first, second;
     void *owner;
 
+    color = lbl_8064F12C;
     fn_8014CBC0(&lbl_803250A8);
     first = fn_801A7498(event_object);
     second = fn_801A7490(event_object);

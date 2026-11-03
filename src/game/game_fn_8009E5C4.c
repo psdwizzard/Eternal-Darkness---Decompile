@@ -1,5 +1,3 @@
-/* The body matches retail. Current compiler settings generate GPR
- * save/restore helpers in place of the retail stmw/lmw pair. */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;

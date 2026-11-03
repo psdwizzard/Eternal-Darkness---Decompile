@@ -50,7 +50,7 @@ extern void fn_80201D14(void *, int);
 extern int fn_800CC4DC(void *);
 extern int fn_800A3588(ActorState *, void *, void *, void *, int);
 extern int fn_800D39D0(ActorState *, void *, void *, int);
-extern void fn_801AC9F4(int, int, float *, int);
+extern int fn_801AC9F4(u16, u8, Vec3 *, u8);
 extern int fn_8013017C(void *);
 extern int fn_801305D4(void *);
 extern void fn_801301B0(void *, int, int);
@@ -58,9 +58,9 @@ extern void fn_80201E78(void *, void *);
 extern void fn_800A3894(ActorState *, float *, void *);
 extern void fn_800A2598(ActorState *);
 extern void fn_800A3274(ActorState *, void *, int);
-extern void fn_8020123C(int, int, int, int);
+extern unsigned long long fn_8020123C(int, int, int, int);
 extern int fn_80200C28(void *);
-extern int fn_80200C38(void *);
+extern void *fn_80200C38(void *);
 extern void fn_801A7228(int);
 extern void fn_800A2D1C(ActorState *);
 extern void fn_801557C4(void *, int);
@@ -85,7 +85,7 @@ extern void *fn_80201814(int);
 extern float lbl_8064F354;
 extern void fn_800A2430(ActorState *, int, void *, int *);
 extern void fn_80064B38(void *, void *, int *);
-extern void fn_800D3148(ActorState *, void *, void *);
+extern void fn_800D3148();
 extern void fn_800A3D90(void *, void *, void *, int *);
 extern void fn_8012B324(void *);
 extern void fn_80201D34(void *, int);
@@ -192,27 +192,38 @@ extern char lbl_8064B728[8];
 extern int lbl_8064D5A8;
 extern int lbl_8064D180;
 
-/* Honest C reconstruction of the actor event dispatcher. The retail paths
- * are expressed; register allocation, local layout and instruction scheduling
- * still require matching work under the canonical GC/1.3 settings. */
+/* Actor event dispatcher. */
 int fn_800D0B74(void *object, int alternate, void *event, int *value)
 {
-    Vec3 *vectors = lbl_803254A0;
-    char *data = lbl_80248A60;
-    int kind = fn_80200C10(event);
-    void *source = fn_80201B3C();
-    int source_id = source != 0 ? fn_80201B54(source) : -1;
-    int event_value = fn_80200C20(event);
-    void *resource = fn_80201BC8(object);
-    void *actor = fn_80201B8C(object);
-    void *actor_8c = *(void **)((u8 *)actor + 0x8C);
-    ActorState *state = *(ActorState **)((u8 *)actor + 0x64);
-    int mode = (int)fn_80201B94(object);
-    int object_id = fn_80201B54(object);
+    int kind;
+    char *data;
+    Vec3 *vectors;
+    void *actor;
+    ActorState *state;
+    int mode;
+    void *source;
+    void *resource;
+    int object_id;
+    int active;
+    int event_value;
+    int source_id;
+    void *actor_8c;
     float position[3];
     Vec3 copied_position, sound_position, target_position;
     Vec3 point2, point3, point28, point29;
-    int active;
+
+    vectors = lbl_803254A0;
+    data = lbl_80248A60;
+    kind = fn_80200C10(event);
+    source = fn_80201B3C();
+    source_id = source != 0 ? fn_80201B54(source) : -1;
+    event_value = fn_80200C20(event);
+    resource = fn_80201BC8(object);
+    actor = fn_80201B8C(object);
+    actor_8c = *(void **)((u8 *)actor + 0x8C);
+    state = *(ActorState **)((u8 *)actor + 0x64);
+    mode = (int)fn_80201B94(object);
+    object_id = fn_80201B54(object);
 
     fn_8011F114(position, resource);
     active = fn_80201B44();
@@ -229,7 +240,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
                               special);
         handled |= fn_800D39D0(state, object, source, 1);
         if (handled != 0) {
-            fn_801AC9F4(**(u16 **)((u8 *)state + 0x264), 0x64, position, 2);
+            fn_801AC9F4(**(u16 **)((u8 *)state + 0x264), 0x64, (Vec3 *)position, 2);
         }
         ((void (**)(void *))*(void **)state)[4](object);
         if ((fn_8013017C(resource) & 0x40) != 0 &&
@@ -243,228 +254,225 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
         }
     }
 
-    if (alternate == 0 && kind == 1) {
-        void (**callbacks)(ActorState *, void *);
-        fn_800359A0(object, 0);
-        fn_80201DD8(mode, 0);
-        fn_800A3104(state, 0);
-        fn_800A3AC4(state);
-        callbacks = *(void (***)(ActorState *, void *))state;
-        callbacks[0](state, object);
-        fn_80201D2C(object, 1);
-        fn_80201D14(object, 1);
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 8) {
-        fn_800A2598(state);
-        fn_800A3274(state, object, 3);
-        ((void (**)(ActorState *, void *, void *))*(void **)state)[8](
-            state, object, event);
-        fn_8020123C(0xFC, object_id, source_id, 0);
-        fn_800A2D1C(state);
-        fn_801557C4(*(void **)((u8 *)state + 0xC4), 1);
-        fn_801557C4(*(void **)((u8 *)state + 0xC8), 1);
-        *(void **)((u8 *)state + 0xC4) = 0;
-        *(void **)((u8 *)state + 0xC8) = 0;
-        fn_800CD094(object, event, 0xB4);
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 0xED) {
-        int event_arg2 = fn_80200C38(event);
-        int event_arg1 = fn_80200C28(event);
-        fn_8020123C(0xB, fn_80200C20(event), event_arg1, event_arg2);
-        fn_801A7228(fn_80200C38(event));
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 0x3A) {
-        int event_arg2 = fn_80200C38(event);
-        int event_arg1 = fn_80200C28(event);
-        fn_8020123C(0x27, fn_80200C20(event), event_arg1, event_arg2);
-        fn_801A7228(fn_80200C38(event));
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 0x3E) {
-        if (*(u8 *)((u8 *)state + 0x287) == 0) {
-            *(u8 *)((u8 *)state + 0x287) = 1;
-            fn_800A2B8C(object,
-                         fn_800A2018(state, *(u16 *)((u8 *)state + 0x86)));
-            fn_800D38CC(state, position);
-            fn_800A2E00(state, object_id, 0x319);
-        } else if (((ActorFlags *)((u8 *)state + 0x2A2))->bit7 == 0 &&
-                   lbl_8064D180 == 0x53) {
-            *(u16 *)((u8 *)state + 0x284) = 0xD2;
+    if (alternate == 0) {
+        if (kind == 1) {
+            void (**callbacks)(ActorState *, void *);
+            fn_800359A0(object, 0);
+            fn_80201DD8(mode, 0);
+            fn_800A3104(state, 0);
+            fn_800A3AC4(state);
+            callbacks = *(void (***)(ActorState *, void *))state;
+            callbacks[0](state, object);
             fn_80201D2C(object, 1);
             fn_80201D14(object, 1);
+            return 1;
         }
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0x0B) {
-        int result = 0;
-        int event_arg2 = fn_80200C38(event);
-        if (fn_800A3A10(state, (u8 *)actor_8c + 0xEA, event_arg2) != 0) {
-            if (((fn_801A74C0(event_arg2) >> 16) & 1) != 0 &&
-                (fn_801A7590(event_arg2) & 0x8000) != 0) {
-                fn_800A4798(object, event_arg2);
-                fn_801A7588(event_arg2,
-                    1U << *(unsigned int *)((u8 *)state + 0x198));
+        if (kind == 8) {
+            fn_800A2598(state);
+            fn_800A3274(state, object, 3);
+            ((void (**)(ActorState *, void *, void *))*(void **)state)[8](
+                state, object, event);
+            fn_8020123C(0xFC, object_id, source_id, 0);
+            fn_800A2D1C(state);
+            fn_801557C4(*(void **)((u8 *)state + 0xC4), 1);
+            fn_801557C4(*(void **)((u8 *)state + 0xC8), 1);
+            *(void **)((u8 *)state + 0xC4) = 0;
+            *(void **)((u8 *)state + 0xC8) = 0;
+            fn_800CD094(object, event, 0xB4);
+            return 1;
+        }
+
+        if (kind == 0xED) {
+            fn_8020123C(0xB, fn_80200C20(event), fn_80200C28(event), (int)fn_80200C38(event));
+            fn_801A7228((int)fn_80200C38(event));
+            return 1;
+        }
+
+        if (kind == 0x3A) {
+            fn_8020123C(0x27, fn_80200C20(event), fn_80200C28(event), (int)fn_80200C38(event));
+            fn_801A7228((int)fn_80200C38(event));
+            return 1;
+        }
+
+        if (kind == 0x3E) {
+            if (*(u8 *)((u8 *)state + 0x287) == 0) {
+                *(u8 *)((u8 *)state + 0x287) = 1;
+                fn_800A2B8C(object,
+                             fn_800A2018(state, *(u16 *)((u8 *)state + 0x86)));
+                fn_800D38CC(state, position);
+                fn_800A2E00(state, object_id, 0x319);
+            } else if (((ActorFlags *)((u8 *)state + 0x2A2))->bit7 == 0 &&
+                       lbl_8064D180 == 0x53) {
+                *(u16 *)((u8 *)state + 0x284) = 0xD2;
+                fn_80201D2C(object, 1);
+                fn_80201D14(object, 1);
             }
-            fn_800A4634(state, resource);
-            result = fn_800654F8(event_arg2);
-            fn_8020123C(0x97, object_id, object_id,
-                         *(u16 *)((u8 *)state->effect + 0x10));
-        } else {
-            ++*(u16 *)((u8 *)state + 0x29C);
-            if ((fn_801A7570(event_arg2) & 0x10018) != 0) {
-                if (*(u16 *)((u8 *)state + 0x29C) == 1 ||
-                    ((ActorFlags *)((u8 *)state + 0x2A2))->bit4 != 0) {
-                    fn_8020104C(0x97, object_id, object_id, 0x2B5,
-                                 lbl_8064F354);
-                    fn_80201D2C(object, 0x7E);
-                    fn_80201D14(object, 1);
-                } else {
-                    fn_800A383C(state);
-                    fn_8020104C(0x97, object_id, object_id, 0x2B5,
-                                 lbl_8064F354);
-                    fn_800A40C4(resource, state,
-                                 *(void **)((u8 *)actor + 0x94), event_arg2);
+            return 1;
+        }
+
+        if (kind == 0x0B) {
+            int result = 0;
+            int event_arg2 = (int)fn_80200C38(event);
+            if (fn_800A3A10(state, (u8 *)actor_8c + 0xEA, event_arg2) != 0) {
+                if (((fn_801A74C0(event_arg2) >> 16) & 1) != 0 &&
+                    (fn_801A7590(event_arg2) & 0x8000) != 0) {
+                    fn_800A4798(object, event_arg2);
+                    fn_801A7588(event_arg2,
+                        1U << *(unsigned int *)((u8 *)state + 0x198));
                 }
+                fn_800A4634(state, resource);
+                result = fn_800654F8(event_arg2);
+                fn_8020123C(0x97, object_id, object_id,
+                             *(u16 *)((u8 *)state->effect + 0x10));
             } else {
-                int linked = fn_801A7498(event_arg2);
-                if (linked != 0 && fn_80201BC8(fn_80201814(linked)) != 0) {
-                    fn_80201DD8(mode, linked);
+                ++*(u16 *)((u8 *)state + 0x29C);
+                if ((fn_801A7570(event_arg2) & 0x10018) != 0) {
+                    if (*(u16 *)((u8 *)state + 0x29C) == 1 ||
+                        ((ActorFlags *)((u8 *)state + 0x2A2))->bit4 != 0) {
+                        fn_8020104C(0x97, object_id, object_id, 0x2B5,
+                                     lbl_8064F354);
+                        fn_80201D2C(object, 0x7E);
+                        fn_80201D14(object, 1);
+                    } else {
+                        fn_800A383C(state);
+                        fn_8020104C(0x97, object_id, object_id, 0x2B5,
+                                     lbl_8064F354);
+                        fn_800A40C4(resource, state,
+                                     *(void **)((u8 *)actor + 0x94), event_arg2);
+                    }
+                } else {
+                    int linked = fn_801A7498(event_arg2);
+                    if (linked != 0 && fn_80201BC8(fn_80201814(linked)) != 0) {
+                        fn_80201DD8(mode, linked);
+                    }
                 }
             }
+            if (value != 0) {
+                *value = result;
+            }
+            return 1;
         }
-        if (value != 0) {
-            *value = result;
+
+        if (kind == 0xDC) {
+            fn_800A2430(state, 0x0F, event, value);
+            return 1;
         }
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0xDC) {
-        fn_800A2430(state, 0x0F, event, value);
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 0x27) {
-        fn_80064B38(object, event, value);
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 0x3D) {
-        fn_800D3148(state, object, event);
-        return 1;
-    }
-
-    if (alternate == 0 && kind == 0x97) {
-        int sound = (u16)fn_80200C38(event);
-        int volume = 0x64;
-        sound_position = *(Vec3 *)position;
-        switch (sound) {
-        case 0x13A:
-        case 0x2B5:
-            sound = 0x2B5;
-            fn_80201E78(&sound_position, source);
-            /* fall through */
-        case 0x243:
-            volume = 0x7F;
-            break;
-        case 0x242:
-        case 0x2C4:
-            volume = 0x64;
-            fn_80201E78(&sound_position, source);
-            break;
+        if (kind == 0x27) {
+            fn_80064B38(object, event, value);
+            return 1;
         }
-        fn_801AC9F4(sound, volume, (float *)&sound_position, 2);
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0x20) {
-        if (value != 0) {
-            *value = 0;
+        if (kind == 0x3D) {
+            fn_800D3148(state, object, event);
+            return 1;
         }
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0x6B) {
-        if (value != 0) {
-            *value = 0;
+        if (kind == 0x97) {
+            u16 sound = (u16)(int)fn_80200C38(event);
+            int volume = 0x64;
+            sound_position = *(Vec3 *)position;
+            switch (sound) {
+            case 0x13A:
+            case 0x2B5:
+                sound = 0x2B5;
+                fn_80201E78(&sound_position, source);
+                /* fall through */
+            case 0x243:
+                volume = 0x7F;
+                break;
+            case 0x242:
+            case 0x2C4:
+                volume = 0x64;
+                fn_80201E78(&sound_position, source);
+                break;
+            }
+            fn_801AC9F4(sound, volume, &sound_position, 2);
+            return 1;
         }
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0x3B) {
-        if (value != 0) {
-            *value = 1;
+        if (kind == 0x20) {
+            if (value != 0) {
+                *value = 0;
+            }
+            return 1;
         }
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0x82) {
-        if (value != 0) {
-            *value = 0;
+        if (kind == 0x6B) {
+            if (value != 0) {
+                *value = 0;
+            }
+            return 1;
         }
-        return 1;
-    }
 
-    if (alternate == 0 && kind == 0xE6) {
-        fn_800A3D90(object, resource, event, value);
-        return 1;
-    }
+        if (kind == 0x3B) {
+            if (value != 0) {
+                *value = 1;
+            }
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0x35) {
-        fn_800A3D90(object, resource, event, value);
-        return 1;
-    }
+        if (kind == 0x82) {
+            if (value != 0) {
+                *value = 0;
+            }
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0x39) {
-        fn_8012B324(resource);
-        fn_80201D34(object, 0);
-        fn_80201D1C(object, 1);
-        fn_801E8328(2, object);
-        return 1;
-    }
+        if (kind == 0xE6) {
+            fn_800A3D90(object, resource, event, value);
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0x91) {
-        fn_800A3C2C(state, event_value);
-        return 1;
-    }
+        if (kind == 0x35) {
+            fn_800A3D90(object, resource, event, value);
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0xF6) {
-        fn_800A2384(state, event_value, fn_80200C38(event));
-        return 1;
-    }
+        if (kind == 0x39) {
+            fn_8012B324(resource);
+            fn_80201D34(object, 0);
+            fn_80201D1C(object, 1);
+            fn_801E8328(2, object);
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0xF8) {
-        fn_800A2414(state, event);
-        return 1;
-    }
+        if (kind == 0x91) {
+            fn_800A3C2C(state, event_value);
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0xFA) {
-        fn_80200C38(event);
-        ((ActorFlags *)((u8 *)state + 0x2A2))->bit6 = 0;
-        fn_800A2F0C(state, 1);
-        return 1;
-    }
+        if (kind == 0xF6) {
+            fn_800A2384(state, event_value, (int)fn_80200C38(event));
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0x37) {
-        return 1;
-    }
+        if (kind == 0xF8) {
+            fn_800A2414(state, event);
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0x32) {
-        return 1;
-    }
+        if (kind == 0xFA) {
+            (int)fn_80200C38(event);
+            ((ActorFlags *)((u8 *)state + 0x2A2))->bit6 = 0;
+            fn_800A2F0C(state, 1);
+            return 1;
+        }
 
-    if (alternate == 0 && kind == 0x1E) {
-        return 1;
-    }
+        if (kind == 0x37) {
+            return 1;
+        }
 
-    if (alternate == 1) {
+        if (kind == 0x32) {
+            return 1;
+        }
+
+        if (kind == 0x1E) {
+            return 1;
+        }
+
+    } else if (alternate == 1) {
         if (kind == 1) {
             return 1;
         }
@@ -517,9 +525,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 0x61) {
+    } else if (alternate == 0x61) {
         if (kind == 1) {
             return 1;
         }
@@ -542,9 +548,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             fn_800A357C(state);
             return 1;
         }
-    }
-
-    if (alternate == 6) {
+    } else if (alternate == 6) {
         if (kind == 3) {
             fn_800A1DA0(state, 0xBF);
             if (*(u8 *)((u8 *)state + 0x280) != 0 &&
@@ -593,9 +597,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             fn_800A3AC4(state);
             return 1;
         }
-    }
-
-    if (alternate == 0x71) {
+    } else if (alternate == 0x71) {
         if (kind == 1) {
             fn_800A30F4(state, 1);
             return 1;
@@ -636,9 +638,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 7) {
+    } else if (alternate == 7) {
         if (kind == 1) {
             if (*(u16 *)((u8 *)state + 0x86) == 2) {
                 fn_800A2598(state);
@@ -674,9 +674,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             *(int *)((u8 *)state + 0x190) = -1;
             return 1;
         }
-    }
-
-    if (alternate == 0x70) {
+    } else if (alternate == 0x70) {
         if (kind == 1) {
             fn_800A30B8(state, 1);
             return 1;
@@ -706,7 +704,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             return 1;
         }
         if (kind == 0x78) {
-            int target_id = *(int *)((u8 *)fn_80200C38(event) + 0x20);
+            int target_id = *(int *)((u8 *)(int)fn_80200C38(event) + 0x20);
             ((void (**)(ActorState *, void *, void *))*(void **)state)[9](
                 state, object, event);
             fn_800A397C(state, object, resource);
@@ -722,9 +720,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 8) {
+    } else if (alternate == 8) {
         if (kind == 1) {
             if (resource != 0) {
                 fn_8011FA8C(resource, 0xC0, 0);
@@ -767,9 +763,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
         if (kind == 0x37) { return 1; }
         if (kind == 0x1E) { return 1; }
         if (kind == 0x32) { return 1; }
-    }
-
-    if (alternate == 0x73) {
+    } else if (alternate == 0x73) {
         if (kind == 1) {
             fn_802010C8(6, object, 0, lbl_8064F35C);
             return 1;
@@ -798,9 +792,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 0x78) {
+    } else if (alternate == 0x78) {
         if (kind == 1) {
             fn_800A3104(state, 1);
             fn_800A3AC4(state);
@@ -832,9 +824,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 0x56) {
+    } else if (alternate == 0x56) {
         if (kind == 1) {
             fn_800A3104(state, 1);
             fn_800A3AC4(state);
@@ -867,9 +857,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             fn_80201D14(object, 1);
             return 1;
         }
-    }
-
-    if (alternate == 0x6E) {
+    } else if (alternate == 0x6E) {
         if (kind == 1) { return 1; }
         if (kind == 2) {
             fn_800A3104(state, 0);
@@ -896,9 +884,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             fn_800A1DA0(state, 0xE5);
             return 1;
         }
-    }
-
-    if (alternate == 0x6F) {
+    } else if (alternate == 0x6F) {
         if (kind == 1) {
             fn_800A270C(object, resource, 0);
             return 1;
@@ -919,9 +905,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 0x77) {
+    } else if (alternate == 0x77) {
         if (kind == 1) {
             if (fn_800A2B80(state) > 0) {
                 fn_800A43E8(state, object_id);
@@ -975,9 +959,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
-    }
-
-    if (alternate == 0x44) {
+    } else if (alternate == 0x44) {
         if (kind == 1) {
             fn_800A1DA0(state, 0xFF);
             return 1;
@@ -1075,7 +1057,11 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
                         int next_frame;
                         fn_8012A1FC(resource, 0x71);
                         fn_8012A1BC(resource, 0x71);
-                        next_frame = frame - 0x41 < 0 ? 0x13 : 0x12;
+                        if (frame - 0x41 < 0) {
+                            next_frame = 0x13;
+                        } else {
+                            next_frame = 0x12;
+                        }
                         fn_80129FD0(resource, next_frame << 17, 1);
                     }
                     fn_80128C44(animation, (void *)fn_80204810,
@@ -1099,9 +1085,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             fn_8012B344(resource);
             return 1;
         }
-    }
-
-    if (alternate == 0x45) {
+    } else if (alternate == 0x45) {
         if (kind == 3) {
             void *target;
             SearchResult point3, point29;
@@ -1152,9 +1136,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             return 1;
         }
         if (kind == 2) { return 1; }
-    }
-
-    if (alternate == 0x46) {
+    } else if (alternate == 0x46) {
         if (kind == 1) {
             fn_800A1DA0(state, 0xF2);
             return 1;
@@ -1187,9 +1169,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             fn_8012B344(resource);
             return 1;
         }
-    }
-
-    if (alternate == 0x7E) {
+    } else if (alternate == 0x7E) {
         if (kind == 1) {
             void *animation;
             ((ActorFlags *)((u8 *)state + 0x2A2))->bit4 = 0;

@@ -68,7 +68,7 @@ void *fn_8007091C(u32 kind, u32 subtype, u32 count,
         } else {
             fn_80036E8C(object);
             fn_80201750(object);
-            return 0;
+            object = 0;
         }
     }
     return object;
