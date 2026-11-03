@@ -61,73 +61,25 @@ extern void fn_800D6638(Actor *, void *, int);
 /* Initialize the actor's parameters and behavior callbacks. */
 void fn_800D3B68(Actor *actor)
 {
-    register int (*canAct)(void *, void *);
-    register void (*performAction)(Actor *, void *, int);
-    register int (*getRange)(int, Range *);
-    register int (*chooseAction)(void *);
-    register void (*setKind)(Actor *);
-    register int (*chooseVariant)(int);
-    register int (*handleEvent)(void *, int, void *, int *);
-    register int (*interact)(void *, void *, int);
-    /* ASM: lis loads callback address halves ahead of the parameter stores;
-     * C interleaves these loads with stores under the fixed compiler flags. */
-    asm {
-        lis chooseAction, fn_800D4100@ha
-        lis chooseVariant, fn_800D4310@ha
-        lis handleEvent, fn_800D4324@ha
-        lis interact, fn_800D6294@ha
-        lis canAct, fn_800D6314@ha
-        lis getRange, fn_800D6358@ha
-        lis setKind, fn_800D6430@ha
-        lis performAction, fn_800D6638@ha
-    }
-    /* ASM: addi completes callback addresses at these store boundaries;
-     * C defers the additions until later method writes under the fixed flags. */
-    asm {
-        addi chooseAction, chooseAction, fn_800D4100@l
-    }
     actor->sounds = lbl_80248AF0;
-    /* ASM: addi completes callback addresses at these store boundaries;
-     * C defers the additions until later method writes under the fixed flags. */
-    asm {
-        addi chooseVariant, chooseVariant, fn_800D4310@l
-        addi handleEvent, handleEvent, fn_800D4324@l
-    }
     actor->field_26C = 50;
     actor->field_26E = 1600;
-    /* ASM: addi completes callback addresses at these store boundaries;
-     * C defers the additions until later method writes under the fixed flags. */
-    asm {
-        addi interact, interact, fn_800D6294@l
-        addi canAct, canAct, fn_800D6314@l
-    }
     actor->field_270 = 7000;
-    /* ASM: addi completes callback addresses at these store boundaries;
-     * C defers the additions until later method writes under the fixed flags. */
-    asm {
-        addi getRange, getRange, fn_800D6358@l
-        addi setKind, setKind, fn_800D6430@l
-    }
     actor->field_272 = 34;
     actor->field_25D = 0;
     actor->counter = 0;
     actor->field_260 = 573;
     actor->methods->initialize = fn_800D406C;
-    /* ASM: addi completes callback addresses at these store boundaries;
-     * C defers the additions until later method writes under the fixed flags. */
-    asm {
-        addi performAction, performAction, fn_800D6638@l
-    }
-    actor->methods->chooseAction = chooseAction;
-    actor->methods->chooseVariant = chooseVariant;
-    actor->methods->handleEvent = handleEvent;
+    actor->methods->chooseAction = fn_800D4100;
+    actor->methods->chooseVariant = fn_800D4310;
+    actor->methods->handleEvent = fn_800D4324;
     actor->methods->update = fn_800D5EFC;
     actor->methods->react = fn_800D607C;
-    actor->methods->interact = interact;
-    actor->methods->canAct = canAct;
-    actor->methods->getRange = getRange;
-    actor->methods->setKind = setKind;
+    actor->methods->interact = fn_800D6294;
+    actor->methods->canAct = fn_800D6314;
+    actor->methods->getRange = fn_800D6358;
+    actor->methods->setKind = fn_800D6430;
     actor->methods->configure = fn_800D64A8;
     actor->methods->setActions = fn_800D6588;
-    actor->methods->performAction = performAction;
+    actor->methods->performAction = fn_800D6638;
 }
