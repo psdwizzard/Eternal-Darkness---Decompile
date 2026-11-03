@@ -50,20 +50,14 @@ void fn_800B90B8(u16 group, u16 index, u8 mode)
     height = fn_801E6420(lbl_8064C9F0);
     center = x + (width >> 1);
     if (mode == 1) {
-        register s16 extraHeight;
-        register int padded;
-        register int fullHeight;
+        s16 promptHeight;
+        int verticalExtent;
         lbl_8064C9F4 = fn_801E6CA0(lbl_8064C51C, 0, 15, 10, 1);
-        extraHeight = fn_801E6420(lbl_8064C9F4);
-        fullHeight = height;
-        /* ASM: addi keeps the padding addition before the position addition;
-         * MWCC reassociates the equivalent C expression. */
-        asm { addi padded, fullHeight, 20 }
-        fn_801E6328(lbl_8064C9F4, center, y + padded);
-        /* ASM: addi keeps the prompt padding addition before the height sum;
-         * MWCC reassociates the equivalent C expression. */
-        asm { addi padded, extraHeight, 10 }
-        fn_801E6454(lbl_8064C9F0, fullHeight + padded);
+        promptHeight = fn_801E6420(lbl_8064C9F4);
+        verticalExtent = height + 20;
+        fn_801E6328(lbl_8064C9F4, center, y + verticalExtent);
+        verticalExtent = height + promptHeight;
+        fn_801E6454(lbl_8064C9F0, 10 + verticalExtent);
         if (special) {
             *(Color *)fn_801E5D08(lbl_8064C9F4) = lbl_8064C2B0;
         } else {

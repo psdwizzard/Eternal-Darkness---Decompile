@@ -38,7 +38,7 @@ extern void fn_801279E8(Model *model, int index, Matrix m, int noOverride);
 extern void fn_8012E3AC(void *track, Matrix m);
 extern void PSMTXIdentity(Matrix m);
 extern void PSMTXConcat(const Matrix a, const Matrix b, Matrix out);
-extern void PSMTXInverse(const Matrix src, Matrix dst);
+extern unsigned int PSMTXInverse(const Matrix src, Matrix dst);
 extern void PSMTXScale(Matrix m, float x, float y, float z);
 
 void fn_80127DF8(Model *model, int index, Matrix m) {
