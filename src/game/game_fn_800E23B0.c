@@ -146,18 +146,28 @@ extern const float lbl_8064F664;
 extern const float lbl_8064F668;
 extern const float lbl_8064F66C;
 
-int fn_800E23B0(void *context, int phase, void *message, int *result)
+int fn_800E23B0(register void *context, int inputPhase, void *inputMessage, int *inputResult)
 {
-    int variant;
-    int tick;
-    int id;
-    void *owner;
-    Target *target;
-    AnimNames *names;
-    int kind;
     ActorData *data;
-    void *object;
+    register AnimNames *names;
+    int id;
+    int variant;
+    int kind;
+    register void *object;
+    register Target *target;
+    int tick;
+    void *owner;
 
+    register int phase = inputPhase;
+    register void *message = inputMessage;
+    register int *result = inputResult;
+    register void *other;
+    int value;
+    register int slot;
+    void *link;
+    int sender;
+    register int timer;
+    register int busy;
     names = &lbl_80248D58;
     kind = fn_80200C10(message);
     object = fn_80201BC8(context);
@@ -192,9 +202,10 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 59) {
-            void *self = fn_80201814(fn_80201B44());
-            int sender = fn_80200C20(message);
-            void *link = fn_80201814(sender);
+            void *self;
+            self = fn_80201814(fn_80201B44());
+            sender = fn_80200C20(message);
+            link = fn_80201814(sender);
             if (link != 0 && self != 0 && fn_80036E50(self) == 1 &&
                 (sender == fn_80201B44() || fn_80201B5C(link) == 0x19)) {
                 if (result != 0)
@@ -205,25 +216,29 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 14) {
-            void *self = fn_80201814(fn_80201B44());
+            void *self;
+            self = fn_80201814(fn_80201B44());
             if (self != 0 && fn_80036E50(self) == 1)
                 fn_80068994(context, message);
             return 1;
         }
         if (kind == 39) {
-            void *self = fn_80201814(fn_80201B44());
+            void *self;
+            self = fn_80201814(fn_80201B44());
             if (self != 0 && fn_80036E50(self) == 1)
                 fn_80064B38(context, message, result);
             return 1;
         }
         if (kind == 8) {
             if (fn_8015C9F0() == 0) {
-                void *self = fn_80201814(fn_80201B44());
+                void *self;
+                self = fn_80201814(fn_80201B44());
                 fn_80201EB8(context);
                 if (self != 0 && fn_80036E50(self) == 1) {
-                    void *anim = fn_801294DC(object, 0x18, 0x20, 10);
+                    void *anim;
+                    anim = fn_801294DC(object, 0x18, 0x20, 10);
                     if (anim != 0) {
-                        int slot;
+
                         fn_8012A1FC(object, 0x18);
                         slot = fn_8012A1BC(object, 0x18);
                         if (data->unk8C->unk14E == 0) {
@@ -240,7 +255,7 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
                         fn_800389E0(context, 0, 0, 1);
                         fn_80128A84(anim, 0, slot);
                         if (target->unk5C != 0) {
-                            void *other = fn_80201BC8(fn_80201814(target->unk5C));
+                            other = fn_80201BC8(fn_80201814(target->unk5C));
                             anim = fn_801294DC(other, 0x18, 0x20, 10);
                             if (anim == 0)
                                 anim = fn_80128E30(other);
@@ -269,8 +284,9 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 11) {
-            void *self = fn_80201814(fn_80201B44());
-            int value = 0;
+            void *self;
+            self = fn_80201814(fn_80201B44());
+            value = 0;
             if (self != 0 && fn_80036E50(self) == 1) {
                 value = fn_800654F8(fn_80200C38(message));
                 fn_801A977C(object, 0x21);
@@ -280,8 +296,8 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 230) {
-            int value = fn_80200C38(message);
-            void *link = fn_80201814(fn_80200C20(message));
+            value = fn_80200C38(message);
+            link = fn_80201814(fn_80200C20(message));
             if (link != 0 && fn_80201B5C(link) == 0x19)
                 fn_80066754(context, message, result);
             else
@@ -300,7 +316,8 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 145) {
-            void *found = 0;
+            void *found;
+            found = 0;
             if (fn_80201C2C(context) == 0) {
                 if (fn_801E79FC(lbl_8064C4E0, 0x36E) != 0)
                     found = fn_800930B0(context, 0x6E, 0x4B, 0x41, 0x30C);
@@ -321,7 +338,7 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 243) {
-            int value = fn_80200C38(message);
+            value = fn_80200C38(message);
             fn_800EA0FC(context, target, value, message, result);
             return 1;
         }
@@ -331,18 +348,21 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 24) {
-            int busy = fn_800CB254(context, 0x32, 0, lbl_8064D18C, 1);
-            int timer = fn_80201C50(fn_80201B94(context));
+            busy = fn_800CB254(context, 0x32, 0, lbl_8064D18C, 1);
+            timer = fn_80201C50(fn_80201B94(context));
             if (busy == 0) {
-                int flags = fn_8011FAEC(object);
-                Link *link = data->unk4;
+                int flags;
+                Link *link;
                 void *anim;
+                flags = fn_8011FAEC(object);
+                link = data->unk4;
                 if (link != 0 && link->unk4 != 0)
                     fn_8016B400(link->unk4, id, 0);
                 fn_8012B344(object);
                 anim = fn_801294DC(object, 0x29, 0x20, 8);
                 if (anim != 0) {
-                    int tag = id << 8;
+                    int tag;
+                    tag = id << 8;
                     fn_80128C44(anim, fn_80204810, tag | 7);
                     fn_80128C28(anim, fn_80204810, tag | 0x38);
                     fn_80201D2C(context, 0x21);
@@ -362,8 +382,7 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 90) {
-            void *link = fn_80201814(fn_80200C20(message));
-            void *other;
+            link = fn_80201814(fn_80200C20(message));
             if (link != 0)
                 other = fn_80201BC8(link);
             else
@@ -405,8 +424,7 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 90) {
-            void *link = fn_80201814(fn_80200C20(message));
-            void *other;
+            link = fn_80201814(fn_80200C20(message));
             if (link != 0)
                 other = fn_80201BC8(link);
             else
@@ -419,8 +437,10 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 2) {
-            int model = fn_80128EAC(object);
-            int flags = fn_801290D0(object);
+            int model;
+            int flags;
+            model = fn_80128EAC(object);
+            flags = fn_801290D0(object);
             if ((flags & 4) && (model == 3 || model == 2))
                 fn_80128F74(object, flags & ~4);
             return 1;
@@ -446,7 +466,15 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 7) {
-            if (fn_80035FB8(context, names->idle, lbl_8064B7B8, names->walk, lbl_8064B7C0, names->run) == 0) {
+            register char *label;
+            register void *callContext;
+            /* ASM: mr/addi retain argument order and the zero-offset string address;
+             * C folds this address calculation to mr. */
+            asm {
+                mr callContext, context
+                addi label, names, 0
+            }
+            if (fn_80035FB8(callContext, label, lbl_8064B7B8, names->walk, lbl_8064B7C0, names->run) == 0) {
                 fn_80201D2C(context, 1);
                 fn_80201D14(context, 1);
             }
@@ -463,7 +491,15 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 7) {
-            if (fn_80035FB8(context, names->idle, lbl_8064B7C8, names->walk, lbl_8064B7C0, names->run) == 0) {
+            register char *label;
+            register void *callContext;
+            /* ASM: mr/addi retain argument order and the zero-offset string address;
+             * C folds this address calculation to mr. */
+            asm {
+                mr callContext, context
+                addi label, names, 0
+            }
+            if (fn_80035FB8(callContext, label, lbl_8064B7C8, names->walk, lbl_8064B7C0, names->run) == 0) {
                 fn_80201D2C(context, 1);
                 fn_80201D14(context, 1);
             }
@@ -478,7 +514,15 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 7) {
-            if (fn_80035FB8(context, names->idle, names->special, names->walk, lbl_8064B7C0, names->run) == 0) {
+            register char *label;
+            register void *callContext;
+            /* ASM: mr/addi retain argument order and the zero-offset string address;
+             * C folds this address calculation to mr. */
+            asm {
+                mr callContext, context
+                addi label, names, 0
+            }
+            if (fn_80035FB8(callContext, label, names->special, names->walk, lbl_8064B7C0, names->run) == 0) {
                 fn_80201D2C(context, 1);
                 fn_80201D14(context, 1);
             }
@@ -500,7 +544,8 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
                 fn_8012B344(object);
                 anim = fn_801294DC(object, 0x29, 0x20, 8);
                 if (anim != 0) {
-                    int tag = id << 8;
+                    int tag;
+                    tag = id << 8;
                     fn_80128C44(anim, fn_80204810, tag | 7);
                     fn_80128C28(anim, fn_80204810, tag | 0x36);
                     fn_80201D2C(context, 7);
