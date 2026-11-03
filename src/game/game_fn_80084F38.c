@@ -135,15 +135,6 @@ extern void PSVECNormalize(const Vec3*, Vec3*);
 extern void PSVECCrossProduct(const Vec3*, const Vec3*, Vec3*);
 extern void GXBegin(s32, void*, s32);
 
-static inline void drawIconVertex(const Vec3* vertex, s16 x, s16 y, s16 inset)
-{
-    register u16 depth;
-    /* ASM: li preserves the retail all-ones depth register. A C call with
-     * a constant u16 argument instead materializes the zero-extended 65535. */
-    asm { li depth, -1 }
-    fn_80086204(vertex->x + (f32)(s16)(x + inset), vertex->y + (f32)(s16)(y + inset), depth);
-}
-
 void fn_80084F38(void)
 {
     Quad quad;
@@ -158,7 +149,7 @@ void fn_80084F38(void)
     u32 legendColor, symbolColor;
     u32 startColor, colorDelta, endColor, textColor, strongTint, weakTint, defaultTint;
     volatile u32 colorCopy;
-    UiState *effectCursor;
+    f32 zero;
     f32 targetValue;
     f32 effectTarget;
     f32 currentValue;
@@ -180,30 +171,29 @@ void fn_80084F38(void)
 
     /* Advance the five timed effect envelopes. */
     if (fn_8015C910() == 0U) {
-        effectCursor = &lbl_8031CBA0;
         for (effectIndex = 0; effectIndex < 5; effectIndex++) {
-            targetValue = effectCursor->effects[0].target;
-            currentValue = effectCursor->effects[0].current;
+            targetValue = lbl_8031CBA0.effects[effectIndex].target;
+            currentValue = lbl_8031CBA0.effects[effectIndex].current;
             if (targetValue == currentValue) {
-                if (targetValue != lbl_8064EA14) {
-                    effectCursor->effects[0].elapsed = (s16) (effectCursor->effects[0].elapsed + 1);
-                    if ((s16) effectCursor->effects[0].elapsed >= (s16) effectCursor->effects[0].duration) {
-                        effectCursor->effects[0].elapsed = 0;
-                        effectCursor->effects[0].target = (f32) lbl_8064EA14;
+                zero = *(const volatile f32*)&lbl_8064EA14;
+                if (targetValue != zero) {
+                    lbl_8031CBA0.effects[effectIndex].elapsed = (s16) (lbl_8031CBA0.effects[effectIndex].elapsed + 1);
+                    if ((s16) lbl_8031CBA0.effects[effectIndex].elapsed >= (s16) lbl_8031CBA0.effects[effectIndex].duration) {
+                        lbl_8031CBA0.effects[effectIndex].elapsed = 0;
+                        lbl_8031CBA0.effects[effectIndex].target = zero;
                     }
                 }
             } else if (currentValue < targetValue) {
-                effectCursor->effects[0].current = (f32) (currentValue + effectCursor->effects[0].step);
-                effectCursor->effects[0].current = effectCursor->effects[0].current < effectCursor->effects[0].target ?
-                    effectCursor->effects[0].current : effectCursor->effects[0].target;
-                effectCursor->effects[0].elapsed = 0;
+                lbl_8031CBA0.effects[effectIndex].current = (f32) (currentValue + lbl_8031CBA0.effects[effectIndex].step);
+                lbl_8031CBA0.effects[effectIndex].current = lbl_8031CBA0.effects[effectIndex].current < lbl_8031CBA0.effects[effectIndex].target ?
+                    lbl_8031CBA0.effects[effectIndex].current : lbl_8031CBA0.effects[effectIndex].target;
+                lbl_8031CBA0.effects[effectIndex].elapsed = 0;
             } else {
-                effectCursor->effects[0].current = (f32) (currentValue - effectCursor->effects[0].step);
-                effectCursor->effects[0].current = effectCursor->effects[0].current > effectCursor->effects[0].target ?
-                    effectCursor->effects[0].current : effectCursor->effects[0].target;
-                effectCursor->effects[0].elapsed = 0;
+                lbl_8031CBA0.effects[effectIndex].current = (f32) (currentValue - lbl_8031CBA0.effects[effectIndex].step);
+                lbl_8031CBA0.effects[effectIndex].current = lbl_8031CBA0.effects[effectIndex].current > lbl_8031CBA0.effects[effectIndex].target ?
+                    lbl_8031CBA0.effects[effectIndex].current : lbl_8031CBA0.effects[effectIndex].target;
+                lbl_8031CBA0.effects[effectIndex].elapsed = 0;
             }
-            effectCursor = (UiState*)((u8*)effectCursor + sizeof(TimedEffect));
         }
     }
     effect = 0;
@@ -227,7 +217,8 @@ void fn_80084F38(void)
     case 0x59: {
         s32 iconIndex;
         s32 image;
-        s16 iconX, iconY;
+        register u16 depth;
+        s32 iconX, iconY;
         if (((s32) lbl_803003C8.mode == 0) && ((s8) lbl_8031CD84.selected >= 0)) {
             for (iconIndex = 0; iconIndex < 2; iconIndex++) {
                 image = ((Resource*)fn_8015C2FC(2))->image;
@@ -248,32 +239,43 @@ void fn_80084F38(void)
                 fn_801A8EDC(&lbl_802515D0);
                 iconColor = lbl_8064C2A8;
                 fn_801A852C(&iconColor, 0, iconIndex * 3, 0x80000000);
+                /* ASM: li supplies the all-ones FIFO depth; a C u16 constant
+                 * materializes 65535 instead of the retail signed immediate. */
+                asm { li depth, -1 }
                 fn_801A8F08(iconX, iconY, (s16) (iconX + 0x40), (s16) (iconY + 0x40), -1, 0, (void*)5);
                 shadowColor = lbl_8064EB04;
                 fn_801A852C(&shadowColor, 5, 1, 0x80000000);
                 if ((u32) lbl_8031CD84.icons[lbl_8031CD84.selected].enabled[iconIndex] != 0U) {
                     fn_801ECF50(6);
                     GXBegin(0x80, (void*)5, 4);
-                    drawIconVertex(&quad.v[0], iconX, iconY, 0x25);
+                    fn_80086204(quad.v[0].x + (f32)(s16)(iconX + 0x25),
+                                 quad.v[0].y + (f32)(s16)(iconY + 0x25), depth);
                     fn_800861F8(0);
-                    drawIconVertex(&quad.v[1], iconX, iconY, 0x25);
+                    fn_80086204(quad.v[1].x + (f32)(s16)(iconX + 0x25),
+                                 quad.v[1].y + (f32)(s16)(iconY + 0x25), depth);
                     fn_800861F8(1);
-                    drawIconVertex(&quad.v[2], iconX, iconY, 0x25);
+                    fn_80086204(quad.v[2].x + (f32)(s16)(iconX + 0x25),
+                                 quad.v[2].y + (f32)(s16)(iconY + 0x25), depth);
                     fn_800861F8(2);
-                    drawIconVertex(&quad.v[3], iconX, iconY, 0x25);
+                    fn_80086204(quad.v[3].x + (f32)(s16)(iconX + 0x25),
+                                 quad.v[3].y + (f32)(s16)(iconY + 0x25), depth);
                     fn_800861F8(3);
                     fn_800861F4();
                     faceColor = lbl_8064C2A8;
                     fn_801A852C(&faceColor, 0, 2, 0x80000000);
                     fn_801ECF50(6);
                     GXBegin(0x80, (void*)5, 4);
-                    drawIconVertex(&quad.v[0], iconX, iconY, 0x20);
+                    fn_80086204(quad.v[0].x + (f32)(s16)(iconX + 0x20),
+                                 quad.v[0].y + (f32)(s16)(iconY + 0x20), depth);
                     fn_800861F8(0);
-                    drawIconVertex(&quad.v[1], iconX, iconY, 0x20);
+                    fn_80086204(quad.v[1].x + (f32)(s16)(iconX + 0x20),
+                                 quad.v[1].y + (f32)(s16)(iconY + 0x20), depth);
                     fn_800861F8(1);
-                    drawIconVertex(&quad.v[2], iconX, iconY, 0x20);
+                    fn_80086204(quad.v[2].x + (f32)(s16)(iconX + 0x20),
+                                 quad.v[2].y + (f32)(s16)(iconY + 0x20), depth);
                     fn_800861F8(2);
-                    drawIconVertex(&quad.v[3], iconX, iconY, 0x20);
+                    fn_80086204(quad.v[3].x + (f32)(s16)(iconX + 0x20),
+                                 quad.v[3].y + (f32)(s16)(iconY + 0x20), depth);
                     fn_800861F8(3);
                     fn_800861F4();
                 }

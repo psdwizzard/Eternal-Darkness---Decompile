@@ -68,16 +68,16 @@ extern const Color lbl_8065025C;
 void fn_801339FC(Manager* arg)
 {
     Manager* manager;
-    Object* object;
     int i;
+    Object* object;
     void* resource;
     void* node;
     void* special;
     void* linked;
     Object* target;
-    manager = arg;
+    manager = (Manager*)arg;
     lbl_8064CF44 = 0;
-    if (manager != 0) {
+    if (arg != 0) {
         i = 0;
         while (i < manager->count) {
             object = manager->entries[i].object;
