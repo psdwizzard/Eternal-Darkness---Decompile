@@ -1,4 +1,4 @@
-typedef signed int s32;
+typedef signed long s32;
 typedef unsigned int u32;
 typedef signed short s16;
 typedef unsigned short u16;
@@ -223,7 +223,7 @@ extern void fn_801E79A0(s32, s32);
 extern s32 fn_801E79FC(s32, s32);
 extern u16 fn_801F6228(s32, s32, s32);
 extern void fn_801F63E4(s32, s32);
-extern void fn_801F6ED0(u32, u32, CameraFlags *);
+extern void fn_801F6ED0(void *, void *);
 extern void fn_801F86F4(s32);
 extern s32 fn_80200C10(void *);
 extern s32 fn_80200C20(void *);
@@ -302,15 +302,15 @@ extern const f32 lbl_8064E5A8;
 extern const f32 lbl_8064E5AC;
 extern const f32 lbl_8064E5B0;
 
-s32 fn_8005BDA4(void *context, s32 type, void *event, u32 *result)
+s32 fn_8005BDA4(void *context, s32 type, u8 *event, u32 *result)
 {
-    void *object;
-    s32 id;
-    s32 kind;
-    s32 slot;
+    CharExtra *extra;
     CharState *state;
     CharWork *work;
-    CharExtra *extra;
+    s32 slot;
+    s32 kind;
+    s32 id;
+    void *object;
     char *data;
     Vec3 pos;
     s32 room;
@@ -665,11 +665,11 @@ s32 fn_8005BDA4(void *context, s32 type, void *event, u32 *result)
         if (kind == 0x78) {
             s32 *params;
             s32 action;
-            s32 other_id;
+            s32 other_action;
             void *other;
             CharState *other_state;
+            s32 other_id;
             u32 other_object;
-            s32 other_action;
             s32 index;
             s32 message;
             params = (s32 *)fn_80200C38(event);
@@ -717,7 +717,7 @@ s32 fn_8005BDA4(void *context, s32 type, void *event, u32 *result)
                     fn_801F86F4(0);
                     lbl_8063D378.unk40 = 1;
                     lbl_8063D400.unk40 = 1;
-                    fn_801F6ED0(lbl_8064C4E4, other_object, &lbl_8063D400);
+                    fn_801F6ED0((void *)lbl_8064C4E4, (void *)other_object);
                 }
                 fn_80201AF8(other_id);
                 lbl_8064C4E4 = other_object;

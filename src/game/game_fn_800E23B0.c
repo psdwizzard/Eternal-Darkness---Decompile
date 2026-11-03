@@ -150,13 +150,13 @@ int fn_800E23B0(void *context, int phase, void *message, int *result)
 {
     int variant;
     int tick;
-    void *object;
-    ActorData *data;
-    int kind;
-    AnimNames *names;
-    Target *target;
-    void *owner;
     int id;
+    void *owner;
+    Target *target;
+    AnimNames *names;
+    int kind;
+    ActorData *data;
+    void *object;
 
     names = &lbl_80248D58;
     kind = fn_80200C10(message);

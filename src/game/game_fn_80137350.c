@@ -1,5 +1,3 @@
-/* The loop and result copy match retail. The fixed compiler settings
- * emit GPR save/restore helpers instead of retail stmw/lmw instructions. */
 typedef struct Vec3 {
     float x, y, z;
 } Vec3;
@@ -39,7 +37,7 @@ extern unsigned int fn_80201CDC(Object80201CDC* node);
 extern int fn_80201EB8(Object80201EB8* node);
 extern float PSVECSquareDistance(const Vec3* a, const Vec3* b);
 extern int lbl_8064D18C;
-extern float lbl_806502A0;
+extern const float lbl_806502A0;
 
 int fn_80137350(void* object, const Shape* shape,
                 const CollisionWorld* world, Result* result,

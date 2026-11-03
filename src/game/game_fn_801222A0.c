@@ -35,26 +35,12 @@ DisplayList* fn_801222A0(register void* object, register int kind, register int 
     DisplayList* list;
     int i;
 
-    /* ASM: mr preserves argument copies before the cache loads; C moves
-     * the copies into the lookup setup. */
-    asm {
-        mr object, object
-        mr kind, kind
-        mr mode, mode
-        mr value, value
-    }
-
     index = lbl_8064D738;
     other_index = index ^ 1;
-    other = lbl_804ED5CC[other_index];
     count = lbl_8064CEDC[index];
-    current = lbl_804ED5CC[index];
     other_count = lbl_8064CEDC[other_index];
-    /* ASM: mr fixes the current cache pointer before allocating the result;
-     * C otherwise overlaps pointer setup and result initialization. */
-    asm {
-        mr current, current
-    }
+    other = lbl_804ED5CC[other_index];
+    current = lbl_804ED5CC[index];
     result = 0;
     list = current;
 
