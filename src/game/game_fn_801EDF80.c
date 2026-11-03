@@ -6,10 +6,22 @@ typedef unsigned short u16;
 /* Slot table owned by the animation sampler. */
 typedef struct Slot Slot;
 
+typedef struct EntryA EntryA;
+typedef struct EntryB EntryB;
 typedef struct EntryPair {
-    void* first;
-    void* second;
+    EntryA* first;
+    EntryB* second;
 } EntryPair;
+
+typedef struct ResourceTable {
+    void* base;
+    u32 count;
+    EntryPair* entries;
+} ResourceTable;
+
+typedef struct Color {
+    u8 r, g, b, a;
+} Color;
 
 /* Eight-word texture/material description filled in by fn_8015DB84. */
 typedef struct Material {
@@ -18,8 +30,8 @@ typedef struct Material {
 
 /* Per-frame controller state kept by the input layer. */
 typedef struct InputState {
-    void* resources[22];
-    u32 color;
+    ResourceTable* resources[22];
+    Color color;
     s16 values[11];
 } InputState;
 
@@ -48,36 +60,34 @@ typedef struct ControllerRegion {
  * GC/1.3 from folding the field base into the indexed address (see
  * fn_801EDE34). */
 #define UNFOLDED(p) ((u32)(unsigned long long)(u32)(p))
-#define COMMAND(r, i) (((int*)UNFOLDED((r)->commands))[i])
 #define CHECKSUM(r, i) (((int*)UNFOLDED((r)->checksums))[i])
-#define CACHE(r) ((ChannelCache*)UNFOLDED(&(r)->cache))
 #define CACHED(r) ((s16*)UNFOLDED((r)->cache.values))
 
 extern int lbl_80265D80[];
 extern int lbl_8064C378;
 extern u8 lbl_8064D5F8;
-extern void* lbl_8064D5FC;
+extern ResourceTable* lbl_8064D5FC;
 extern int lbl_8064D61C;
 extern int lbl_8064D634;
 extern int lbl_8064D638;
 extern int lbl_8064D650;
-extern u8 lbl_8064D674[4];
+extern Color lbl_8064D674;
 extern u32 lbl_8064D678;
 extern int lbl_8064D680;
 extern int lbl_8064D684;
 extern int lbl_8064D6E8;
 extern int lbl_8064D6F0;
-extern void* lbl_8064D744;
-extern void* lbl_8064D748;
+extern ResourceTable* lbl_8064D744;
+extern ResourceTable* lbl_8064D748;
 extern ControllerRegion lbl_80639260;
 
-extern void fn_801ECD74(u32*);
+extern void fn_801ECD74(Color*);
 extern void fn_801ED118(void);
 extern u16 fn_801F6034(int, Slot*);
 extern int fn_8015AA20(void);
-extern void fn_8015DB84(void*, void*, u32);
-extern EntryPair* fn_8015DB74(void*, u32);
-extern void fn_8015DC54(void*, void*, void*, u32, u32);
+extern void fn_8015DB84(ResourceTable*, void*, u32);
+extern EntryPair* fn_8015DB74(ResourceTable*, u32);
+extern void fn_8015DC54(ResourceTable*, void*, void*, u32, u32);
 extern void GXLoadTlut(void*, int);
 extern void GXLoadTexObj(void*, int);
 extern u16 GXGetTexObjHeight(void*);
@@ -102,7 +112,7 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
                 int parameter, int mode, int channel, Slot* context, int flags,
                 InputState* state)
 {
-    ControllerRegion* region;
+    register ControllerRegion* region;
     int attributes;
     int tint;
     int kind;
@@ -115,6 +125,7 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
     int next;
     int first_pass;
     int result;
+    u32 command_offset;
 
     region = &lbl_80639260;
     result = 1;
@@ -154,10 +165,10 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
 
         accepted = 1;
         if (values != 0) {
-            u32 color = *(u32*)((char*)values + 0x1C);
+            Color color = *(Color*)((char*)values + 0x1C);
             fn_801ECD74(&color);
         } else {
-            u32 color = state->color;
+            Color color = state->color;
             fn_801ECD74(&color);
         }
 
@@ -201,8 +212,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         }
 
         if (!accepted) {
-            if ((lbl_8064D674[0] == 0xFF && lbl_8064D674[1] == 0xFF &&
-                 lbl_8064D674[2] == 0xFF && lbl_8064D674[3] == 0xFF) ||
+            if ((lbl_8064D674.r == 0xFF && lbl_8064D674.g == 0xFF &&
+                 lbl_8064D674.b == 0xFF && lbl_8064D674.a == 0xFF) ||
                 (attributes & 0x80000000) != 0) {
                 return 0;
             }
@@ -225,6 +236,9 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         int candidate;
         int bit;
         int changed;
+        register int* group;
+        register ChannelCache* cache;
+        s16* cached;
 
         if (values != 0) {
             candidate = values[channel];
@@ -240,12 +254,18 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
                     candidate = values[8];
                     break;
                 }
-                if (region->group[0] != values[1] ||
-                    region->group[1] != values[6] ||
-                    region->group[2] != values[8]) {
+                if (region->group[0] != values[1]) {
+                    goto invalidate_group;
+                }
+                /* ASM: addi and mr preserve the group base; C folds it into both loads. */
+                asm { addi group, region, 0x21CC; mr group, group }
+                if (group[1] != values[6] || group[2] != values[8]) {
+                invalidate_group:
                     region->group[0] = values[1];
-                    region->group[1] = values[6];
-                    region->group[2] = values[8];
+                    /* ASM: addi and mr preserve the group base; C folds it into both stores. */
+                    asm { addi group, region, 0x21CC; mr group, group }
+                    group[1] = values[6];
+                    group[2] = values[8];
                     CACHED(region)[channel] = -1;
                 }
             }
@@ -253,28 +273,30 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
             candidate = state->values[channel];
         }
 
+        /* ASM: addi and mr retain the cache base for the header and indexed value. */
+        asm { addi cache, region, 0x21D8; mr cache, cache }
         bit = 1 << channel;
         changed = attributes & bit;
-        if (changed != (CACHE(region)->attributes & bit) ||
-            candidate != CACHE(region)->values[channel]) {
+        if (changed != (cache->attributes & bit) ||
+            candidate != cache->values[channel]) {
             if (changed != 0) {
                 candidate = (s16)fn_801F6034(values[channel], context);
             }
-            if ((s16)candidate != CACHED(region)[channel]) {
+            if ((s16)candidate != ((s16*)UNFOLDED(cached = region->cache.values))[channel]) {
                 Material material;
 
-                CACHED(region)[channel] = candidate;
+                cached[channel] = candidate;
                 if (values != 0) {
                     if (channel == 9) {
                         if (fn_8015AA20() != 0) {
                             fn_8015DB84(lbl_8064D744, &material,
-                                        CACHED(region)[channel]);
+                                        cached[channel]);
                         } else {
                             fn_8015DB84(lbl_8064D748, &material,
-                                        CACHED(region)[channel]);
+                                        cached[channel]);
                         }
                     } else if (channel == 3) {
-                        switch (CACHED(region)[channel]) {
+                        switch (cached[channel]) {
                         case 0:
                             material = region->material0;
                             break;
@@ -293,15 +315,15 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
                         }
                     } else {
                         if (fn_8015DB74(lbl_8064D5FC,
-                                        CACHED(region)[channel])->second != 0) {
+                                        cached[channel])->second != 0) {
                             u32 extra[3];
 
                             fn_8015DC54(lbl_8064D5FC, &material, extra, 1,
-                                        CACHED(region)[channel]);
+                                        cached[channel]);
                             GXLoadTlut(extra, 1);
                         } else {
                             fn_8015DB84(lbl_8064D5FC, &material,
-                                        CACHED(region)[channel]);
+                                        cached[channel]);
                         }
                     }
                 } else {
@@ -327,7 +349,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
     }
     if ((flags & 0x7000) != lbl_8064D61C) {
         lbl_8064D61C = flags & 0x7000;
-        COMMAND(region, total) = -1;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = -1;
     }
     if (attributes & 0x40000000) {
         tint = 1;
@@ -391,7 +414,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
 
     switch (channel) {
     case 10:
-        COMMAND(region, total) = 10;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 10;
         fn_801ED510(total, 0, 0);
         if (repeat == 1) {
             repeat = 6;
@@ -410,7 +434,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         }
         break;
     case 0:
-        COMMAND(region, total) = 0;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 0;
         if (flags & 0x1000) {
             switch (flags & 0x6000) {
             case 0:
@@ -440,7 +465,9 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         int alternate = fn_801EB304();
         int texture;
 
-        COMMAND(region, total) = 1;
+        command_offset = (u32)total * 4;
+
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 1;
         texture = 0xC;
         fn_801ED510(total, 0, 0);
         fn_801EF1A4(total, 7, 7, 7, repeat);
@@ -458,7 +485,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         break;
     }
     case 4:
-        COMMAND(region, total) = 4;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 4;
         fn_801ED510(total, 0, 0);
         fn_801EF1A4(total, 7, 7, 7, repeat);
         fn_801EF110(total, 0, 0, 0, 1, 0);
@@ -466,7 +494,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         fn_801EF07C(total, 0, 0, 0, 1, 0);
         break;
     case 5:
-        COMMAND(region, total) = 5;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 5;
         fn_801ED494(1, 0, 0, 0, 0);
         fn_801ED510(total, 0, 1);
         fn_801EF1A4(total, 7, repeat, 4, 7);
@@ -475,7 +504,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         fn_801EF07C(total, 0, 0, 0, 1, 0);
         break;
     case 2:
-        COMMAND(region, total) = 2;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 2;
         fn_801ED510(total, 0, 0);
         fn_801EF1A4(total, 7, 7, 7, 0);
         fn_801EF110(total, 0, 0, 0, 1, 0);
@@ -483,7 +513,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         fn_801EF07C(total, 0, 0, 0, 1, 0);
         break;
     case 9:
-        COMMAND(region, total) = 9;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 9;
         fn_801ED510(total, 0, 0);
         fn_801EF220(total, 0xE);
         fn_801EF000(total, 0xF, 0xE, 8, 0xF);
@@ -491,14 +522,16 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         fn_801EF1A4(total, 7, 7, 7, repeat);
         fn_801EF110(total, 0, 0, 0, 1, 2);
         next = total + 1;
-        COMMAND(region, next) = -1;
+        command_offset = (u32)next * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = -1;
         fn_801EF000(next, 0xF, 8, 4, command);
         fn_801EF07C(next, 0, 0, 0, 1, 0);
         fn_801EF1A4(next, 7, 7, 7, repeat);
         fn_801EF110(next, 0, 0, 0, 1, 0);
         break;
     case 7:
-        COMMAND(region, total) = 7;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 7;
         fn_801ED510(total, 0, 0);
         fn_801EF220(total, 0x14);
         fn_801EF000(total, 0xF, 8, 0xE, command);
@@ -506,7 +539,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         fn_801EF1A4(total, 7, 7, 7, repeat);
         fn_801EF110(total, 0, 0, 0, 1, 0);
         next = total + 1;
-        COMMAND(region, next) = -1;
+        command_offset = (u32)next * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = -1;
         fn_801ED510(next, 0, 0);
         fn_801EF220(next, 0x14);
         fn_801EF000(next, 0xF, 8, 0xE, 0);
@@ -515,7 +549,8 @@ int fn_801EDF80(s16* values, int total, int count, int iteration_total,
         fn_801EF110(next, 0, 0, 0, 1, 0);
         break;
     case 3:
-        COMMAND(region, total) = 3;
+        command_offset = (u32)total * 4;
+        *(int*)((char*)UNFOLDED(region->commands) + command_offset) = 3;
         fn_801ED510(total, 0, 0);
         fn_801EF000(total, 0xF, 6, 8, command);
         fn_801EF07C(total, 0, 0, 0, 1, 0);

@@ -43,7 +43,7 @@ typedef struct AnimNames {
 extern int fn_80200C10(void *);
 extern int fn_80200C20(void *);
 extern int fn_80200C28(void *);
-extern int fn_80200C38(void *);
+extern void *fn_80200C38(void *);
 extern void *fn_80201BC8(void *);
 extern ActorData *fn_80201B8C(void *);
 extern void *fn_80201B94(void *);
@@ -274,13 +274,13 @@ int fn_800E23B0(register void *context, int inputPhase, void *inputMessage, int 
             return 1;
         }
         if (kind == 237) {
-            fn_8020123C(11, fn_80200C20(message), fn_80200C28(message), fn_80200C38(message));
-            fn_801A7228(fn_80200C38(message));
+            fn_8020123C(11, fn_80200C20(message), fn_80200C28(message), (int)fn_80200C38(message));
+            fn_801A7228((int)fn_80200C38(message));
             return 1;
         }
         if (kind == 58) {
-            fn_8020123C(39, fn_80200C20(message), fn_80200C28(message), fn_80200C38(message));
-            fn_801A7228(fn_80200C38(message));
+            fn_8020123C(39, fn_80200C20(message), fn_80200C28(message), (int)fn_80200C38(message));
+            fn_801A7228((int)fn_80200C38(message));
             return 1;
         }
         if (kind == 11) {
@@ -288,7 +288,7 @@ int fn_800E23B0(register void *context, int inputPhase, void *inputMessage, int 
             self = fn_80201814(fn_80201B44());
             value = 0;
             if (self != 0 && fn_80036E50(self) == 1) {
-                value = fn_800654F8(fn_80200C38(message));
+                value = fn_800654F8((int)fn_80200C38(message));
                 fn_801A977C(object, 0x21);
             }
             if (result != 0)
@@ -296,12 +296,13 @@ int fn_800E23B0(register void *context, int inputPhase, void *inputMessage, int 
             return 1;
         }
         if (kind == 230) {
-            value = fn_80200C38(message);
+            void *arg;
+            arg = fn_80200C38(message);
             link = fn_80201814(fn_80200C20(message));
             if (link != 0 && fn_80201B5C(link) == 0x19)
                 fn_80066754(context, message, result);
             else
-                fn_80066888(object, value, lbl_8064F654, lbl_8064F658);
+                fn_80066888(object, (int)arg, lbl_8064F654, lbl_8064F658);
             return 1;
         }
         if (kind == 53) {
@@ -338,8 +339,9 @@ int fn_800E23B0(register void *context, int inputPhase, void *inputMessage, int 
             return 1;
         }
         if (kind == 243) {
-            value = fn_80200C38(message);
-            fn_800EA0FC(context, target, value, message, result);
+            void *arg;
+            arg = fn_80200C38(message);
+            fn_800EA0FC(context, target, (int)arg, message, result);
             return 1;
         }
     } else if (phase == 0x72) {
