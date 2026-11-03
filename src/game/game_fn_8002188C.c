@@ -157,9 +157,11 @@ extern s32 fn_800B194C();
 extern s32 fn_800B2EC0();
 extern s32 fn_8011C900();
 extern unsigned int fn_80144470(int);
-extern void fn_801A852C(Color, int, int, u32);
-extern s32 fn_801A8660();
-extern void fn_801A872C(short, short, short, short, int, int, PackedColor*);
+extern void fn_801A852C(u32*, int, int, u32);
+#define fn_801A852C(c, a, b, flags) fn_801A852C((u32*)(c), a, b, flags)
+extern void fn_801A8660();
+extern void fn_801A872C(int, int, int, int, int, int, const u32*);
+#define fn_801A872C(x, y, w, h, z, inset, c) fn_801A872C(x, y, w, h, z, inset, (const u32*)(c))
 extern void fn_801A8D38(int);
 extern s32 fn_801A8F08();
 extern s32 fn_801A8FE8();
@@ -186,7 +188,7 @@ extern s32 fn_801EC7F4();
 extern s32 fn_801ECB40();
 extern s32 fn_801ECC4C();
 extern s32 fn_801ED3F4();
-extern s32 fn_801ED5F4();
+extern void fn_801ED5F4();
 extern s32 fn_801F3960();
 extern s32 C_MTXOrtho();
 extern s32 GXSetNumTexGens();
@@ -245,7 +247,9 @@ extern s32 GXSetProjection();
 void fn_8002188C(int param_1,int param_2,uint param_3)
 
 {
-  FrontData *front;
+  register FrontData *front;
+  register char *titleMask;
+  register u8 *image;
   PackedColor *selA;
   PackedColor *selB;
   s32 uVar2;
@@ -336,6 +340,7 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
   float local_8c [6];
   undefined1 auStack_74 [68];
   SeqEntry *entry;
+  register SeqEntry *seqBase;
   s32 *track;
   int slot;
   float scale;
@@ -357,7 +362,14 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
     else {
       fn_801A91D4(2,param_3,1);
     }
-    fn_801A90BC(lbl_802515D0,front->title);
+    /* ASM: lis/addi/addi preserve the zero-offset address form and scheduling;
+     * C folds the address to mr, and an isolated addi prevents the lis hoist. */
+    asm {
+      lis image, lbl_802515D0@ha
+      addi titleMask, front, 0
+      addi image, image, lbl_802515D0@l
+    }
+    fn_801A90BC(image,titleMask);
     break;
   case 2:
   case 5:
@@ -375,7 +387,14 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
     break;
   case 6:
     fn_801A9250(0x47,param_3,1);
-    fn_801A90BC(lbl_802515D0,front->title);
+    /* ASM: lis/addi/addi preserve the zero-offset address form and scheduling;
+     * C folds the address to mr, and an isolated addi prevents the lis hoist. */
+    asm {
+      lis image, lbl_802515D0@ha
+      addi titleMask, front, 0
+      addi image, image, lbl_802515D0@l
+    }
+    fn_801A90BC(image,titleMask);
     iVar4 = fn_800B193C();
     if (iVar4 != 0) {
       iVar4 = fn_800B194C();
@@ -397,7 +416,14 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
   case 7:
     fn_8001E134(1);
     fn_801A9250(1,param_3,1);
-    fn_801A90BC(lbl_802515D0,front->title);
+    /* ASM: lis/addi/addi preserve the zero-offset address form and scheduling;
+     * C folds the address to mr, and an isolated addi prevents the lis hoist. */
+    asm {
+      lis image, lbl_802515D0@ha
+      addi titleMask, front, 0
+      addi image, image, lbl_802515D0@l
+    }
+    fn_801A90BC(image,titleMask);
     if (lbl_8064C520 != 0) {
       local_98 = local_90;
       iVar4 = fn_801E7578(lbl_80301CE0[0]);
@@ -435,7 +461,14 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
   case 16:
     local_a0 = lbl_8064DF00;
     fn_801A9250(2,param_3,1);
-    fn_801A90BC(lbl_802515D0,front->title);
+    /* ASM: lis/addi/addi preserve the zero-offset address form and scheduling;
+     * C folds the address to mr, and an isolated addi prevents the lis hoist. */
+    asm {
+      lis image, lbl_802515D0@ha
+      addi titleMask, front, 0
+      addi image, image, lbl_802515D0@l
+    }
+    fn_801A90BC(image,titleMask);
     if ((lbl_803003D8[0] & 1) != 0) {
       local_c8 = local_a0;
       fn_801A852C(&local_c8,5,0x23,0x80000000);
@@ -600,7 +633,9 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
     if ((iVar4 == 3) && (lbl_8064DEA8 == lbl_8064C67C)) {
       fn_801AD4B4(0,0,1,0);
     }
-    if (seqTable[iVar4].fade == 1) {
+    /* ASM: addi preserves the table base separately; C folds it into the member displacement. */
+    asm { addi seqBase, front, 0x288 }
+    if (seqBase[iVar4].fade == 1) {
       scale = lbl_8064DEC0 - lbl_8064C67C;
       local_8c[0] = scale;
       local_8c[4] = scale;
@@ -643,7 +678,9 @@ void fn_8002188C(int param_1,int param_2,uint param_3)
         uVar6 = 0xffffffff;
       }
       else {
-        uVar6 = seqTable[uVar2].track;
+        /* ASM: addi preserves the table base separately; C folds it into the member displacement. */
+        asm { addi seqBase, front, 0x288 }
+        uVar6 = seqBase[uVar2].track;
       }
       entry = &seqTable[iVar4];
       lbl_8064C690 = uVar6;

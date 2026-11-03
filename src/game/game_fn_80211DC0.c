@@ -1,57 +1,55 @@
+typedef union PairedFloats {
+    struct { float first, second; } component;
+    double bits;
+} PairedFloats;
+
 typedef struct Quaternion {
     float x, y, z, w;
 } Quaternion;
 
-/* Hamilton product. Either input may also be the destination. */
+/* Hamilton product. A pair is moved as raw bits so each component keeps
+ * its own floating-point lane. */
 void PSQUATMultiply(register const Quaternion *a, register const Quaternion *b,
-                 register Quaternion *out)
+                    register Quaternion *out)
 {
-    register float xy, zw, bxy, bzw;
-    float resultX;
-    register float resultY;
+    register double xy = ((const PairedFloats *)&a->x)->bits;
+    register double zw = ((const PairedFloats *)&a->z)->bits;
+    register double bxy = ((const PairedFloats *)&b->x)->bits;
+    register double bzw;
+    register double resultXY;
+    register double resultZW;
 
-    /* ASM: psq_l and ps_neg load and negate quaternion pairs. C has
-     * no paired-single type to preserve both lanes of these values. */
+    /* ASM: ps_neg negates both float lanes; scalar C cannot retain
+     * the second lane in a register. */
     asm {
-        psq_l xy, 0(a), 0, 0
-        psq_l zw, 8(a), 0, 0
-        psq_l bxy, 0(b), 0, 0
         ps_neg f5, xy
-        psq_l bzw, 8(b), 0, 0
-        ps_neg f6, zw
     }
-    /* ASM: ps_merge01 forms (-x,y), a cross-lane operation absent in C. */
-    asm { ps_merge01 f4, f5, xy }
-    /* ASM: ps_muls0 forms the z*x product while retaining its paired
-     * companion; C emits only a scalar multiply. */
-    asm { ps_muls0 resultY, zw, bxy }
-    /* ASM: ps_muls0, ps_merge01 and ps_muls1 form paired z/w terms,
-     * which scalar C cannot retain in both register lanes. */
+    bzw = ((const PairedFloats *)&b->z)->bits;
+    /* ASM: ps_neg, ps_merge01, ps_muls0 and ps_muls1 operate on both
+     * lanes; scalar C cannot retain the second component. */
     asm {
+        ps_neg f6, zw
+        ps_merge01 f4, f5, xy
+        ps_muls0 f7, zw, bxy
         ps_muls0 f5, f5, bxy
         ps_merge01 zw, f6, zw
         ps_muls1 f8, f4, bxy
     }
-    resultX = a->w * bxy;
-    resultX = __fmadds(a->y, bzw, resultX);
-    resultY = __fmadds(-xy, bzw, resultY);
-    /* ASM: ps_madds0 and ps_madds1 fuse both z/w product lanes; C
-     * cannot address the upper lane for arithmetic. */
+    /* ASM: ps_madds0 fuses two lane products, which scalar C cannot do. */
+    asm { ps_madds0 f7, f4, bzw, f7 }
+    /* ASM: ps_muls1, ps_madds0, ps_madds1, ps_merge10 and ps_add
+     * compute and rearrange both lanes; C has only scalar arithmetic. */
     asm {
+        ps_muls1 bxy, zw, bxy
         ps_madds0 f5, zw, bzw, f5
         ps_madds1 f8, f6, bzw, f8
+        ps_merge10 f7, f7, f7
+        ps_madds1 bxy, xy, bzw, bxy
+        ps_merge10 f5, f5, f5
+        ps_add resultXY, f7, bxy
     }
-    resultX += __fmadds(xy, b->w, zw * b->y);
-    resultY += __fmadds(a->y, b->w, a->w * b->y);
-    /* ASM: ps_merge10 swaps the z/w cross terms, which C cannot do
-     * without storing and reloading the upper lane. */
-    asm { ps_merge10 f5, f5, f5 }
-    out->x = resultX;
-    out->y = resultY;
-    /* ASM: ps_sub and psq_st finish both z/w lanes; C has no paired
-     * subtraction or paired store. */
-    asm {
-        ps_sub f5, f5, f8
-        psq_st f5, 8(out), 0, 0
-    }
+    ((PairedFloats *)&out->x)->bits = resultXY;
+    /* ASM: ps_sub subtracts both component lanes, which C cannot express. */
+    asm { ps_sub resultZW, f5, f8 }
+    ((PairedFloats *)&out->z)->bits = resultZW;
 }
