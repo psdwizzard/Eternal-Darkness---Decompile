@@ -82,7 +82,7 @@ void fn_801A7744(Vec3 *, const void *);
 void *fn_801A7760(void *);
 u8 fn_801A7768(void *);
 void fn_801A977C(void *, s32);
-s32 fn_801D1B10(s32, s32, s32, s32);
+s32 fn_801D1B10(s16, s32, s32, u8);
 s32 fn_801DD188(void *, s32, u8);
 void fn_8020104C(s32, s32, s32, s32, f32);
 u64 fn_8020123C(s32, s32, s32, s32);
@@ -243,7 +243,7 @@ s32 fn_800654F8(void *event) {
     s32 defaultReaction;
     register s32 contactOrHealthIndex;
     register s32 doubledDamage;
-    register u32 effectKind;
+    register u8 effectKind;
     s32 randomX;
     s32 characterState;
     u8 targetKind;
@@ -353,7 +353,7 @@ s32 fn_800654F8(void *event) {
                 targetType = fn_80035628((void *)target);
                 elementType = fn_80157AB8(weaponInfo);
                 effectKind = fn_80157918(weaponInfo);
-                fn_801D1B10((s16)damage, targetType, elementType, effectKind & 0xFF);
+                fn_801D1B10(damage, targetType, elementType, effectKind);
                 /* ASM: mr retains the returned word in the short working value;
                  * C assignment eagerly sign-extends it before the guarded test. */
                 asm { mr damage, r3 }
@@ -392,10 +392,7 @@ s32 fn_800654F8(void *event) {
 skipLinkedHandler:
             if (eventFlags & 0x800) {
                 elementType = (u32)fn_801A7760(event);
-                fn_801A7768(event);
-                /* ASM: mr preserves the getter's already zero-extended byte;
-                 * C promotion inserts an unnecessary clrlwi here. */
-                asm { mr effectKind, r3 }
+                effectKind = fn_801A7768(event);
             }
             if (((u8)effectKind > 1U) && (suppressParticles == 0)) {
                 particleModel = model;

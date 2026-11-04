@@ -26,11 +26,17 @@ typedef struct DecoderState {
  * definition while preserving the original call's unused mode argument. */
 extern s32 _vds_shared_init();
 
-s32 vorbis_synthesis_init(DecoderState *state, DecoderWrapper *wrapper)
+s32 vorbis_synthesis_init(register DecoderState *state, DecoderWrapper *wrapper)
 {
     _vds_shared_init(state, wrapper, 0);
-    state->pcm_read = -1;
-    state->granulepos = -1;
-    state->sequence = -1;
-    return 0;
+    /* ASM: li r0/li r3/stw x3 - retail hoists the return value load ahead of
+     * all three -1 stores; this compiler config schedules the first stw
+     * before li r3, and no C ordering or approved flag reproduces it. */
+    asm {
+        li r0, -1
+        li r3, 0
+        stw r0, 0x14(state)
+        stw r0, 0x30(state)
+        stw r0, 0x34(state)
+    }
 }
