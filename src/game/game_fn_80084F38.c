@@ -85,7 +85,7 @@ extern u32 lbl_806519A8;
 
 extern void fn_800861F4(void);
 extern void fn_800861F8(u16);
-extern void fn_80086204(u16, u16, u16);
+extern void fn_80086204();
 extern u32 fn_80113B64(void);
 extern void fn_8011F0E8(Vec3*, Vec3*);
 extern void* fn_8011F130(void*);
@@ -100,7 +100,7 @@ extern void fn_801A74A8(void*, u32);
 extern void fn_801A7518(void*, s16);
 extern void fn_801A7538(void*, u16);
 extern void fn_801A764C(void*, const void*);
-extern void fn_801A852C(u32*, int, u16, u32);
+extern void fn_801A852C();
 extern void fn_801A8660(s32, s32, s32, s32, s32, const u32*);
 extern void fn_801A8D38(s32);
 extern void fn_801A8EDC(void*);
@@ -163,7 +163,6 @@ void fn_80084F38(void)
     void *soundEntry;
     s32 panelImage;
     s32 effectIndex;
-    s32 legendIndex;
     s32 symbolIndex;
     TimedEffect *effect;
 
@@ -217,7 +216,6 @@ void fn_80084F38(void)
     case 0x59: {
         s32 iconIndex;
         s32 image;
-        register u16 depth;
         s32 iconX, iconY;
         if (((s32) lbl_803003C8.mode == 0) && ((s8) lbl_8031CD84.selected >= 0)) {
             for (iconIndex = 0; iconIndex < 2; iconIndex++) {
@@ -239,43 +237,40 @@ void fn_80084F38(void)
                 fn_801A8EDC(&lbl_802515D0);
                 iconColor = lbl_8064C2A8;
                 fn_801A852C(&iconColor, 0, iconIndex * 3, 0x80000000);
-                /* ASM: li supplies the all-ones FIFO depth; a C u16 constant
-                 * materializes 65535 instead of the retail signed immediate. */
-                asm { li depth, -1 }
                 fn_801A8F08(iconX, iconY, (s16) (iconX + 0x40), (s16) (iconY + 0x40), -1, 0, (void*)5);
                 shadowColor = lbl_8064EB04;
                 fn_801A852C(&shadowColor, 5, 1, 0x80000000);
                 if ((u32) lbl_8031CD84.icons[lbl_8031CD84.selected].enabled[iconIndex] != 0U) {
                     fn_801ECF50(6);
                     GXBegin(0x80, (void*)5, 4);
-                    fn_80086204(quad.v[0].x + (f32)(s16)(iconX + 0x25),
-                                 quad.v[0].y + (f32)(s16)(iconY + 0x25), depth);
+                    fn_80086204((s32)(quad.v[0].x + (f32)(s16)(iconX + 0x25)),
+                                 (s32)(quad.v[0].y + (f32)(s16)(iconY + 0x25)), -1);
                     fn_800861F8(0);
-                    fn_80086204(quad.v[1].x + (f32)(s16)(iconX + 0x25),
-                                 quad.v[1].y + (f32)(s16)(iconY + 0x25), depth);
+                    fn_80086204((s32)(quad.v[1].x + (f32)(s16)(iconX + 0x25)),
+                                 (s32)(quad.v[1].y + (f32)(s16)(iconY + 0x25)), -1);
                     fn_800861F8(1);
-                    fn_80086204(quad.v[2].x + (f32)(s16)(iconX + 0x25),
-                                 quad.v[2].y + (f32)(s16)(iconY + 0x25), depth);
+                    fn_80086204((s32)(quad.v[2].x + (f32)(s16)(iconX + 0x25)),
+                                 (s32)(quad.v[2].y + (f32)(s16)(iconY + 0x25)), -1);
                     fn_800861F8(2);
-                    fn_80086204(quad.v[3].x + (f32)(s16)(iconX + 0x25),
-                                 quad.v[3].y + (f32)(s16)(iconY + 0x25), depth);
+                    fn_80086204((s32)(quad.v[3].x + (f32)(s16)(iconX + 0x25)),
+                                 (s32)(quad.v[3].y + (f32)(s16)(iconY + 0x25)), -1);
                     fn_800861F8(3);
                     fn_800861F4();
                     faceColor = lbl_8064C2A8;
                     fn_801A852C(&faceColor, 0, 2, 0x80000000);
                     fn_801ECF50(6);
                     GXBegin(0x80, (void*)5, 4);
-                    fn_80086204(quad.v[0].x + (f32)(s16)(iconX + 0x20),
-                                 quad.v[0].y + (f32)(s16)(iconY + 0x20), depth);
+                    fn_80086204((s32)(quad.v[0].x + (f32)(s16)(iconX + 0x20)),
+                                 (s32)(quad.v[0].y + (f32)(s16)(iconY + 0x20)), -1);
                     fn_800861F8(0);
-                    fn_80086204(quad.v[1].x + (f32)(s16)(iconX + 0x20),
-                                 quad.v[1].y + (f32)(s16)(iconY + 0x20), depth);
+                    fn_80086204((s32)(quad.v[1].x + (f32)(s16)(iconX + 0x20)),
+                                 (s32)(quad.v[1].y + (f32)(s16)(iconY + 0x20)), -1);
                     fn_800861F8(1);
-                    fn_80086204(quad.v[2].x + (f32)(s16)(iconX + 0x20),
-                                 quad.v[2].y + (f32)(s16)(iconY + 0x20), depth);
+                    fn_80086204((s32)(quad.v[2].x + (f32)(s16)(iconX + 0x20)),
+                                 (s32)(quad.v[2].y + (f32)(s16)(iconY + 0x20)), -1);
                     fn_800861F8(2);
-                    fn_80086204(quad.v[3].x + (f32)(s16)(iconX + 0x20),
-                                 quad.v[3].y + (f32)(s16)(iconY + 0x20), depth);
+                    fn_80086204((s32)(quad.v[3].x + (f32)(s16)(iconX + 0x20)),
+                                 (s32)(quad.v[3].y + (f32)(s16)(iconY + 0x20)), -1);
                     fn_800861F8(3);
                     fn_800861F4();
                 }
@@ -310,17 +305,19 @@ void fn_80084F38(void)
                     lowerPanelColor = lbl_8064C2A8;
                     fn_801A852C(&lowerPanelColor, 0, 5, 0x80000000);
                     fn_801A8F08(0x3E, 0x100, 0x19B, 0x1A0, -1, 0, (void*)5);
-                    legendIndex = 0;
-                    do {
-                        legendColor = lbl_8064C2A8;
-                        fn_801A852C(&legendColor, 0, indices.v[lbl_80244870[legendIndex]], 0x80000000);
-                        legendX = points.v[legendIndex].x;
-                        legendY = points.v[indices.v[lbl_80244870[legendIndex]]].y;
-                        fn_801A8F08((s16)(legendX - 0x54), (s16)(legendY + 0xB9),
-                                    (s16)(legendX - 0x34), (s16)(legendY + 0xF9),
-                                    -1, 0, (void*)5);
-                        legendIndex += 1;
-                    } while (legendIndex < 7);
+                    {
+                        s32 legendIndex = 0;
+                        do {
+                            legendColor = lbl_8064C2A8;
+                            fn_801A852C(&legendColor, 0, indices.v[lbl_80244870[legendIndex]], 0x80000000);
+                            legendX = points.v[legendIndex].x;
+                            legendY = points.v[indices.v[lbl_80244870[legendIndex]]].y;
+                            fn_801A8F08((s16)(legendX - 0x54), (s16)(legendY + 0xB9),
+                                        (s16)(legendX - 0x34), (s16)(legendY + 0xF9),
+                                        -1, 0, (void*)5);
+                            legendIndex += 1;
+                        } while (legendIndex < 7);
+                    }
                 }
             }
             symbolIndex = 0;
@@ -353,7 +350,6 @@ void fn_80084F38(void)
     case 0x121:
     case 0x122:
     case 0x123: {
-        UiObjects *objectCursor;
         f32 forwardY;
         f32 radialY;
         f32 angleStep;
@@ -405,7 +401,6 @@ void fn_80084F38(void)
             PSMTXRotAxisRad(ringStep, &axis, -angleStep);
             PSMTXMultVec(ringRotation, &radial, &radial);
             angle = lbl_8031CBA0.ringAngle;
-            objectCursor = &lbl_8031CD84;
             objectIndex = 0;
             do {
                 if ((1 << objectIndex) & ((u32) lbl_8031CD84.mask >> lbl_8031CD84.shift)) {
@@ -431,15 +426,14 @@ void fn_80084F38(void)
                         colorCopy = color.word;
                         endColor = color.word;
                         startColor = color.word;
-                        fn_8012C62C((u8*)objectCursor->objects[0], 0xF,
+                        fn_8012C62C((u8*)lbl_8031CD84.objects[objectIndex], 0xF,
                                     &startColor, (s8*)&colorDelta, &endColor, 4);
                     }
-                    fn_8011F0E8(objectCursor->objects[0], &position);
+                    fn_8011F0E8(lbl_8031CD84.objects[objectIndex], &position);
                     PSMTXMultVec(ringStep, &radial, &radial);
                     angle -= angleStep;
                 }
                 objectIndex += 1;
-                objectCursor = (UiObjects*)((u8*)objectCursor + 4);
             } while (objectIndex < 5);
             {
                 f32 fullTurn, nextAngle, oldAngle, wantedAngle;
@@ -479,10 +473,13 @@ void fn_80084F38(void)
                 }
                 if (wantedAngle == lbl_8031CBA0.ringAngle) {
                     lbl_8031CBA0.direction = 0U;
-                } else if ((s8) lbl_8031CBA0.direction > 0) {
-                    lbl_8031CBA0.direction = 3U;
-                } else if ((s8) lbl_8031CBA0.direction < 0) {
-                    lbl_8031CBA0.direction = -3U;
+                } else {
+                    s8 direction = lbl_8031CBA0.direction;
+                    if (direction > 0) {
+                        lbl_8031CBA0.direction = 3;
+                    } else if (direction < 0) {
+                        lbl_8031CBA0.direction = -3;
+                    }
                 }
             }
             if (((s32)fn_801E7578(lbl_8031CD84.mask) <= 1 ||

@@ -14,6 +14,13 @@ typedef struct SearchResult {
     u8 enabled;
 } SearchResult;
 
+/* Three target positions stored at lbl_803254A0. */
+typedef struct VectorTable {
+    Vec3 first;
+    Vec3 second;
+    Vec3 third;
+} VectorTable;
+
 typedef struct ActorFlags {
     unsigned char bit7 : 1;
     unsigned char bit6 : 1;
@@ -197,7 +204,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
 {
     int kind;
     char *data;
-    Vec3 *vectors;
+    VectorTable *vectors;
     void *actor;
     ActorState *state;
     int mode;
@@ -212,7 +219,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
     Vec3 copied_position, sound_position, target_position;
     Vec3 point2, point3, point28, point29;
 
-    vectors = lbl_803254A0;
+    vectors = (VectorTable *)lbl_803254A0;
     data = lbl_80248A60;
     kind = fn_80200C10(event);
     source = fn_80201B3C();
@@ -371,7 +378,7 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
 
         if (kind == 0x97) {
             u16 sound = (u16)(int)fn_80200C38(event);
-            int volume = 0x64;
+            u8 volume = 0x64;
             sound_position = *(Vec3 *)position;
             switch (sound) {
             case 0x13A:
@@ -994,21 +1001,21 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
                                     target, collision, 1, 1, lbl_8064F364) != 0) {
                         *(u16 *)((u8 *)state + 0x84) |= 0x80;
                         fn_8020123C(0x9E, object_id, active, 0);
-                        fn_800D34B8(target, &point3, &point29, &vectors[0]);
-                        fn_8020123C(0x9D, object_id, active, (int)&vectors[0]);
-                        fn_8020123C(0x0C, object_id, object_id, (int)&vectors[0]);
+                        fn_800D34B8(target, &point3, &point29, &vectors->first);
+                        fn_8020123C(0x9D, object_id, active, (int)&vectors->first);
+                        fn_8020123C(0x0C, object_id, object_id, (int)&vectors->first);
                         fn_8020123C(0x97, object_id, object_id, 0x2C4);
                     }
                 } else if (point_distance - target_distance > 0x12C) {
-                    fn_8020123C(0x0C, object_id, object_id, (int)&vectors[0]);
+                    fn_8020123C(0x0C, object_id, object_id, (int)&vectors->first);
                 }
             } else {
                 fn_8011F6A4(resource, 3, 0, -1, &point, 1);
                 point3 = point.position;
                 fn_8011F6A4(resource, 0x1D, 0, -1, &point, 1);
                 point29 = point.position;
-                fn_800D34B8(target, &point3, &point29, &vectors[0]);
-                fn_8020123C(0x9D, object_id, active, (int)&vectors[0]);
+                fn_800D34B8(target, &point3, &point29, &vectors->first);
+                fn_8020123C(0x9D, object_id, active, (int)&vectors->first);
             }
             return 1;
         }
@@ -1057,9 +1064,8 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
                         int next_frame;
                         fn_8012A1FC(resource, 0x71);
                         fn_8012A1BC(resource, 0x71);
-                        if (frame - 0x41 < 0) {
-                            next_frame = 0x13;
-                        } else {
+                        next_frame = 0x13;
+                        if (frame - 0x41 >= 0) {
                             next_frame = 0x12;
                         }
                         fn_80129FD0(resource, next_frame << 17, 1);
@@ -1095,9 +1101,9 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
                 fn_8011F6A4(resource, 3, 0, -1, &point3, 1);
                 fn_8011F6A4(resource, 0x1D, 0, -1, &point29, 1);
                 fn_800D34B8(target, &point3.position, &point29.position,
-                             &vectors[1]);
+                             &vectors->second);
             }
-            fn_8020123C(0x9D, object_id, active, (int)&vectors[1]);
+            fn_8020123C(0x9D, object_id, active, (int)&vectors->second);
             return 1;
         }
         if (kind == 0x9F) {
@@ -1111,8 +1117,8 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
                 fn_8011F6A4(resource, 3, 0, -1, &point3, 1);
                 fn_8011F6A4(resource, 0x1D, 0, -1, &point29, 1);
                 fn_800D34B8(target, &point3.position, &point29.position,
-                             &vectors[2]);
-                fn_8020123C(0x9D, object_id, active, (int)&vectors[2]);
+                             &vectors->third);
+                fn_8020123C(0x9D, object_id, active, (int)&vectors->third);
             }
             fn_80201D2C(object, 1);
             fn_80201D14(object, 1);
@@ -1232,6 +1238,8 @@ int fn_800D0B74(void *object, int alternate, void *event, int *value)
             }
             return 1;
         }
+    } else {
+        return 0;
     }
 
     return 0;
